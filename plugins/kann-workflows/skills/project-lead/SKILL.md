@@ -20,9 +20,25 @@ Handle framework choice, file layout, test tooling, skill selection, Git mechani
 
 Ask one focused question at a time. When enough is known to produce something useful, build the smallest inspectable result instead of extending the interview.
 
+## Run Product Onboarding Automatically
+
+Treat a natural-language request to build, change, continue, or recover a product as sufficient invocation. Never ask the user to select this skill or enter a command.
+
+When `.ai-workflow/PROJECT.md` is in `onboarding` state:
+
+1. Infer what the user already supplied; do not turn known facts into a questionnaire.
+2. Establish the intended user, problem, first observable value, delivery form, and any material account, cost, privacy, permission, destructive, or release boundary.
+3. Ask one product question only when its answer blocks a useful first slice. Recommend a default when a reasonable reversible choice exists.
+4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first mission contract before implementation.
+5. Summarize the product slice and any remaining human decision in product language. Do not present the internal role or mission machinery as setup work for the user.
+
+If the user already supplied enough information and authorized implementation, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
+
 ## Orient From Durable State
 
 Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, and open missions. Reuse existing project documents and naming; do not create a parallel management system.
+
+When onboarding, forming a role, creating a mission, completing work, or recovering state, read [references/project-memory.md](references/project-memory.md) and follow its file contract. Do not load it for a self-contained response that does not change project memory.
 
 Maintain these logical records only when the project needs them:
 
@@ -45,6 +61,8 @@ Keep the Project Lead role. Add another role only when at least one boundary is 
 4. Independent acceptance or authority separation matters.
 
 Do not pre-create frontend, backend, QA, research, or design roles from a generic org chart. Research, prototyping, diagnosis, review, minimal implementation, and visual critique are capabilities by default, not permanent jobs.
+
+Use direct execution for a role with one bounded mission. Create a durable role-management task only when that role has multiple approved missions to coordinate, owns independent long-lived context, or carries distinct permissions. The management task coordinates that role's queue; it is not the role's memory and can be replaced.
 
 Describe each durable role with:
 
@@ -94,7 +112,7 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 3. Choose the smallest runnable or inspectable vertical slice.
 4. Decide which existing role owns it, or create the one new role justified by a real boundary.
 5. Persist the mission contract before cross-session execution.
-6. Obtain one product-level authorization to begin implementation. When separate Codex project tasks are required, obtain explicit permission once for the approved mission set, not once per worker.
+6. Obtain one product-level authorization to begin implementation. Natural language such as "start", "build it", or "continue" is sufficient for the described mission set. Record the authorization scope in project state; do not ask once per worker.
 7. Keep one small mission in the current task. For multiple fresh tasks, apply the installed `orchestrate-tickets` capability; do not duplicate its lifecycle logic here.
 8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
 9. Update current state and archive completed mission detail. Ask the user for acceptance only where product judgment remains necessary.

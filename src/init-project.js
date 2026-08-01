@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.1.0";
+const WORKFLOW_VERSION = "0.2.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -36,14 +36,15 @@ schema_version: 1
 workflow_version: ${WORKFLOW_VERSION}
 status: onboarding
 project_name: ${JSON.stringify(projectName)}
-task_creation: ask-once
+task_creation: pending
 ---
 
 # ${projectName}
 
 ## Product Direction
 
-Pending the Product Owner's first description.
+Pending the Product Owner's first description. Establish the intended user, problem,
+first observable value, delivery form, and material risk boundaries before dispatching work.
 
 ## Current State
 
@@ -52,7 +53,7 @@ Pending the Product Owner's first description.
 
 ## Roles
 
-- **Project Lead**: single product-facing entry; responsibilities will be refined after onboarding.
+- **Project Lead**: single product-facing entry; materialize its role contract during onboarding.
 
 ## Active Missions
 
@@ -61,6 +62,7 @@ None.
 ## Durable Pointers
 
 Create role, mission, decision, and archive records lazily as the project requires them.
+Use repository-relative links; never persist local task identifiers or machine paths.
 `;
 }
 
@@ -70,6 +72,7 @@ function agentsDocument() {
 ## Product Collaboration
 
 - Treat the user as Product Owner and keep one Project Lead as the product-facing entry.
+- Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.
 - Keep roles durable and Codex task instances replaceable. Do not store task IDs or machine paths in tracked files.

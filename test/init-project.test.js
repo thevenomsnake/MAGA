@@ -28,6 +28,10 @@ test("initializes the minimum project kernel", (t) => {
     fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8"),
     /status: onboarding/,
   );
+  assert.match(
+    fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8"),
+    /Never ask the user to invoke a Skill/,
+  );
 });
 
 test("initializes a repository at the project root", (t) => {

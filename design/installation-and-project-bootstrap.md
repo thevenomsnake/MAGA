@@ -146,6 +146,8 @@ AI Workflow Plugin
 - 管理岗位会话、执行会话、当前状态和归档；
 - 用户始终通过一个项目入口继续修改产品。
 
+实现状态：`project-lead` 已包含隐式入职流程和按需项目记忆契约；实际新任务实验记录在 `experiments/product-onboarding-smoke/`。
+
 ### V2：自动建立首个入口
 
 - 初始化器创建并命名同项目 Project Lead；
