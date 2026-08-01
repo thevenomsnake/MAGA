@@ -1,6 +1,6 @@
 interface:
   display_name: "Orchestrate Tickets"
-  short_description: "Run approved tickets in fresh Codex tasks"
+  short_description: "Manage approved tickets across fresh Codex tasks"
   default_prompt: "Use $orchestrate-tickets to execute the approved ticket plan in fresh Codex tasks."
 policy:
   allow_implicit_invocation: true
