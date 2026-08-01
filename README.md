@@ -24,6 +24,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 ## 手册入口
 
 - [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
+- [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
 
 ## 工作流
 

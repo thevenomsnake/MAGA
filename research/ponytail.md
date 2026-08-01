@@ -362,3 +362,116 @@ Ponytail 将一套最小实现规则打包为多个宿主可加载的 skills 和
 Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深工程师常用的“必要性审查”变成可重复加载的操作顺序。它最适合作为编码执行 policy，帮助代理减少无必要的新增表面积。
 
 它的效力取决于模型是否能遵循多步规则、任务是否存在过度实现空间，以及需求边界是否足够真实。它不能替代需求澄清、领域模型、安全设计、项目记忆或验收。公开介绍时应使用条件性 agentic 结论，不应使用 `ponytail-gain` 的旧指标卡作为普遍承诺。
+
+## 面向不写代码用户的调用体验
+
+本节只讨论 Ponytail 自身的调用体验，不将它与其他 skills 综合，也不据此设计最终产品。目标问题是：一个能描述产品、但不写代码且不愿学习 `/xxx` 命令的用户，能否无感获得 Ponytail 的价值。
+
+### 六个 `SKILL.md` 与完整插件不是同一种安装
+
+#### 可验证事实
+
+固定 commit 的 Codex 插件清单同时声明了 `skills: "./skills/"` 和 `hooks: "./hooks/claude-codex-hooks.json"`，并把自身能力标为 `Instructions` 与 `Lifecycle hooks`。完整插件因此包含两个彼此独立的层次：
+
+1. 六个 `SKILL.md` 提供任务描述、触发语和模型应遵循的规则；
+2. hooks 在会话生命周期中注入主规则、记录模式，并把规则带入子代理。
+
+当前本地安装只包含六个 skill 目录，每个目录只有一个 `SKILL.md`；插件缓存、插件配置和运行时环境中没有 Ponytail 插件或 hook 的安装记录。因此，本地已安装的是**六个按任务发现的提示能力**，不是官方所说的完整 always-on 插件。
+
+完整插件的 `SessionStart` hook 覆盖 startup、resume、clear 和 compact，默认读取 `full`，写入模式状态并注入主规则；`SubagentStart` 按当前状态向子代理注入相同规则；`UserPromptSubmit` 识别模式切换和关闭。Codex 路径把状态写在插件数据目录，并输出 `PONYTAIL:<MODE>` system message。官方 README 还要求 Codex 用户安装后在 `/hooks` 中审查并信任 hooks，并要求非交互 shell 的 `PATH` 中存在 Node.js；缺少 Node.js 时，skills 仍能使用，但 always-on 激活不会工作。
+
+来源：[Codex 插件清单](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/.codex-plugin/plugin.json)、[hooks 配置](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/claude-codex-hooks.json)、[activation hook](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-activate.js)、[模式追踪](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-mode-tracker.js)、[运行时状态与输出](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-runtime.js)、[README 安装说明](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md)。
+
+#### 分析判断
+
+六个 skills 可以做到“在宿主判断任务匹配时自动加载”，但做不到“无论宿主如何判断，规则在每个会话、压缩恢复和子代理中都持续存在”。`SKILL.md` 内的 `ACTIVE EVERY RESPONSE` 是给模型的指令，不是状态管理机制；没有 hooks 时，不能把它称为持久无感，只能称为**匹配任务时的无命令调用**。
+
+### 不使用 `/xxx` 时，哪些任务仍可自动触发
+
+#### 可验证事实
+
+六个 skill 的 frontmatter 都包含自然语言用途或触发语，而不是只声明斜杠命令：
+
+| Skill | 自然语言可表达的任务 | 是否必须使用命令 |
+| --- | --- | --- |
+| `ponytail` | 编写、增加、重构、修复、review、设计代码或选择依赖；也列出“最简单方案”“YAGNI”“减少样板”等说法 | 否；描述要求用于任何编码任务 |
+| `ponytail-review` | review 当前改动是否过度工程、还能删除什么、能否简化 | 否；`/ponytail-review` 只是列出的一个触发方式 |
+| `ponytail-audit` | 全库检查过度工程、寻找可删除内容或膨胀 | 否；但描述中的 `audit this codebase` 本身较宽泛 |
+| `ponytail-debt` | 列出刻意推迟的简化、shortcut 或债务台账 | 否 |
+| `ponytail-gain` | 询问 Ponytail 节省什么或查看影响指标 | 否 |
+| `ponytail-help` | 询问 Ponytail 如何使用、有哪些能力 | 否 |
+
+在采用描述驱动 skill 匹配的 Codex 宿主中，用户只要自然地表达上述任务，宿主就可以选择对应 skill。官方 README 同时把 Codex 的显式入口写成 `@ponytail`、`@ponytail-review` 等；因此，显式命令是强制指定能力的专家入口，不是这些 skill 文本所允许的唯一入口。
+
+来源：[主 skill](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail/SKILL.md)、[`ponytail-review`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-review/SKILL.md)、[`ponytail-audit`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-audit/SKILL.md)、[`ponytail-debt`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-debt/SKILL.md)、[`ponytail-gain`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-gain/SKILL.md)、[`ponytail-help`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-help/SKILL.md)、[README Commands](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md#commands)。
+
+#### 分析判断
+
+自然语言触发对不写代码用户已经足够：他说“这个功能别搞得太复杂”或“看看这次改动有没有多余东西”，不必知道 skill 名称。真正仍需要显式操作的，是**强制选择某个内部处理器**，以及切换 `lite/full/ultra/off`、查询当前模式或持久修改默认模式。这些都是调试和工程治理需求，不是普通产品意图。
+
+自动匹配也不是确定性保证。它取决于宿主是否支持 skills、是否读取 frontmatter，以及调度器是否把用户意图判给正确能力。只复制 skill 文件时，不能把“用户自然语言一定会触发”当作 Ponytail 自身提供的运行时保证。
+
+### 用户是否需要理解等级和五个辅助 skills
+
+#### 可验证事实
+
+完整插件默认每个新会话启用 `full`。`lite`、`full`、`ultra` 改变的是代理挑战需求和执行决策梯的强度；`off` 关闭模式。默认值可由环境变量或配置文件改变，普通会话切换只持续到会话结束。`review` 不是可持久默认等级。
+
+其余五个 skills 都是一次性工具：`review` 只看当前 diff 的复杂度，`audit` 扫描全库，`debt` 收集遵循特定注释约定的有意简化，`gain` 展示固定 benchmark 卡片，`help` 展示操作索引。它们都不是完成日常产品修改的必要前置步骤。
+
+来源：[主 skill 的强度定义](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail/SKILL.md)、[模式配置](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-config.js)、[`ponytail-help`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-help/SKILL.md)。
+
+#### 分析判断
+
+不写代码的用户不需要理解 `lite/full/ultra`。对这种用户，把 `full` 作为后台默认策略已经能表达“尽量采用最小正确实现”；让用户选择实现强度，等于把内部工程判断重新推回给他。只有当他明确感觉系统删减过多或过少时，才需要用普通语言纠正行为，不必先学习等级名称。
+
+他也不需要知道 `review/audit/debt/gain/help`：
+
+- `review` 和 `audit` 是维护者的复杂度诊断，不是用户验收产品行为的方式；
+- `debt` 依赖源码中的 `ponytail:` 注释，对不读源码的用户没有直接操作价值；
+- `gain` 是项目宣传数据，不会证明他的项目实际节省了什么，而且固定 commit 中仍有旧口径冲突；
+- `help` 主要解释命令体系，反而会把本可隐藏的内部结构暴露给用户。
+
+这些能力可以存在于后台，但“用户看不见 skill 名称”和“系统每次都自动运行全部 skills”不是一回事。尤其全库 audit 不应因为用户不懂代码就默认频繁执行。
+
+### 常驻策略能否真正无感
+
+#### 可验证事实
+
+完整插件可以在不要求用户每轮输入命令的情况下默认启用 `full`，并在会话恢复、上下文压缩和子代理启动时重新注入。模式默认值可以由安装者预先配置。对 Codex，activation hook 不会触发 Claude 专用的 statusline 设置邀请。
+
+它仍会留下可见痕迹：hook 配置提供“Loading ponytail mode...”和“Tracking ponytail mode...”状态消息；Codex hook 输出包含 `PONYTAIL:<MODE>` system message；README 明确说启动和模式切换文本会显示当前模式。主 skill 还要求实现后简短说明跳过了什么、何时再增加，并可能在交付简化版本时质疑复杂需求。
+
+来源：[hooks 配置](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/claude-codex-hooks.json)、[activation hook](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-activate.js)、[运行时状态与输出](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/hooks/ponytail-runtime.js)、[主 skill 的输出规则](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail/SKILL.md)、[README](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md)。
+
+#### 分析判断
+
+“无命令”与“无感知”是两层目标。完整插件基本实现前者，但官方实现仍把模式名、加载状态和工程式的“跳过内容”暴露给直接使用 Codex 的人。它可以对熟悉代理工具的开发者做到低打扰，却不能直接证明面向普通产品构建者的界面已经无感。
+
+如果把 Ponytail 放在后台执行会话，前台只呈现产品变化，这些痕迹可以被上层隐藏；这是宿主编排带来的体验，不是 Ponytail 六个 skills 自己提供的能力。
+
+### 可见干扰与误触发风险
+
+以下是基于固定源码的分析判断，不是官方承认的问题：
+
+1. **宽泛 audit 触发可能错配范围。** `ponytail-audit` 把“audit this codebase”列为触发语，但其边界明确排除正确性、安全和性能。不了解该边界的用户说“全面审计项目”，可能期待的恰好是它不做的内容。
+2. **“最小”可能被误读为“少做”。** 主规则会跳过被判断为 speculative 的需求，并允许先交付 lazy version。用户若不能完整表达领域约束，代理可能把未说清的必要行为当成多余复杂度；源码中的安全边界无法补齐模型尚不知道的业务事实。
+3. **等级会制造不必要的选择负担。** `lite/full/ultra` 对工程师有调节价值，但名称无法让产品用户预判实际产品行为。尤其 `ultra` 会更积极挑战需求，不适合无条件默认。
+4. **辅助输出可能泄漏工程语言。** `stdlib`、`native`、`YAGNI`、diff 行号、依赖数和 `ponytail:` 注释对维护者有用，对不写代码用户通常是噪声。
+5. **help 会把自然语言体验重新包装成命令手册。** `ponytail-help` 的主要内容是命令、模式和配置；如果目标是不让用户学习 `/xxx`，它更适合管理员入口。
+6. **gain 可能造成错误期待。** 它展示旧单轮 benchmark 卡片。即使声明不是当前仓库收益，不写代码的用户也容易把百分比理解成自己项目的交付承诺。
+7. **自动触发仍依赖宿主判断。** 描述写“用于任何编码任务”可以提高主 skill 的覆盖率，也可能与项目自己的完整性、架构或风险策略发生冲突；六个文本文件没有优先级仲裁机制。
+
+### 对当前安装的结论
+
+#### 可验证事实
+
+当前安装能让支持描述匹配的 Codex 在相关任务中发现六个 skills；主 skill 的描述足以覆盖常见编码、修复、重构和依赖选择。当前没有安装或启用官方 hooks，因此没有 Ponytail 自己提供的会话启动激活、压缩后重注入、模式状态持久化或子代理继承。
+
+#### 分析判断
+
+对“不写代码、也不使用 `/xxx`”这一要求，当前安装的准确评价是：
+
+> **可以无命令地按任务触发，但不能称为持久无感。**
+
+用户不需要学习六个命令，也不需要理解三个强度；默认编码任务可由宿主自动选择主 skill。可是这种效果来自 Codex 的 skill 发现规则，每轮是否加载仍依赖宿主和任务表述。只有安装并信任完整 hooks，才接近官方定义的 always-on；即使如此，模式状态和工程术语仍可能在直接界面中可见。

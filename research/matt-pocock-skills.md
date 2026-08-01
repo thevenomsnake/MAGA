@@ -366,6 +366,117 @@ idea
 
 因此，旧稿关于“仅安装 21 个”“缺少 `resolving-merge-conflicts`”“5 个主文件存在漂移”的说法已经失效，不再保留。此结论只针对上述固定 commit 和正式 22 个 skill，不推断其他本地 skill 的来源或状态。
 
+## 面向不写代码用户的调用体验
+
+本节只从一个更窄的视角检查该项目：使用者能够描述产品、理解少量技术框架，但不写代码，也不愿学习或输入 `/xxx` 命令时，固定快照原样提供的体验是否成立。它不与其他项目比较，也不据此修改上游设计。
+
+### 先区分两种“无 slash”
+
+**[可验证事实]** 上游把 skill 分为两类，并由宿主读取元数据执行访问控制：
+
+- 13 个 **user-invoked** skill 只能由人显式输入名字触达；Claude Code 使用 `disable-model-invocation: true`，Codex 使用 `policy.allow_implicit_invocation: false`。模型和其他 skill 都不能自行启动它们。
+- 9 个 **model-invoked** skill 保留带触发语句的 description，允许模型根据用户自然语言自动采用，也允许其他 skill 调用。
+
+上游同时说明，skill 之间的依赖只是“运行 `/skill`”这种文字约定，而不是代码级函数调用；`agents/openai.yaml` 还提供用于 Codex skill picker 的显示名和简述。[Invocation model](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md#L3-L16)
+
+**[分析判断]** 因此需要把两个问题分开：
+
+1. **界面中不出现 `/` 字符**：可以。宿主可以用 skill picker、按钮或其他显式控件替代 slash；slash 是入口语法，不是 skill 本体。
+2. **用户完全不需要知道 skill，并只用普通产品语言启动完整流程**：原样安装做不到。13 个流程型 skill 的“必须由人显式进入”不是视觉写法，而是上游主动设置的调用边界。
+
+换言之，slash 本身不是本质依赖，**显式调用权才是**。
+
+### 哪些能力能够由自然语言隐式触发
+
+**[可验证事实]** 固定快照允许模型隐式调用的 9 个 skill 是：`prototype`、`diagnosing-bugs`、`research`、`tdd`、`domain-modeling`、`codebase-design`、`code-review`、`resolving-merge-conflicts` 和 `grilling`。它们的 description 面向模型编写，包含“用户报告故障”“想研究资料”“想探索 UI”“想压力测试一个决定”等触发条件。[Engineering index](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/README.md#L19-L31) · [Productivity index](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/productivity/README.md#L14-L18)
+
+**[分析判断]** “可隐式触发”不等于“对不写代码用户同样友好”。按执行中的用户负担，可以再分三组：
+
+| 原样能力 | 用户实际需要做什么 | 对不写代码用户的适配判断 |
+| --- | --- | --- |
+| `research` | 提出研究问题，之后可离开 | 最接近无感后台能力；上游明确要求后台 Agent 查一手来源并留下文档。 |
+| `diagnosing-bugs`、`resolving-merge-conflicts` | 描述故障，必要时提供只有人能完成的复现动作 | 大部分工程步骤可后台完成；但它们以命令、Git 状态和可运行反馈为工作对象，适合作为内部能力而非用户概念。 |
+| `code-review` | 若上下文缺失，要提供 Git fixed point 和 spec 来源 | 审查本身可后台完成，但独立使用时仍可能要求用户理解 branch、commit、merge-base、diff 或 PRD。[code-review](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/code-review/SKILL.md#L17-L32) |
+| `tdd`、`codebase-design` | 参与确认测试 seam 或讨论模块 interface | 可被实现流程内部调用，但直接交互建立在测试与架构词汇上；自然语言触发并没有消除理解门槛。 |
+| `grilling`、`domain-modeling` | 逐个回答真正的决定，确认共同理解 | 需要人参与是其目的；其中“一次一个问题、事实由 Agent 自查、决定留给人”的交互对不写代码用户反而友好。[grilling](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/productivity/grilling/SKILL.md#L6-L12) |
+| `prototype` | 亲自操作 UI 变体或终端状态模型，再表达哪处符合预期 | 让人按体验而非代码作判断，这是友好的；但 logic 分支仍要求用户运行终端命令，UI 分支才接近产品式反馈。[UI prototype](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/prototype/UI.md#L94-L103) · [Logic prototype](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/prototype/LOGIC.md#L59-L71) |
+
+**[分析判断]** 这 9 个 skill 中，真正同时满足“用户用普通语言触发”和“执行时几乎不要求工程知识”的主要是 `research`，以及上下文已经足够完整时的诊断、冲突解决和审查。`grilling` 与 `prototype` 也适合不写代码的人，但不是后台能力：它们有意保留人的判断和体验反馈。
+
+### 哪些流程必须由用户显式启动
+
+**[可验证事实]** 13 个 user-invoked skill 是：
+
+- Engineering：`ask-matt`、`grill-with-docs`、`triage`、`improve-codebase-architecture`、`setup-matt-pocock-skills`、`to-spec`、`to-tickets`、`implement`、`wayfinder`。
+- Productivity：`grill-me`、`handoff`、`teach`、`writing-great-skills`。
+
+这是固定快照索引和每个 skill 元数据共同声明的正式分类，不是根据名字作出的推测。[Engineering index](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/README.md#L5-L17) · [Productivity index](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/productivity/README.md#L5-L12)
+
+**[分析判断]** 这里出现了对目标用户最重要的错位：被禁止自动触发的恰好是完整交付链的阶段入口。即使 `tdd` 和 `code-review` 可以被 `implement` 内部调用，用户仍需先显式启动 `implement`；多会话工作还需要依次启动 `to-spec`、`to-tickets`，再为每张 ticket 启动新的 `implement` 会话。[ask-matt: main flow](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/ask-matt/SKILL.md#L17-L32)
+
+这些显式入口在启动后，对人的实际依赖并不相同：
+
+| 流程 | 上游要求用户参与的部分 | 原本可由 Agent 完成的部分 |
+| --- | --- | --- |
+| `setup-matt-pocock-skills` | 确认 issue tracker、triage 标签、monorepo 文档布局；必要时选择创建 `AGENTS.md` 还是 `CLAUDE.md`；审阅写入草稿 | 探索仓库、推荐默认值、生成配置文件。[setup](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/setup-matt-pocock-skills/SKILL.md#L32-L78) |
+| `grill-me`、`grill-with-docs` | 回答决策问题并确认共同理解 | 查找可验证事实、整理术语、更新 glossary 与 ADR。 |
+| `to-spec` | 上游说“不访谈，只综合”，但仍要求用户确认测试 seam | 探索代码库、撰写并发布 spec。[to-spec](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/to-spec/SKILL.md#L7-L19) |
+| `to-tickets` | 启动流程；若既有内容不足，可能需要补充范围决定 | 拆纵向 ticket、声明 blocking edges、发布到 tracker。 |
+| `implement` | 启动当前 spec 或 ticket；seam 应已预先约定 | 写代码、TDD、typecheck、测试、双轴 review、commit 都由 Agent 执行。[implement](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/implement/SKILL.md#L7-L15) |
+| `triage` | 显式进入后用自然语言说明要处理哪些外来 Issue/PR；信息不足时参与 grilling | 分类、验证、更新 tracker 状态并形成 agent-ready brief。 |
+| `improve-codebase-architecture` | 从 HTML 报告中选择候选，再参与 grilling | 扫描热点、生成报告和候选。 |
+| `wayfinder` | 命名 destination、参与 prototype/grilling/task 类型的 HITL ticket，并按会话继续调用 | research ticket 明确为 AFK，可由后台子 Agent 并行完成；tracker 维护与部分 task 也可自动执行。[wayfinder: ticket types](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/wayfinder/SKILL.md#L73-L80) |
+| `handoff` | 指定下一会话用途，并在生成后新开会话、引用 handoff 文件 | 摘要、引用既有工件和隐私删改。[handoff](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/productivity/handoff/SKILL.md#L8-L16) |
+
+**[分析判断]** 上游已经能让 Agent 完成大量后台工程工作；问题不是“每一步都要用户写代码”，而是用户仍被要求**拥有并操作研发流程**。部分必要的人类参与是产品判断，另一部分则是 tracker、测试 seam、Git fixed point 和会话切换等工程控制。
+
+### 主流程要求用户理解什么
+
+**[可验证事实]** `ask-matt` 的 idea-to-ship 路线直接向用户展示并要求其操作以下概念：
+
+- `CONTEXT.md`、ADR、spec、ticket、tracer bullet、blocking edge、Issue tracker 和 `.scratch`；
+- TDD、red-green slice、test seam、Standards/Spec 双轴 review、diff 和 commit；
+- fresh context、clear、compact、handoff、smart zone 和约 120K tokens 的会话阈值；
+- domain model、deep module、interface、adapter 等工程设计词汇。
+
+它还明确要求用户判断工作是否跨多会话、何时 handoff、何时另开 prototype 会话，以及每张 ticket 何时启动新的 implementation session。[ask-matt](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/ask-matt/SKILL.md#L17-L64)
+
+**[分析判断]** 这与 README 的 “Skills For Real Engineers” 定位一致，不是上游实现失误。它面向的是希望保留工程控制权、但不想记住每个流程细节的开发者。对“略懂框架但不从事 coding”的人，主要负担不是代码语法，而是必须理解并调度研发阶段、Git 状态、测试策略和上下文生命周期。
+
+### `ask-matt` 降低了多少发现负担
+
+**[官方自述]** `ask-matt` 开头写道 “You don't remember every skill, so ask”；`writing-great-skills` 也认为 user-invoked skills 太多时，应增加一个 router skill，降低人记住所有入口的 cognitive load。[ask-matt](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/engineering/ask-matt/SKILL.md#L7-L15) · [writing-great-skills](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/skills/productivity/writing-great-skills/SKILL.md#L11-L20)
+
+**[可验证事实]** invocation 规则又明确规定，user-invoked skill 不能调用另一个 user-invoked skill。因此 `ask-matt` 能列出路线和推荐下一步，却不能替用户直接启动 `grill-with-docs`、`to-spec`、`to-tickets`、`implement` 等 user-invoked 阶段。[Invocation model](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md#L8-L10)
+
+**[分析判断]** `ask-matt` 确实把“记住 13 个名字”降为“先记住一个入口”，但它是**导航索引，不是自动路由器或工作流执行器**：
+
+- 它没有消除冷启动问题，用户仍需先知道 `ask-matt` 存在。
+- 它用说明文告诉用户下一步该调用什么，用户仍负责阶段切换。
+- 说明本身包含大量工程术语，因此更像开发者的流程速查卡。
+- 它不持有项目状态，也不会根据状态自动继续下一阶段。
+
+所以，它能显著降低已使用这套体系的工程师的命令记忆负担，却没有把发现和调度负担从不写代码用户身上完全拿走。
+
+### 不修改上游，能否实现真正无感调用
+
+**[分析判断]** 需要按运行方式给出三个不同答案：
+
+1. **只安装原版 skills，用户仅说普通自然语言**：不能跑通完整主流程。9 个 model-invoked skill 可以自动触发，13 个 user-invoked 阶段不会由模型自行进入。
+2. **不改上游文件，但由宿主提供 picker、按钮或阶段操作**：可以做到“没有 slash”，但仍然是用户显式选择流程，尚未做到 skill 无感知。
+3. **不改上游文件，但在外部增加意图路由和流程状态层**：技术上可以让用户只说目标，由外层替他执行宿主级显式 dispatch。此时无感调用来自新增的适配层，不是上游原生能力；适配层也必须自行承担误路由、确认时机和会话状态管理。
+
+第三种做法保持了上游文件不变，却改变了上游“人是流程操作员”的交互契约。因而不能把它描述成该项目已经支持自然语言端到端构建，只能说其单项工程能力可以被另一个系统包在后台。
+
+### 本节结论
+
+**[分析判断]** 对不写代码用户，这套项目呈现出明显的两面性：
+
+- **友好的部分**：Agent 自查事实；一次只问一个真正决定；用可操作原型而不是代码讨论体验；研究、诊断、实现、测试、审查和提交中的大量机械工作都已有后台执行形态。
+- **不友好的部分**：完整流程的关键阶段被设计为用户显式调用；主路由要求用户理解并管理研发术语、Git、tracker、测试 seam 和会话边界；交付物主要是 spec、ticket、ADR、branch 和 commit，而不是专门面向产品构建者的状态与预览界面。
+
+最准确的评价不是“这些 skills 只给程序用”，也不是“装上后非程序员就能无感构建”，而是：**它们把工程实践做成了可复用能力，但原始交互仍以懂研发流程的人为操作者。**
+
 ## 主要一手来源
 
 - [项目 README](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/README.md)
