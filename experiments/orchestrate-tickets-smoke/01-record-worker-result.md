@@ -1,14 +1,14 @@
 # 01 - Record A Worker Result
 
-**Status:** creating
+**Status:** integrated
 
 **Task title:** Orchestration smoke · 01 Record worker result
 
 **Attempt:** 1
 
-**Result commit:** None
+**Result commit:** `7fc7b00`
 
-**Validation:** None
+**Validation:** PowerShell exact-content and sole-change check; PASS.
 
 **Blocker:** None
 
@@ -41,3 +41,11 @@ The file must contain:
 ## Blocking
 
 None.
+
+## Experiment Result
+
+- Codex created a same-project task with the deterministic title and returned a usable thread identifier immediately.
+- The worker read only this contract and project instructions, added the one allowed file, ran one focused verification, and committed it.
+- The coordinator received the structured result through task waiting without replaying the worker transcript.
+- Because the worker used the saved checkout, its commit became the target branch result directly; no separate integration operation was required.
+- A file-backed ticket cannot be committed from the coordinator while a shared-checkout worker may be using Git. In this mode, `creating` remains the durable claim while Codex runtime state represents active execution.

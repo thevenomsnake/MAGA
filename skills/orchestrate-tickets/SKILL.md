@@ -64,6 +64,8 @@ failed/running -> superseded -> archived
 
 `completed` means the worker returned a commit. `integrated` is a later durable ticket state. Archive a worker only after its result is integrated, deferred, or superseded and recorded.
 
+For a file-backed tracker in a shared checkout, keep `creating` as the durable claim throughout worker execution. Use the Codex runtime task state as `running`; do not edit or commit tracker files concurrently with the worker.
+
 ## Recover Before Dispatching
 
 Always reconcile existing state before creating tasks:
@@ -98,7 +100,7 @@ If no ticket is ready, report the blocking product decision, dependency, permiss
 2. Confirm no active task already has the deterministic title.
 3. Set the ticket to `creating`, record its task title and attempt, then call `codex_app__create_thread` with that title and the initial prompt below.
 4. For a Git repository, use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer.
-5. If creation returns a real `threadId`, retain it only at runtime and set the ticket to `running`.
+5. If creation returns a real `threadId`, retain it only at runtime. Set the ticket to `running` when the tracker can be updated without touching the worker's checkout. With a file-backed tracker in the shared checkout, leave it at `creating` and keep the coordinator read-only until the worker stops.
 6. If creation returns only `clientThreadId`, leave the ticket at `creating`. Never pass a client ID to read, send, wait, archive, or other tools that require `threadId`. Resolve the real task later by its deterministic title through `codex_app__list_threads`.
 7. If creation fails, set the ticket to `failed` with the concrete reason.
 
@@ -142,7 +144,7 @@ When a worker reports `completed`:
 
 1. Require a resolvable commit and a concrete validation fact. Otherwise continue the same task for correction.
 2. Set the ticket to `completed` and record the worker commit and validation.
-3. Integrate the commit in dependency order using the repository's established Git workflow.
+3. Integrate the commit in dependency order using the repository's established Git workflow. A worker using the target checkout may already have committed directly to the target branch; verify that identity instead of cherry-picking it again.
 4. Set the ticket to `integrated` only after integration succeeds. Release newly unblocked tickets at that point.
 5. Archive the worker with `codex_app__set_thread_archived` after the durable record is complete.
 

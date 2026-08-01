@@ -109,13 +109,16 @@ failed/running -> superseded -> archived
 
 thread ID、host ID、client thread ID、等待 cursor 和 worktree 位置只属于 Codex 运行时，不得提交仓库。仓库保留确定性任务名称、尝试次数、结果 commit 和验证事实，足以让新协调会话重建关系。
 
+如果 ticket 是仓库文件，而 worker 与协调任务共享同一个 checkout，`creating` 在整个执行期间同时承担持久 claim。此时 `running` 只存在于 Codex 运行时；协调任务不得为了更新状态与 worker 并发编辑或提交。worker 停止后再一次性回填完成状态。
+
 ## 创建会话
 
 协调任务先用 Codex 项目列表确认当前项目，再把 ticket 状态设为 `creating`，然后创建带有确定性标题的同项目任务。仓库规则允许 worktree 所在位置时才使用独立 worktree；如果项目内容必须留在原项目目录，则所有写入任务使用该目录并严格串行。任务契约必须已经存在于新任务能读取的仓库状态或远程 tracker 中。
 
 创建 worktree 是异步过程。Codex 可能立即返回可操作的 `threadId`，也可能先返回 `clientThreadId`：
 
-- 得到 `threadId` 后，ticket 才进入 `running`；
+- 得到 `threadId` 后，运行时任务进入 `running`；tracker 能在不触碰 worker checkout 的情况下更新时，ticket 也进入 `running`；
+- file-backed tracker 与 worker 共用 checkout 时，ticket 保持 `creating`，协调任务保持只读；
 - 只有 `clientThreadId` 时保持 `creating`；
 - `clientThreadId` 不能用于发送消息、读取、等待或归档；
 - 后续通过确定性标题在项目任务列表中找到正式任务；
@@ -150,7 +153,7 @@ thread ID、host ID、client thread ID、等待 cursor 和 worktree 位置只属
 4. 集成成功后把 ticket 设为 `integrated`，再释放下游。
 5. 持久记录完整后归档执行任务。
 
-归档前不能只依赖执行任务聊天保存结果。失败优先在原任务中定向修复，不自动制造多个竞争实现。
+worker 直接使用目标 checkout 时，它的 commit 已经位于目标分支，不得再次 cherry-pick；协调任务只需核对提交身份和变更边界。归档前不能只依赖执行任务聊天保存结果。失败优先在原任务中定向修复，不自动制造多个竞争实现。
 
 ## 什么隐藏，什么保留
 
