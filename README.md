@@ -16,6 +16,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 ## 内容
 
 - `research/`：外部项目与资料的观察记录
+- `design/`：尚在讨论和验证中的产品设计草案
 - `experiences/`：真实任务中的实践与复盘
 - `experiments/`：对改造后 skills 进行可重复验证的公开安全实验
 - `playbooks/`：跨项目可直接采用的协作手册
@@ -29,6 +30,10 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 - [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
 - [面向产品构建者的 Project Lead](playbooks/product-oriented-project-lead.md)
 - [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
+
+## 设计草案
+
+- [安装与项目启动体验](design/installation-and-project-bootstrap.md)
 
 ## 实验性 Skills
 
