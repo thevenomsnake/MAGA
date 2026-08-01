@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.2.0";
+const WORKFLOW_VERSION = "0.3.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -27,6 +27,21 @@ function requireGit() {
   const result = spawnSync("git", ["--version"], { encoding: "utf8", shell: false });
   if (result.error || result.status !== 0) {
     throw new Error("Git is required unless --no-git is used");
+  }
+}
+
+export function readProjectName(targetDir) {
+  const marker = path.join(path.resolve(targetDir), ".ai-workflow", "PROJECT.md");
+  if (!fs.existsSync(marker)) {
+    throw new Error(`Kann Workflows is not initialized in ${path.resolve(targetDir)}`);
+  }
+
+  const match = fs.readFileSync(marker, "utf8").match(/^project_name:\s*(.+)$/m);
+  if (!match) return path.basename(path.resolve(targetDir));
+  try {
+    return String(JSON.parse(match[1]));
+  } catch {
+    return match[1].replace(/^['"]|['"]$/g, "");
   }
 }
 
@@ -137,7 +152,7 @@ export function initProject(options = {}) {
   if (fs.existsSync(marker)) {
     return {
       targetDir,
-      projectName: options.projectName || path.basename(targetDir),
+      projectName: readProjectName(targetDir),
       alreadyInitialized: true,
       git: fs.existsSync(path.join(targetDir, ".git")) ? "existing" : "disabled",
       commit: "unchanged",

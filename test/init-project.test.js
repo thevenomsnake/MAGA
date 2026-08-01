@@ -44,11 +44,12 @@ test("initializes a repository at the project root", (t) => {
 
 test("is idempotent after initialization", (t) => {
   const targetDir = workspace(t);
-  initProject({ targetDir, git: false });
+  initProject({ targetDir, projectName: "Original", git: false });
   const first = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   const result = initProject({ targetDir, projectName: "Changed", git: false });
 
   assert.equal(result.alreadyInitialized, true);
+  assert.equal(result.projectName, "Original");
   assert.equal(
     fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8"),
     first,

@@ -1,6 +1,6 @@
 {
   "name": "kann-workflows",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Product-oriented project initialization and Codex workflow orchestration",
   "type": "module",
   "bin": {
@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "node --test",
-    "smoke:init": "node ./bin/kann-workflows.js init ./tmp/init-smoke --skip-plugin --no-commit --json"
+    "smoke:init": "node ./bin/kann-workflows.js init ./tmp/init-smoke --skip-plugin --no-commit --no-launch --json"
   },
   "engines": {
     "node": ">=18"

@@ -113,7 +113,7 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 4. Decide which existing role owns it, or create the one new role justified by a real boundary.
 5. Persist the mission contract before cross-session execution.
 6. Obtain one product-level authorization to begin implementation. Natural language such as "start", "build it", or "continue" is sufficient for the described mission set. Record the authorization scope in project state; do not ask once per worker.
-7. Keep one small mission in the current task. For multiple fresh tasks, apply the installed `orchestrate-tickets` capability; do not duplicate its lifecycle logic here.
+7. Keep a small cohesive mission in the current task when its context is still focused. When an approved mission benefits from a fresh attention workspace and `task_creation` is `approved`, apply the installed `orchestrate-tickets` capability automatically; do not ask the user to name it or duplicate its lifecycle logic here.
 8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
 9. Update current state and archive completed mission detail. Ask the user for acceptance only where product judgment remains necessary.
 10. Release only under explicit or durable standing authorization and the release role's authority boundary.

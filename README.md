@@ -48,7 +48,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 npx github:thevenomsnake/kann_workflows init
 ```
 
-命令会安装 Kann Workflows 插件、创建最小项目状态并初始化 Git。之后在 Codex 中打开该文件夹，直接描述想做的产品即可；正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
+命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续岗位与使命任务由系统按已批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
 
 ## 工作流
 
