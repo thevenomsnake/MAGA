@@ -34,6 +34,20 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 
 If the user already supplied enough information and authorized implementation, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
 
+## Run The Native Codex Loop
+
+Use Codex Desktop as the only user interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The initializer's App Server bridge may create, name, and pin this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
+
+At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. When approved work needs a fresh attention workspace, run the entire native loop rather than stopping after dispatch:
+
+1. Persist the current product outcome, minimum roles, and mission contract.
+2. Apply `orchestrate-tickets` to reuse or create the appropriate native manager or worker task.
+3. Wait for the result; continue the same task for in-scope clarification and route only irreducible product judgment to the user.
+4. Integrate the result, update project and mission state, then archive completed workers.
+5. Return to the Product Owner with what is usable, what they can inspect, and the next product decision if one remains.
+
+For dispatch, recovery, integration, or closure across tasks, read [references/native-codex-loop.md](references/native-codex-loop.md). Do not load it while still resolving an onboarding question with no active mission.
+
 ## Orient From Durable State
 
 Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, and open missions. Reuse existing project documents and naming; do not create a parallel management system.

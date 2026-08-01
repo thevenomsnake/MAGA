@@ -1,6 +1,6 @@
 import { spawn, spawnSync } from "node:child_process";
 import path from "node:path";
-import { launchProjectLead } from "./app-server-client.js";
+import { launchProjectLead } from "./codex-bridge.js";
 import { initProject, readProjectName } from "./init-project.js";
 
 const MARKETPLACE = "thevenomsnake/kann_workflows";

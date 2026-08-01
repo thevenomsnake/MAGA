@@ -156,9 +156,14 @@ AI Workflow Plugin
 
 实现状态：`orchestrate-tickets` 已把一次产品级授权转成同项目任务的创建、续发、等待、恢复和归档生命周期，并区分可置顶的岗位管理任务与完成后归档的使命执行任务。端到端证据记录在 `experiments/task-lifecycle-v2/`。
 
-### V3：独立启动器/客户端
+### V3：Codex 原生完整闭环
 
-在原生 Codex 任务能力之上提供一个更完整的项目入口，让用户初始化、描述目标、查看职责与使命状态，而不需要理解 App Server 或任务工具。
+- Codex Desktop 是唯一用户界面，不开发独立聊天 UI、Dashboard 或任务面板；
+- 初始化器只用一次性 App Server bridge 创建、命名并置顶首个原生 Project Lead，随后退出；
+- Project Lead 在 Codex 内完成入职、职责形成、使命投递、续发、等待、集成、状态更新和归档；
+- 用户始终回到同一个产品入口查看可用结果和作出不可替代的产品决定。
+
+实现状态：原生闭环契约位于 `project-lead/references/native-codex-loop.md`；嵌套 Project Lead 与使命执行任务的端到端实验记录在 `experiments/native-loop-v3/`。
 
 ## 待讨论问题
 

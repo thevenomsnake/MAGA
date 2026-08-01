@@ -3,13 +3,13 @@ import { EventEmitter, once } from "node:events";
 import path from "node:path";
 import readline from "node:readline";
 
-const CLIENT_VERSION = "0.3.0";
+const BRIDGE_VERSION = "0.4.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export class CodexAppServer {
+class CodexBridge {
   constructor({ cwd, command = "codex", timeoutMs = 120_000 } = {}) {
     this.cwd = path.resolve(cwd || process.cwd());
     this.command = command;
@@ -75,7 +75,7 @@ export class CodexAppServer {
       clientInfo: {
         name: "kann_workflows",
         title: "Kann Workflows",
-        version: CLIENT_VERSION,
+        version: BRIDGE_VERSION,
       },
     });
     this.notify("initialized", {});
@@ -142,10 +142,6 @@ export class CodexAppServer {
     return this.request("thread/read", { threadId, includeTurns: true });
   }
 
-  archiveThread(threadId) {
-    return this.request("thread/archive", { threadId });
-  }
-
   waitForTurn(threadId, turnId) {
     const matches = ({ method, params }) => method === "turn/completed"
       && (!params.threadId || params.threadId === threadId)
@@ -197,22 +193,22 @@ mention Skills, commands, Git, testing, roles, tickets, models, or internal work
 export async function launchProjectLead({ targetDir, projectName, timeoutMs, onReady } = {}) {
   const cwd = path.resolve(targetDir || process.cwd());
   const title = `${projectName || path.basename(cwd)} · Project Lead`;
-  const client = new CodexAppServer({ cwd, timeoutMs });
+  const bridge = new CodexBridge({ cwd, timeoutMs });
 
   try {
-    await client.connect();
-    const existing = (await client.listThreads({ cwd, title }))
+    await bridge.connect();
+    const existing = (await bridge.listThreads({ cwd, title }))
       .find((thread) => thread.name === title);
     if (existing) {
       await onReady?.({ title, reused: true });
       return { threadId: existing.id, title, reused: true };
     }
 
-    const thread = await client.createThread({ cwd, title, pinned: true });
+    const thread = await bridge.createThread({ cwd, title, pinned: true });
     await onReady?.({ title, reused: false });
-    await client.sendMessage(thread.id, projectLeadPrompt());
+    await bridge.sendMessage(thread.id, projectLeadPrompt());
     return { threadId: thread.id, title, reused: false };
   } finally {
-    await client.close();
+    await bridge.close();
   }
 }

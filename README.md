@@ -50,6 +50,8 @@ npx github:thevenomsnake/kann_workflows init
 
 命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续岗位与使命任务由系统按已批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
 
+Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server bridge 建立首个原生 Project Lead，随后退出；项目对话、岗位管理和使命执行全部留在 Codex 原生同项目任务中，不另建聊天 UI、Dashboard 或任务面板。
+
 ## 工作流
 
 1. **记录事实**：写清来源、场景和发生了什么，不急于总结规律。
