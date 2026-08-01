@@ -45,3 +45,10 @@ After the follow-up arrives, write exactly this durable evidence without any tas
 ```
 
 Inspect that single file, commit it, and return the standard five completion fields. Do not create another task or modify any other file.
+
+## Observed Worker Result
+
+- The fresh same-project task first returned `needs-decision` without editing files or inventing the missing label.
+- The coordinator sent `Public label: same-task-follow-up-confirmed` to that same task.
+- The continued turn created only `evidence.md`, inspected it once, and committed `903e74c`.
+- The worker was archived only after this durable result was recorded.
