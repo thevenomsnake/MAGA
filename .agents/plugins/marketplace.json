@@ -1,0 +1,20 @@
+{
+  "name": "kann-workflows",
+  "interface": {
+    "displayName": "Kann Workflows"
+  },
+  "plugins": [
+    {
+      "name": "kann-workflows",
+      "source": {
+        "source": "local",
+        "path": "./plugins/kann-workflows"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

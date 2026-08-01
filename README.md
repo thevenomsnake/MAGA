@@ -20,7 +20,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 - `experiences/`：真实任务中的实践与复盘
 - `experiments/`：对改造后 skills 进行可重复验证的公开安全实验
 - `playbooks/`：跨项目可直接采用的协作手册
-- `skills/`：融合并改造公开方法后形成的可安装 Codex skills
+- `plugins/kann-workflows/skills/`：融合并改造公开方法后形成的可安装 Codex skills
 - `CONTEXT.md`：本手册使用的统一术语
 - `templates/entry.md`：新增记录的统一入口
 
@@ -37,8 +37,18 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 ## 实验性 Skills
 
-- [`project-lead`](skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、使命契约、交付和收口。
-- [`orchestrate-tickets`](skills/orchestrate-tickets/SKILL.md)：内部执行能力，在使命获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
+- [`project-lead`](plugins/kann-workflows/skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、使命契约、交付和收口。
+- [`orchestrate-tickets`](plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)：内部执行能力，在使命获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
+
+## 初始化一个项目
+
+在空文件夹中运行：
+
+```powershell
+npx github:thevenomsnake/kann_workflows init
+```
+
+命令会安装 Kann Workflows 插件、创建最小项目状态并初始化 Git。之后在 Codex 中打开该文件夹，直接描述想做的产品即可；正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
 
 ## 工作流
 

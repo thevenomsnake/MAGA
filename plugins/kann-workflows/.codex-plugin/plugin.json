@@ -1,0 +1,26 @@
+{
+  "name": "kann-workflows",
+  "version": "0.1.0",
+  "description": "Product-oriented Codex workflows that turn natural-language intent into durable missions and coordinated delivery.",
+  "author": {
+    "name": "Kann Workflows contributors",
+    "url": "https://github.com/thevenomsnake/kann_workflows"
+  },
+  "homepage": "https://github.com/thevenomsnake/kann_workflows",
+  "repository": "https://github.com/thevenomsnake/kann_workflows",
+  "license": "CC-BY-4.0",
+  "keywords": ["codex", "product", "workflow", "multi-session"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kann Workflows",
+    "shortDescription": "Build products through one natural-language project lead.",
+    "longDescription": "Keeps product decisions visible while Codex manages roles, durable missions, fresh task contexts, implementation, and handoff internally.",
+    "developerName": "Kann Workflows contributors",
+    "category": "Productivity",
+    "capabilities": ["Project planning", "Task orchestration"],
+    "defaultPrompt": [
+      "Help me turn this product idea into a working first version.",
+      "Continue this project from its current state."
+    ]
+  }
+}

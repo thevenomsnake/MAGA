@@ -180,6 +180,6 @@ worker 直接使用目标 checkout 时，它的 commit 已经位于目标分支�
 
 ## 当前产物
 
-可安装 skill 位于 [`skills/orchestrate-tickets`](../skills/orchestrate-tickets/SKILL.md)。它是内部执行能力；面向产品构建者的入口是 [`project-lead`](../skills/project-lead/SKILL.md) 和自然语言。
+可安装 skill 位于 [`orchestrate-tickets`](../plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)。它是内部执行能力；面向产品构建者的入口是 [`project-lead`](../plugins/kann-workflows/skills/project-lead/SKILL.md) 和自然语言。
 
 下一步应使用一组无隐私内容的示例 tickets 做真实 Codex 任务投递，观察 ticket 粒度、阻塞返回和提交集成是否足够稳定，再决定是否把需求澄清与自动拆票并入同一入口。

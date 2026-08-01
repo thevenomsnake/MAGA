@@ -1,0 +1,29 @@
+{
+  "name": "kann-workflows",
+  "version": "0.1.0",
+  "description": "Product-oriented project initialization and Codex workflow orchestration",
+  "type": "module",
+  "bin": {
+    "kann-workflows": "./bin/kann-workflows.js"
+  },
+  "files": [
+    ".agents/",
+    "bin/",
+    "plugins/",
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "smoke:init": "node ./bin/kann-workflows.js init ./tmp/init-smoke --skip-plugin --no-commit --json"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thevenomsnake/kann_workflows.git"
+  },
+  "license": "CC-BY-4.0"
+}
