@@ -1,6 +1,6 @@
 ---
 key: M001
-status: creating
+status: integrated
 role: content-delivery
 ---
 
@@ -38,7 +38,7 @@ Run one local inspection that confirms the heading names and order, exactly thre
 
 ## Completion
 
-- Behavior: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: Created a concise checklist with Before, During, and After actions for first-time volunteer event organizers.
+- Evidence: PowerShell structural inspection passed with three ordered headings and nine checkboxes, distributed three per section.
+- Commit or artifact: `b898687` and `event-readiness-checklist.md`
 - Blocker: none

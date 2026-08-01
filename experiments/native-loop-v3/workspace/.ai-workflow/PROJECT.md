@@ -18,7 +18,7 @@ task_creation: approved
 
 ## Current State
 
-The first checklist slice is authorized and being produced. Nothing is blocked.
+The event-readiness checklist is usable at `event-readiness-checklist.md`. The approved slice is integrated and nothing is blocked.
 
 ## Roles
 
@@ -27,7 +27,7 @@ The first checklist slice is authorized and being produced. Nothing is blocked.
 
 ## Active Missions
 
-- [M001 Create the event-readiness checklist](missions/M001-event-readiness-checklist.md): creating
+None.
 
 ## Decisions
 
