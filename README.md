@@ -1,6 +1,6 @@
 # AI Workflow
 
-一本面向实际项目的 AI 协作手册。它从 GitHub 项目、公开资料和亲身实践中提炼可复用、可验证的方法，目标是让不同技术栈、规模和团队都能按需采用。
+一本面向实际项目的 AI 协作手册，也包含由研究结果改造出的实验性 Codex skills。它从 GitHub 项目、公开资料和亲身实践中提炼可复用、可验证的方法，目标是让不同技术栈、规模和团队都能按需采用。
 
 ## 核心问题
 
@@ -18,6 +18,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 - `research/`：外部项目与资料的观察记录
 - `experiences/`：真实任务中的实践与复盘
 - `playbooks/`：跨项目可直接采用的协作手册
+- `skills/`：融合并改造公开方法后形成的可安装 Codex skills
 - `CONTEXT.md`：本手册使用的统一术语
 - `templates/entry.md`：新增记录的统一入口
 
@@ -25,6 +26,11 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 - [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
 - [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
+- [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
+
+## 实验性 Skills
+
+- [`orchestrate-tickets`](skills/orchestrate-tickets/SKILL.md)：在用户批准多 ticket 计划后，使用 Codex 原生项目任务完成新鲜上下文投递、等待与结果收口。正常使用不要求输入 skill 命令。
 
 ## 工作流
 

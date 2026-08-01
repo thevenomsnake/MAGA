@@ -4,3 +4,4 @@
 
 - [多会话协作：用上下文隔离对抗注意力衰减](multi-session-collaboration.md)
 - [Matt Pocock Skills 与 Ponytail 使用手册](matt-skills-and-ponytail-guide.md)
+- [Codex 原生 Ticket 编排](codex-ticket-orchestration.md)
