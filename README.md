@@ -17,6 +17,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 - `research/`：外部项目与资料的观察记录
 - `experiences/`：真实任务中的实践与复盘
+- `experiments/`：对改造后 skills 进行可重复验证的公开安全实验
 - `playbooks/`：跨项目可直接采用的协作手册
 - `skills/`：融合并改造公开方法后形成的可安装 Codex skills
 - `CONTEXT.md`：本手册使用的统一术语
