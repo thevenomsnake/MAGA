@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Lead"
+  short_description: "Turn product intent into coordinated Codex delivery"
+  default_prompt: "Use $project-lead to turn this product goal into a working result while managing roles and tasks internally."
+policy:
+  allow_implicit_invocation: true

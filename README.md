@@ -27,11 +27,13 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 - [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
 - [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
+- [面向产品构建者的 Project Lead](playbooks/product-oriented-project-lead.md)
 - [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
 
 ## 实验性 Skills
 
-- [`orchestrate-tickets`](skills/orchestrate-tickets/SKILL.md)：在用户批准多 ticket 计划后，使用 Codex 原生项目任务完成新鲜上下文投递、等待与结果收口。正常使用不要求输入 skill 命令。
+- [`project-lead`](skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、使命契约、交付和收口。
+- [`orchestrate-tickets`](skills/orchestrate-tickets/SKILL.md)：内部执行能力，在使命获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
 
 ## 工作流
 

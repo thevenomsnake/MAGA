@@ -1,11 +1,11 @@
 ---
 name: orchestrate-tickets
-description: Coordinate and recover an approved multi-ticket implementation in Codex by naming and creating fresh same-project tasks, preventing duplicate dispatch, sending each task only its ticket pointer, managing blockers and retries, integrating results, and archiving finished tasks. Use when the user asks in natural language to start, continue, or recover an approved ticket plan with separate Codex tasks or background sessions. Do not use for an unapproved plan or a single small implementation.
+description: Internal Codex execution workflow for coordinating and recovering approved multi-mission or multi-ticket work by naming and creating fresh same-project tasks, preventing duplicate dispatch, managing blockers and retries, integrating results, and archiving finished tasks. Use when a project lead has approved mission contracts ready for separate Codex tasks, or when the user explicitly asks to run an approved ticket plan in separate tasks. Do not use for product discovery, an unapproved plan, or one small implementation.
 ---
 
 # Orchestrate Tickets
 
-Run approved task contracts through fresh Codex project tasks. Keep product decisions visible to the user and keep skill names, Git mechanics, validation tools, and task routing internal unless the user asks.
+Run approved mission or ticket contracts through fresh Codex project tasks. This is an internal execution capability, not the normal product-facing entry. Keep product decisions visible and keep skill names, Git mechanics, validation tools, and task routing internal unless the user asks.
 
 ## Preconditions
 
@@ -25,14 +25,14 @@ Follow `AGENTS.md` and narrower ticket instructions. Never persist machine paths
 Use the project's language and these title shapes:
 
 ```text
-Coordinator: <feature> · <localized "build coordination">
-Worker:      <feature> · <ticket-key> <user-visible outcome>
+Coordinator: <project> · <localized "project lead">
+Worker:      <project> · <role> · <mission-key> <user-visible outcome>
 Replacement:<worker title> · <localized "retry N">
 ```
 
-For example: `Inventory · 02 Record stock movement`.
+For example: `Inventory · Stock experience · 02 Record stock movement`.
 
-- Derive the feature from the parent spec or epic and the outcome from the ticket.
+- Derive the project, role, mission key, and outcome from durable contracts. Name roles by responsibility, not generic code layers.
 - Keep the stable ticket key. Do not put status, branch, worktree, thread IDs, or commit hashes in a title.
 - Keep one active task per ticket. Increment the retry suffix only when replacing an unusable task.
 - Do not rename workers as their status changes.
