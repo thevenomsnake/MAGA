@@ -4,9 +4,9 @@
 
 **Role:** Product experience
 
-**Task title:** AI Workflow · Product experience · E02 Product first turn
+**Task title:** AI Workflow · Product experience · E02 Product first turn · retry 2
 
-**Attempt:** 1
+**Attempt:** 2
 
 ## Scenario
 
@@ -29,3 +29,12 @@ The evaluator reads `skills/project-lead/SKILL.md` and returns only the first re
 ## Result
 
 Pending.
+
+## Attempt History
+
+### Attempt 1
+
+- The project task was created, but its initial turn and one focused continuation both ended in Codex `systemError`.
+- No assistant response, command, or file change was produced.
+- The requested deterministic title was not present when the failed task was read back.
+- The failed task was treated as unusable and superseded rather than evaluated as a skill result.
