@@ -1,8 +1,8 @@
 # 01 - Record A Worker Result
 
-**Status:** ready
+**Status:** creating
 
-**Task title:** Orchestration smoke - 01 Record worker result
+**Task title:** Orchestration smoke · 01 Record worker result
 
 **Attempt:** 1
 
