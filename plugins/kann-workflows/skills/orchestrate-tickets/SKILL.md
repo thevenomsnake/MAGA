@@ -1,18 +1,18 @@
 ---
 name: orchestrate-tickets
-description: Internal Codex execution workflow for coordinating and recovering approved work by naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when project state authorizes task creation and an approved mission needs a fresh attention workspace, when a durable role needs a management task, or when the user explicitly asks to run approved work in separate tasks. Do not use for product discovery, an unapproved plan, or work that is cheaper to finish in the current focused task.
+description: Internal Codex execution workflow for coordinating and recovering approved Tickets by naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when an approved durable Ticket needs a fresh attention workspace or when a durable role needs a management task. Do not use for product discovery, an unapproved plan, or work that is cheaper to finish in the current focused task.
 ---
 
 # Orchestrate Tickets
 
-Run approved mission or ticket contracts through fresh Codex project tasks. This is an internal execution capability, not the normal product-facing entry. Keep product decisions visible and keep skill names, Git mechanics, validation tools, and task routing internal unless the user asks.
+Run approved Ticket contracts through fresh Codex project tasks. This is an internal execution capability, not the normal product-facing entry. Keep product decisions visible and keep skill names, Git mechanics, validation tools, and task routing internal unless the user asks.
 
 ## Preconditions
 
 Proceed only when:
 
-- The Product Owner approved the mission set and project state records `task_creation: approved`, or the user explicitly asked to execute the approved work in separate Codex tasks. Natural language is sufficient; no skill command is required.
-- Each ticket is a durable task contract with a user-visible outcome, acceptance criteria, blockers, and status.
+- The Product Owner approved the currently described Ticket set and every selected Ticket records `authorization: approved`. Natural language is sufficient; if approval is expressed in the current turn, persist it on exactly those Tickets before dispatch.
+- Each Ticket is a durable work contract with a user-visible outcome, acceptance criteria, blockers, authorization, and status.
 - The contract is reachable from the worker's starting repository state or issue tracker.
 - Codex task coordination tools are available.
 
@@ -27,13 +27,13 @@ Use the project's language and these title shapes:
 ```text
 Coordinator: <project> · <localized "project lead">
 Manager:     <project> · <role> · <localized "management">
-Worker:      <project> · <role> · <mission-key> <user-visible outcome>
+Worker:      <project> · <role> · <ticket-key> <user-visible outcome>
 Replacement:<worker title> · <localized "retry N">
 ```
 
-For example: `Inventory · Stock experience · 02 Record stock movement`.
+For example: `Inventory · Stock experience · T002 Record stock movement`.
 
-- Derive the project, role, mission key, and outcome from durable contracts. Name roles by responsibility, not generic code layers.
+- Derive the project, role, Ticket key, and outcome from durable contracts. Name roles by responsibility, not generic code layers.
 - Keep the stable ticket key. Do not put status, branch, worktree, thread IDs, or commit hashes in a title.
 - Keep one active task per ticket. Increment the retry suffix only when replacing an unusable task.
 - Do not rename workers as their status changes.
@@ -45,7 +45,7 @@ For a role whose contract says `Session shape: managed queue`:
 
 1. Reuse an active same-project task with the deterministic manager title.
 2. If none exists, create one, pin it with `codex_app__set_thread_pinned`, and give it the role contract plus current project index as its only durable entrypoints.
-3. Send newly approved mission pointers to that manager instead of creating another manager.
+3. Send newly approved Ticket pointers to that manager instead of creating another manager.
 4. Let the manager apply this worker lifecycle within its role boundary; it must return product decisions and cross-role conflicts to the Project Lead.
 5. Keep the role in repository state. Archive its manager task only when the role is retired or replaced, and record that durable fact first.
 
@@ -55,19 +55,20 @@ Use this manager prompt:
 Carry the durable role at: <repository-relative role contract>
 
 Read AGENTS.md, .ai-workflow/PROJECT.md, and that role contract. Coordinate only
-approved missions owned by this role. Apply the installed task-orchestration
+approved Tickets owned by this role. Apply the installed task-orchestration
 capability internally. Do not broaden product scope, store task identifiers in the
-repository, or implement every mission in this management context. Return product
+repository, or implement every Ticket in this management context. Return product
 decisions and cross-role conflicts to the Project Lead.
 ```
 
-Do not create a management task for `direct execution` roles. Dispatch their approved fresh missions directly from the Project Lead.
+Do not create a management task for `direct execution` roles. Dispatch their approved fresh Tickets directly from the Project Lead.
 
 ## Separate Durable And Runtime State
 
 Keep the ticket or tracker as the durable source of truth:
 
 ```text
+Authorization: pending | approved | revoked
 Status: ready | creating | running | needs-decision | completed | integrated | failed | deferred
 Task title: <deterministic title>
 Attempt: <positive integer>
@@ -107,7 +108,7 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 ## Choose The Smallest Execution Shape
 
 1. Implement one small, self-contained ticket in the current task when its attention workspace is still focused.
-2. Use a fresh project task when a mission needs a distinct professional context, write boundary, permission boundary, or clean recovery point.
+2. Use a fresh project task when a Ticket needs a distinct professional context, write boundary, permission boundary, or clean recovery point.
 3. Run tickets sequentially by default.
 4. Run tickets in parallel only when their blockers are complete, their write scopes do not conflict, and each task has an isolated worktree.
 
@@ -115,7 +116,7 @@ Do not create tasks merely because the plan contains several bullets. Split on a
 
 ## Find The Frontier
 
-Select tickets that are approved, `ready`, unclaimed, unblocked, and small enough for one fresh context. Read the index first, then open only the selected ticket and its explicit references.
+Select Tickets with `authorization: approved` that are `ready`, unclaimed, unblocked, and small enough for one fresh context. Read the index first, then open only the selected Ticket and its explicit references. A new, split, derived, materially expanded, resumed-deferred, or reauthorized-revoked Ticket is not executable until its own authorization is current; do not inherit approval from another Ticket or the legacy `task_creation` field.
 
 If no ticket is ready, report the blocking product decision, dependency, permission, or external condition. Downstream tickets become ready only after every blocker is `integrated`, not merely `completed`.
 
@@ -132,7 +133,7 @@ If no ticket is ready, report the blocking product decision, dependency, permiss
 Use this initial prompt:
 
 ```text
-Implement the task contract at: <repository-relative path or issue URL>
+Implement the Ticket at: <repository-relative path or issue URL>
 
 Read AGENTS.md and the contract's explicit references. Do not read sibling tickets
 unless this contract links them. Do not create more tasks or update orchestration

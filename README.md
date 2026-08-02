@@ -9,7 +9,7 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 因此，本手册不把一个长会话当作项目记忆。它采用两个基本判断：
 
 - **会话是有边界的注意力工作区**：一个会话只承担一组内聚目标和职责。
-- **仓库是可持久的协作记忆**：事实、决策、任务契约、状态和结果必须写入可版本化的载体。
+- **仓库是可持久的协作记忆**：事实、决策、Ticket、状态和结果必须写入可版本化的载体。
 
 分会话不是目的。只有当隔离上下文能减少注意力竞争、职责漂移或操作风险时才拆分；否则保持单会话更简单。
 
@@ -37,8 +37,8 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 ## 实验性 Skills
 
-- [`project-lead`](plugins/kann-workflows/skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、使命契约、交付和收口。
-- [`orchestrate-tickets`](plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)：内部执行能力，在使命获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
+- [`project-lead`](plugins/kann-workflows/skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、Ticket 契约、交付和收口。
+- [`orchestrate-tickets`](plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)：内部执行能力，在 Ticket 获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
 
 ## 初始化一个项目
 
@@ -48,20 +48,23 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 npx github:thevenomsnake/kann_workflows init
 ```
 
-命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续岗位与使命任务由系统按已批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
+命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续职责与 Ticket 由系统按逐 Ticket 记录的批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
 
-Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server bridge 建立首个原生 Project Lead，随后退出；项目对话、岗位管理和使命执行全部留在 Codex 原生同项目任务中，不另建聊天 UI、Dashboard 或任务面板。
+Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server bridge 建立首个原生 Project Lead，随后退出；项目对话、职责管理和 Ticket 执行全部留在 Codex 原生同项目任务中，不另建聊天 UI、Dashboard 或任务面板。
 
 ## 当前实现
 
 | 方法版本 | 包版本 | 已完成的纵向切片 |
 | --- | --- | --- |
 | V1 | `0.1.0` | 插件分发、空目录初始化、Git 与最小项目内核 |
-| V1.5 | `0.2.0` | 自然语言入职、最少职责和首个使命的持久化 |
+| V1.5 | `0.2.0` | 自然语言入职、最少职责和首个有边界工作的持久化 |
 | V2 | `0.3.0` | 首个 Project Lead bridge，以及原生任务的创建、续发、等待和归档 |
-| V3 | `0.4.0` | Codex Desktop 内从产品入职到使命集成与状态收口的完整闭环 |
+| V3 | `0.4.0` | Codex Desktop 内从产品入职到工作集成与状态收口的机械闭环 |
+| V3.1 | `0.5.0` | 统一 Ticket 真源，并将执行授权限定到明确的 Ticket 集合 |
 
-每一版都有仓库内匿名实验记录；V3 的 Project Lead 还实际创建并收口了一个原生同项目 worker，而不是只验证提示词文本。
+每一版都有仓库内匿名实验记录；V3 的 Project Lead 还实际创建并收口了一个原生同项目 worker，而不是只验证提示词文本。这些版本表示能力切片，不代表产品成熟度认证。
+
+`0.5.0` 的 schema v2 只用于新初始化项目。初始化器不会静默重写已有 schema v1 项目；Project Lead 在旧工作重新进入活跃状态时按 Ticket 契约保守迁移，并要求当前授权。批量升级旧项目不属于这一切片。
 
 ## 工作流
 

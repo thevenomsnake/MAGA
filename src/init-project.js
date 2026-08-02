@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.4.0";
+const WORKFLOW_VERSION = "0.5.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -47,11 +47,10 @@ export function readProjectName(targetDir) {
 
 function projectDocument(projectName) {
   return `---
-schema_version: 1
+schema_version: 2
 workflow_version: ${WORKFLOW_VERSION}
 status: onboarding
 project_name: ${JSON.stringify(projectName)}
-task_creation: pending
 ---
 
 # ${projectName}
@@ -70,13 +69,13 @@ first observable value, delivery form, and material risk boundaries before dispa
 
 - **Project Lead**: single product-facing entry; materialize its role contract during onboarding.
 
-## Active Missions
+## Active Tickets
 
 None.
 
 ## Durable Pointers
 
-Create role, mission, decision, and archive records lazily as the project requires them.
+Create role, ticket, decision, and archive records lazily as the project requires them.
 Use repository-relative links; never persist local task identifiers or machine paths.
 `;
 }

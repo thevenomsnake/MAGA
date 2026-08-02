@@ -24,13 +24,60 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, "AGENTS.md")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".gitignore")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
-  assert.match(
-    fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8"),
-    /status: onboarding/,
-  );
+  const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
+  assert.match(project, /schema_version: 2/);
+  assert.match(project, /workflow_version: 0\.5\.0/);
+  assert.match(project, /status: onboarding/);
+  assert.match(project, /## Active Tickets/);
+  assert.doesNotMatch(project, /task_creation|Active Missions/);
   assert.match(
     fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8"),
     /Never ask the user to invoke a Skill/,
+  );
+});
+
+test("ships per-Ticket execution authorization", () => {
+  const projectLead = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "project-lead", "SKILL.md"),
+    "utf8",
+  );
+  const memory = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "project-lead", "references", "project-memory.md"),
+    "utf8",
+  );
+  const orchestration = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "orchestrate-tickets", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.match(memory, /key: T001[\s\S]+authorization: pending/);
+  assert.match(memory, /future Ticket/);
+  assert.match(projectLead, /Set `authorization: approved` on exactly those Tickets/);
+  assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
+  assert.doesNotMatch(projectLead, /task_creation/);
+  assert.doesNotMatch(orchestration, /task_creation: approved/);
+});
+
+test("keeps package, plugin, workflow, and bridge versions aligned", () => {
+  const packageVersion = JSON.parse(
+    fs.readFileSync(path.join(REPOSITORY_ROOT, "package.json"), "utf8"),
+  ).version;
+  const pluginVersion = JSON.parse(
+    fs.readFileSync(
+      path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", ".codex-plugin", "plugin.json"),
+      "utf8",
+    ),
+  ).version;
+  const escapedVersion = packageVersion.replaceAll(".", "\\.");
+
+  assert.equal(pluginVersion, packageVersion);
+  assert.match(
+    fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "init-project.js"), "utf8"),
+    new RegExp(`WORKFLOW_VERSION = "${escapedVersion}"`),
+  );
+  assert.match(
+    fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "codex-bridge.js"), "utf8"),
+    new RegExp(`BRIDGE_VERSION = "${escapedVersion}"`),
   );
 });
 

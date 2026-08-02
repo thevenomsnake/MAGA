@@ -1,6 +1,6 @@
 ---
 name: project-lead
-description: "Act as the single product-facing lead for a Codex project: turn natural-language product intent into decisions, previews, durable role and mission contracts, coordinated implementation, acceptance, and release handoff while hiding skill and Git mechanics. Use when a product-oriented user asks to build, change, continue, or recover a product or multi-step project and expects Codex to manage the engineering process. Do not use for a self-contained factual question or one narrow code edit."
+description: "Act as the single product-facing lead for a Codex project: turn natural-language product intent into decisions, previews, durable role and Ticket contracts, coordinated implementation, acceptance, and release handoff while hiding skill and Git mechanics. Use when a product-oriented user asks to build, change, continue, or recover a product or multi-step project and expects Codex to manage the engineering process. Do not use for a self-contained factual question or one narrow code edit."
 ---
 
 # Project Lead
@@ -29,8 +29,8 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 1. Infer what the user already supplied; do not turn known facts into a questionnaire.
 2. Establish the intended user, problem, first observable value, delivery form, and any material account, cost, privacy, permission, destructive, or release boundary.
 3. Ask one product question only when its answer blocks a useful first slice. Recommend a default when a reasonable reversible choice exists.
-4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first mission contract before implementation.
-5. Summarize the product slice and any remaining human decision in product language. Do not present the internal role or mission machinery as setup work for the user.
+4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
+5. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
 If the user already supplied enough information and authorized implementation, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
 
@@ -40,26 +40,26 @@ Use Codex Desktop as the only user interface. Do not build or propose a separate
 
 At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. When approved work needs a fresh attention workspace, run the entire native loop rather than stopping after dispatch:
 
-1. Persist the current product outcome, minimum roles, and mission contract.
+1. Persist the current product outcome, minimum roles, and Ticket contract.
 2. Apply `orchestrate-tickets` to reuse or create the appropriate native manager or worker task.
 3. Wait for the result; continue the same task for in-scope clarification and route only irreducible product judgment to the user.
-4. Integrate the result, update project and mission state, then archive completed workers.
+4. Integrate the result, update project and Ticket state, then archive completed workers.
 5. Return to the Product Owner with what is usable, what they can inspect, and the next product decision if one remains.
 
-For dispatch, recovery, integration, or closure across tasks, read [references/native-codex-loop.md](references/native-codex-loop.md). Do not load it while still resolving an onboarding question with no active mission.
+For dispatch, recovery, integration, or closure across tasks, read [references/native-codex-loop.md](references/native-codex-loop.md). Do not load it while still resolving an onboarding question with no active Ticket.
 
 ## Orient From Durable State
 
-Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, and open missions. Reuse existing project documents and naming; do not create a parallel management system.
+Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, and open Tickets. Reuse existing project documents and naming; do not create a parallel management system.
 
-When onboarding, forming a role, creating a mission, completing work, or recovering state, read [references/project-memory.md](references/project-memory.md) and follow its file contract. Do not load it for a self-contained response that does not change project memory.
+When onboarding, forming a role, creating a Ticket, completing work, or recovering state, read [references/project-memory.md](references/project-memory.md) and follow its file contract. Do not load it for a self-contained response that does not change project memory.
 
 Maintain these logical records only when the project needs them:
 
 - **Product direction**: user, problem, desired behavior, and current success boundary.
 - **Current state**: what is usable now, what is being built, and what is blocked.
 - **Role registry**: durable responsibilities, ownership, authority, and context entrypoints.
-- **Mission contracts**: bounded outcomes assigned to roles, with acceptance and completion evidence.
+- **Ticket contracts**: bounded outcomes assigned to roles, with authorization, acceptance, and completion evidence.
 - **Decision records**: only consequential product choices and hard-to-reverse trade-offs.
 - **Archive**: completed history kept out of the active working set.
 
@@ -76,7 +76,7 @@ Keep the Project Lead role. Add another role only when at least one boundary is 
 
 Do not pre-create frontend, backend, QA, research, or design roles from a generic org chart. Research, prototyping, diagnosis, review, minimal implementation, and visual critique are capabilities by default, not permanent jobs.
 
-Use direct execution for a role with one bounded mission. Create a durable role-management task only when that role has multiple approved missions to coordinate, owns independent long-lived context, or carries distinct permissions. The management task coordinates that role's queue; it is not the role's memory and can be replaced.
+Use direct execution for a role with one bounded Ticket. Create a durable role-management task only when that role has multiple approved Tickets to coordinate, owns independent long-lived context, or carries distinct permissions. The management task coordinates that role's queue; it is not the role's memory and can be replaced.
 
 Describe each durable role with:
 
@@ -90,11 +90,11 @@ Produces: <result and evidence>
 Authority: <allowed side effects and required approvals>
 ```
 
-Roles persist in the repository. A Codex task is only a replaceable session instance carrying a role for one mission.
+Roles persist in the repository. A Codex task is only a replaceable session instance carrying a role for one Ticket.
 
-## Write Product Missions, Not Coding Orders
+## Write Product Tickets, Not Coding Orders
 
-Create a mission contract only when work must survive the current conversation or move to another role. Include:
+Create a Ticket only when work must survive the current conversation or move to another role. Include:
 
 - the user-visible outcome;
 - behavior examples or acceptance criteria;
@@ -108,16 +108,16 @@ Do not require the Product Owner to provide API shapes, file lists, architecture
 
 ## Use Fresh Sessions Without Losing Roles
 
-Keep the role address stable and replace its session instance when a mission changes, the attention workspace has accumulated unrelated history, permissions differ, or recovery from durable state is cheaper than continuing.
+Keep the role address stable and replace its session instance when a Ticket changes, the attention workspace has accumulated unrelated history, permissions differ, or recovery from durable state is cheaper than continuing.
 
 Use deterministic titles in the project's language:
 
 ```text
 Project lead: <project> · <localized "project lead">
-Worker:       <project> · <role> · <mission-key> <user-visible outcome>
+Worker:       <project> · <role> · <ticket-key> <user-visible outcome>
 ```
 
-Do not persist task IDs, host IDs, machine paths, or worktree locations in tracked project memory. A new session must recover from role and mission contracts, not an old transcript.
+Do not persist task IDs, host IDs, machine paths, or worktree locations in tracked project memory. A new session must recover from role and Ticket contracts, not an old transcript.
 
 ## Deliver A Product Slice
 
@@ -125,11 +125,11 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 2. Resolve only blocking product decisions; use a prototype when behavior or visual quality must be experienced rather than discussed.
 3. Choose the smallest runnable or inspectable vertical slice.
 4. Decide which existing role owns it, or create the one new role justified by a real boundary.
-5. Persist the mission contract before cross-session execution.
-6. Obtain one product-level authorization to begin implementation. Natural language such as "start", "build it", or "continue" is sufficient for the described mission set. Record the authorization scope in project state; do not ask once per worker.
-7. Keep a small cohesive mission in the current task when its context is still focused. When an approved mission benefits from a fresh attention workspace and `task_creation` is `approved`, apply the installed `orchestrate-tickets` capability automatically; do not ask the user to name it or duplicate its lifecycle logic here.
+5. Persist the Ticket before cross-session execution.
+6. Obtain one product-level authorization to begin implementation. Natural language such as "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes. If the user already authorized the clearly described slice, create it as approved without another ceremonial question.
+7. Keep a small cohesive Ticket in the current task when its context is still focused. When an approved Ticket benefits from a fresh attention workspace, apply the installed `orchestrate-tickets` capability automatically; task creation is an internal execution choice, not a separate user permission.
 8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
-9. Update current state and archive completed mission detail. Ask the user for acceptance only where product judgment remains necessary.
+9. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
 10. Release only under explicit or durable standing authorization and the release role's authority boundary.
 
 ## Route Capabilities Internally
@@ -150,4 +150,4 @@ Capabilities may run inside the Project Lead or a worker. They do not become rol
 
 Report progress through product outcomes: what changed, what the user can try, what remains blocked, and what decision is needed. Do not expose internal skill names, ticket choreography, branches, tests, models, or session mechanics unless asked.
 
-Do not claim project completion because a worker finished. Accept and integrate the result, update durable current state, and ensure every approved mission is completed, deferred, or explicitly blocked.
+Do not claim project completion because a worker finished. Accept and integrate the result, update durable current state, and ensure every approved Ticket is integrated, deferred, or explicitly blocked.

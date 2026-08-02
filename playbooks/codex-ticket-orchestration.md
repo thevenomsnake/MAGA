@@ -25,17 +25,17 @@ flowchart TD
 
 ## 用户如何触发
 
-不需要显式选择 skill。自然语言中需要包含两个事实：范围已经批准，并且允许 Codex 使用独立任务执行。例如：
+不需要显式选择 skill。自然语言只需确认当前 Ticket 集合已经批准并可以开始执行。例如：
 
 ```text
-这个拆分可以，按这些 tickets 创建独立任务开始执行。
+这个拆分可以，按这些 Tickets 开始执行。
 ```
 
 ```text
 继续推进已经批准、没有阻塞的任务。
 ```
 
-这不是要求用户学习内部命令，而是确认系统可以开始产生代码和创建任务。一次批准覆盖本轮已确认的 ticket 集合；不应在每张 ticket 前重复询问。
+这不是要求用户学习内部命令，而是确认系统可以开始执行。一次批准覆盖本轮已明确描述的 Ticket 集合，并分别写入每张 Ticket 的 `authorization: approved`；不应在每张 Ticket 或每个 worker 前重复询问，也不得把批准延伸到未来新增或实质扩大的 Ticket。是否创建独立任务由系统根据注意力和权限边界内部决定。
 
 ## 内部职责
 
@@ -62,7 +62,7 @@ flowchart TD
 
 ```text
 协调任务：<项目名> · 项目负责人
-执行任务：<项目名> · <职责> · <使命编号> <用户结果>
+执行任务：<项目名> · <职责> · <Ticket 编号> <用户结果>
 替代任务：<原执行任务名> · 重试 <次数>
 ```
 
@@ -74,7 +74,7 @@ flowchart TD
 库存管理 · 库存体验 · 03 查看低库存商品
 ```
 
-标题使用项目本身的语言。职责来自持久角色契约，不机械使用“前端”“后端”等代码层名称。标题保留稳定的使命或 ticket 编号，但不包含状态、thread ID、分支、worktree 或 commit。状态变化不重命名任务；只有原任务不可继续、确实创建替代任务时才增加重试次数。
+标题使用项目本身的语言。职责来自持久角色契约，不机械使用“前端”“后端”等代码层名称。标题保留稳定的 Ticket 编号，但不包含状态、thread ID、分支、worktree 或 commit。状态变化不重命名任务；只有原任务不可继续、确实创建替代任务时才增加重试次数。
 
 同一个 ticket 同时只能有一个活动任务。创建前必须按确定性名称检查现有 Codex 任务，不能把“暂时没有返回结果”误判成“任务不存在”。
 
@@ -83,6 +83,7 @@ flowchart TD
 ticket 是可恢复的持久真源，至少保存：
 
 ```text
+Authorization: pending | approved | revoked
 Status: ready | creating | running | needs-decision | completed | integrated | failed | deferred
 Task title: <确定性名称>
 Attempt: <正整数>
@@ -102,6 +103,8 @@ failed/running -> superseded -> archived
 
 两者不能混为一谈：
 
+- 只有 `authorization: approved` 的 Ticket 才能进入执行 frontier；
+- 是否创建新 Codex 任务只是内部执行选择，不是另一项用户权限；
 - `completed` 只表示执行任务已经产生 commit；
 - `integrated` 表示该 commit 已进入目标分支；
 - 下游 ticket 只在 blocker `integrated` 后释放；
@@ -113,7 +116,7 @@ thread ID、host ID、client thread ID、等待 cursor 和 worktree 位置只属
 
 ## 创建会话
 
-协调任务先用 Codex 项目列表确认当前项目，再把 ticket 状态设为 `creating`，然后创建带有确定性标题的同项目任务。仓库规则允许 worktree 所在位置时才使用独立 worktree；如果项目内容必须留在原项目目录，则所有写入任务使用该目录并严格串行。任务契约必须已经存在于新任务能读取的仓库状态或远程 tracker 中。
+协调任务先用 Codex 项目列表确认当前项目，再把 Ticket 状态设为 `creating`，然后创建带有确定性标题的同项目任务。仓库规则允许 worktree 所在位置时才使用独立 worktree；如果项目内容必须留在原项目目录，则所有写入任务使用该目录并严格串行。Ticket 必须已经存在于新任务能读取的仓库状态或远程 tracker 中。
 
 创建 worktree 是异步过程。Codex 可能立即返回可操作的 `threadId`，也可能先返回 `clientThreadId`：
 
