@@ -1,11 +1,16 @@
 ---
 name: orchestrate-tickets
-description: Internal Codex execution workflow for coordinating and recovering approved Tickets by naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when an approved durable Ticket needs a fresh attention workspace or when a durable role needs a management task. Do not use for product discovery, an unapproved plan, or work that is cheaper to finish in the current focused task.
+description: Internal Codex execution workflow for coordinating and recovering approved research, prototype, diagnosis, review, delivery, or release Tickets by naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when an approved durable Ticket needs a fresh attention workspace or when a durable role needs a management task. Do not use for vague product discovery, an unapproved plan, or work that is cheaper to finish in the current focused task.
 ---
 
 # Orchestrate Tickets
 
-Run approved Ticket contracts through fresh Codex project tasks. This is an internal execution capability, not the normal product-facing entry. Keep product decisions visible and keep skill names, Git mechanics, validation tools, and task routing internal unless the user asks.
+Run approved Ticket contracts through fresh Codex project tasks. A Ticket may
+produce a finding, prototype, diagnosis, review, delivery, or release result; it
+does not have to be source-code implementation. This is an internal execution
+capability, not the normal product-facing entry. Keep product decisions visible
+and keep skill names, Git mechanics, validation tools, and task routing internal
+unless the user asks.
 
 ## Preconditions
 
@@ -27,17 +32,18 @@ Use the project's language and these title shapes:
 ```text
 Coordinator: <project> · <localized "project lead">
 Manager:     <project> · <role> · <localized "management">
-Worker:      <project> · <role> · <ticket-key> <user-visible outcome>
+Worker:      <project> · <localized workspace or role> · <ticket-key> <user-visible outcome>
 Replacement:<worker title> · <localized "retry N">
 ```
 
-For example: `Inventory · Stock experience · T002 Record stock movement`.
+For example: `Inventory · Prototype · T002 Mobile stock adjustment flow`.
 
-- Derive the project, role, Ticket key, and outcome from durable contracts. Name roles by responsibility, not generic code layers.
+- Derive the project, workspace or role, Ticket key, and outcome from durable contracts. Prefer the Ticket's optional `workspace` value for bounded capability work; otherwise use its role. Name roles by responsibility, not generic code layers.
 - Keep the stable ticket key. Do not put status, branch, worktree, thread IDs, or commit hashes in a title.
 - Keep one active task per ticket. Increment the retry suffix only when replacing an unusable task.
 - Do not rename workers as their status changes.
 - Rename the current task with `codex_app__set_thread_title` when it is the coordinator and still has a generic title.
+- Never create or keep a worker titled only with a generic capability such as `Research`, `Prototype`, or `Implementation`; the Ticket key and specific outcome are required.
 
 ## Manage Durable Roles
 
@@ -107,7 +113,7 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 
 ## Choose The Smallest Execution Shape
 
-1. Implement one small, self-contained ticket in the current task when its attention workspace is still focused.
+1. Complete one small, self-contained ticket in the current task when its attention workspace is still focused.
 2. Use a fresh project task when a Ticket needs a distinct professional context, write boundary, permission boundary, or clean recovery point.
 3. Run tickets sequentially by default.
 4. Run tickets in parallel only when their blockers are complete, their write scopes do not conflict, and each task has an isolated worktree.
@@ -133,7 +139,7 @@ If no ticket is ready, report the blocking product decision, dependency, permiss
 Use this initial prompt:
 
 ```text
-Implement the Ticket at: <repository-relative path or issue URL>
+Complete the Ticket at: <repository-relative path or issue URL>
 
 Read AGENTS.md and the contract's explicit references. Do not read sibling tickets
 unless this contract links them. Do not create more tasks or update orchestration
@@ -141,9 +147,11 @@ state. Stay inside the approved product behavior and write boundary. If a produc
 decision or permission is missing, stop and return needs-decision instead of inventing
 scope.
 
-Produce the shortest runnable vertical slice, perform the one risk-matched validation
-required by the contract, and commit the result. Do not introduce TDD, a full regression
-run, or additional review stages unless the contract or repository rules require them.
+Use the Ticket's workspace and completion check to select installed capabilities
+internally; never ask the Product Owner to name a Skill. Produce the shortest runnable
+or inspectable result, perform the one risk-matched validation required by the contract,
+and commit the result. Do not introduce TDD, a full regression run, or additional review
+stages unless the contract or repository rules require them.
 
 Return exactly these fields:
 Status: completed | needs-decision | failed

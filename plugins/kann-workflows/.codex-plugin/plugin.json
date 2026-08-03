@@ -1,7 +1,7 @@
 {
   "name": "kann-workflows",
-  "version": "0.6.0",
-  "description": "Product-oriented Codex workflows bundled with Matt Pocock Skills and Ponytail lifecycle guidance.",
+  "version": "0.7.0",
+  "description": "A product-facing Codex lead with on-demand research, prototype, and delivery workspaces, bundled with credited upstream Skills.",
   "author": {
     "name": "Kann Workflows contributors",
     "url": "https://github.com/thevenomsnake/kann_workflows"
@@ -14,12 +14,14 @@
   "interface": {
     "displayName": "Kann Workflows",
     "shortDescription": "Build products through one natural-language project lead.",
-    "longDescription": "Keeps product decisions visible while Codex manages roles, authorized Tickets, fresh task contexts, implementation, and handoff, with the original Matt Pocock Skills invocation split and Ponytail lifecycle behavior bundled.",
+    "longDescription": "Starts with one pinned product lead, then opens specifically named research, prototype, diagnosis, review, or delivery tasks only when the work needs a fresh context. Bundled Matt Pocock Skills keep their original invocation split, and Ponytail keeps its lifecycle behavior.",
     "developerName": "Kann Workflows contributors",
     "category": "Productivity",
-    "capabilities": ["Project planning", "Task orchestration", "Engineering workflows", "Lifecycle hooks"],
+    "capabilities": ["Product discovery", "On-demand task workspaces", "Task orchestration", "Engineering workflows", "Lifecycle hooks"],
     "defaultPrompt": [
       "Help me turn this product idea into a working first version.",
+      "Research an external question that could change this product decision.",
+      "Build a small prototype to test this product experience.",
       "Continue this project from its current state."
     ]
   }

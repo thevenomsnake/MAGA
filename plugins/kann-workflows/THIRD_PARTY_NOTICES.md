@@ -17,6 +17,11 @@ so each Skill is an immediate child of the Kann plugin's `skills/` directory,
 and Claude-only `disable-model-invocation` frontmatter is removed because Codex
 uses the equivalent `agents/openai.yaml` policy.
 
+Kann's Project Lead may read a bundled explicit-only Skill as an internal
+workflow reference. That automatic routing belongs to Kann, is not an upstream
+Matt invocation behavior, and does not change the preserved 13 manual / 9
+implicit registered entry policies.
+
 MIT License
 
 Copyright (c) 2026 Matt Pocock

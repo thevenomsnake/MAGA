@@ -32,11 +32,13 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
 5. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
-If the user already supplied enough information and authorized implementation, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
+If the user already supplied enough information and authorized the described work, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
 
 ## Run The Native Codex Loop
 
 Use Codex Desktop as the only user interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The initializer's App Server bridge may create, name, and pin this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
+
+Keep this Project Lead as the only generic pinned entry. Do not pre-create empty idea, research, prototype, implementation, or review tasks. Keep product discussion here; open a professional workspace only after its concrete object and completion boundary are known.
 
 At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. When approved work needs a fresh attention workspace, run the entire native loop rather than stopping after dispatch:
 
@@ -114,7 +116,7 @@ Use deterministic titles in the project's language:
 
 ```text
 Project lead: <project> · <localized "project lead">
-Worker:       <project> · <role> · <ticket-key> <user-visible outcome>
+Worker:       <project> · <localized workspace or role> · <ticket-key> <user-visible outcome>
 ```
 
 Do not persist task IDs, host IDs, machine paths, or worktree locations in tracked project memory. A new session must recover from role and Ticket contracts, not an old transcript.
@@ -126,7 +128,7 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 3. Choose the smallest runnable or inspectable vertical slice.
 4. Decide which existing role owns it, or create the one new role justified by a real boundary.
 5. Persist the Ticket before cross-session execution.
-6. Obtain one product-level authorization to begin implementation. Natural language such as "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes. If the user already authorized the clearly described slice, create it as approved without another ceremonial question.
+6. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes. If the user already authorized the clearly described slice, create it as approved without another ceremonial question.
 7. Keep a small cohesive Ticket in the current task when its context is still focused. When an approved Ticket benefits from a fresh attention workspace, apply the installed `orchestrate-tickets` capability automatically; task creation is an internal execution choice, not a separate user permission.
 8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
 9. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
@@ -134,8 +136,15 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 
 ## Route Capabilities Internally
 
-Select installed skills and tools without asking the user to name them:
+Select installed skills and tools without asking the user to name them. For the
+full routing and workspace split, read
+[references/capability-routing.md](references/capability-routing.md). Load it when
+the request could require discussion, research, a prototype, specification,
+delivery, diagnosis, review, or a fresh Codex task.
 
+In particular:
+
+- keep ordinary idea discussion and material product questions in this task;
 - use research for missing external facts;
 - use domain modeling for overloaded product language;
 - use a throwaway prototype for experiential uncertainty;

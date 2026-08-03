@@ -26,14 +26,13 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.6\.0/);
+  assert.match(project, /workflow_version: 0\.7\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
-  assert.match(
-    fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8"),
-    /Never ask the user to invoke a Skill/,
-  );
+  const agents = fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8");
+  assert.match(agents, /Never ask the user to invoke a Skill/);
+  assert.match(agents, /Do not pre-create generic discussion, research, prototype, or implementation tasks/);
 });
 
 test("ships per-Ticket execution authorization", () => {
@@ -56,6 +55,46 @@ test("ships per-Ticket execution authorization", () => {
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
   assert.doesNotMatch(projectLead, /task_creation/);
   assert.doesNotMatch(orchestration, /task_creation: approved/);
+});
+
+test("routes specifically named professional workspaces on demand", () => {
+  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+  const projectLeadRoot = path.join(pluginRoot, "skills", "project-lead");
+  const projectLead = fs.readFileSync(path.join(projectLeadRoot, "SKILL.md"), "utf8");
+  const routing = fs.readFileSync(
+    path.join(projectLeadRoot, "references", "capability-routing.md"),
+    "utf8",
+  );
+  const nativeLoop = fs.readFileSync(
+    path.join(projectLeadRoot, "references", "native-codex-loop.md"),
+    "utf8",
+  );
+  const memory = fs.readFileSync(
+    path.join(projectLeadRoot, "references", "project-memory.md"),
+    "utf8",
+  );
+  const orchestration = fs.readFileSync(
+    path.join(pluginRoot, "skills", "orchestrate-tickets", "SKILL.md"),
+    "utf8",
+  );
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"),
+  );
+
+  assert.match(projectLead, /only generic pinned entry/);
+  assert.match(projectLead, /references\/capability-routing\.md/);
+  assert.match(routing, /Never initialize empty tasks named only/);
+  assert.match(routing, /Name The Work, Not The Capability/);
+  assert.match(routing, /Leave bounded workers unpinned and archive them/);
+  assert.match(routing, /do not change its invocation metadata/);
+  assert.match(routing, /real managed queue/);
+  assert.match(nativeLoop, /Never pre-create empty capability tasks/);
+  assert.match(nativeLoop, /specific object is not authoritative/);
+  assert.match(memory, /workspace: <optional research \| prototype \| delivery/);
+  assert.match(orchestration, /approved research, prototype, diagnosis, review, delivery, or release Tickets/);
+  assert.match(orchestration, /Never create or keep a worker titled only with a generic capability/);
+  assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
+  assert.equal(manifest.interface.defaultPrompt.length, 4);
 });
 
 test("keeps package, plugin, workflow, and bridge versions aligned", () => {

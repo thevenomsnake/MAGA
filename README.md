@@ -1,50 +1,21 @@
-# AI Workflow
+# Kann Workflows
 
-一本面向实际项目的 AI 协作手册，也包含由研究结果改造出的实验性 Codex skills。它从 GitHub 项目、公开资料和亲身实践中提炼可复用、可验证的方法，目标是让不同技术栈、规模和团队都能按需采用。
+**让资深产品构建者只负责产品判断，让 Codex 管理工程工作方式。**
 
-## 核心问题
+Kann Workflows 是一个独立、开源、实验性的 Codex 插件与项目初始化器。
+它面向懂产品、体验和基本软件边界，但不希望亲自管理 Skill 命令、会话编排、
+Ticket 格式、Git 流程和工程角色的产品设计者与产品负责人。
 
-AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随着会话变长、目标增多，早期约束、全局目标和关键边界会与大量局部细节竞争，因而更容易被遗漏、误读或覆盖。
+用户始终从一个置顶的 **Project Lead（产品主理）** 开始。Project Lead 会在
+目标具体后，按需创建带明确对象的外部调研、原型验证、诊断、审查或交付任务，
+整合结果后再归档。初始化不会生成一排空的“部门窗口”。
 
-因此，本手册不把一个长会话当作项目记忆。它采用两个基本判断：
+> 当前版本：`0.7.0`。这是公开实验，不是成熟度认证，也不是任何上游项目的
+> 官方发行版。
 
-- **会话是有边界的注意力工作区**：一个会话只承担一组内聚目标和职责。
-- **仓库是可持久的协作记忆**：事实、决策、Ticket、状态和结果必须写入可版本化的载体。
+## 一分钟开始
 
-分会话不是目的。只有当隔离上下文能减少注意力竞争、职责漂移或操作风险时才拆分；否则保持单会话更简单。
-
-## 内容
-
-- `research/`：外部项目与资料的观察记录
-- `design/`：尚在讨论和验证中的产品设计草案
-- `experiences/`：真实任务中的实践与复盘
-- `experiments/`：对改造后 skills 进行可重复验证的公开安全实验
-- `playbooks/`：跨项目可直接采用的协作手册
-- `plugins/kann-workflows/skills/`：融合并改造公开方法后形成的可安装 Codex skills
-- `CONTEXT.md`：本手册使用的统一术语
-- `templates/entry.md`：新增记录的统一入口
-
-## 手册入口
-
-- [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
-- [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
-- [面向产品构建者的 Project Lead](playbooks/product-oriented-project-lead.md)
-- [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
-
-## 设计草案
-
-- [安装与项目启动体验](design/installation-and-project-bootstrap.md)
-
-## 实验性 Skills
-
-- [`project-lead`](plugins/kann-workflows/skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、Ticket 契约、交付和收口。
-- [`orchestrate-tickets`](plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)：内部执行能力，在 Ticket 获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
-- Matt Pocock Skills：固定快照中的 22 个正式 Skills；13 个保持只能由用户显式调用，9 个保持可由模型根据任务自动调用。
-- Ponytail：6 个原版 Skills，以及会话启动、恢复、清空、压缩、模式切换和子任务继承所需的原版生命周期 hooks。
-
-插件合计提供 30 个 Skills。Kann 不会把 Matt 的显式入口改成自动入口，也不会把原本允许自动匹配的能力降级为手动入口。Ponytail 默认以 `full` 模式启动；用户仍可使用原版命令切换 `lite`、`full`、`ultra` 或 `off`。
-
-## 只安装插件
+### 只安装插件
 
 在要使用 Kann 的 Codex 环境中运行：
 
@@ -52,9 +23,10 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 npx github:thevenomsnake/kann_workflows install
 ```
 
-这条命令只添加 Kann marketplace 并安装 Kann Workflows 插件，不会创建项目、初始化 Git 或启动 Codex。安装后请新建任务，并在 `/hooks` 中审阅和信任 Ponytail 生命周期 hooks。
+这条命令只添加 Kann marketplace 并安装插件，不创建项目、不初始化 Git、
+不启动 Codex。适合先在现有项目或隔离实例中试用 Skills。
 
-## 初始化一个项目
+### 初始化一个新项目
 
 在空文件夹中运行：
 
@@ -62,63 +34,185 @@ npx github:thevenomsnake/kann_workflows install
 npx github:thevenomsnake/kann_workflows init
 ```
 
-命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续职责与 Ticket 由系统按逐 Ticket 记录的批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
+也可以指定一个新的空目录：
 
-Ponytail 的持久默认模式由插件生命周期 hooks 提供，并要求非交互命令环境的 `PATH` 中存在 Node.js 18 或更高版本。Codex 不会自动信任任何第三方插件 hook；首次安装或 hook 内容变化后，必须在 Codex 中使用 `/hooks`（或当前界面提供的 hook review 入口）审阅并信任它们。未信任、禁用 hooks 或找不到 Node.js 时，30 个 Skills 仍可使用，但 Ponytail 的会话自动激活、压缩后重注入和子任务继承不会运行。
+```powershell
+npx github:thevenomsnake/kann_workflows init ./my-product
+```
 
-Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server bridge 建立首个原生 Project Lead，随后退出；项目对话、职责管理和 Ticket 执行全部留在 Codex 原生同项目任务中，不另建聊天 UI、Dashboard 或任务面板。
+初始化器会：
 
-## 当前实现
+1. 安装 Kann Workflows 插件；
+2. 创建最小的 `.ai-workflow/PROJECT.md` 与项目级 `AGENTS.md`；
+3. 初始化 Git，并在本机已配置 Git 身份时创建首个提交；
+4. 通过一次性 Codex App Server bridge 创建、命名并置顶 Project Lead；
+5. 打开项目，然后退出 bridge，不常驻后台。
+
+私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。初始化器只接受空目录，
+不会接管或重写一个已有项目。
+
+## 用户只需要说产品语言
+
+例如：
+
+```text
+我想做一个帮助独立设计师管理客户反馈的工具。
+```
+
+也可以直接说：
+
+- 帮我把这个产品想法讨论清楚；
+- 先调研这个市场、竞品或外部限制；
+- 做一个最小原型验证这个交互；
+- 继续推进当前项目；
+- 这个结果不符合预期，先找出原因。
+
+默认路径不要求用户输入 `$to-spec`、`$research`、`$prototype` 或其他 Skill
+命令。希望精确控制原始工作流的高级用户，仍然可以显式使用插件内保留的
+Matt Pocock Skills 和 Ponytail 入口。
+
+## 一个入口，按需开工作间
+
+```mermaid
+flowchart LR
+    U["产品所有者"] <--> L["置顶的 Project Lead"]
+    L <--> M["仓库中的持久项目状态"]
+    L --> R["外部调研 · 具体问题"]
+    L --> P["原型验证 · 待验证体验"]
+    L --> D["交付 · T001 具体结果"]
+    R --> L
+    P --> L
+    D --> L
+    L --> A["整合结果并归档临时任务"]
+```
+
+| Codex 任务 | 何时创建 | 生命周期 |
+| --- | --- | --- |
+| `<项目> · Project Lead` | 初始化时 | 默认长期存在并置顶 |
+| 想法讨论 | 默认就在 Project Lead 中 | 不额外创建空任务 |
+| `<项目> · 外部调研 · T### <具体问题>` | 外部事实可能改变产品决定时 | 结果整合后归档 |
+| `<项目> · 原型 · T### <待验证体验>` | 必须实际体验才能决定时 | 验证完成后归档 |
+| `<项目> · 诊断/审查 · T### <具体对象>` | 需要独立证据或验收时 | 收口后归档 |
+| `<项目> · 交付 · T### <用户结果>` | 对应 Ticket 已获授权时 | 集成后归档 |
+| 长期专业管理任务 | 确实形成独立持续队列时 | 才建立并置顶 |
+
+任务必须带具体对象。`外部调研 · 用户为何放弃首次配置` 是工作，只有
+`外部调研` 四个字则只是能力目录。只有独立产物、不同专业上下文、安全并行、
+上下文压力、权限边界或独立验收真正存在时，Kann 才拆出新任务。
+
+## Kann 管理什么
+
+- 从自然语言建立产品方向、首个可观察价值和风险边界；
+- 每次只把真正需要人的产品判断交给用户；
+- 把事实、决策、角色、Ticket、授权和结果写入可版本化的项目状态；
+- 根据证据自动选择讨论、领域建模、研究、原型、实现、诊断和审查方法；
+- 为获批的具体工作创建、复用、等待和归档 Codex 原生任务；
+- 默认交付最小可运行或可检查的纵向切片，并执行一次风险匹配的验证；
+- 防止任务创建被误当成无限授权，发布、费用、账号、私有数据、破坏性操作和
+  不可逆迁移仍需要明确边界。
+
+Kann 不创建独立聊天界面、Dashboard、Launcher 功能或自定义任务面板。
+Codex Desktop 是唯一用户界面；仓库是持久记忆，Codex 任务是可替换的注意力
+工作区。
+
+## 插件包含什么
+
+插件当前提供 30 个 Skills：
+
+- **Kann Workflows：2 个**
+  - `project-lead`：唯一产品入口、自动能力路由和产品闭环；
+  - `orchestrate-tickets`：内部的原生 Codex 任务执行与恢复能力。
+- **Matt Pocock Skills：22 个**
+  - 13 个保持上游的显式调用策略；
+  - 9 个保持上游的模型自动调用策略。
+- **Ponytail：6 个**
+  - 同时包含其 Codex 会话启动、恢复、清空、压缩、模式切换和子任务继承所需
+    的生命周期 hooks。
+
+Kann 的 Project Lead 可以把已打包 Skill 的说明作为内部工作流参考。这是 Kann
+自有的编排行为，不是 Matt 上游的自动调用行为；Matt Skill 在 Codex 注册层面的
+13 个手动、9 个自动入口元数据保持不变，也不会把原本允许自动匹配的能力降级
+为手动入口。
+
+## Ponytail hooks
+
+Ponytail 默认以 `full` 模式启动，仍支持原版的 `lite`、`full`、`ultra` 和
+`off` 切换。
+
+Codex 不会自动信任任何第三方插件 hook。首次安装或 hook 内容变化后，请在
+Codex 中使用 `/hooks`，或当前界面提供的 hook review 入口，审阅并信任它们。
+生命周期脚本还要求非交互命令环境的 `PATH` 中存在 Node.js 18 或更高版本。
+
+未信任 hooks、禁用 hooks 或找不到 Node.js 时，30 个 Skills 仍然可用；只有
+Ponytail 的自动激活、压缩后重注入和子任务继承不会运行。
+
+## 对上游项目的尊重与说明
+
+Kann Workflows 是独立项目。它直接包含两个 MIT 项目基于固定 commit 的
+vendored 副本，并在许可范围内进行 Codex 宿主适配。我们感谢这些作者公开其
+工作；如果这些方法对你有帮助，也请访问和支持原项目。
+
+### Matt Pocock Skills
+
+- 原项目：[mattpocock/skills](https://github.com/mattpocock/skills)
+- 固定版本：`2ab958093e83e0ec752e6c1c5932da465bf23e0c`
+- Kann 包含：22 个正式 Engineering 与 Productivity Skill 目录；
+- Kann 适配：把分类目录展开到 Codex 插件的直接 `skills/` 子目录，并用
+  `agents/openai.yaml` 表达 Codex 调用策略；原有 13 个手动、9 个自动分类保持
+  不变。
+
+### Ponytail
+
+- 原项目：[DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
+- 固定版本：`16f29800fd2681bdf24f3eb4ccffe38be3baec6b`
+- Kann 包含：全部 6 个 Skills，以及 Codex 生命周期 hook 配置和所需脚本；
+- Kann 适配：增加本地 CommonJS 边界、识别 Kann namespace，并把持久默认值
+  隔离在当前插件的 `PLUGIN_DATA` 中。
+
+完整的上游版权、MIT 许可文本、固定 commit 和修改边界见
+[Third-Party Notices](THIRD_PARTY_NOTICES.md)。上游作者没有赞助、认可或背书
+Kann Workflows；Kann 的问题也不代表上游项目的问题。
+
+## 当前实现阶段
 
 | 方法版本 | 包版本 | 已完成的纵向切片 |
 | --- | --- | --- |
 | V1 | `0.1.0` | 插件分发、空目录初始化、Git 与最小项目内核 |
 | V1.5 | `0.2.0` | 自然语言入职、最少职责和首个有边界工作的持久化 |
-| V2 | `0.3.0` | 首个 Project Lead bridge，以及原生任务的创建、续发、等待和归档 |
+| V2 | `0.3.0` | 首个 Project Lead bridge，以及原生任务创建、续发、等待和归档 |
 | V3 | `0.4.0` | Codex Desktop 内从产品入职到工作集成与状态收口的机械闭环 |
-| V3.1 | `0.5.0` | 统一 Ticket 真源，并将执行授权限定到明确的 Ticket 集合 |
-| V3.2 | `0.6.0` | 内置 Matt 22 个 Skills 与 Ponytail 6 个 Skills，并保留原调用分类和生命周期 hooks |
+| V3.1 | `0.5.0` | 统一 Ticket 真源，并将执行授权限定到明确 Ticket 集合 |
+| V3.2 | `0.6.0` | 内置 Matt 22 个 Skills 与 Ponytail 6 个 Skills，保留 Matt 调用分类与 Ponytail 生命周期语义，并披露宿主适配 |
+| V3.3 | `0.7.0` | 一个固定产品入口，按需创建具名调研、原型、诊断、审查和交付任务 |
 
-每一版都有仓库内匿名实验记录；V3 的 Project Lead 还实际创建并收口了一个原生同项目 worker，而不是只验证提示词文本。这些版本表示能力切片，不代表产品成熟度认证。
+`0.7.0` 继续使用 schema v2，只用于新初始化项目。初始化器不会静默批量
+重写旧项目；旧工作重新进入活跃状态时，由 Project Lead 按当前 Ticket 契约
+保守恢复。
 
-`0.6.0` 继续使用 schema v2，只用于新初始化项目。初始化器不会静默重写已有 schema v1 项目；Project Lead 在旧工作重新进入活跃状态时按 Ticket 契约保守迁移，并要求当前授权。批量升级旧项目不属于这一切片。
+## 研究与手册
 
-## 工作流
+本仓库同时公开 Kann 的研究、设计、实验和可复用手册：
 
-1. **记录事实**：写清来源、场景和发生了什么，不急于总结规律。
-2. **提炼判断**：区分观察、推断和个人偏好，注明适用边界。
-3. **形成流程**：把反复有效的方法整理为 `playbooks/` 中可执行的步骤。
-4. **实际验证**：在真实任务中使用，记录结果与失败条件。
-5. **持续修订**：新证据推翻旧结论时，直接更新并保留变更历史。
+- [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
+- [面向产品构建者的 Project Lead](playbooks/product-oriented-project-lead.md)
+- [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
+- [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
+- [安装与项目启动体验](design/installation-and-project-bootstrap.md)
 
-## 新增内容
+目录说明：
 
-复制 `templates/entry.md` 到对应目录，文件名使用简短的 kebab-case，例如：
+- `research/`：外部项目与资料的观察记录；
+- `design/`：仍在讨论和验证的产品设计；
+- `experiences/`：真实任务中的实践与复盘；
+- `experiments/`：公开安全、可重复的验证记录；
+- `playbooks/`：跨项目可采用的协作手册；
+- `plugins/kann-workflows/`：实际分发的 Codex 插件。
 
-```text
-research/github-agent-memory.md
-experiences/debugging-with-ai.md
-playbooks/reviewing-ai-changes.md
-```
-
-一条内容至少应包含：来源或场景、观察、结论、适用边界、下一步验证。
-
-本仓库默认面向公开发布。只记录可公开验证的来源；来自私人项目或亲身经历的方法必须匿名化，不得出现项目名、本机路径、会话 ID、账号、内部系统名或可反推身份与业务的信息。
-
-## 原则
-
-- 证据先于观点，具体案例先于抽象口号。
-- 先解释要解决的机制，再介绍流程和工具。
-- 区分通用原则与某个项目的具体实现。
-- 将“有效过一次”和“稳定可复用”明确区分。
-- 流程应能执行和验证，而不只是读起来正确。
-- 优先沉淀短小、独立、可链接的条目。
-- 不收录密钥、私人数据或无权再发布的内容。
-- 私人案例只贡献抽象方法，不保留可识别来源。
+本仓库默认公开发布。请勿提交私人项目名、本机路径、会话或任务 ID、账号、
+内部系统、密钥或可识别业务数据。私人实践只能贡献匿名化的方法和证据。
 
 ## License
 
-Kann Workflows 采用 [MIT License](LICENSE)。项目融合并改造了 Matt Pocock
-Skills 与 Ponytail 的部分工作流思想；相应上游版本、版权与 MIT 许可声明见
-[Third-Party Notices](THIRD_PARTY_NOTICES.md)。上游作者不为 Kann Workflows
-提供赞助或背书。
+Kann Workflows 自有代码和文档采用 [MIT License](LICENSE)。随插件分发的上游
+部分保留各自原始版权与 MIT 许可声明，详见
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

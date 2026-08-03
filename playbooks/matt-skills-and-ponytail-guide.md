@@ -20,17 +20,20 @@
 
 所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接照抄到 Codex。Kann 包内面向 Codex 的引用统一写成 `$skill-name`。
 
-但是，**没有输入名称**和**完全自动触发**不是一回事。Matt 有 13 个 skill 明确禁止隐式调用，仍然需要人显式选择。
+但是，**没有输入名称**和**完全自动触发原版 Skill**不是一回事。Matt 有 13 个
+Skill 明确禁止宿主隐式调用；直接使用这些原版入口时，仍然需要人显式选择。
+Kann 的 Project Lead 可以根据产品状态在内部采用相应方法，但不会修改这些原版
+入口的调用元数据。
 
 来源：[OpenAI Skills 文档](https://learn.chatgpt.com/docs/build-skills#how-chatgpt-and-codex-use-skills)、[Matt 调用模型](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md)。
 
-## Kann 0.6.0 包含什么
+## Kann 0.7.0 包含什么
 
 | 来源 | Kann 内置内容 | 调用与生命周期 |
 | --- | --- | --- |
 | Kann Workflows | 2 个入口 skills | `project-lead` 与 `orchestrate-tickets` 均允许隐式调用 |
 | Matt Pocock Skills | 22 个正式 skills | 13 个必须显式调用，9 个允许隐式调用 |
-| Ponytail | 6 个 skills 与原版生命周期 hooks | 6 个 skills 允许隐式调用；hooks 负责会话注入、模式切换和子代理继承 |
+| Ponytail | 6 个 Skills，以及基于固定上游 commit、经 Kann 宿主适配的生命周期 hooks | 6 个 Skills 允许隐式调用；hooks 保留上游生命周期语义，适配项见 Third-Party Notices |
 
 因此，一个隔离实例只需安装 Kann，就能获得上述 30 个 skills，不需要再分别安装 Matt 或 Ponytail。这里的“内置”不表示跳过 Matt 原有的项目配置：首次在某个仓库采用 Matt 的 tracker/spec/ticket 流程时，仍需手动运行 `$setup-matt-pocock-skills`。它生成项目内配置，不会联网安装外部 skills，Kann 也不会替用户自动触发它。
 
@@ -50,7 +53,7 @@
 | 最小实现 | “用最简单、能工作的方式完成，不要过度设计” | `ponytail` |
 | 简化当前改动 | “检查这次改动是否过度工程，有什么能删” | `ponytail-review` |
 
-以下流程原样安装后不会仅靠普通自然语言自动启动：
+以下原版 Matt 入口不会仅靠普通自然语言由 Codex 宿主自动启动：
 
 - 把完整讨论发布为 spec；
 - 把 spec 拆成 tickets；
@@ -58,7 +61,9 @@
 - 建立跨会话 Wayfinder 地图；
 - 生成 handoff 并切换会话。
 
-要使用这些流程，需要显式选择对应 Matt skill。
+要直接运行这些原版流程，需要显式选择对应 Matt Skill。通过 Kann Project Lead
+工作时，用户仍可只说产品目标；Project Lead 会自动决定是否在当前任务采用其中
+的方法，或为具体问题建立按需调研、原型、诊断、审查或交付任务。
 
 ## Matt Pocock Skills 是什么
 

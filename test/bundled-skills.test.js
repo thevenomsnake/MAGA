@@ -139,4 +139,6 @@ test("pins both upstream snapshots in distributed notices", () => {
 
   assert.match(notices, /2ab958093e83e0ec752e6c1c5932da465bf23e0c/);
   assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
+  assert.match(notices, /automatic routing belongs to Kann/);
+  assert.match(notices, /does not change the preserved 13 manual \/ 9\s+implicit registered entry policies/);
 });

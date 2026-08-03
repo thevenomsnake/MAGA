@@ -5,12 +5,28 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 ## Invariants
 
 - Keep one product-facing Project Lead task, named and pinned.
+- Never pre-create empty capability tasks. Create a worker only for a concrete research question, prototype decision, diagnosis, review, or delivery outcome.
 - Keep durable roles in `.ai-workflow/roles/`; never use a task transcript as role memory.
 - Pin a role-management task only for a `managed queue` role.
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
+
+## Create Professional Workspaces On Demand
+
+Keep product discussion in the Project Lead. When a bounded capability or delivery
+Ticket benefits from fresh attention, use a title shaped as:
+
+```text
+<project> · <localized workspace or role> · <ticket-key> <specific outcome>
+```
+
+Prefer a fresh task only for an independent artifact, a materially different
+source set or professional context, safe parallel work, context pressure, or a
+separate permission, write, or acceptance boundary. Leave workers unpinned and
+archive them after integration. A generic `Research` or `Prototype` task with no
+specific object is not authoritative and should not be created.
 
 ## Reconcile Before Acting
 

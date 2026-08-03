@@ -97,6 +97,7 @@ key: T001
 status: ready
 authorization: pending
 role: <role-key>
+workspace: <optional research | prototype | delivery | diagnosis | review | release>
 ---
 
 # <User-visible outcome>
@@ -131,11 +132,15 @@ role: <role-key>
 
 Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integrated`, `failed`, or `deferred`. Archive detail only after the result is accepted or explicitly deferred; keep `PROJECT.md` focused on current work.
 
+Omit `workspace` when the Ticket stays in the current focused task. When a fresh
+task is useful, set it to the smallest stable capability label needed for a
+specific task title; it describes the attention workspace, not a permanent role.
+
 ## Authorization
 
 Treat authorization as part of each Ticket, not as permission to create Codex tasks:
 
-- Use `pending` before implementation is authorized, `approved` for an explicitly authorized Ticket, and `revoked` when the Product Owner withdraws authorization.
+- Use `pending` before the Ticket's research, prototype, diagnosis, review, delivery, or release work is authorized; use `approved` for an explicitly authorized Ticket and `revoked` when the Product Owner withdraws authorization.
 - Accept natural language such as "start", "build it", or "continue" as approval for the currently described Ticket set. Update every Ticket in that set together; do not ask once per worker.
 - Do not copy approval to a future Ticket. If an approved Ticket's outcome, acceptance, boundaries, cost, private-data use, external effect, destructive action, or release scope materially expands, return it to `pending`.
 - Choose whether to work in the current task or create a fresh Codex task internally after approval. Task creation does not require a second permission.
