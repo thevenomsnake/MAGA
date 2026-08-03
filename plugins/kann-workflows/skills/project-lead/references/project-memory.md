@@ -122,15 +122,26 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 
 <One risk-matched preview, command, or inspectable fact.>
 
+## Execution
+
+- Task title: pending
+- Attempt: pending
+
 ## Completion
 
 - Behavior: pending
+- Validation: pending
 - Evidence: pending
 - Commit or artifact: pending
 - Blocker: none
 ```
 
-Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integrated`, `failed`, or `deferred`. Archive detail only after the result is accepted or explicitly deferred; keep `PROJECT.md` focused on current work.
+Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integrated`, `failed`, or `deferred`. Move Ticket detail out of the active working set only after it is `integrated` or explicitly `deferred`. Archive a worker task only after its result is durably recorded as integrated, deferred, or superseded; keep `PROJECT.md` focused on current work.
+
+Leave `Task title` and `Attempt` as `pending` while the Ticket is unclaimed or
+stays in the current focused task. Before creating a fresh task, persist its
+deterministic title and a positive attempt number. Record the observed validation
+fact and commit or artifact identity before marking the worker completed.
 
 Omit `workspace` when the Ticket stays in the current focused task. When a fresh
 task is useful, set it to the smallest stable capability label needed for a

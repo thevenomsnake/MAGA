@@ -91,10 +91,46 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(nativeLoop, /Never pre-create empty capability tasks/);
   assert.match(nativeLoop, /specific object is not authoritative/);
   assert.match(memory, /workspace: <optional research \| prototype \| delivery/);
+  assert.match(memory, /## Execution[\s\S]+Task title: pending[\s\S]+Attempt: pending/);
+  assert.match(memory, /Validation: pending/);
+  assert.match(memory, /integrated, deferred, or superseded/);
   assert.match(orchestration, /approved research, prototype, diagnosis, review, delivery, or release Tickets/);
   assert.match(orchestration, /Never create or keep a worker titled only with a generic capability/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
   assert.equal(manifest.interface.defaultPrompt.length, 4);
+});
+
+test("ships the GitHub routing guide and hero", () => {
+  const readme = fs.readFileSync(path.join(REPOSITORY_ROOT, "README.md"), "utf8");
+  const diagram = readme.match(/```mermaid\n([\s\S]+?)```/)?.[1];
+  const hero = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "assets", "kann-workflows-routing-hero.png"),
+  );
+
+  assert.match(readme, /assets\/kann-workflows-routing-hero\.png/);
+  assert.match(readme, /## 自动路由如何工作/);
+  assert.match(readme, /### Project Lead 完整路由表/);
+  assert.match(readme, /### 授权如何约束自动路由/);
+  assert.match(readme, /### 自动路由的现实边界/);
+  assert.match(readme, /同一 Ticket 在范围不变时[\s\S]+保留原有 `approved`/);
+  assert.match(readme, /执行中被撤销时，在安全[\s\S]+边界停止/);
+  assert.match(readme, /共享 checkout[\s\S]+协调者保持只读/);
+  assert.match(readme, /visual critique/);
+  assert.match(readme, /release handoff/);
+  assert.ok(diagram);
+  const shapedNodeIds = [...diagram.matchAll(/\b([A-Z][A-Z0-9]*)\s*(?=\[|\{)/g)].map(
+    (match) => match[1],
+  );
+  assert.deepEqual(
+    shapedNodeIds.filter((id, index) => shapedNodeIds.indexOf(id) !== index),
+    [],
+  );
+  assert.deepEqual(
+    [...hero.subarray(0, 8)],
+    [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+  );
+  assert.ok(hero.readUInt32BE(16) >= 1600);
+  assert.ok(hero.readUInt32BE(20) >= 500);
 });
 
 test("keeps package, plugin, workflow, and bridge versions aligned", () => {
