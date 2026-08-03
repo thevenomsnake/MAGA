@@ -1,0 +1,6 @@
+interface:
+  display_name: "MAGA · Ponytail: Debt Ledger"
+  short_description: "Collect deliberate shortcuts and their upgrade triggers"
+  default_prompt: "Use $ponytail-debt to collect this repository's marked shortcuts into a ledger."
+policy:
+  allow_implicit_invocation: true

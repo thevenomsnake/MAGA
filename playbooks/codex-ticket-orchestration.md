@@ -1,12 +1,13 @@
 # Codex 原生 Ticket 编排
 
-> 状态：第一版实验流程。它改造的是 Matt Skills 从 `to-tickets` 到 `implement` 之间仍需人工操作的部分。
+> 状态：MAGA 0.9.0 内部编排流程。上游 `to-tickets` 与 `implement`
+> 的工作方法已保留在插件内部，不再作为需要用户选择的 Skill 入口。
 
 ## 改造目标
 
-Matt Skills 已经定义了一个有效边界：ticket 写清以后，应交给只围绕该 ticket 工作的新鲜实现会话。但上游只要求人“打开新会话并调用 implement”，没有负责创建会话、投递任务和等待结果。
+Matt Skills 已经定义了一个有效边界：ticket 写清以后，应交给只围绕该 ticket 工作的新鲜实现会话。但上游流程需要人手动打开新会话并选择实现入口，没有负责创建会话、投递任务和等待结果。
 
-Codex 已经提供项目任务、worktree、消息发送和任务等待能力，因此这段人工操作可以被内部 skill 接管。用户不需要记住 `to-tickets`、`implement` 或任何 slash command；他只需要批准产品范围并要求开始执行。
+Codex 已经提供项目任务、worktree、消息发送和任务等待能力，因此这段人工操作由 MAGA 的 Project Lead、内部方法与 Ticket 编排 Skill 接管。用户不需要记住上游入口名或任何 slash command；他只需要批准产品范围并要求开始执行。
 
 ```mermaid
 flowchart TD

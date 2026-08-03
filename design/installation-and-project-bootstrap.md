@@ -107,13 +107,14 @@ queue 的长期职责才建立置顶管理会话。
 
 ```text
 MAGA Plugin
-├── project-lead
-├── orchestrate-tickets
-├── bootstrap-project
-├── research / prototype / diagnosis / review 等内部能力
+├── 15 个注册 Skills
+│   ├── project-lead / orchestrate-tickets
+│   ├── research / prototype / diagnosis / review 等 9 个自动能力
+│   └── Ponytail 的 4 个生命周期与简化能力
+├── 13 个仅由 Project Lead 路由的内部方法
 ├── 最小项目模板
 ├── 初始化 CLI
-└── 可选任务管理工具
+└── 上游来源与入口映射 catalog
 ```
 
 最初的 V1 优先从 skills-only 插件开始。现有 Codex 项目任务工具足以支持活跃 Project Lead 创建、发送、等待和归档同项目任务；只有缺少稳定能力时才增加 MCP server。Hooks 只用于生命周期约束或上下文恢复，不负责静默创建一批会话。到 V3.3，MAGA 已为内置 Ponytail 增加这类生命周期 hooks，但仍不使用 hooks 静默创建任务；专业任务由 Project Lead 根据持久 Ticket 按需建立。

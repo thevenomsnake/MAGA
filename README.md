@@ -1,20 +1,20 @@
 <h1 align="center">MAGA</h1>
 
-<h3 align="center">Make Apps Great Again</h3>
+<h3 align="center">Make Apps Great Again → MAGA</h3>
 
 <p align="center"><strong>让资深产品构建者只负责产品判断，让 Codex 管理工程工作方式。</strong></p>
 
 <p align="center"><em>No rallies. No red tape. Just better apps.</em></p>
 
 <p align="center">
-  <img alt="Version 0.8.0" src="https://img.shields.io/badge/version-0.8.0-635BFF?style=flat-square">
+  <img alt="Version 0.9.0" src="https://img.shields.io/badge/version-0.9.0-635BFF?style=flat-square">
   <img alt="Node.js 18 or newer" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?style=flat-square&logo=node.js&logoColor=white">
-  <img alt="30 bundled skills" src="https://img.shields.io/badge/bundled_skills-30-2563EB?style=flat-square">
+  <img alt="15 registered skills" src="https://img.shields.io/badge/registered_skills-15-2563EB?style=flat-square">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-0F172A?style=flat-square"></a>
 </p>
 
 <p align="center">
-  <img src="./assets/maga-routing-hero.png" alt="MAGA 自动路由：一个产品主理协调四类按需工作区" width="100%">
+  <img src="https://raw.githubusercontent.com/thevenomsnake/MAGA/main/assets/maga-routing-hero.png" alt="MAGA 自动路由：一个产品主理协调四类按需工作区" width="100%">
 </p>
 
 <p align="center">
@@ -40,7 +40,7 @@ Git 流程和工程角色的产品设计者与产品负责人。
 生成一排空的“部门窗口”。
 
 > [!NOTE]
-> 当前版本为 `0.8.0`。这是公开实验，不是成熟度认证，也不是任何上游项目的
+> 当前版本为 `0.9.0`。这是公开实验，不是成熟度认证，也不是任何上游项目的
 > 官方发行版。
 
 ## 为什么叫 MAGA
@@ -111,9 +111,9 @@ npx github:thevenomsnake/MAGA init ./my-product
 - 继续推进当前项目；
 - 这个结果不符合预期，先找出原因。
 
-默认路径不要求用户输入 `$to-spec`、`$research`、`$prototype` 或其他 Skill
-命令。希望精确控制原始工作流的高级用户，仍然可以显式使用插件内保留的
-Matt Pocock Skills 和 Ponytail 入口。
+默认路径不要求用户输入 `$research`、`$prototype` 或其他 Skill 命令。高级用户
+仍可显式选择已注册的专业入口；规格、拆票、交接和交付等流程已经收进 MAGA
+内部方法库，由 Project Lead 按产品意图加载，不再要求用户记住阶段命令。
 
 ## 自动路由如何工作
 
@@ -131,8 +131,8 @@ MAGA 不是靠一组固定关键词把用户塞进预设流水线。它使用两
 
 | 机制 | 什么时候发生 | 不代表什么 |
 | --- | --- | --- |
-| 宿主隐式调用 | 用户表述与一个允许隐式调用的 Skill `description` 匹配时，Codex 可能加载它 | 不是每条消息都读取全部 30 个 `SKILL.md` 正文，也不是确定性关键词命中 |
-| Project Lead 内部路由 | `project-lead` 已进入后，项目证据表明需要某种方法时，它选择已打包说明并决定留在当前任务还是拆出工作区 | 不会修改 Matt 的原始调用元数据，也不会让一个未授权 Ticket 获得执行权 |
+| 宿主隐式调用 | 用户表述与一个允许隐式调用的 Skill `description` 匹配时，Codex 可能加载它 | 不是每条消息都读取全部 15 个 `SKILL.md` 正文，也不是确定性关键词命中 |
+| Project Lead 内部路由 | `project-lead` 已进入后，项目证据表明需要某种方法时，它选择已打包的内部方法并决定留在当前任务还是拆出工作区 | 不会把内部方法重新暴露成阶段命令，也不会让一个未授权 Ticket 获得执行权 |
 | Ponytail 生命周期注入 | 用户已信任 hooks、宿主启用 hooks 且 Node.js 18+ 可用时，在启动、恢复、清空、压缩、模式切换和子任务开始等事件发生 | 不是一次新的产品任务路由；任一运行条件不满足时都不会自动注入 |
 
 具体注册与触发范围如下：
@@ -149,16 +149,14 @@ MAGA 不是靠一组固定关键词把用户塞进预设流水线。它使用两
   `domain-modeling`、`codebase-design`、`code-review`、
   `resolving-merge-conflicts`、`grilling`。MAGA 项目额外规定：除非用户明确要求，
   普通交付不默认采用 TDD。
-- **Matt 的 13 个显式入口**：`ask-matt`、`grill-with-docs`、`triage`、
-  `improve-codebase-architecture`、`setup-matt-pocock-skills`、`to-spec`、
-  `to-tickets`、`implement`、`wayfinder`、`grill-me`、`handoff`、`teach`、
-  `writing-great-skills`。Codex 宿主不会因普通自然语言直接隐式加载这些原入口；
-  高级用户可以显式选择。Project Lead 也可以在 MAGA 自己的授权与项目边界内，
-  把相应说明作为内部方法采用——这是 MAGA 的编排，不是 Matt 上游自动调用。
-- **Ponytail 的 6 个隐式入口**：`ponytail`、`ponytail-review`、
-  `ponytail-audit`、`ponytail-debt`、`ponytail-gain`、`ponytail-help`。其中主
-  `ponytail` 还可通过已信任 hooks 在生命周期中持续注入最小化策略；其余入口仍
-  只在意图匹配时加载。
+- **Matt 的 13 个原显式流程**：作为 `methods/` 下的独立内部方法随插件分发。
+  `ask-matt` 的路由职责由 Project Lead 接管；`grill-me` 与 `grill-with-docs` 成为
+  `grilling` 的两种持久化模式；规格、拆票、交付、架构审计、triage、教学和交接
+  继续保持独立方法文件，按需读取而不进入宿主 Skill 列表。
+- **Ponytail 的 4 个注册入口**：`ponytail`、`ponytail-review`、
+  `ponytail-audit`、`ponytail-debt`。主 `ponytail` 仍通过已信任 hooks 在生命周期
+  中持续注入最小化策略；原 `help` 与 `gain` 信息卡作为主入口的按需 reference
+  保留，不再占用独立 Skill 身份。
 
 因此，路由判断本身由模型完成，但执行边界不是任意的：Ticket 授权、项目状态与
 外部副作用构成状态门禁；确定性任务名称和归档规则让恢复行为可检查。实际契约
@@ -167,7 +165,7 @@ MAGA 不是靠一组固定关键词把用户塞进预设流水线。它使用两
 [原生 Codex 闭环](plugins/maga/skills/project-lead/references/native-codex-loop.md)
 和 [Ticket 编排](plugins/maga/skills/orchestrate-tickets/SKILL.md)。每个上游
 入口的用途与自然语言示例见
-[Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)。
+[MAGA 内置方法与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)。
 
 ```mermaid
 flowchart TD
@@ -350,22 +348,28 @@ Codex Desktop 是唯一用户界面；仓库是持久记忆，Codex 任务是可
 
 ## 插件包含什么
 
-插件当前提供 30 个 Skills：
+插件当前提供 **15 个注册 Skills**，外加只由 Project Lead 按需读取的内部方法库：
 
 - **MAGA：2 个**
   - `project-lead`：唯一产品入口、自动能力路由和产品闭环；
   - `orchestrate-tickets`：内部的原生 Codex 任务执行与恢复能力。
-- **Matt Pocock Skills：22 个**
-  - 13 个保持上游的显式调用策略；
-  - 9 个保持上游的模型自动调用策略。
-- **Ponytail：6 个**
+- **Matt Pocock 方法：22 份上游工作流材料**
+  - 9 个保持独立注册和模型自动调用；
+  - 13 个转为 MAGA 内部方法，不再要求用户显式启动阶段命令。
+- **Ponytail：4 个注册入口 + 2 份信息 reference**
   - 同时包含其 Codex 会话启动、恢复、清空、压缩、模式切换和子任务继承所需
     的生命周期 hooks。
 
-MAGA 的 Project Lead 可以把已打包 Skill 的说明作为内部工作流参考。这是 MAGA
-自有的编排行为，不是 Matt 上游的自动调用行为；Matt Skill 在 Codex 注册层面的
-13 个手动、9 个自动入口元数据保持不变，也不会把原本允许自动匹配的能力降级
-为手动入口。
+MAGA 没有把这些方法拼成一个巨大的 `SKILL.md`。每个内部方法仍有独立文件和
+支持资源，Project Lead 只在当前产品状态确实需要时读取。原本允许自动匹配的
+9 个 Matt Skills 仍保持独立注册；改变的是 13 个手动阶段的产品入口，而不是它们
+承载的方法内容。机器可读的原始名称、当前身份、调用类别和固定上游版本见
+[Skill Catalog](plugins/maga/skill-catalog.json)。
+
+在标准 MAGA 项目中，规格、Tickets、状态与授权默认写入 `.ai-workflow/` 本地真源。
+上游方法中关于 issue tracker 的流程会适配到这份原生契约；除非项目原本就在使用
+外部 tracker，或用户明确要求配置/发布到外部平台，否则不会增加一个 tracker 初始化
+步骤。
 
 ## Ponytail hooks
 
@@ -376,7 +380,7 @@ Codex 不会自动信任任何第三方插件 hook。首次安装或 hook 内容
 Codex 中使用 `/hooks`，或当前界面提供的 hook review 入口，审阅并信任它们。
 生命周期脚本还要求非交互命令环境的 `PATH` 中存在 Node.js 18 或更高版本。
 
-未信任 hooks、禁用 hooks 或找不到 Node.js 时，30 个 Skills 仍然可用；只有
+未信任 hooks、禁用 hooks 或找不到 Node.js 时，15 个注册 Skills 与内部方法仍然可用；只有
 Ponytail 的自动激活、压缩后重注入和子任务继承不会运行。
 
 ## 对上游项目的尊重与说明
@@ -389,16 +393,16 @@ vendored 副本，并在许可范围内进行 Codex 宿主适配。我们感谢�
 
 - 原项目：[mattpocock/skills](https://github.com/mattpocock/skills)
 - 固定版本：`2ab958093e83e0ec752e6c1c5932da465bf23e0c`
-- MAGA 包含：22 个正式 Engineering 与 Productivity Skill 目录；
-- MAGA 适配：把分类目录展开到 Codex 插件的直接 `skills/` 子目录，并用
-  `agents/openai.yaml` 表达 Codex 调用策略；原有 13 个手动、9 个自动分类保持
-  不变。
+- MAGA 包含：全部 22 个正式 Engineering 与 Productivity 工作流材料；
+- MAGA 适配：9 个自动入口保留为直接 `skills/` 子目录；13 个原手动入口转为
+  `methods/` 内部方法，由 Project Lead 在 MAGA 的授权与项目边界内路由。
 
 ### Ponytail
 
 - 原项目：[DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
 - 固定版本：`16f29800fd2681bdf24f3eb4ccffe38be3baec6b`
-- MAGA 包含：全部 6 个 Skills，以及 Codex 生命周期 hook 配置和所需脚本；
+- MAGA 包含：4 个注册 Skills、2 份合并进主入口的帮助/指标 reference，以及
+  Codex 生命周期 hook 配置和所需脚本；
 - MAGA 适配：增加本地 CommonJS 边界、识别 MAGA namespace，并把持久默认值
   隔离在当前插件的 `PLUGIN_DATA` 中。
 
@@ -418,12 +422,12 @@ MAGA；MAGA 的问题也不代表上游项目的问题。
 | V3.2 | `0.6.0` | 内置 Matt 22 个 Skills 与 Ponytail 6 个 Skills，保留 Matt 调用分类与 Ponytail 生命周期语义，并披露宿主适配 |
 | V3.3 | `0.7.0` | 一个固定产品入口，按需创建具名调研、原型、诊断、审查和交付任务 |
 | V3.4 | `0.8.0` | 硬切换为 MAGA 插件身份、CLI、namespace 与 GitHub 安装入口 |
+| V3.5 | `0.9.0` | 将 30 个同级入口收敛为 15 个注册 Skills 与按需内部方法库，并产品化 Skill 展示名 |
 
-`0.8.0` 继续使用 schema v2，只用于新初始化项目。插件身份是一次不保留兼容
-别名的 breaking cutover：已有安装不会原地升级为 MAGA。测试实例应先移除之前的
-插件与 marketplace，再安装 MAGA，并重新审阅 Ponytail hooks。初始化器不会静默
-批量重写旧项目；旧工作重新进入活跃状态时，由 Project Lead 按当前 Ticket 契约
-保守恢复。
+`0.9.0` 继续使用 schema v2。它不为被收进内部方法库的旧技术入口保留别名；
+别名会重新制造列表重复与路由歧义。已有项目状态不需要迁移，但更新后的 Ponytail
+hook 内容需要重新审阅和信任。初始化器不会静默批量重写旧项目；旧工作重新进入
+活跃状态时，由 Project Lead 按当前 Ticket 契约保守恢复。
 
 ## 研究与手册
 
@@ -432,7 +436,7 @@ MAGA；MAGA 的问题也不代表上游项目的问题。
 - [多会话协作：用上下文隔离对抗注意力衰减](playbooks/multi-session-collaboration.md)
 - [面向产品构建者的 Project Lead](playbooks/product-oriented-project-lead.md)
 - [Codex 原生 Ticket 编排](playbooks/codex-ticket-orchestration.md)
-- [Matt Pocock Skills 与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
+- [MAGA 内置方法与 Ponytail 使用手册](playbooks/matt-skills-and-ponytail-guide.md)
 - [安装与项目启动体验](design/installation-and-project-bootstrap.md)
 
 目录说明：

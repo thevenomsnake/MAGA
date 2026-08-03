@@ -50,7 +50,12 @@ function finish() {
           }
           return; // don't fall through to the session-mode switch
         }
-        if (arg === 'lite') mode = 'lite';
+        if (arg === 'help' || arg === 'gain') {
+          // Information-only routes are rendered by the Ponytail Skill. Report
+          // the current mode to context without changing session or defaults.
+          isReportOnly = true;
+          mode = readMode() || getDefaultMode();
+        } else if (arg === 'lite') mode = 'lite';
         else if (arg === 'full') mode = 'full';
         else if (arg === 'ultra') mode = 'ultra';
         else if (arg === 'off') mode = 'off';

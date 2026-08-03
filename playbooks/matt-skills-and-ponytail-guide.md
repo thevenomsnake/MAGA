@@ -1,338 +1,181 @@
-# Matt Pocock Skills 与 Ponytail 使用手册
+# MAGA 内置方法与 Ponytail 使用手册
 
-> 面向能理解产品、前后端和数据库等基本概念，但不以写代码为主要工作的人。
->
-> 核对版本：Matt Pocock Skills [`2ab9580`](https://github.com/mattpocock/skills/commit/2ab958093e83e0ec752e6c1c5932da465bf23e0c)，Ponytail [`16f2980`](https://github.com/DietrichGebert/ponytail/commit/16f29800fd2681bdf24f3eb4ccffe38be3baec6b)。
+> 适用版本：MAGA `0.9.0`
 
-## 先回答：一定要输入 skill 名称吗
+MAGA 基于 Matt Pocock Skills 与 Ponytail 的固定 MIT 快照进行 Codex 适配，
+但不再把上游的每一个文件夹都暴露成同级产品入口。当前分发形态是：
 
-**不一定。** Codex 有两种 skill 调用方式：
+- 15 个注册 Skills，供 Codex 宿主识别和按需加载；
+- 13 个 Matt 原手动流程，作为 Project Lead 的内部方法；
+- Ponytail 的 help 与 gain 信息卡，作为主 Ponytail Skill 的 references；
+- Ponytail 会话启动、恢复、清空、压缩、模式切换和子任务继承 hooks。
 
-1. **隐式调用**：你直接描述目标，Codex 根据 skill 的 `description` 判断是否使用。
-2. **显式调用**：你明确选择某个 skill，确保本次使用它。
+完整来源、固定 commit、修改范围和 MIT 文本见
+[Third-Party Notices](../THIRD_PARTY_NOTICES.md)。上游作者没有赞助、认可或背书
+MAGA。
 
-不同宿主的显式语法不同：
+## 用户需要记住什么
 
-| 使用位置 | 显式调用方式 |
+只需要从 Project Lead 开始，并用产品语言说明目标：
+
+```text
+我想做一个帮助独立设计师整理客户反馈的工具。
+先研究竞品怎样处理重复反馈，再做一个能点的归并原型。
+继续推进当前项目。
+这个保存流程不稳定，先找出原因。
+```
+
+用户不需要先选择 spec、ticket、implementation 或 handoff 命令。Project Lead 会
+根据当前意图和项目状态选择内部方法；只有形成了具体、已授权的工作边界，才会
+创建新的 Codex 任务。
+
+## 15 个注册 Skills
+
+### MAGA 核心
+
+| Skill | 用途 | 默认入口 |
+| --- | --- | --- |
+| `project-lead` | 唯一产品入口、能力路由、验收与恢复 | 自然语言自动匹配 |
+| `orchestrate-tickets` | 协调已批准 Ticket、fresh task、等待、整合和归档 | 内部窄触发 |
+
+### 保留独立自动触发的 Matt 方法
+
+这 9 个能力仍保留上游技术 ID 与隐式调用语义，因为它们拥有不同的输入、证据和
+完成边界：
+
+| Skill | 何时适用 |
 | --- | --- |
-| Codex Desktop、CLI 或 IDE 扩展 | 输入 `$skill-name`，或用 `/skills` 选择 |
-| Claude Code | 上游文档通常写成 `/skill-name` |
+| `research` | 缺少可能改变产品决定的外部事实 |
+| `prototype` | 必须看到或体验行为后才能决定 |
+| `diagnosing-bugs` | 已观察到具体故障、回归或性能问题 |
+| `grilling` | 需要逐项压力测试一个想法或决定 |
+| `domain-modeling` | 需要澄清领域术语、场景或难以逆转的决定 |
+| `codebase-design` | 需要设计模块接口、seam 或架构形状 |
+| `code-review` | 需要按规格和仓库标准独立验收变更 |
+| `resolving-merge-conflicts` | 正在处理 Git merge/rebase 冲突 |
+| `tdd` | 用户明确要求 test-first 或风险边界确实需要 |
 
-所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接照抄到 Codex。MAGA 包内面向 Codex 的引用统一写成 `$skill-name`。
+普通 MAGA 交付不会因为 `tdd` 存在就默认采用完整 TDD。项目级 `AGENTS.md`、
+已批准 Ticket 和用户明确要求始终优先。
 
-但是，**没有输入名称**和**完全自动触发原版 Skill**不是一回事。Matt 有 13 个
-Skill 明确禁止宿主隐式调用；直接使用这些原版入口时，仍然需要人显式选择。
-MAGA 的 Project Lead 可以根据产品状态在内部采用相应方法，但不会修改这些原版
-入口的调用元数据。
+### Ponytail
 
-来源：[OpenAI Skills 文档](https://learn.chatgpt.com/docs/build-skills#how-chatgpt-and-codex-use-skills)、[Matt 调用模型](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md)。
+| Skill | 用途 |
+| --- | --- |
+| `ponytail` | 最小可行实现策略、模式控制、帮助与 benchmark 信息 |
+| `ponytail-review` | 只审查当前 diff 中可删除的过度设计 |
+| `ponytail-audit` | 对整个仓库执行一次复杂度审计 |
+| `ponytail-debt` | 汇总 `ponytail:` 注释形成显式债务账本 |
 
-## MAGA 0.8.0 包含什么
-
-| 来源 | MAGA 内置内容 | 调用与生命周期 |
-| --- | --- | --- |
-| MAGA | 2 个入口 skills | `project-lead` 与 `orchestrate-tickets` 均允许隐式调用 |
-| Matt Pocock Skills | 22 个正式 skills | 13 个必须显式调用，9 个允许隐式调用 |
-| Ponytail | 6 个 Skills，以及基于固定上游 commit、经 MAGA 宿主适配的生命周期 hooks | 6 个 Skills 允许隐式调用；hooks 保留上游生命周期语义，适配项见 Third-Party Notices |
-
-因此，一个隔离实例只需安装 MAGA，就能获得上述 30 个 skills，不需要再分别安装 Matt 或 Ponytail。这里的“内置”不表示跳过 Matt 原有的项目配置：首次在某个仓库采用 Matt 的 tracker/spec/ticket 流程时，仍需手动运行 `$setup-matt-pocock-skills`。它生成项目内配置，不会联网安装外部 skills，MAGA 也不会替用户自动触发它。
-
-## 最简单的使用方法
-
-下面这些请求可以直接用自然语言说，不需要记 skill 名称：
-
-| 你想做什么 | 可以直接说 | 可能隐式使用 |
-| --- | --- | --- |
-| 查资料 | “去官方资料研究这个问题，整理成文档” | `research` |
-| 排查故障 | “这个功能报错了，找出根因并修复” | `diagnosing-bugs` |
-| 做原型 | “先做几个可以操作的界面方案让我比较” | `prototype` |
-| 审查代码 | “review 这个分支是否符合需求和项目规范” | `code-review` |
-| 整理术语 | “把这些容易混淆的业务概念定义清楚” | `domain-modeling` |
-| 讨论模块边界 | “这个模块接口是否太复杂，应该如何收口” | `codebase-design` |
-| 压测想法 | “先挑战一下这个计划，找出没想清楚的地方” | `grilling` |
-| 最小实现 | “用最简单、能工作的方式完成，不要过度设计” | `ponytail` |
-| 简化当前改动 | “检查这次改动是否过度工程，有什么能删” | `ponytail-review` |
-
-以下原版 Matt 入口不会仅靠普通自然语言由 Codex 宿主自动启动：
-
-- 把完整讨论发布为 spec；
-- 把 spec 拆成 tickets；
-- 按 ticket 进入 Matt 的完整实现流程；
-- 建立跨会话 Wayfinder 地图；
-- 生成 handoff 并切换会话。
-
-要直接运行这些原版流程，需要显式选择对应 Matt Skill。通过 MAGA Project Lead
-工作时，用户仍可只说产品目标；Project Lead 会自动决定是否在当前任务采用其中
-的方法，或为具体问题建立按需调研、原型、诊断、审查或交付任务。
-
-## Matt Pocock Skills 是什么
-
-Matt Pocock Skills 是一组可组合的工程流程，不是自动运行的开发流水线。它试图把需求澄清、领域建模、研究、规格、拆票、实现、TDD、审查和交接做成可以重复调用的工作方法。
-
-它的典型完整路线是：
+帮助和 benchmark 卡不再是独立 Skill。使用自然语言询问，或在主入口下使用：
 
 ```text
-想法
--> grill-with-docs
--> 必要时 prototype
--> to-spec
--> to-tickets
--> 每张 ticket 使用新的 implement 会话
--> implement 内部调用 TDD 和 code-review
--> commit
+$ponytail help
+$ponytail gain
 ```
 
-这套路线上最重要的限制是：流程入口大多要求人显式调用。`ask-matt` 可以推荐下一步，却不能替用户启动另一个显式 skill。
+这两个信息型操作不会改变当前模式或持久默认值。
 
-### 13 个显式调用 Skills
+## 13 个内部方法
 
-这些 skill 的 Codex 元数据设置了 `allow_implicit_invocation: false`。普通自然语言不会可靠地让 Codex 自动进入它们。
+以下上游流程的核心方法与支持资源仍随插件分发，并经过 MAGA 产品边界适配；它们
+位于 `plugins/maga/methods/`，不会出现在宿主 Skill 列表中：
 
-| Skill | 具体做什么 | 什么时候使用 | Codex Desktop 示例 |
-| --- | --- | --- | --- |
-| `ask-matt` | 根据当前处境推荐 skill 和路线 | 不知道下一步该用什么 | `$ask-matt 我有一个产品想法` |
-| `grill-with-docs` | 深入追问设计，同时维护术语表和必要 ADR | 想法仍有大量产品决定 | `$grill-with-docs 帮我把这个设计问清楚` |
-| `triage` | 分类、验证 Issue 或外部 PR，形成可执行 brief | 有一批外来需求、Bug 或 PR | `$triage 处理待办 Issue` |
-| `improve-codebase-architecture` | 扫描架构问题，生成候选报告，再讨论一个改进点 | 想改善已有代码库结构 | `$improve-codebase-architecture` |
-| `setup-matt-pocock-skills` | 配置 tracker、triage 标签和领域文档位置 | 每个仓库首次使用这套体系 | `$setup-matt-pocock-skills` |
-| `to-spec` | 将已经讨论清楚的内容整理并发布为 spec | 讨论完成，需要固定需求 | `$to-spec` |
-| `to-tickets` | 将计划或 spec 拆成可独立验收的纵向 tickets | 工作超出一个会话 | `$to-tickets` |
-| `implement` | 根据 spec/tickets 实现、验证、review 并提交 | 已有清晰执行源 | `$implement 执行 ticket 12` |
-| `wayfinder` | 将超大、模糊工作拆成决策地图，逐项消除未知 | 单个会话无法容纳的问题 | `$wayfinder 规划这次大型改造` |
-| `grill-me` | 只做深入访谈，不维护仓库文档 | 想压力测试想法但不写文档 | `$grill-me` |
-| `handoff` | 将当前会话压缩成下一会话可读取的交接 | 当前上下文过长或需要换会话 | `$handoff` |
-| `teach` | 建立可跨会话持续的教学空间 | 想系统学习一个主题 | `$teach 教我理解事件驱动架构` |
-| `writing-great-skills` | 指导创建或改进 skill | 正在设计自己的 skill | `$writing-great-skills` |
+| 内部方法 | MAGA 怎样采用 |
+| --- | --- |
+| `ask-matt` | 路由知识被 Project Lead 的能力路由取代 |
+| `grill-me` | `grilling` 的无持久记录模式 |
+| `grill-with-docs` | `grilling` 与 `domain-modeling` 联合模式 |
+| `handoff` | 只在正式工件尚未承载上下文时生成交接 |
+| `implement` | 在已批准 Ticket 内作为最小交付方法 |
+| `improve-codebase-architecture` | `codebase-design` 的全仓审计方法 |
+| `setup-matt-pocock-skills` | 由项目初始化和按需项目配置吸收 |
+| `to-spec` | 决策充分闭合后综合规格 |
+| `to-tickets` | 把已接受范围形成可验收纵向 Tickets |
+| `wayfinder` | 只在目标清楚、路线超出一个注意力窗口时建立决策地图 |
+| `triage` | 用户明确要求处理外来 Issue/PR 时进入 |
+| `teach` | 用户明确要求建立持续学习工作区时进入 |
+| `writing-great-skills` | 维护者设计或修改 Skills 时的参考方法 |
 
-### 9 个允许隐式调用的 Skills
+融合指的是减少注册入口，不是把方法内容拼进一个巨大的 `SKILL.md`。每个方法仍
+保留独立文件和支持资源，Project Lead 只在当前工作需要时读取。
 
-这些 skill 可以根据自然语言自动匹配。显式选择仍可用于确保一定调用。
+标准 MAGA 项目以 `.ai-workflow/PROJECT.md`、`specs/` 与 `tickets/` 为本地真源，
+不会因为上游方法提到 issue tracker 就额外要求用户初始化或选择平台。只有项目本来
+就在使用外部 tracker，或用户明确希望配置、发布到外部 tracker 时，才进入对应的
+setup 方法与外部副作用授权。
 
-| Skill | 具体做什么 | 常见自然语言触发 |
-| --- | --- | --- |
-| `prototype` | 建立可丢弃的逻辑或 UI 原型，回答设计问题 | “做几个能操作的方案让我试” |
-| `diagnosing-bugs` | 建立复现、提出假设、定位根因并验证修复 | “这个功能坏了”“为什么变慢了” |
-| `research` | 后台查一手来源，生成有引用的研究文档 | “研究官方文档”“查清这个 API” |
-| `tdd` | 采用 red-green-refactor 开发 | “使用 TDD”“先写失败测试” |
-| `domain-modeling` | 澄清领域术语，维护 `CONTEXT.md` 和少量 ADR | “统一这些业务术语” |
-| `codebase-design` | 用深模块、interface、seam 等方法讨论代码结构 | “这个模块边界应该怎么设计” |
-| `code-review` | 分别检查项目规范与需求符合度 | “review 这个分支”“检查当前改动” |
-| `resolving-merge-conflicts` | 处理正在进行的 merge/rebase 冲突 | “解决当前 Git 冲突” |
-| `grilling` | 逐个追问真正需要人决定的问题 | “挑战这个计划”“把没想清楚的问出来” |
+## 自动路由边界
 
-本项目的额外规则是：TDD 只有在用户明确要求时使用。上游允许 `tdd` 隐式匹配，不表示每个项目都应把它设为默认流程。
+Codex 先根据注册 Skill 的 `name` 与 `description` 判断候选；只有触发后才读取完整
+`SKILL.md`。Project Lead 进入后再从项目状态选择内部方法。两层路由都不是关键词
+状态机，也不会扩大用户授权。
 
-### `ask-matt` 到底是不是自动路由器
+以下能力必须保持分开：
 
-不是。它是一个导航入口：
+- research、prototype 与 diagnosis：分别产生事实、体验证据和故障证据；
+- code-review 与 ponytail-review：分别审查正确性/规格和不必要复杂度；
+- domain-modeling 与 codebase-design：分别管理业务语言和代码结构；
+- spec 与 tickets：前者固定决定，后者创建可执行边界，不能跨过授权门禁合并执行。
 
-1. 你显式调用 `ask-matt`。
-2. 它分析当前情况并告诉你推荐路线。
-3. 你再显式选择下一个流程 skill。
+## Ponytail 生命周期
 
-它把“记住 13 个名字”缩小成“先记住一个入口”，但没有自动执行完整路线，也不保存当前工作流状态。
-
-### 哪些内容对产品人员不友好
-
-Matt 的上游定位本来就是 “Skills For Real Engineers”。完整流程会直接出现：
-
-- spec、ticket、tracer bullet 和 blocking edge；
-- TDD、test seam 和 red-green；
-- branch、diff、commit 和 merge-base；
-- handoff、fresh context 和 smart zone；
-- domain model、deep module 和 interface。
-
-大量机械工作确实由 Agent 完成，但使用者仍要管理研发阶段。对略懂技术但不写代码的人，它更适合作为工程团队手册，而不是完全无感的产品构建流程。
-
-## Ponytail 是什么
-
-Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策略。它要求代理依次检查：
+Ponytail 默认以 `full` 模式启动，支持：
 
 ```text
-是否需要做
--> 项目里是否已经有
--> 标准库是否支持
--> 平台是否原生支持
--> 已装依赖是否支持
--> 能否用清晰的一行完成
--> 最后才写最少的新代码
+$ponytail lite
+$ponytail
+$ponytail ultra
+$ponytail off
+$ponytail default lite
 ```
 
-它约束的是实现选择，不负责需求澄清、项目记忆、权限、安全设计或最终产品验收。
+生命周期 hooks 只有在以下条件同时满足时才运行：
 
-### 6 个 Ponytail Skills
+1. Codex 已启用 hooks；
+2. 用户已经审阅并信任当前定义；
+3. 非交互命令环境的 `PATH` 中存在 Node.js 18 或更高版本。
 
-这 6 个 skill 都允许通过自然语言描述任务，不强制使用命令。
+更新 MAGA 或 hook 内容变化后，需要重新通过 `/hooks` 或当前界面的 hook review
+入口审阅。hooks 不可用时，Skills 和内部方法仍然可用；只是不再自动激活、恢复或
+向子任务注入 Ponytail 模式。
 
-| Skill | 具体做什么 | 自然语言触发示例 | 是否日常需要 |
-| --- | --- | --- | --- |
-| `ponytail` | 在编码任务中优先不做、复用、标准库和原生能力 | “用最简单方式实现”“不要引入多余依赖” | 是，主要能力 |
-| `ponytail-review` | 只检查当前 diff 是否过度工程 | “看看这次改动有什么可以删” | 实现后按需 |
-| `ponytail-audit` | 对整个仓库做复杂度专项检查 | “审计整个项目有哪些过度设计” | 低频维护 |
-| `ponytail-debt` | 收集源码中的 `ponytail:` 简化标记 | “列出之前刻意留下的简化和升级条件” | 维护者使用 |
-| `ponytail-gain` | 展示项目自带的 benchmark 指标卡 | “Ponytail 声称节省多少” | 非交付能力 |
-| `ponytail-help` | 展示模式、命令和配置帮助 | “Ponytail 怎么用” | 管理和帮助 |
+Ponytail 的技术 ID、状态目录、默认模式解析和生命周期事件保持不变。MAGA 只把
+help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品牌或第二套模式。
 
-对普通产品人员来说，只需要知道主 `ponytail` 的效果。其余五个更接近维护和诊断工具，不必学习。
+## 隔离实例验收
 
-### 原版生命周期在 MAGA 中如何运行
+在只安装 MAGA 的隔离 Codex 环境中至少验证：
 
-完整 Ponytail 插件包含 skills 和 lifecycle hooks。hooks 负责：
+1. 插件页面列出 15 个 Skills，展示名能够清楚识别 MAGA 或 Ponytail；
+2. `research`、`prototype`、`diagnosing-bugs` 各用一个自然语言正例触发；
+3. 为每个正例加入一个相邻但不应触发的负例；
+4. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
+   用户输入原阶段命令或先配置外部 issue tracker；
+5. `$ponytail help` 与 `$ponytail gain` 不改变当前模式；
+6. 启动、恢复、清空、压缩与子任务事件继续恢复配置的 Ponytail 默认模式；
+7. 未信任 hooks 时插件仍可使用，且不会声称生命周期已经运行。
 
-- 新会话默认加载 `full`；
-- 恢复或压缩上下文后重新注入规则；
-- 让子代理继承规则；
-- 保存 `lite/full/ultra/off` 模式状态。
+## 从 0.8.0 更新
 
-MAGA 已内置这套 hooks，并保留原版三个事件契约：
+`0.9.0` 不保留被收进内部方法库的旧技术入口别名。别名会重新制造列表重复、
+显式调用歧义和额外上下文成本。旧项目的 `.ai-workflow/` 状态不需要迁移；更新
+插件后应在新任务中验证 Skill 列表，并重新审阅 Ponytail hooks。
 
-- `SessionStart`：在 `startup`、`resume`、`clear`、`compact` 时按持久默认值重新注入规则；
-- `SubagentStart`：向匹配的子代理再次注入当前规则；
-- `UserPromptSubmit`：处理原版 `$ponytail`、`$ponytail-review` 及 MAGA 命名空间下的模式命令。
+## 上游更新策略
 
-Codex 不会让第三方插件自行取得 hook 信任。安装 MAGA 后需要在 `/hooks` 中审阅并信任，运行环境的非交互 `PATH` 还必须能找到 Node.js 18 或更高版本。如果 hooks 未获信任、被宿主禁用或找不到 Node.js，六个 Ponytail skills 仍可被显式或隐式调用，但 always-on 生命周期不会运行。
+MAGA 不在安装时自动拉取上游最新版本。更新采用显式 vendor bump：
 
-MAGA 保留固定上游版本的实际语义，而不虚构更强的持久化能力：`lite` 或 `ultra` 会在下一次 `resume`、`clear` 或 `compact` 重新加载持久默认值；同一插件数据目录中的并发任务共用当前模式文件。要改变这两点属于后续 MAGA 扩展，不是“保留原版”。
-
-### 隔离 Codex 实例的最小验收
-
-仓库测试可以验证打包结构、调用元数据和 hook 脚本，却不能替 Codex 宿主授予信任或证明宿主实际派发了事件。发布前应在只安装 MAGA 的隔离实例中做一次宿主验收：
-
-1. 安装 MAGA 后确认界面列出 30 个 skills，并在 `/hooks` 中审阅、信任三个 Ponytail 事件；
-2. 新建任务，确认 `SessionStart` 以默认 `full` 注入；
-3. 运行 `$ponytail ultra` 和 `$ponytail-review`，确认原版模式命令仍有效；
-4. 启动一个子任务，确认 `SubagentStart` 继承当前模式；
-5. 分别触发 resume 或 compact，确认会按持久默认值重注入，而不是错误保留临时模式；
-6. 用自然语言分别试一次 `research` 等自动 skill，并确认 `$implement` 等手动 skill 只有显式选择后才进入。
-
-前五项是确定性的生命周期验收；第六项中的自然语言自动匹配包含模型调度判断，应验证“允许自动调用且没有被错误禁用”，不应把每一种措辞都必须命中写成保证。
-
-### 是否需要理解 `lite/full/ultra`
-
-普通用户不需要。
-
-- `lite`：照需求实现，同时指出更简单选项。
-- `full`：默认执行完整最小化决策梯。
-- `ultra`：更积极地删除并挑战需求。
-- `off`：关闭。
-
-这些等级适合维护者调试实现策略。产品人员只需要用普通语言纠正结果，例如“这次不要省略扩展能力”或“先做最简单版本”。
-
-### Ponytail 的风险边界
-
-- “最小实现”可能被误读成“少做需求”。
-- 用户没说清楚的真实业务约束可能被判成不必要。
-- `audit` 只检查复杂度，不代表完整质量审计。
-- `ponytail-gain` 使用的旧指标不能视为当前项目收益。
-- 自动匹配取决于 Codex 对 description 的判断，并非确定性保证。
-
-## 面向产品人员的使用建议
-
-### 日常产品修改
-
-直接描述想要的产品行为即可。Ponytail 和适合的隐式 Matt skill 可能自动加载：
-
-```text
-给库存列表增加批量调整功能。先做最小可运行版本，不增加新的框架。
-```
-
-### 想法还不清楚
-
-如果愿意使用 Matt 的原始流程，显式选择：
-
-```text
-$grill-with-docs
-```
-
-随后用产品语言描述目标。你仍需要回答产品决定，但不需要自己写代码。
-
-### 不知道该走哪个流程
-
-显式选择：
-
-```text
-$ask-matt
-```
-
-它会推荐路线，但不会替你自动启动下一项。
-
-### 已经讨论清楚，准备实现
-
-Matt 的原始完整流程需要依次显式进入：
-
-```text
-$to-spec
-$to-tickets
-$implement
-```
-
-小任务可以直接使用 `$implement`。进入后，代码、测试、review 和 commit 由 Agent 处理。
-
-### 发现 Bug
-
-直接说：
-
-```text
-这个操作偶尔会保存两次，找出根因并修复。
-```
-
-`diagnosing-bugs` 可以隐式触发，不需要先运行 Matt 主流程。
-
-### 只想防止过度设计
-
-直接说：
-
-```text
-用最简单能工作的方式完成，不要增加没必要的抽象。
-```
-
-这比要求产品人员学习 Ponytail 的模式和辅助命令更直接。
-
-## 常见误解
-
-### “安装后所有 skills 都会自动运行”
-
-错误。宿主先看到名称和 description，只在匹配时加载完整内容；Matt 还有 13 个明确禁止隐式调用的 skill。
-
-### “隐式调用一定会命中”
-
-错误。它依赖 description、用户表述、宿主调度和可用的 skill 元数据。重要任务应显式选择。
-
-### “`ask-matt` 会自动执行完整工作流”
-
-错误。它只推荐路线，不能调用另一个 user-invoked skill。
-
-### “安装 MAGA 后 Ponytail hooks 会直接运行”
-
-错误。完整 hooks 已包含在 MAGA 中，但 Codex 要求用户先在 `/hooks` 中审阅并信任；Node.js 和宿主 hook 开关也必须可用。
-
-### “用了 `implement` 就要自己再调用 TDD 和 review”
-
-不需要。上游 `implement` 会在内部调用 `tdd` 和 `code-review`。但它默认的完整测试和双轴 review 可能比某些窄改动需要的更重。
-
-### “Ponytail 越强越好”
-
-错误。`ultra` 会更积极质疑需求；权限、安全、数据迁移、并发和不可逆操作仍需要风险驱动的完整设计。
-
-## 一页速查
-
-| 情况 | 是否需要显式 skill | 推荐入口 |
-| --- | --- | --- |
-| 普通研究、诊断、原型、术语整理、review | 通常不需要 | 直接说目标 |
-| 普通编码，希望避免过度设计 | 通常不需要 | 直接说明产品行为和“最小正确实现” |
-| 不知道 Matt 里该用哪个流程 | 需要 | `$ask-matt` |
-| 深入澄清并同步文档 | 需要 | `$grill-with-docs` |
-| 将讨论转成正式规格 | 需要 | `$to-spec` |
-| 将规格拆成跨会话工作 | 需要 | `$to-tickets` |
-| 按 spec/ticket 执行完整实现 | 需要 | `$implement` |
-| 巨大且模糊的长期工作 | 需要 | `$wayfinder` |
-| 只检查当前改动是否过度工程 | 不一定 | 自然语言或 `$ponytail-review` |
-| 希望 Ponytail 在宿主事件后重新注入 | 需要一次信任 | 安装 MAGA 后用 `/hooks` 审阅；确保 Node.js 18+ 可用 |
+1. 选择并记录新的固定 commit；
+2. 对比上游 Skill 与当前内部方法；
+3. 重放 MAGA 的 Codex metadata、产品授权和生命周期适配；
+4. 验证 15 个注册入口、内部方法映射、触发正反例与 Ponytail hooks；
+5. 同步更新 catalog、Third-Party Notices 和发布说明。
 
 ## 延伸阅读
 
-- [Matt Pocock Skills 独立研究](../research/matt-pocock-skills.md)
-- [Ponytail 独立研究](../research/ponytail.md)
-- [Matt 官方 README](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/README.md)
-- [Ponytail 官方 README](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md)
-- [OpenAI Skills 文档](https://learn.chatgpt.com/docs/build-skills)
+- [MAGA 能力与工作区路由](../plugins/maga/skills/project-lead/references/capability-routing.md)
+- [Codex 原生 Ticket 编排](codex-ticket-orchestration.md)
+- [Matt Pocock Skills 研究](../research/matt-pocock-skills.md)
+- [Ponytail 研究](../research/ponytail.md)
+- [Third-Party Notices](../THIRD_PARTY_NOTICES.md)

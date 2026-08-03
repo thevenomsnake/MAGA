@@ -1,3 +1,6 @@
 interface:
-  display_name: "Resolving Merge Conflicts"
-  short_description: "Resolve merge and rebase conflicts"
+  display_name: "MAGA · Resolve Merge Conflicts"
+  short_description: "Resolve merge and rebase conflicts without guesswork"
+  default_prompt: "Use $resolving-merge-conflicts to resolve the current merge or rebase conflicts safely."
+policy:
+  allow_implicit_invocation: true

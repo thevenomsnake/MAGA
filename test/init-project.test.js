@@ -26,7 +26,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.8\.0/);
+  assert.match(project, /workflow_version: 0\.9\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
@@ -86,7 +86,9 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(routing, /Never initialize empty tasks named only/);
   assert.match(routing, /Name The Work, Not The Capability/);
   assert.match(routing, /Leave bounded workers unpinned and archive them/);
-  assert.match(routing, /do not change its invocation metadata/);
+  assert.match(routing, /Load Internal Methods By Exact Path/);
+  assert.match(routing, /Never synthesize a `\$<method-name>` invocation/);
+  assert.match(routing, /methods\/implement\/METHOD\.md/);
   assert.match(routing, /real managed queue/);
   assert.match(nativeLoop, /Never pre-create empty capability tasks/);
   assert.match(nativeLoop, /specific object is not authoritative/);
@@ -108,6 +110,7 @@ test("ships the GitHub routing guide and hero", () => {
   );
 
   assert.match(readme, /assets\/maga-routing-hero\.png/);
+  assert.match(readme, /raw\.githubusercontent\.com\/thevenomsnake\/MAGA\/main\/assets\/maga-routing-hero\.png/);
   assert.match(readme, /Make Apps Great Again → MAGA/);
   assert.match(readme, /## 自动路由如何工作/);
   assert.match(readme, /### Project Lead 完整路由表/);
@@ -173,6 +176,9 @@ test("ships MIT and upstream notices with the package and plugin", () => {
   assert.equal(packageMetadata.license, "MIT");
   assert.equal(pluginMetadata.license, "MIT");
   assert.equal(packageMetadata.files.includes("THIRD_PARTY_NOTICES.md"), true);
+  for (const documentationRoot of ["design/", "playbooks/", "research/"]) {
+    assert.equal(packageMetadata.files.includes(documentationRoot), true, documentationRoot);
+  }
 
   for (const root of [REPOSITORY_ROOT, pluginRoot]) {
     const license = fs.readFileSync(path.join(root, "LICENSE"), "utf8");

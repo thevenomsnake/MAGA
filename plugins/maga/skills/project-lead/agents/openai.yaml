@@ -1,5 +1,5 @@
 interface:
-  display_name: "Project Lead"
+  display_name: "MAGA · Product Lead"
   short_description: "Turn product intent into a working first slice"
   default_prompt: "Use $project-lead to turn this product goal into a working result while managing roles and tasks internally."
 policy:

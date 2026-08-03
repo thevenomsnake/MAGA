@@ -3,7 +3,7 @@ import { EventEmitter, once } from "node:events";
 import path from "node:path";
 import readline from "node:readline";
 
-const BRIDGE_VERSION = "0.8.0";
+const BRIDGE_VERSION = "0.9.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

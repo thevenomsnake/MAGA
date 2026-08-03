@@ -5,15 +5,16 @@ description: >
   minimal. Channels a senior dev who has seen everything: question whether the
   task needs to exist at all (YAGNI), reach for the standard library before
   custom code, native platform features before dependencies, one line before
-  fifty. Supports intensity levels: lite, full (default), ultra. Use on ANY
-  coding task: writing, adding, refactoring, fixing, reviewing, or designing
-  code, and choosing libraries or dependencies. Also use whenever the user
-  says "ponytail", "be lazy", "lazy mode", "simplest solution", "minimal
-  solution", "yagni", "do less", or "shortest path", or complains about
+  fifty. Supports intensity levels: lite, full (default), ultra, plus one-shot
+  help and benchmark-gain cards. Use on ANY coding task: writing, adding,
+  refactoring, fixing, reviewing, or designing code, and choosing libraries or
+  dependencies. Also use whenever the user says "ponytail", "be lazy", "lazy
+  mode", "simplest solution", "minimal solution", "yagni", "do less",
+  "shortest path", "ponytail help", "how do I use ponytail", "ponytail gain",
+  "what does ponytail save", or "ponytail scoreboard", or complains about
   over-engineering, bloat, boilerplate, or unnecessary dependencies. Do NOT
-  use for non-coding requests (general knowledge, prose, translation,
-  summaries, recipes).
-argument-hint: "[lite|full|ultra]"
+  use for unrelated non-coding requests (general knowledge, prose,
+  translation, summaries, recipes).
 license: MIT
 ---
 
@@ -28,6 +29,18 @@ code is the code never written.
 ACTIVE EVERY RESPONSE. No drift back to over-building. Still active if
 unsure. Off only: "stop ponytail" / "normal mode". Default: **full**.
 Switch: `$ponytail lite|full|ultra`.
+
+## Information commands
+
+- For `$ponytail help`, "ponytail help", "how do I use ponytail", or an
+  equivalent request, read [references/help.md](references/help.md) and render
+  its card.
+- For `$ponytail gain`, "ponytail gain", "what does ponytail save", "show
+  ponytail impact", "ponytail scoreboard", or an equivalent request, read
+  [references/gain.md](references/gain.md) and render its scoreboard.
+
+These are one-shot information routes. Do not switch the current mode, change
+the configured default, or write Ponytail state for either route.
 
 ## The ladder
 

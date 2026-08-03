@@ -13,26 +13,61 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 - Treat a Codex task as an attention workspace for one concrete object, not as a
   menu item or permanent department.
 
+## Load Internal Methods By Exact Path
+
+MAGA distributes thirteen upstream workflows as internal method resources, not
+registered Skills. When a route below selects one, read its linked `METHOD.md`
+before acting and execute the method inline under the current product, Ticket,
+permission, and repository boundaries. Load only the selected method and the
+supporting files it directly requires.
+
+Never synthesize a `$<method-name>` invocation, claim the method is installed as
+a Skill, or ask the Product Owner to invoke it. The paths in this index are
+relative to this reference file:
+
+When `.ai-workflow/PROJECT.md` exists, the Project Memory Contract is the
+default authority for specs, roles, Tickets, status, and authorization. Adapt
+upstream issue-tracker wording to that native contract. Do not run the setup
+method or ask the Product Owner to choose a tracker merely because an upstream
+method mentions one. Configure or publish to an external tracker only when the
+project already uses it or the user explicitly intends that external effect.
+
+| Internal method | Load when |
+| --- | --- |
+| [ask-matt](../../../methods/ask-matt/METHOD.md) | A maintainer needs the upstream workflow map or no narrower method explains the engineering route |
+| [grill-me](../../../methods/grill-me/METHOD.md) | An idea needs conversational challenge without durable project documents |
+| [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) | Product language or decisions should survive in the repository |
+| [handoff](../../../methods/handoff/METHOD.md) | Context must cross into a clean task without making the transcript the source of truth |
+| [implement](../../../methods/implement/METHOD.md) | A bounded, authorized Ticket is ready for the smallest working slice |
+| [improve-codebase-architecture](../../../methods/improve-codebase-architecture/METHOD.md) | The user asks for an architecture audit, or diagnosis exposes a concrete missing seam |
+| [setup-matt-pocock-skills](../../../methods/setup-matt-pocock-skills/METHOD.md) | The user intends to configure an external issue tracker or the upstream document conventions |
+| [teach](../../../methods/teach/METHOD.md) | The user explicitly wants a durable, guided learning workspace |
+| [to-spec](../../../methods/to-spec/METHOD.md) | Known decisions need synthesis into an implementation-neutral specification |
+| [to-tickets](../../../methods/to-tickets/METHOD.md) | An accepted specification must become bounded, blocked, authorized work contracts |
+| [triage](../../../methods/triage/METHOD.md) | Raw incoming bug reports or feature requests need product and reproduction triage |
+| [wayfinder](../../../methods/wayfinder/METHOD.md) | A genuinely large effort is blocked by decision fog rather than implementation |
+| [writing-great-skills](../../../methods/writing-great-skills/METHOD.md) | The user asks to create or improve a Codex Skill |
+
 ## Route From Evidence
 
 | Signal in the request or durable state | Internal method | Default workspace |
 | --- | --- | --- |
-| Product behavior, audience, or value is materially unclear | Apply grilling and domain-modeling methods; ask one product question at a time | Current Project Lead |
+| Product behavior, audience, or value is materially unclear | Apply registered `grilling`; load [grill-me](../../../methods/grill-me/METHOD.md) or [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) for the appropriate persistence mode | Current Project Lead |
 | A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh research task when the question is bounded and substantial; otherwise current task |
 | A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh prototype task when it produces an inspectable artifact |
-| The destination is clear but the route is too large for one attention window | Apply the wayfinding method to resolve decision fog before delivery | Bounded decision tasks; do not create a generic planning room |
-| Decisions are sufficiently closed | Apply the specification method to synthesize what is already known | Current Project Lead unless publication needs an independent boundary |
-| An accepted result must survive the current conversation or cross responsibilities | Form product Tickets with explicit blockers and authorization | Durable project state first; tasks only for approved Tickets |
-| An approved Ticket is ready | Apply the minimum implementation method and any risk-justified specialist capability | Current task or a fresh delivery task |
+| The destination is clear but the route is too large for one attention window | Load [wayfinder](../../../methods/wayfinder/METHOD.md) to resolve decision fog before delivery | Bounded decision tasks; do not create a generic planning room |
+| Decisions are sufficiently closed | Load [to-spec](../../../methods/to-spec/METHOD.md) to synthesize what is already known | Current Project Lead unless publication needs an independent boundary |
+| An accepted result must survive the current conversation or cross responsibilities | Load [to-tickets](../../../methods/to-tickets/METHOD.md) and form product Tickets with explicit blockers and authorization | Durable project state first; tasks only for approved Tickets |
+| An approved Ticket is ready | Load [implement](../../../methods/implement/METHOD.md) and apply any risk-justified registered capability | Current task or a fresh delivery task |
 | A concrete failure is observed | Apply diagnosis before proposing a fix | Fresh diagnosis task only when isolation or a long evidence trail helps |
 | A result is ready for independent acceptance | Apply the smallest review needed for the documented risk | Fresh review task only when independence is material |
-| Context is polluted or a branch of work needs isolation | Recover from durable project state in a fresh task | Replacement or bounded worker, never a generic handoff room |
+| Context is polluted or a branch of work needs isolation | Load [handoff](../../../methods/handoff/METHOD.md), then recover from durable project state in a fresh task | Replacement or bounded worker, never a generic handoff room |
 
-When the selected bundled upstream Skill is explicit-only, load its instructions
-as an internal workflow reference instead of asking the Product Owner to type a
-Skill command. Keep the original explicit entry available for expert direct use,
-and do not change its invocation metadata. MAGA's Ticket authorization, product
-boundaries, and repository instructions still govern any adapted method.
+Registered specialist Skills may still be selected normally. Internal methods
+have no compatibility aliases: their original technical identities exist only
+in this method index and the distributed provenance catalog. MAGA's Ticket
+authorization, product boundaries, and repository instructions govern every
+adapted method.
 
 Do not automatically enter setup, teaching, skill-authoring, opportunistic
 architecture-audit, or external issue-triage flows without matching user intent.

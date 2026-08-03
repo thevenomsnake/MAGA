@@ -148,6 +148,53 @@ test("persists a namespaced default inside this MAGA installation", (t) => {
   assert.match(activated.hookSpecificOutput.additionalContext, /PONYTAIL MODE ACTIVE — level: ultra/);
 });
 
+test("keeps help and gain routes informational without changing mode or default", (t) => {
+  const root = workspace(t);
+  const env = codexEnvironment(root);
+  const state = path.join(env.PLUGIN_DATA, ".ponytail-active");
+  const configPath = path.join(env.PLUGIN_DATA, "ponytail", "config.json");
+
+  runHook("ponytail-activate.js", env);
+  runHook(
+    "ponytail-mode-tracker.js",
+    env,
+    JSON.stringify({ prompt: "$ponytail ultra" }),
+  );
+  runHook(
+    "ponytail-mode-tracker.js",
+    env,
+    JSON.stringify({ prompt: "$ponytail default lite" }),
+  );
+  assert.equal(fs.readFileSync(state, "utf8"), "ultra");
+  assert.equal(JSON.parse(fs.readFileSync(configPath, "utf8")).defaultMode, "lite");
+
+  for (const prompt of [
+    "$ponytail help",
+    "$ponytail gain",
+    "$maga:ponytail help",
+    "$maga:ponytail gain",
+  ]) {
+    const output = JSON.parse(runHook(
+      "ponytail-mode-tracker.js",
+      env,
+      JSON.stringify({ prompt }),
+    ));
+    assert.equal(output.systemMessage, "PONYTAIL:ULTRA", prompt);
+    assert.equal(fs.readFileSync(state, "utf8"), "ultra", prompt);
+    assert.equal(JSON.parse(fs.readFileSync(configPath, "utf8")).defaultMode, "lite", prompt);
+  }
+
+  for (const prompt of ["ponytail help", "show ponytail impact"]) {
+    assert.equal(runHook(
+      "ponytail-mode-tracker.js",
+      env,
+      JSON.stringify({ prompt }),
+    ), "", prompt);
+    assert.equal(fs.readFileSync(state, "utf8"), "ultra", prompt);
+    assert.equal(JSON.parse(fs.readFileSync(configPath, "utf8")).defaultMode, "lite", prompt);
+  }
+});
+
 test("mode tracker self-exits when Windows wrappers leave stdin open", async (t) => {
   const root = workspace(t);
   const child = spawn(process.execPath, [path.join(HOOKS_ROOT, "ponytail-mode-tracker.js")], {

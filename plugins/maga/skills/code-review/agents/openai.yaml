@@ -1,3 +1,6 @@
 interface:
-  display_name: "Code Review"
-  short_description: "Review a diff on standards and spec"
+  display_name: "MAGA · Review the Build"
+  short_description: "Review a build against its standards and intent"
+  default_prompt: "Use $code-review to review this build against the repository standards and intended result."
+policy:
+  allow_implicit_invocation: true

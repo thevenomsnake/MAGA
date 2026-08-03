@@ -11,6 +11,7 @@ Create only records the project currently needs:
 |-- PROJECT.md
 |-- roles/
 |   `-- <role-key>.md
+|-- specs/           # only when several closed decisions need one durable synthesis
 |-- tickets/
 |   `-- T001-<outcome-key>.md
 |-- decisions/       # only for consequential decisions
@@ -18,6 +19,11 @@ Create only records the project currently needs:
 ```
 
 `PROJECT.md` is the small current-state index. Role files hold durable responsibility. Ticket files hold bounded work and their execution authorization. Do not use chat transcripts, task IDs, host IDs, usernames, absolute paths, or worktree locations as project memory.
+
+When a specification is useful, write one focused file under
+`.ai-workflow/specs/` (or reuse an established repository specification
+location) and link it from the relevant Tickets. Do not create a specification
+merely to satisfy a phase name.
 
 ## Onboarding Completion
 
@@ -89,7 +95,10 @@ Use `managed queue` only for multiple approved Tickets, independent long-lived p
 
 ## Ticket Contract
 
-Scan existing Ticket keys and allocate the next `T###` key. Use a short outcome slug. A Ticket is ready only when its product result and one completion check are concrete.
+Scan existing Ticket keys and allocate the next `T###` key. Use a short outcome
+slug. A Ticket is ready only when its product result and one completion check
+are concrete and every listed blocker is already `integrated` (or it has no
+blockers).
 
 ```markdown
 ---
@@ -113,6 +122,10 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 ## Boundaries
 
 - <Non-goal, product constraint, or write boundary.>
+
+## Blocked By
+
+- None, or `<T###>` plus the outcome it must integrate first.
 
 ## Reads First
 
