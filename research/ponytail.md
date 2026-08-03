@@ -4,6 +4,8 @@
 > 固定源码快照：[commit `16f2980`](https://github.com/DietrichGebert/ponytail/commit/16f29800fd2681bdf24f3eb4ccffe38be3baec6b)
 > 核对日期：2026-08-01
 > 证据范围：官方 GitHub 仓库中的源码、skills、benchmark harness、结果说明和 release 元数据。
+>
+> 历史边界：文中的“当前本地安装”特指 2026-08-01 的核对环境，当时只有六个独立 Skills。Kann 0.6.0 后的产品状态与用法见[使用手册](../playbooks/matt-skills-and-ponytail-guide.md)，不要把下面的历史安装结论当成现状。
 
 ## 证据标记
 
@@ -376,7 +378,7 @@ Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深�
 1. 六个 `SKILL.md` 提供任务描述、触发语和模型应遵循的规则；
 2. hooks 在会话生命周期中注入主规则、记录模式，并把规则带入子代理。
 
-当前本地安装只包含六个 skill 目录，每个目录只有一个 `SKILL.md`；插件缓存、插件配置和运行时环境中没有 Ponytail 插件或 hook 的安装记录。因此，本地已安装的是**六个按任务发现的提示能力**，不是官方所说的完整 always-on 插件。
+2026-08-01 核对时的本地安装只包含六个 skill 目录，每个目录只有一个 `SKILL.md`；当时的插件缓存、插件配置和运行时环境中没有 Ponytail 插件或 hook 的安装记录。因此，该历史环境安装的是**六个按任务发现的提示能力**，不是官方所说的完整 always-on 插件。
 
 完整插件的 `SessionStart` hook 覆盖 startup、resume、clear 和 compact，默认读取 `full`，写入模式状态并注入主规则；`SubagentStart` 按当前状态向子代理注入相同规则；`UserPromptSubmit` 识别模式切换和关闭。Codex 路径把状态写在插件数据目录，并输出 `PONYTAIL:<MODE>` system message。官方 README 还要求 Codex 用户安装后在 `/hooks` 中审查并信任 hooks，并要求非交互 shell 的 `PATH` 中存在 Node.js；缺少 Node.js 时，skills 仍能使用，但 always-on 激活不会工作。
 
@@ -384,7 +386,7 @@ Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深�
 
 #### 分析判断
 
-六个 skills 可以做到“在宿主判断任务匹配时自动加载”，但做不到“无论宿主如何判断，规则在每个会话、压缩恢复和子代理中都持续存在”。`SKILL.md` 内的 `ACTIVE EVERY RESPONSE` 是给模型的指令，不是状态管理机制；没有 hooks 时，不能把它称为持久无感，只能称为**匹配任务时的无命令调用**。
+当时的六个独立 skills 可以做到“在宿主判断任务匹配时自动加载”，但做不到“无论宿主如何判断，规则在每个会话、压缩恢复和子代理中都持续存在”。`SKILL.md` 内的 `ACTIVE EVERY RESPONSE` 是给模型的指令，不是状态管理机制；没有 hooks 时，不能把它称为持久无感，只能称为**匹配任务时的无命令调用**。
 
 ### 不使用 `/xxx` 时，哪些任务仍可自动触发
 
@@ -401,7 +403,7 @@ Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深�
 | `ponytail-gain` | 询问 Ponytail 节省什么或查看影响指标 | 否 |
 | `ponytail-help` | 询问 Ponytail 如何使用、有哪些能力 | 否 |
 
-在采用描述驱动 skill 匹配的 Codex 宿主中，用户只要自然地表达上述任务，宿主就可以选择对应 skill。官方 README 同时把 Codex 的显式入口写成 `@ponytail`、`@ponytail-review` 等；因此，显式命令是强制指定能力的专家入口，不是这些 skill 文本所允许的唯一入口。
+在采用描述驱动 skill 匹配的 Codex 宿主中，用户只要自然地表达上述任务，宿主就可以选择对应 skill。核对当时的官方 README 把 Codex 显式入口写成 `@ponytail`、`@ponytail-review` 等；Kann 当前面向 Codex 的使用说明统一采用 `$skill-name`。无论宿主采用哪种显式语法，显式入口都只是强制指定能力的专家入口，不是这些 skill 文本所允许的唯一入口。
 
 来源：[主 skill](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail/SKILL.md)、[`ponytail-review`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-review/SKILL.md)、[`ponytail-audit`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-audit/SKILL.md)、[`ponytail-debt`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-debt/SKILL.md)、[`ponytail-gain`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-gain/SKILL.md)、[`ponytail-help`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-help/SKILL.md)、[README Commands](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md#commands)。
 
@@ -462,15 +464,15 @@ Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深�
 6. **gain 可能造成错误期待。** 它展示旧单轮 benchmark 卡片。即使声明不是当前仓库收益，不写代码的用户也容易把百分比理解成自己项目的交付承诺。
 7. **自动触发仍依赖宿主判断。** 描述写“用于任何编码任务”可以提高主 skill 的覆盖率，也可能与项目自己的完整性、架构或风险策略发生冲突；六个文本文件没有优先级仲裁机制。
 
-### 对当前安装的结论
+### 对 2026-08-01 核对环境的结论
 
 #### 可验证事实
 
-当前安装能让支持描述匹配的 Codex 在相关任务中发现六个 skills；主 skill 的描述足以覆盖常见编码、修复、重构和依赖选择。当前没有安装或启用官方 hooks，因此没有 Ponytail 自己提供的会话启动激活、压缩后重注入、模式状态持久化或子代理继承。
+当时的安装能让支持描述匹配的 Codex 在相关任务中发现六个 skills；主 skill 的描述足以覆盖常见编码、修复、重构和依赖选择。当时没有安装或启用官方 hooks，因此没有 Ponytail 自己提供的会话启动激活、压缩后重注入、模式状态持久化或子代理继承。
 
 #### 分析判断
 
-对“不写代码、也不使用 `/xxx`”这一要求，当前安装的准确评价是：
+对“不写代码、也不使用 `/xxx`”这一要求，该历史安装的准确评价是：
 
 > **可以无命令地按任务触发，但不能称为持久无感。**
 

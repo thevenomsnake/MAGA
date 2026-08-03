@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.5.0";
+const WORKFLOW_VERSION = "0.6.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {

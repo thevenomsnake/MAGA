@@ -111,7 +111,7 @@ AI Workflow Plugin
 └── 可选任务管理工具
 ```
 
-优先从 skills-only 插件开始。现有 Codex 项目任务工具足以支持活跃 Project Lead 创建、发送、等待和归档同项目任务；只有缺少稳定能力时才增加 MCP server。Hooks 只用于生命周期约束或上下文恢复，不负责静默创建一批会话。
+最初的 V1 优先从 skills-only 插件开始。现有 Codex 项目任务工具足以支持活跃 Project Lead 创建、发送、等待和归档同项目任务；只有缺少稳定能力时才增加 MCP server。Hooks 只用于生命周期约束或上下文恢复，不负责静默创建一批会话。到 V3.2，Kann 已为内置 Ponytail 增加这类生命周期 hooks，但仍未用 hooks 静默创建任务。
 
 ## 当前已确认的事实
 
@@ -131,7 +131,7 @@ AI Workflow Plugin
 
 ## 建议迭代路线
 
-### V1：可安装内核
+### V1：可安装内核（已完成的历史切片）
 
 - 把现有 skills 包装成 skills-only Codex 插件；
 - 提供空目录初始化命令；

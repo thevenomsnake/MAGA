@@ -4,7 +4,7 @@
 >
 > 核对版本：Matt Pocock Skills [`2ab9580`](https://github.com/mattpocock/skills/commit/2ab958093e83e0ec752e6c1c5932da465bf23e0c)，Ponytail [`16f2980`](https://github.com/DietrichGebert/ponytail/commit/16f29800fd2681bdf24f3eb4ccffe38be3baec6b)。
 
-## 先回答：一定要输入 `/xxxx` 吗
+## 先回答：一定要输入 skill 名称吗
 
 **不一定。** Codex 有两种 skill 调用方式：
 
@@ -15,24 +15,24 @@
 
 | 使用位置 | 显式调用方式 |
 | --- | --- |
-| Codex / ChatGPT Desktop | 输入 `@` 后选择 skill |
-| Codex CLI 或 IDE 扩展 | 输入 `$skill-name`，或用 `/skills` 选择 |
+| Codex Desktop、CLI 或 IDE 扩展 | 输入 `$skill-name`，或用 `/skills` 选择 |
 | Claude Code | 上游文档通常写成 `/skill-name` |
 
-所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接理解成 Codex Desktop 也必须输入斜杠。斜杠只是某些宿主的入口语法。
+所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接照抄到 Codex。Kann 包内面向 Codex 的引用统一写成 `$skill-name`。
 
-但是，**没有斜杠**和**完全自动触发**不是一回事。Matt 有 13 个 skill 明确禁止隐式调用；即使界面把斜杠换成按钮或 `@`，仍然需要人显式选择。
+但是，**没有输入名称**和**完全自动触发**不是一回事。Matt 有 13 个 skill 明确禁止隐式调用，仍然需要人显式选择。
 
 来源：[OpenAI Skills 文档](https://learn.chatgpt.com/docs/build-skills#how-chatgpt-and-codex-use-skills)、[Matt 调用模型](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md)。
 
-## 当前安装状态
+## Kann 0.6.0 包含什么
 
-| 项目 | 已安装内容 | 当前实际能力 |
+| 来源 | Kann 内置内容 | 调用与生命周期 |
 | --- | --- | --- |
+| Kann Workflows | 2 个入口 skills | `project-lead` 与 `orchestrate-tickets` 均允许隐式调用 |
 | Matt Pocock Skills | 22 个正式 skills | 13 个必须显式调用，9 个允许隐式调用 |
-| Ponytail | 6 个独立 `SKILL.md` | 可以按自然语言匹配；没有 Ponytail 插件 hooks |
+| Ponytail | 6 个 skills 与原版生命周期 hooks | 6 个 skills 允许隐式调用；hooks 负责会话注入、模式切换和子代理继承 |
 
-当前没有安装 Ponytail 完整插件，因此不存在它自己提供的会话启动激活、压缩后重注入、模式持久化和子代理继承。现在的 Ponytail 能否加载，由 Codex 对任务描述的匹配决定。
+因此，一个隔离实例只需安装 Kann，就能获得上述 30 个 skills，不需要再分别安装 Matt 或 Ponytail。这里的“内置”不表示跳过 Matt 原有的项目配置：首次在某个仓库采用 Matt 的 tracker/spec/ticket 流程时，仍需手动运行 `$setup-matt-pocock-skills`。它生成项目内配置，不会联网安装外部 skills，Kann 也不会替用户自动触发它。
 
 ## 最简单的使用方法
 
@@ -85,19 +85,19 @@ Matt Pocock Skills 是一组可组合的工程流程，不是自动运行的开�
 
 | Skill | 具体做什么 | 什么时候使用 | Codex Desktop 示例 |
 | --- | --- | --- | --- |
-| `ask-matt` | 根据当前处境推荐 skill 和路线 | 不知道下一步该用什么 | `@ask-matt 我有一个产品想法` |
-| `grill-with-docs` | 深入追问设计，同时维护术语表和必要 ADR | 想法仍有大量产品决定 | `@grill-with-docs 帮我把这个设计问清楚` |
-| `triage` | 分类、验证 Issue 或外部 PR，形成可执行 brief | 有一批外来需求、Bug 或 PR | `@triage 处理待办 Issue` |
-| `improve-codebase-architecture` | 扫描架构问题，生成候选报告，再讨论一个改进点 | 想改善已有代码库结构 | `@improve-codebase-architecture` |
-| `setup-matt-pocock-skills` | 配置 tracker、triage 标签和领域文档位置 | 每个仓库首次使用这套体系 | `@setup-matt-pocock-skills` |
-| `to-spec` | 将已经讨论清楚的内容整理并发布为 spec | 讨论完成，需要固定需求 | `@to-spec` |
-| `to-tickets` | 将计划或 spec 拆成可独立验收的纵向 tickets | 工作超出一个会话 | `@to-tickets` |
-| `implement` | 根据 spec/tickets 实现、验证、review 并提交 | 已有清晰执行源 | `@implement 执行 ticket 12` |
-| `wayfinder` | 将超大、模糊工作拆成决策地图，逐项消除未知 | 单个会话无法容纳的问题 | `@wayfinder 规划这次大型改造` |
-| `grill-me` | 只做深入访谈，不维护仓库文档 | 想压力测试想法但不写文档 | `@grill-me` |
-| `handoff` | 将当前会话压缩成下一会话可读取的交接 | 当前上下文过长或需要换会话 | `@handoff` |
-| `teach` | 建立可跨会话持续的教学空间 | 想系统学习一个主题 | `@teach 教我理解事件驱动架构` |
-| `writing-great-skills` | 指导创建或改进 skill | 正在设计自己的 skill | `@writing-great-skills` |
+| `ask-matt` | 根据当前处境推荐 skill 和路线 | 不知道下一步该用什么 | `$ask-matt 我有一个产品想法` |
+| `grill-with-docs` | 深入追问设计，同时维护术语表和必要 ADR | 想法仍有大量产品决定 | `$grill-with-docs 帮我把这个设计问清楚` |
+| `triage` | 分类、验证 Issue 或外部 PR，形成可执行 brief | 有一批外来需求、Bug 或 PR | `$triage 处理待办 Issue` |
+| `improve-codebase-architecture` | 扫描架构问题，生成候选报告，再讨论一个改进点 | 想改善已有代码库结构 | `$improve-codebase-architecture` |
+| `setup-matt-pocock-skills` | 配置 tracker、triage 标签和领域文档位置 | 每个仓库首次使用这套体系 | `$setup-matt-pocock-skills` |
+| `to-spec` | 将已经讨论清楚的内容整理并发布为 spec | 讨论完成，需要固定需求 | `$to-spec` |
+| `to-tickets` | 将计划或 spec 拆成可独立验收的纵向 tickets | 工作超出一个会话 | `$to-tickets` |
+| `implement` | 根据 spec/tickets 实现、验证、review 并提交 | 已有清晰执行源 | `$implement 执行 ticket 12` |
+| `wayfinder` | 将超大、模糊工作拆成决策地图，逐项消除未知 | 单个会话无法容纳的问题 | `$wayfinder 规划这次大型改造` |
+| `grill-me` | 只做深入访谈，不维护仓库文档 | 想压力测试想法但不写文档 | `$grill-me` |
+| `handoff` | 将当前会话压缩成下一会话可读取的交接 | 当前上下文过长或需要换会话 | `$handoff` |
+| `teach` | 建立可跨会话持续的教学空间 | 想系统学习一个主题 | `$teach 教我理解事件驱动架构` |
+| `writing-great-skills` | 指导创建或改进 skill | 正在设计自己的 skill | `$writing-great-skills` |
 
 ### 9 个允许隐式调用的 Skills
 
@@ -170,7 +170,7 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 
 对普通产品人员来说，只需要知道主 `ponytail` 的效果。其余五个更接近维护和诊断工具，不必学习。
 
-### 当前安装为什么不能叫“持久无感”
+### 原版生命周期在 Kann 中如何运行
 
 完整 Ponytail 插件包含 skills 和 lifecycle hooks。hooks 负责：
 
@@ -179,14 +179,28 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 - 让子代理继承规则；
 - 保存 `lite/full/ultra/off` 模式状态。
 
-当前只安装了 6 个 `SKILL.md`，没有安装 Ponytail 插件。因此：
+Kann 已内置这套 hooks，并保留原版三个事件契约：
 
-- 自然语言任务匹配时可以自动加载；
-- 不能保证每个编码任务都一定加载；
-- 不能保证换会话、压缩上下文或启动子代理后继续生效；
-- 没有 Ponytail 自己提供的模式持久化。
+- `SessionStart`：在 `startup`、`resume`、`clear`、`compact` 时按持久默认值重新注入规则；
+- `SubagentStart`：向匹配的子代理再次注入当前规则；
+- `UserPromptSubmit`：处理原版 `$ponytail`、`$ponytail-review` 及 Kann 命名空间下的模式命令。
 
-准确说法是：**当前可以无命令地按任务触发，但不是跨会话持续生效的 always-on 模式。**
+Codex 不会让第三方插件自行取得 hook 信任。安装 Kann 后需要在 `/hooks` 中审阅并信任，运行环境的非交互 `PATH` 还必须能找到 Node.js 18 或更高版本。如果 hooks 未获信任、被宿主禁用或找不到 Node.js，六个 Ponytail skills 仍可被显式或隐式调用，但 always-on 生命周期不会运行。
+
+Kann 保留固定上游版本的实际语义，而不虚构更强的持久化能力：`lite` 或 `ultra` 会在下一次 `resume`、`clear` 或 `compact` 重新加载持久默认值；同一插件数据目录中的并发任务共用当前模式文件。要改变这两点属于后续 Kann 扩展，不是“保留原版”。
+
+### 隔离 Codex 实例的最小验收
+
+仓库测试可以验证打包结构、调用元数据和 hook 脚本，却不能替 Codex 宿主授予信任或证明宿主实际派发了事件。发布前应在只安装 Kann 的隔离实例中做一次宿主验收：
+
+1. 安装 Kann 后确认界面列出 30 个 skills，并在 `/hooks` 中审阅、信任三个 Ponytail 事件；
+2. 新建任务，确认 `SessionStart` 以默认 `full` 注入；
+3. 运行 `$ponytail ultra` 和 `$ponytail-review`，确认原版模式命令仍有效；
+4. 启动一个子任务，确认 `SubagentStart` 继承当前模式；
+5. 分别触发 resume 或 compact，确认会按持久默认值重注入，而不是错误保留临时模式；
+6. 用自然语言分别试一次 `research` 等自动 skill，并确认 `$implement` 等手动 skill 只有显式选择后才进入。
+
+前五项是确定性的生命周期验收；第六项中的自然语言自动匹配包含模型调度判断，应验证“允许自动调用且没有被错误禁用”，不应把每一种措辞都必须命中写成保证。
 
 ### 是否需要理解 `lite/full/ultra`
 
@@ -222,7 +236,7 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 如果愿意使用 Matt 的原始流程，显式选择：
 
 ```text
-@grill-with-docs
+$grill-with-docs
 ```
 
 随后用产品语言描述目标。你仍需要回答产品决定，但不需要自己写代码。
@@ -232,7 +246,7 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 显式选择：
 
 ```text
-@ask-matt
+$ask-matt
 ```
 
 它会推荐路线，但不会替你自动启动下一项。
@@ -242,12 +256,12 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 Matt 的原始完整流程需要依次显式进入：
 
 ```text
-@to-spec
-@to-tickets
-@implement
+$to-spec
+$to-tickets
+$implement
 ```
 
-小任务可以直接使用 `@implement`。进入后，代码、测试、review 和 commit 由 Agent 处理。
+小任务可以直接使用 `$implement`。进入后，代码、测试、review 和 commit 由 Agent 处理。
 
 ### 发现 Bug
 
@@ -283,9 +297,9 @@ Matt 的原始完整流程需要依次显式进入：
 
 错误。它只推荐路线，不能调用另一个 user-invoked skill。
 
-### “装了 Ponytail skills 就等于装了完整 Ponytail 插件”
+### “安装 Kann 后 Ponytail hooks 会直接运行”
 
-错误。当前没有插件 hooks，只具备按任务发现的六个 skills。
+错误。完整 hooks 已包含在 Kann 中，但 Codex 要求用户先在 `/hooks` 中审阅并信任；Node.js 和宿主 hook 开关也必须可用。
 
 ### “用了 `implement` 就要自己再调用 TDD 和 review”
 
@@ -301,14 +315,14 @@ Matt 的原始完整流程需要依次显式进入：
 | --- | --- | --- |
 | 普通研究、诊断、原型、术语整理、review | 通常不需要 | 直接说目标 |
 | 普通编码，希望避免过度设计 | 通常不需要 | 直接说明产品行为和“最小正确实现” |
-| 不知道 Matt 里该用哪个流程 | 需要 | `@ask-matt` |
-| 深入澄清并同步文档 | 需要 | `@grill-with-docs` |
-| 将讨论转成正式规格 | 需要 | `@to-spec` |
-| 将规格拆成跨会话工作 | 需要 | `@to-tickets` |
-| 按 spec/ticket 执行完整实现 | 需要 | `@implement` |
-| 巨大且模糊的长期工作 | 需要 | `@wayfinder` |
-| 只检查当前改动是否过度工程 | 不一定 | 自然语言或 `@ponytail-review` |
-| 希望 Ponytail 跨会话持续生效 | 当前安装做不到 | 需要完整插件及受信任 hooks |
+| 不知道 Matt 里该用哪个流程 | 需要 | `$ask-matt` |
+| 深入澄清并同步文档 | 需要 | `$grill-with-docs` |
+| 将讨论转成正式规格 | 需要 | `$to-spec` |
+| 将规格拆成跨会话工作 | 需要 | `$to-tickets` |
+| 按 spec/ticket 执行完整实现 | 需要 | `$implement` |
+| 巨大且模糊的长期工作 | 需要 | `$wayfinder` |
+| 只检查当前改动是否过度工程 | 不一定 | 自然语言或 `$ponytail-review` |
+| 希望 Ponytail 在宿主事件后重新注入 | 需要一次信任 | 安装 Kann 后用 `/hooks` 审阅；确保 Node.js 18+ 可用 |
 
 ## 延伸阅读
 

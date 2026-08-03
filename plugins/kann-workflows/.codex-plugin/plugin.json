@@ -1,7 +1,7 @@
 {
   "name": "kann-workflows",
-  "version": "0.5.0",
-  "description": "Product-oriented Codex workflows that turn natural-language intent into authorized Tickets and coordinated delivery.",
+  "version": "0.6.0",
+  "description": "Product-oriented Codex workflows bundled with Matt Pocock Skills and Ponytail lifecycle guidance.",
   "author": {
     "name": "Kann Workflows contributors",
     "url": "https://github.com/thevenomsnake/kann_workflows"
@@ -14,10 +14,10 @@
   "interface": {
     "displayName": "Kann Workflows",
     "shortDescription": "Build products through one natural-language project lead.",
-    "longDescription": "Keeps product decisions visible while Codex manages roles, authorized Tickets, fresh task contexts, implementation, and handoff internally.",
+    "longDescription": "Keeps product decisions visible while Codex manages roles, authorized Tickets, fresh task contexts, implementation, and handoff, with the original Matt Pocock Skills invocation split and Ponytail lifecycle behavior bundled.",
     "developerName": "Kann Workflows contributors",
     "category": "Productivity",
-    "capabilities": ["Project planning", "Task orchestration"],
+    "capabilities": ["Project planning", "Task orchestration", "Engineering workflows", "Lifecycle hooks"],
     "defaultPrompt": [
       "Help me turn this product idea into a working first version.",
       "Continue this project from its current state."

@@ -39,6 +39,10 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 - [`project-lead`](plugins/kann-workflows/skills/project-lead/SKILL.md)：面向产品构建者的自然语言入口，负责产品决定、职责形成、Ticket 契约、交付和收口。
 - [`orchestrate-tickets`](plugins/kann-workflows/skills/orchestrate-tickets/SKILL.md)：内部执行能力，在 Ticket 获批后使用 Codex 原生项目任务完成投递、等待、恢复与归档。
+- Matt Pocock Skills：固定快照中的 22 个正式 Skills；13 个保持只能由用户显式调用，9 个保持可由模型根据任务自动调用。
+- Ponytail：6 个原版 Skills，以及会话启动、恢复、清空、压缩、模式切换和子任务继承所需的原版生命周期 hooks。
+
+插件合计提供 30 个 Skills。Kann 不会把 Matt 的显式入口改成自动入口，也不会把原本允许自动匹配的能力降级为手动入口。Ponytail 默认以 `full` 模式启动；用户仍可使用原版命令切换 `lite`、`full`、`ultra` 或 `off`。
 
 ## 初始化一个项目
 
@@ -49,6 +53,8 @@ npx github:thevenomsnake/kann_workflows init
 ```
 
 命令会安装 Kann Workflows 插件、创建最小项目状态、初始化 Git，并创建和打开置顶的 Project Lead 任务。用户直接在这个入口描述想做的产品即可；后续职责与 Ticket 由系统按逐 Ticket 记录的批准范围创建、续发、等待和归档，正常路径不需要输入 Skill、Git 或测试命令。私有仓库安装需要本机 Git 已具备对应 GitHub 访问权限。
+
+Ponytail 的持久默认模式由插件生命周期 hooks 提供，并要求非交互命令环境的 `PATH` 中存在 Node.js 18 或更高版本。Codex 不会自动信任任何第三方插件 hook；首次安装或 hook 内容变化后，必须在 Codex 中使用 `/hooks`（或当前界面提供的 hook review 入口）审阅并信任它们。未信任、禁用 hooks 或找不到 Node.js 时，30 个 Skills 仍可使用，但 Ponytail 的会话自动激活、压缩后重注入和子任务继承不会运行。
 
 Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server bridge 建立首个原生 Project Lead，随后退出；项目对话、职责管理和 Ticket 执行全部留在 Codex 原生同项目任务中，不另建聊天 UI、Dashboard 或任务面板。
 
@@ -61,10 +67,11 @@ Codex Desktop 是唯一用户界面。初始化器只通过一次性 App Server 
 | V2 | `0.3.0` | 首个 Project Lead bridge，以及原生任务的创建、续发、等待和归档 |
 | V3 | `0.4.0` | Codex Desktop 内从产品入职到工作集成与状态收口的机械闭环 |
 | V3.1 | `0.5.0` | 统一 Ticket 真源，并将执行授权限定到明确的 Ticket 集合 |
+| V3.2 | `0.6.0` | 内置 Matt 22 个 Skills 与 Ponytail 6 个 Skills，并保留原调用分类和生命周期 hooks |
 
 每一版都有仓库内匿名实验记录；V3 的 Project Lead 还实际创建并收口了一个原生同项目 worker，而不是只验证提示词文本。这些版本表示能力切片，不代表产品成熟度认证。
 
-`0.5.0` 的 schema v2 只用于新初始化项目。初始化器不会静默重写已有 schema v1 项目；Project Lead 在旧工作重新进入活跃状态时按 Ticket 契约保守迁移，并要求当前授权。批量升级旧项目不属于这一切片。
+`0.6.0` 继续使用 schema v2，只用于新初始化项目。初始化器不会静默重写已有 schema v1 项目；Project Lead 在旧工作重新进入活跃状态时按 Ticket 契约保守迁移，并要求当前授权。批量升级旧项目不属于这一切片。
 
 ## 工作流
 

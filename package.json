@@ -1,7 +1,7 @@
 {
   "name": "kann-workflows",
-  "version": "0.5.0",
-  "description": "Product-oriented project initialization and Codex workflow orchestration",
+  "version": "0.6.0",
+  "description": "Product-oriented Codex workflows with bundled engineering skills and lifecycle guidance",
   "type": "module",
   "bin": {
     "kann-workflows": "./bin/kann-workflows.js"
@@ -16,7 +16,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "node --test",
+    "test": "node --test test/*.test.js",
     "smoke:init": "node ./bin/kann-workflows.js init ./tmp/init-smoke --skip-plugin --no-commit --no-launch --json"
   },
   "engines": {
