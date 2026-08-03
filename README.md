@@ -101,4 +101,7 @@ playbooks/reviewing-ai-changes.md
 
 ## License
 
-除另有说明外，项目原创文字采用 [CC BY 4.0](LICENSE) 许可。
+Kann Workflows 采用 [MIT License](LICENSE)。项目融合并改造了 Matt Pocock
+Skills 与 Ponytail 的部分工作流思想；相应上游版本、版权与 MIT 许可声明见
+[Third-Party Notices](THIRD_PARTY_NOTICES.md)。上游作者不为 Kann Workflows
+提供赞助或背书。

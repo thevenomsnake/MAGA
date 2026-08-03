@@ -12,6 +12,7 @@
     "plugins/",
     "src/",
     "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
     "README.md"
   ],
   "scripts": {
@@ -25,5 +26,5 @@
     "type": "git",
     "url": "https://github.com/thevenomsnake/kann_workflows.git"
   },
-  "license": "CC-BY-4.0"
+  "license": "MIT"
 }

@@ -81,6 +81,29 @@ test("keeps package, plugin, workflow, and bridge versions aligned", () => {
   );
 });
 
+test("ships MIT and upstream notices with the package and plugin", () => {
+  const packageMetadata = JSON.parse(
+    fs.readFileSync(path.join(REPOSITORY_ROOT, "package.json"), "utf8"),
+  );
+  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+  const pluginMetadata = JSON.parse(
+    fs.readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"),
+  );
+
+  assert.equal(packageMetadata.license, "MIT");
+  assert.equal(pluginMetadata.license, "MIT");
+  assert.equal(packageMetadata.files.includes("THIRD_PARTY_NOTICES.md"), true);
+
+  for (const root of [REPOSITORY_ROOT, pluginRoot]) {
+    const license = fs.readFileSync(path.join(root, "LICENSE"), "utf8");
+    const notices = fs.readFileSync(path.join(root, "THIRD_PARTY_NOTICES.md"), "utf8");
+
+    assert.match(license, /^MIT License/);
+    assert.match(notices, /Copyright \(c\) 2026 Matt Pocock/);
+    assert.match(notices, /Copyright \(c\) 2026 DietrichGebert/);
+  }
+});
+
 test("initializes a repository at the project root", (t) => {
   const targetDir = workspace(t);
   const result = initProject({ targetDir, commit: false });
