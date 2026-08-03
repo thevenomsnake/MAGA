@@ -16,11 +16,11 @@ function finish() {
     // Strip UTF-8 BOM some shells prepend when piping (breaks JSON.parse)
     const data = JSON.parse(input.replace(/^\uFEFF/, ''));
     const prompt = (data.prompt || '').trim().toLowerCase();
-    // Kann bundles Ponytail under its own plugin namespace. Normalize Codex's
-    // explicit `$kann-workflows:<skill>` form to Ponytail's original command
+    // MAGA bundles Ponytail under its own plugin namespace. Normalize Codex's
+    // explicit `$maga:<skill>` form to Ponytail's original command
     // namespace before applying the upstream mode-switch logic.
     const commandPrompt = prompt.replace(
-      /^([/@$])kann-workflows:/,
+      /^([/@$])maga:/,
       '$1ponytail:',
     );
 

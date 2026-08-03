@@ -11,7 +11,7 @@
 ```text
 空文件夹
   -> 一次初始化命令
-  -> 安装或确认 AI Workflow 插件
+  -> 安装或确认 MAGA 插件
   -> 初始化 Git 与最小项目内核
   -> 建立唯一项目入口
   -> 用户描述产品目标
@@ -106,7 +106,7 @@ queue 的长期职责才建立置顶管理会话。
 最终交付物不应只是若干独立 skills，而应是一个可安装插件加一个项目初始化器：
 
 ```text
-AI Workflow Plugin
+MAGA Plugin
 ├── project-lead
 ├── orchestrate-tickets
 ├── bootstrap-project
@@ -116,7 +116,7 @@ AI Workflow Plugin
 └── 可选任务管理工具
 ```
 
-最初的 V1 优先从 skills-only 插件开始。现有 Codex 项目任务工具足以支持活跃 Project Lead 创建、发送、等待和归档同项目任务；只有缺少稳定能力时才增加 MCP server。Hooks 只用于生命周期约束或上下文恢复，不负责静默创建一批会话。到 V3.3，Kann 已为内置 Ponytail 增加这类生命周期 hooks，但仍不使用 hooks 静默创建任务；专业任务由 Project Lead 根据持久 Ticket 按需建立。
+最初的 V1 优先从 skills-only 插件开始。现有 Codex 项目任务工具足以支持活跃 Project Lead 创建、发送、等待和归档同项目任务；只有缺少稳定能力时才增加 MCP server。Hooks 只用于生命周期约束或上下文恢复，不负责静默创建一批会话。到 V3.3，MAGA 已为内置 Ponytail 增加这类生命周期 hooks，但仍不使用 hooks 静默创建任务；专业任务由 Project Lead 根据持久 Ticket 按需建立。
 
 ## 当前已确认的事实
 

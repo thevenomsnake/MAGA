@@ -6,7 +6,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const REPOSITORY_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "maga");
 const HOOKS_ROOT = path.join(PLUGIN_ROOT, "hooks");
 const TEST_ROOT = path.join(REPOSITORY_ROOT, "tmp", "tests");
 
@@ -109,7 +109,7 @@ test("activates, switches, reinjects, and disables Ponytail in isolated Codex da
   output = JSON.parse(runHook(
     "ponytail-mode-tracker.js",
     env,
-    JSON.stringify({ prompt: "$kann-workflows:ponytail lite" }),
+    JSON.stringify({ prompt: "$maga:ponytail lite" }),
   ));
   assert.equal(fs.readFileSync(state, "utf8"), "lite");
   assert.equal(output.systemMessage, "PONYTAIL:LITE");
@@ -128,7 +128,7 @@ test("activates, switches, reinjects, and disables Ponytail in isolated Codex da
   assert.equal(output.systemMessage, "PONYTAIL:OFF");
 });
 
-test("persists a namespaced default inside this Kann installation", (t) => {
+test("persists a namespaced default inside this MAGA installation", (t) => {
   const root = workspace(t);
   const env = codexEnvironment(root);
   const configPath = path.join(env.PLUGIN_DATA, "ponytail", "config.json");
@@ -136,7 +136,7 @@ test("persists a namespaced default inside this Kann installation", (t) => {
   const output = JSON.parse(runHook(
     "ponytail-mode-tracker.js",
     env,
-    JSON.stringify({ prompt: "$kann-workflows:ponytail default ultra" }),
+    JSON.stringify({ prompt: "$maga:ponytail default ultra" }),
   ));
   assert.equal(output.systemMessage, "PONYTAIL:ULTRA");
   assert.equal(JSON.parse(fs.readFileSync(configPath, "utf8")).defaultMode, "ultra");

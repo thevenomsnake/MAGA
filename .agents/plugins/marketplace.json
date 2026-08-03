@@ -1,14 +1,14 @@
 {
-  "name": "kann-workflows",
+  "name": "maga",
   "interface": {
-    "displayName": "Kann Workflows"
+    "displayName": "MAGA"
   },
   "plugins": [
     {
-      "name": "kann-workflows",
+      "name": "maga",
       "source": {
         "source": "local",
-        "path": "./plugins/kann-workflows"
+        "path": "./plugins/maga"
       },
       "policy": {
         "installation": "AVAILABLE",

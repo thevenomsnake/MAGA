@@ -4,7 +4,7 @@
 
 **Role:** Product experience
 
-**Task title:** AI Workflow · Product experience · E02 Product first turn · retry 2
+**Task title:** MAGA · Product experience · E02 Product first turn · retry 2
 
 **Attempt:** 2
 
@@ -16,7 +16,7 @@ A product-oriented user says:
 我想做一个给三五人工作室用的预约管理工具，手机上也要方便。
 ```
 
-The evaluator reads `plugins/kann-workflows/skills/project-lead/SKILL.md` and returns only the first response it would give the user. It does not modify files or receive an expected answer.
+The evaluator reads `plugins/maga/skills/project-lead/SKILL.md` and returns only the first response it would give the user. It does not modify files or receive an expected answer.
 
 ## Acceptance Criteria
 

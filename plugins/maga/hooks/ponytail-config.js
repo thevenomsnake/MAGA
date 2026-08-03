@@ -53,7 +53,7 @@ function isShellSafe(p) {
 
 function getConfigDir() {
   // Codex gives every installed plugin a writable data directory. Keep the
-  // persisted default with this Kann installation so isolated Codex homes do
+  // persisted default with this MAGA installation so isolated Codex homes do
   // not share `%APPDATA%/ponytail/config.json` merely because the OS user is
   // the same. Other Ponytail hosts retain the upstream location rules below.
   if (process.env.PLUGIN_DATA) {

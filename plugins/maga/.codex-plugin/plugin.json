@@ -1,0 +1,27 @@
+{
+  "name": "maga",
+  "version": "0.8.0",
+  "description": "Make Apps Great Again through one product-facing Codex lead with on-demand professional workspaces.",
+  "author": {
+    "name": "MAGA contributors",
+    "url": "https://github.com/thevenomsnake/MAGA"
+  },
+  "homepage": "https://github.com/thevenomsnake/MAGA",
+  "repository": "https://github.com/thevenomsnake/MAGA",
+  "license": "MIT",
+  "keywords": ["maga", "codex", "product", "workflow", "multi-session"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "MAGA",
+    "shortDescription": "Make Apps Great Again through one product lead.",
+    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, or delivery tasks only when the work needs a fresh context. Bundled Matt Pocock Skills keep their original invocation split, and Ponytail keeps its lifecycle behavior.",
+    "developerName": "MAGA contributors",
+    "category": "Productivity",
+    "capabilities": ["Product discovery", "On-demand task workspaces", "Task orchestration", "Engineering workflows", "Lifecycle hooks"],
+    "defaultPrompt": [
+      "Help me turn this product idea into a working first version.",
+      "Research or prototype what we need for the next product decision.",
+      "Continue this project from its current state."
+    ]
+  }
+}

@@ -31,12 +31,12 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 When the selected bundled upstream Skill is explicit-only, load its instructions
 as an internal workflow reference instead of asking the Product Owner to type a
 Skill command. Keep the original explicit entry available for expert direct use,
-and do not change its invocation metadata. Kann's Ticket authorization, product
+and do not change its invocation metadata. MAGA's Ticket authorization, product
 boundaries, and repository instructions still govern any adapted method.
 
 Do not automatically enter setup, teaching, skill-authoring, opportunistic
 architecture-audit, or external issue-triage flows without matching user intent.
-Do not let a manual upstream implementation flow bypass a pending or revoked Kann
+Do not let a manual upstream implementation flow bypass a pending or revoked MAGA
 Ticket.
 
 ## Open A Fresh Workspace Only When It Pays

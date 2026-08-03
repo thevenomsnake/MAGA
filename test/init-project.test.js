@@ -26,7 +26,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.7\.0/);
+  assert.match(project, /workflow_version: 0\.8\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
@@ -37,15 +37,15 @@ test("initializes the minimum project kernel", (t) => {
 
 test("ships per-Ticket execution authorization", () => {
   const projectLead = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "project-lead", "SKILL.md"),
+    path.join(REPOSITORY_ROOT, "plugins", "maga", "skills", "project-lead", "SKILL.md"),
     "utf8",
   );
   const memory = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "project-lead", "references", "project-memory.md"),
+    path.join(REPOSITORY_ROOT, "plugins", "maga", "skills", "project-lead", "references", "project-memory.md"),
     "utf8",
   );
   const orchestration = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", "skills", "orchestrate-tickets", "SKILL.md"),
+    path.join(REPOSITORY_ROOT, "plugins", "maga", "skills", "orchestrate-tickets", "SKILL.md"),
     "utf8",
   );
 
@@ -58,7 +58,7 @@ test("ships per-Ticket execution authorization", () => {
 });
 
 test("routes specifically named professional workspaces on demand", () => {
-  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "maga");
   const projectLeadRoot = path.join(pluginRoot, "skills", "project-lead");
   const projectLead = fs.readFileSync(path.join(projectLeadRoot, "SKILL.md"), "utf8");
   const routing = fs.readFileSync(
@@ -97,17 +97,18 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(orchestration, /approved research, prototype, diagnosis, review, delivery, or release Tickets/);
   assert.match(orchestration, /Never create or keep a worker titled only with a generic capability/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
-  assert.equal(manifest.interface.defaultPrompt.length, 4);
+  assert.equal(manifest.interface.defaultPrompt.length, 3);
 });
 
 test("ships the GitHub routing guide and hero", () => {
   const readme = fs.readFileSync(path.join(REPOSITORY_ROOT, "README.md"), "utf8");
   const diagram = readme.match(/```mermaid\n([\s\S]+?)```/)?.[1];
   const hero = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "assets", "kann-workflows-routing-hero.png"),
+    path.join(REPOSITORY_ROOT, "assets", "maga-routing-hero.png"),
   );
 
-  assert.match(readme, /assets\/kann-workflows-routing-hero\.png/);
+  assert.match(readme, /assets\/maga-routing-hero\.png/);
+  assert.match(readme, /Make Apps Great Again → MAGA/);
   assert.match(readme, /## 自动路由如何工作/);
   assert.match(readme, /### Project Lead 完整路由表/);
   assert.match(readme, /### 授权如何约束自动路由/);
@@ -139,7 +140,7 @@ test("keeps package, plugin, workflow, and bridge versions aligned", () => {
   ).version;
   const pluginVersion = JSON.parse(
     fs.readFileSync(
-      path.join(REPOSITORY_ROOT, "plugins", "kann-workflows", ".codex-plugin", "plugin.json"),
+      path.join(REPOSITORY_ROOT, "plugins", "maga", ".codex-plugin", "plugin.json"),
       "utf8",
     ),
   ).version;
@@ -154,13 +155,17 @@ test("keeps package, plugin, workflow, and bridge versions aligned", () => {
     fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "codex-bridge.js"), "utf8"),
     new RegExp(`BRIDGE_VERSION = "${escapedVersion}"`),
   );
+  assert.match(
+    fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "codex-bridge.js"), "utf8"),
+    /clientInfo:\s*\{\s*name: "maga",\s*title: "MAGA"/,
+  );
 });
 
 test("ships MIT and upstream notices with the package and plugin", () => {
   const packageMetadata = JSON.parse(
     fs.readFileSync(path.join(REPOSITORY_ROOT, "package.json"), "utf8"),
   );
-  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+  const pluginRoot = path.join(REPOSITORY_ROOT, "plugins", "maga");
   const pluginMetadata = JSON.parse(
     fs.readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"),
   );

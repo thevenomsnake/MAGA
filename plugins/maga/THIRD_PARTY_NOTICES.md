@@ -1,9 +1,9 @@
 # Third-Party Notices
 
-Kann Workflows includes vendored Skills and lifecycle code, as well as adapted
+MAGA includes vendored Skills and lifecycle code, as well as adapted
 workflow guidance, from the projects below. These notices identify the fixed
 upstream versions used for the bundled files. The upstream authors do not
-sponsor or endorse Kann Workflows.
+sponsor or endorse MAGA.
 
 ## Matt Pocock Skills
 
@@ -13,12 +13,12 @@ Reference commit: `2ab958093e83e0ec752e6c1c5932da465bf23e0c`
 
 Bundled components: the 22 formal Engineering and Productivity Skill folders.
 Their Codex invocation metadata is preserved; category folders are flattened
-so each Skill is an immediate child of the Kann plugin's `skills/` directory,
+so each Skill is an immediate child of the MAGA plugin's `skills/` directory,
 and Claude-only `disable-model-invocation` frontmatter is removed because Codex
 uses the equivalent `agents/openai.yaml` policy.
 
-Kann's Project Lead may read a bundled explicit-only Skill as an internal
-workflow reference. That automatic routing belongs to Kann, is not an upstream
+MAGA's Project Lead may read a bundled explicit-only Skill as an internal
+workflow reference. That automatic routing belongs to MAGA, is not an upstream
 Matt invocation behavior, and does not change the preserved 13 manual / 9
 implicit registered entry policies.
 
@@ -51,11 +51,11 @@ Source: https://github.com/DietrichGebert/ponytail
 Reference commit: `16f29800fd2681bdf24f3eb4ccffe38be3baec6b`
 
 Bundled components: all six Skill folders and the Codex lifecycle hook
-configuration with its required JavaScript modules. Kann adds a local CommonJS
-package boundary, recognizes the Kann plugin's namespaced Ponytail commands,
+configuration with its required JavaScript modules. MAGA adds a local CommonJS
+package boundary, recognizes the MAGA plugin's namespaced Ponytail commands,
 and scopes persisted Codex defaults to `PLUGIN_DATA`; these host adaptations
 preserve the original mode transitions while allowing the hooks to run inside
-Kann's ESM npm repository and isolated Codex installations.
+MAGA's ESM npm repository and isolated Codex installations.
 
 MIT License
 

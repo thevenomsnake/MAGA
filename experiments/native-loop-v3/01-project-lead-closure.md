@@ -11,7 +11,7 @@ Create a concise event-readiness checklist for first-time volunteer organizers. 
 ## Experiment Boundary
 
 - Treat `experiments/native-loop-v3/workspace/` as the logical product root.
-- Read `AGENTS.md`, the logical root's `AGENTS.md`, and `plugins/kann-workflows/skills/project-lead/SKILL.md` with only the references it routes to for this work.
+- Read `AGENTS.md`, the logical root's `AGENTS.md`, and `plugins/maga/skills/project-lead/SKILL.md` with only the references it routes to for this work.
 - Do not modify this experiment contract or files outside the logical product root.
 - Use Codex Desktop native project tasks only. Do not build another interface or persistent service.
 - Return the usable artifact, focused validation fact, durable final state, relevant commits, and whether the worker was archived. Do not return runtime task identifiers.

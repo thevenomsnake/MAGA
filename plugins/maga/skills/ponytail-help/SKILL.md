@@ -35,7 +35,7 @@ Ponytail hook behavior.
 | **ponytail-help** | `$ponytail-help` | This card. |
 
 Codex uses the `$ponytail`, `$ponytail-review`, and `$ponytail-help` forms
-above. Kann's namespaced forms, such as `$kann-workflows:ponytail`, are also
+above. MAGA's namespaced forms, such as `$maga:ponytail`, are also
 accepted by the lifecycle hooks.
 
 ## Deactivate
@@ -52,8 +52,8 @@ Default mode = `full`, auto-active every session. Change it:
 export PONYTAIL_DEFAULT_MODE=ultra
 ```
 
-**Persist for this Kann installation:** `$ponytail default lite` (replace
-`lite` with `full`, `ultra`, or `off`). Codex stores this setting in Kann's
+**Persist for this MAGA installation:** `$ponytail default lite` (replace
+`lite` with `full`, `ultra`, or `off`). Codex stores this setting in MAGA's
 writable plugin-data directory.
 
 Set the default to `off` to disable auto-activation on session start, then
@@ -63,9 +63,9 @@ Resolution: env var > config file > `full`.
 
 ## Update
 
-Update Kann Workflows through the marketplace or source that installed Kann.
+Update MAGA through the marketplace or source that installed MAGA.
 Do not install or update Ponytail separately; this bundled copy is pinned and
-updated together with Kann.
+updated together with MAGA.
 
 ## More
 

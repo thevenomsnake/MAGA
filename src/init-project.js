@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.7.0";
+const WORKFLOW_VERSION = "0.8.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -33,7 +33,7 @@ function requireGit() {
 export function readProjectName(targetDir) {
   const marker = path.join(path.resolve(targetDir), ".ai-workflow", "PROJECT.md");
   if (!fs.existsSync(marker)) {
-    throw new Error(`Kann Workflows is not initialized in ${path.resolve(targetDir)}`);
+    throw new Error(`MAGA is not initialized in ${path.resolve(targetDir)}`);
   }
 
   const match = fs.readFileSync(marker, "utf8").match(/^project_name:\s*(.+)$/m);
@@ -62,7 +62,7 @@ first observable value, delivery form, and material risk boundaries before dispa
 
 ## Current State
 
-- Kann Workflows initialized.
+- MAGA initialized.
 - Product onboarding has not started.
 
 ## Roles
@@ -138,7 +138,7 @@ function commitInitialState(targetDir) {
   const add = runGit(targetDir, ["add", "--", "AGENTS.md", ".gitignore", ".ai-workflow/PROJECT.md"]);
   if (add.status !== 0) throw new Error(add.stderr.trim() || "git add failed");
 
-  const commit = runGit(targetDir, ["commit", "-m", "chore: initialize kann workflows"]);
+  const commit = runGit(targetDir, ["commit", "-m", "chore: initialize maga"]);
   if (commit.status !== 0) throw new Error(commit.stderr.trim() || "git commit failed");
   return "created";
 }

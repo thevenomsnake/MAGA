@@ -1,10 +1,10 @@
 {
-  "name": "kann-workflows",
-  "version": "0.7.0",
-  "description": "A product-facing Codex lead that opens focused research, prototype, and delivery tasks on demand",
+  "name": "maga",
+  "version": "0.8.0",
+  "description": "Make Apps Great Again through one product-facing Codex lead",
   "type": "module",
   "bin": {
-    "kann-workflows": "./bin/kann-workflows.js"
+    "maga": "./bin/maga.js"
   },
   "files": [
     ".agents/",
@@ -17,14 +17,14 @@
   ],
   "scripts": {
     "test": "node --test test/*.test.js",
-    "smoke:init": "node ./bin/kann-workflows.js init ./tmp/init-smoke --skip-plugin --no-commit --no-launch --json"
+    "smoke:init": "node ./bin/maga.js init ./tmp/init-smoke --skip-plugin --no-commit --no-launch --json"
   },
   "engines": {
     "node": ">=18"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thevenomsnake/kann_workflows.git"
+    "url": "https://github.com/thevenomsnake/MAGA.git"
   },
   "license": "MIT"
 }

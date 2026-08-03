@@ -5,7 +5,7 @@
 > 核对日期：2026-08-01
 > 证据范围：官方 GitHub 仓库中的源码、skills、benchmark harness、结果说明和 release 元数据。
 >
-> 历史边界：文中的“当前本地安装”特指 2026-08-01 的核对环境，当时只有六个独立 Skills。Kann 0.6.0 后的产品状态与用法见[使用手册](../playbooks/matt-skills-and-ponytail-guide.md)，不要把下面的历史安装结论当成现状。
+> 历史边界：文中的“当前本地安装”特指 2026-08-01 的核对环境，当时只有六个独立 Skills。MAGA 0.6.0 后的产品状态与用法见[使用手册](../playbooks/matt-skills-and-ponytail-guide.md)，不要把下面的历史安装结论当成现状。
 
 ## 证据标记
 
@@ -403,7 +403,7 @@ Ponytail 最可靠的价值不是某个固定节省百分比，而是把资深�
 | `ponytail-gain` | 询问 Ponytail 节省什么或查看影响指标 | 否 |
 | `ponytail-help` | 询问 Ponytail 如何使用、有哪些能力 | 否 |
 
-在采用描述驱动 skill 匹配的 Codex 宿主中，用户只要自然地表达上述任务，宿主就可以选择对应 skill。核对当时的官方 README 把 Codex 显式入口写成 `@ponytail`、`@ponytail-review` 等；Kann 当前面向 Codex 的使用说明统一采用 `$skill-name`。无论宿主采用哪种显式语法，显式入口都只是强制指定能力的专家入口，不是这些 skill 文本所允许的唯一入口。
+在采用描述驱动 skill 匹配的 Codex 宿主中，用户只要自然地表达上述任务，宿主就可以选择对应 skill。核对当时的官方 README 把 Codex 显式入口写成 `@ponytail`、`@ponytail-review` 等；MAGA 当前面向 Codex 的使用说明统一采用 `$skill-name`。无论宿主采用哪种显式语法，显式入口都只是强制指定能力的专家入口，不是这些 skill 文本所允许的唯一入口。
 
 来源：[主 skill](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail/SKILL.md)、[`ponytail-review`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-review/SKILL.md)、[`ponytail-audit`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-audit/SKILL.md)、[`ponytail-debt`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-debt/SKILL.md)、[`ponytail-gain`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-gain/SKILL.md)、[`ponytail-help`](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/skills/ponytail-help/SKILL.md)、[README Commands](https://github.com/DietrichGebert/ponytail/blob/16f29800fd2681bdf24f3eb4ccffe38be3baec6b/README.md#commands)。
 

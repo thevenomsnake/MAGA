@@ -10,7 +10,7 @@ Build a small browser-based shift board for volunteer coordinators. One coordina
 
 ## Execution Contract
 
-1. Read `AGENTS.md` and `plugins/kann-workflows/skills/project-lead/SKILL.md`, including only the reference it routes to for onboarding.
+1. Read `AGENTS.md` and `plugins/maga/skills/project-lead/SKILL.md`, including only the reference it routes to for onboarding.
 2. Treat the Product Message as the user's first turn for the initialized project under `experiments/product-onboarding-smoke/workspace/`.
 3. Perform onboarding state materialization only. Do not implement the shift board and do not create another task.
 4. Keep every change under `experiments/product-onboarding-smoke/workspace/.ai-workflow/`.

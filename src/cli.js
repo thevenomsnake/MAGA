@@ -3,8 +3,8 @@ import path from "node:path";
 import { launchProjectLead } from "./codex-bridge.js";
 import { initProject, readProjectName } from "./init-project.js";
 
-const MARKETPLACE = "thevenomsnake/kann_workflows";
-const PLUGIN = "kann-workflows@kann-workflows";
+const MARKETPLACE = "thevenomsnake/MAGA";
+const PLUGIN = "maga@maga";
 
 function run(command, args) {
   const result = spawnSync(command, args, {
@@ -22,8 +22,8 @@ function run(command, args) {
 
 export function installPlugin(execute = run) {
   const configured = JSON.parse(execute("codex", ["plugin", "marketplace", "list", "--json"]));
-  if (configured.marketplaces?.some(({ name }) => name === "kann-workflows")) {
-    execute("codex", ["plugin", "marketplace", "upgrade", "kann-workflows", "--json"]);
+  if (configured.marketplaces?.some(({ name }) => name === "maga")) {
+    execute("codex", ["plugin", "marketplace", "upgrade", "maga", "--json"]);
   } else {
     execute("codex", ["plugin", "marketplace", "add", MARKETPLACE, "--ref", "main", "--json"]);
   }
@@ -32,9 +32,9 @@ export function installPlugin(execute = run) {
 
 function usage() {
   return `Usage:
-  kann-workflows install [--json]
-  kann-workflows init [directory] [--name <project-name>] [--skip-plugin] [--no-git] [--no-commit] [--no-launch] [--no-open] [--json]
-  kann-workflows start [directory] [--name <project-name>] [--no-open] [--json]
+  maga install [--json]
+  maga init [directory] [--name <project-name>] [--skip-plugin] [--no-git] [--no-commit] [--no-launch] [--no-open] [--json]
+  maga start [directory] [--name <project-name>] [--no-open] [--json]
 
 Use install to install only the Codex plugin. Use init to initialize an empty directory
 with durable project state, install the plugin, create the Project Lead task, and open
@@ -144,7 +144,7 @@ export async function runCli(argv, dependencies = {}) {
     const plugin = install();
     write(options.json
       ? `${JSON.stringify(plugin)}\n`
-      : `Installed Kann Workflows${plugin.version ? ` ${plugin.version}` : ""}.\n`);
+      : `Installed MAGA${plugin.version ? ` ${plugin.version}` : ""}.\n`);
     return;
   }
 
@@ -174,7 +174,7 @@ export async function runCli(argv, dependencies = {}) {
 
   write(
     result.alreadyInitialized
-      ? `Kann Workflows is already initialized in ${result.targetDir}.\n`
+      ? `MAGA is already initialized in ${result.targetDir}.\n`
       : `Initialized ${result.projectName} in ${result.targetDir}.\n`,
   );
 

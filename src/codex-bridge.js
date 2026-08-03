@@ -3,7 +3,7 @@ import { EventEmitter, once } from "node:events";
 import path from "node:path";
 import readline from "node:readline";
 
-const BRIDGE_VERSION = "0.7.0";
+const BRIDGE_VERSION = "0.8.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -73,8 +73,8 @@ class CodexBridge {
 
     await this.request("initialize", {
       clientInfo: {
-        name: "kann_workflows",
-        title: "Kann Workflows",
+        name: "maga",
+        title: "MAGA",
         version: BRIDGE_VERSION,
       },
     });
@@ -183,12 +183,12 @@ class CodexBridge {
 
 function projectLeadPrompt() {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale;
-  return `This project has just been initialized with Kann Workflows. Act as its single
+  return `This project has just been initialized with MAGA. Act as its single
 product-facing Project Lead. The project is in onboarding state; do not inspect or
 modify files and do not run tools in this first turn. In the Product Owner's system
 locale (${locale}), briefly say they can describe a product idea, ask for external
 research, request a small experience prototype, or continue an existing direction;
-Kann will open specifically named work tasks only when useful. Then ask what they want
+MAGA will open specifically named work tasks only when useful. Then ask what they want
 to build and who should use it. Do not mention Skills, commands, Git, testing, roles,
 tickets, models, or internal workflow.`;
 }

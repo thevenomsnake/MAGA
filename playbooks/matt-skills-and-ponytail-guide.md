@@ -18,24 +18,24 @@
 | Codex Desktop、CLI 或 IDE 扩展 | 输入 `$skill-name`，或用 `/skills` 选择 |
 | Claude Code | 上游文档通常写成 `/skill-name` |
 
-所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接照抄到 Codex。Kann 包内面向 Codex 的引用统一写成 `$skill-name`。
+所以，在 Matt 或 Ponytail README 中看到 `/xxx`，不要直接照抄到 Codex。MAGA 包内面向 Codex 的引用统一写成 `$skill-name`。
 
 但是，**没有输入名称**和**完全自动触发原版 Skill**不是一回事。Matt 有 13 个
 Skill 明确禁止宿主隐式调用；直接使用这些原版入口时，仍然需要人显式选择。
-Kann 的 Project Lead 可以根据产品状态在内部采用相应方法，但不会修改这些原版
+MAGA 的 Project Lead 可以根据产品状态在内部采用相应方法，但不会修改这些原版
 入口的调用元数据。
 
 来源：[OpenAI Skills 文档](https://learn.chatgpt.com/docs/build-skills#how-chatgpt-and-codex-use-skills)、[Matt 调用模型](https://github.com/mattpocock/skills/blob/2ab958093e83e0ec752e6c1c5932da465bf23e0c/.agents/invocation.md)。
 
-## Kann 0.7.0 包含什么
+## MAGA 0.8.0 包含什么
 
-| 来源 | Kann 内置内容 | 调用与生命周期 |
+| 来源 | MAGA 内置内容 | 调用与生命周期 |
 | --- | --- | --- |
-| Kann Workflows | 2 个入口 skills | `project-lead` 与 `orchestrate-tickets` 均允许隐式调用 |
+| MAGA | 2 个入口 skills | `project-lead` 与 `orchestrate-tickets` 均允许隐式调用 |
 | Matt Pocock Skills | 22 个正式 skills | 13 个必须显式调用，9 个允许隐式调用 |
-| Ponytail | 6 个 Skills，以及基于固定上游 commit、经 Kann 宿主适配的生命周期 hooks | 6 个 Skills 允许隐式调用；hooks 保留上游生命周期语义，适配项见 Third-Party Notices |
+| Ponytail | 6 个 Skills，以及基于固定上游 commit、经 MAGA 宿主适配的生命周期 hooks | 6 个 Skills 允许隐式调用；hooks 保留上游生命周期语义，适配项见 Third-Party Notices |
 
-因此，一个隔离实例只需安装 Kann，就能获得上述 30 个 skills，不需要再分别安装 Matt 或 Ponytail。这里的“内置”不表示跳过 Matt 原有的项目配置：首次在某个仓库采用 Matt 的 tracker/spec/ticket 流程时，仍需手动运行 `$setup-matt-pocock-skills`。它生成项目内配置，不会联网安装外部 skills，Kann 也不会替用户自动触发它。
+因此，一个隔离实例只需安装 MAGA，就能获得上述 30 个 skills，不需要再分别安装 Matt 或 Ponytail。这里的“内置”不表示跳过 Matt 原有的项目配置：首次在某个仓库采用 Matt 的 tracker/spec/ticket 流程时，仍需手动运行 `$setup-matt-pocock-skills`。它生成项目内配置，不会联网安装外部 skills，MAGA 也不会替用户自动触发它。
 
 ## 最简单的使用方法
 
@@ -61,7 +61,7 @@ Kann 的 Project Lead 可以根据产品状态在内部采用相应方法，但�
 - 建立跨会话 Wayfinder 地图；
 - 生成 handoff 并切换会话。
 
-要直接运行这些原版流程，需要显式选择对应 Matt Skill。通过 Kann Project Lead
+要直接运行这些原版流程，需要显式选择对应 Matt Skill。通过 MAGA Project Lead
 工作时，用户仍可只说产品目标；Project Lead 会自动决定是否在当前任务采用其中
 的方法，或为具体问题建立按需调研、原型、诊断、审查或交付任务。
 
@@ -175,7 +175,7 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 
 对普通产品人员来说，只需要知道主 `ponytail` 的效果。其余五个更接近维护和诊断工具，不必学习。
 
-### 原版生命周期在 Kann 中如何运行
+### 原版生命周期在 MAGA 中如何运行
 
 完整 Ponytail 插件包含 skills 和 lifecycle hooks。hooks 负责：
 
@@ -184,21 +184,21 @@ Ponytail 是一套“先证明复杂度有必要，再写代码”的实现策�
 - 让子代理继承规则；
 - 保存 `lite/full/ultra/off` 模式状态。
 
-Kann 已内置这套 hooks，并保留原版三个事件契约：
+MAGA 已内置这套 hooks，并保留原版三个事件契约：
 
 - `SessionStart`：在 `startup`、`resume`、`clear`、`compact` 时按持久默认值重新注入规则；
 - `SubagentStart`：向匹配的子代理再次注入当前规则；
-- `UserPromptSubmit`：处理原版 `$ponytail`、`$ponytail-review` 及 Kann 命名空间下的模式命令。
+- `UserPromptSubmit`：处理原版 `$ponytail`、`$ponytail-review` 及 MAGA 命名空间下的模式命令。
 
-Codex 不会让第三方插件自行取得 hook 信任。安装 Kann 后需要在 `/hooks` 中审阅并信任，运行环境的非交互 `PATH` 还必须能找到 Node.js 18 或更高版本。如果 hooks 未获信任、被宿主禁用或找不到 Node.js，六个 Ponytail skills 仍可被显式或隐式调用，但 always-on 生命周期不会运行。
+Codex 不会让第三方插件自行取得 hook 信任。安装 MAGA 后需要在 `/hooks` 中审阅并信任，运行环境的非交互 `PATH` 还必须能找到 Node.js 18 或更高版本。如果 hooks 未获信任、被宿主禁用或找不到 Node.js，六个 Ponytail skills 仍可被显式或隐式调用，但 always-on 生命周期不会运行。
 
-Kann 保留固定上游版本的实际语义，而不虚构更强的持久化能力：`lite` 或 `ultra` 会在下一次 `resume`、`clear` 或 `compact` 重新加载持久默认值；同一插件数据目录中的并发任务共用当前模式文件。要改变这两点属于后续 Kann 扩展，不是“保留原版”。
+MAGA 保留固定上游版本的实际语义，而不虚构更强的持久化能力：`lite` 或 `ultra` 会在下一次 `resume`、`clear` 或 `compact` 重新加载持久默认值；同一插件数据目录中的并发任务共用当前模式文件。要改变这两点属于后续 MAGA 扩展，不是“保留原版”。
 
 ### 隔离 Codex 实例的最小验收
 
-仓库测试可以验证打包结构、调用元数据和 hook 脚本，却不能替 Codex 宿主授予信任或证明宿主实际派发了事件。发布前应在只安装 Kann 的隔离实例中做一次宿主验收：
+仓库测试可以验证打包结构、调用元数据和 hook 脚本，却不能替 Codex 宿主授予信任或证明宿主实际派发了事件。发布前应在只安装 MAGA 的隔离实例中做一次宿主验收：
 
-1. 安装 Kann 后确认界面列出 30 个 skills，并在 `/hooks` 中审阅、信任三个 Ponytail 事件；
+1. 安装 MAGA 后确认界面列出 30 个 skills，并在 `/hooks` 中审阅、信任三个 Ponytail 事件；
 2. 新建任务，确认 `SessionStart` 以默认 `full` 注入；
 3. 运行 `$ponytail ultra` 和 `$ponytail-review`，确认原版模式命令仍有效；
 4. 启动一个子任务，确认 `SubagentStart` 继承当前模式；
@@ -302,9 +302,9 @@ $implement
 
 错误。它只推荐路线，不能调用另一个 user-invoked skill。
 
-### “安装 Kann 后 Ponytail hooks 会直接运行”
+### “安装 MAGA 后 Ponytail hooks 会直接运行”
 
-错误。完整 hooks 已包含在 Kann 中，但 Codex 要求用户先在 `/hooks` 中审阅并信任；Node.js 和宿主 hook 开关也必须可用。
+错误。完整 hooks 已包含在 MAGA 中，但 Codex 要求用户先在 `/hooks` 中审阅并信任；Node.js 和宿主 hook 开关也必须可用。
 
 ### “用了 `implement` 就要自己再调用 TDD 和 review”
 
@@ -327,7 +327,7 @@ $implement
 | 按 spec/ticket 执行完整实现 | 需要 | `$implement` |
 | 巨大且模糊的长期工作 | 需要 | `$wayfinder` |
 | 只检查当前改动是否过度工程 | 不一定 | 自然语言或 `$ponytail-review` |
-| 希望 Ponytail 在宿主事件后重新注入 | 需要一次信任 | 安装 Kann 后用 `/hooks` 审阅；确保 Node.js 18+ 可用 |
+| 希望 Ponytail 在宿主事件后重新注入 | 需要一次信任 | 安装 MAGA 后用 `/hooks` 审阅；确保 Node.js 18+ 可用 |
 
 ## 延伸阅读
 

@@ -5,10 +5,10 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const REPOSITORY_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "kann-workflows");
+const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "maga");
 const SKILLS_ROOT = path.join(PLUGIN_ROOT, "skills");
 
-const KANN_SKILLS = ["orchestrate-tickets", "project-lead"];
+const MAGA_SKILLS = ["orchestrate-tickets", "project-lead"];
 const MATT_USER_INVOKED = [
   "ask-matt",
   "grill-me",
@@ -48,13 +48,48 @@ function read(...segments) {
   return fs.readFileSync(path.join(...segments), "utf8");
 }
 
+function repositoryFiles(root) {
+  const files = [];
+  for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+    if (entry.name === ".git" || entry.name === "tmp") continue;
+    const target = path.join(root, entry.name);
+    if (entry.isDirectory()) files.push(...repositoryFiles(target));
+    else files.push(target);
+  }
+  return files;
+}
+
+test("hard-cuts the retired plugin identity", () => {
+  const retiredBrand = ["ka", "nn"].join("");
+  const packageMetadata = JSON.parse(read(REPOSITORY_ROOT, "package.json"));
+  const pluginMetadata = JSON.parse(read(PLUGIN_ROOT, ".codex-plugin", "plugin.json"));
+  const marketplace = JSON.parse(read(REPOSITORY_ROOT, ".agents", "plugins", "marketplace.json"));
+
+  assert.equal(packageMetadata.name, "maga");
+  assert.deepEqual(Object.keys(packageMetadata.bin), ["maga"]);
+  assert.equal(pluginMetadata.name, "maga");
+  assert.equal(pluginMetadata.interface.displayName, "MAGA");
+  assert.match(pluginMetadata.interface.shortDescription, /Make Apps Great Again/);
+  assert.equal(marketplace.name, "maga");
+  assert.equal(marketplace.plugins[0].name, "maga");
+  assert.equal(marketplace.plugins[0].source.path, "./plugins/maga");
+
+  for (const file of repositoryFiles(REPOSITORY_ROOT)) {
+    assert.doesNotMatch(path.relative(REPOSITORY_ROOT, file), new RegExp(retiredBrand, "i"));
+    if (path.extname(file).toLowerCase() === ".png") continue;
+    const content = fs.readFileSync(file);
+    if (content.includes(0)) continue;
+    assert.doesNotMatch(content.toString("utf8"), new RegExp(retiredBrand, "i"), file);
+  }
+});
+
 test("bundles exactly 30 immediate-child Skills", () => {
   const actual = fs.readdirSync(SKILLS_ROOT, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .sort();
   const expected = [
-    ...KANN_SKILLS,
+    ...MAGA_SKILLS,
     ...MATT_USER_INVOKED,
     ...MATT_MODEL_INVOKED,
     ...PONYTAIL_SKILLS,
@@ -85,8 +120,8 @@ test("preserves Matt's 13 manual and 9 automatic Codex invocation policies", () 
   }
 });
 
-test("keeps Kann and all six Ponytail Skills available for implicit invocation", () => {
-  for (const skill of KANN_SKILLS) {
+test("keeps MAGA and all six Ponytail Skills available for implicit invocation", () => {
+  for (const skill of MAGA_SKILLS) {
     const metadata = read(SKILLS_ROOT, skill, "agents", "openai.yaml");
     assert.match(metadata, /policy:\s*\r?\n\s*allow_implicit_invocation: true/, skill);
   }
@@ -139,6 +174,6 @@ test("pins both upstream snapshots in distributed notices", () => {
 
   assert.match(notices, /2ab958093e83e0ec752e6c1c5932da465bf23e0c/);
   assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
-  assert.match(notices, /automatic routing belongs to Kann/);
+  assert.match(notices, /automatic routing belongs to MAGA/);
   assert.match(notices, /does not change the preserved 13 manual \/ 9\s+implicit registered entry policies/);
 });
