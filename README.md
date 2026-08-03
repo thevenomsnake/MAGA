@@ -44,6 +44,16 @@ AI 协作的主要限制不只是模型能力，而是**注意力衰减**：随�
 
 插件合计提供 30 个 Skills。Kann 不会把 Matt 的显式入口改成自动入口，也不会把原本允许自动匹配的能力降级为手动入口。Ponytail 默认以 `full` 模式启动；用户仍可使用原版命令切换 `lite`、`full`、`ultra` 或 `off`。
 
+## 只安装插件
+
+在要使用 Kann 的 Codex 环境中运行：
+
+```powershell
+npx github:thevenomsnake/kann_workflows install
+```
+
+这条命令只添加 Kann marketplace 并安装 Kann Workflows 插件，不会创建项目、初始化 Git 或启动 Codex。安装后请新建任务，并在 `/hooks` 中审阅和信任 Ponytail 生命周期 hooks。
+
 ## 初始化一个项目
 
 在空文件夹中运行：

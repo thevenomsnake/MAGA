@@ -20,33 +20,41 @@ function run(command, args) {
   return result.stdout.trim();
 }
 
-export function installPlugin() {
-  const configured = JSON.parse(run("codex", ["plugin", "marketplace", "list", "--json"]));
+export function installPlugin(execute = run) {
+  const configured = JSON.parse(execute("codex", ["plugin", "marketplace", "list", "--json"]));
   if (configured.marketplaces?.some(({ name }) => name === "kann-workflows")) {
-    run("codex", ["plugin", "marketplace", "upgrade", "kann-workflows", "--json"]);
+    execute("codex", ["plugin", "marketplace", "upgrade", "kann-workflows", "--json"]);
   } else {
-    run("codex", ["plugin", "marketplace", "add", MARKETPLACE, "--ref", "main", "--json"]);
+    execute("codex", ["plugin", "marketplace", "add", MARKETPLACE, "--ref", "main", "--json"]);
   }
-  run("codex", ["plugin", "add", PLUGIN, "--json"]);
+  return JSON.parse(execute("codex", ["plugin", "add", PLUGIN, "--json"]));
 }
 
 function usage() {
   return `Usage:
+  kann-workflows install [--json]
   kann-workflows init [directory] [--name <project-name>] [--skip-plugin] [--no-git] [--no-commit] [--no-launch] [--no-open] [--json]
   kann-workflows start [directory] [--name <project-name>] [--no-open] [--json]
 
-Initializes an empty directory with durable project state, installs the Codex plugin,
-creates the Project Lead task, and opens the project in Codex. Use start to restore or
-create the Project Lead for an already initialized project.`;
+Use install to install only the Codex plugin. Use init to initialize an empty directory
+with durable project state, install the plugin, create the Project Lead task, and open
+the project in Codex. Use start to restore or create the Project Lead for an already
+initialized project.`;
 }
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
     return { help: true };
   }
 
-  if (!["init", "start"].includes(argv[0])) {
+  if (!["install", "init", "start"].includes(argv[0])) {
     throw new Error(`unknown command: ${argv[0]}\n\n${usage()}`);
+  }
+
+  if (argv[0] === "install") {
+    const invalid = argv.slice(1).filter((arg) => arg !== "--json");
+    if (invalid.length > 0) throw new Error(`unknown option: ${invalid[0]}`);
+    return { command: "install", json: argv.includes("--json") };
   }
 
   const options = {
@@ -123,10 +131,20 @@ async function startProjectLead(options, projectName) {
   return { title: result.title, reused: result.reused, opened: options.open };
 }
 
-export async function runCli(argv) {
+export async function runCli(argv, dependencies = {}) {
   const options = parseArgs(argv);
+  const install = dependencies.installPlugin || installPlugin;
+  const write = dependencies.write || ((output) => process.stdout.write(output));
   if (options.help) {
-    process.stdout.write(`${usage()}\n`);
+    write(`${usage()}\n`);
+    return;
+  }
+
+  if (options.command === "install") {
+    const plugin = install();
+    write(options.json
+      ? `${JSON.stringify(plugin)}\n`
+      : `Installed Kann Workflows${plugin.version ? ` ${plugin.version}` : ""}.\n`);
     return;
   }
 
@@ -136,35 +154,35 @@ export async function runCli(argv) {
     const projectName = options.projectName?.trim() || readProjectName(options.targetDir);
     const projectLead = await startProjectLead(options, projectName);
     if (options.json) {
-      process.stdout.write(`${JSON.stringify({ targetDir: options.targetDir, projectLead })}\n`);
+      write(`${JSON.stringify({ targetDir: options.targetDir, projectLead })}\n`);
     } else {
-      process.stdout.write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
+      write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
     }
     return;
   }
 
-  if (options.installPlugin) installPlugin();
+  if (options.installPlugin) install();
   const result = initProject(options);
   const projectLead = options.launch
     ? await startProjectLead(options, result.projectName)
     : null;
 
   if (options.json) {
-    process.stdout.write(`${JSON.stringify({ ...result, projectLead })}\n`);
+    write(`${JSON.stringify({ ...result, projectLead })}\n`);
     return;
   }
 
-  process.stdout.write(
+  write(
     result.alreadyInitialized
       ? `Kann Workflows is already initialized in ${result.targetDir}.\n`
       : `Initialized ${result.projectName} in ${result.targetDir}.\n`,
   );
 
   if (projectLead) {
-    process.stdout.write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
+    write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
   }
 
   if (result.commit === "skipped-no-identity") {
-    process.stdout.write("Git was initialized, but the first commit was skipped because no Git identity is configured.\n");
+    write("Git was initialized, but the first commit was skipped because no Git identity is configured.\n");
   }
 }
