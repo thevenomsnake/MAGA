@@ -1,48 +1,86 @@
-# MAGA
+<h1 align="center">MAGA</h1>
+
+<h3 align="center">Make Apps Great Again</h3>
+
+<p align="center"><strong>让资深产品构建者只负责产品判断，让 Codex 管理工程工作方式。</strong></p>
+
+<p align="center"><em>No rallies. No red tape. Just better apps.</em></p>
+
+<p align="center">
+  <img alt="Version 0.8.0" src="https://img.shields.io/badge/version-0.8.0-635BFF?style=flat-square">
+  <img alt="Node.js 18 or newer" src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?style=flat-square&logo=node.js&logoColor=white">
+  <img alt="30 bundled skills" src="https://img.shields.io/badge/bundled_skills-30-2563EB?style=flat-square">
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-0F172A?style=flat-square"></a>
+</p>
 
 <p align="center">
   <img src="./assets/maga-routing-hero.png" alt="MAGA 自动路由：一个产品主理协调四类按需工作区" width="100%">
 </p>
 
-**Make Apps Great Again → MAGA**
+<p align="center">
+  <a href="#为什么叫-maga">为什么 MAGA</a> ·
+  <a href="#一分钟开始">一分钟开始</a> ·
+  <a href="#自动路由如何工作">工作原理</a> ·
+  <a href="#插件包含什么">插件内容</a> ·
+  <a href="#研究与手册">研究与手册</a>
+</p>
 
-让资深产品构建者只负责产品判断，让 Codex 管理工程工作方式。
+MAGA 是一个独立、开源、实验性的 Codex 插件与项目初始化器。它面向懂产品、
+体验和基本软件边界，但不希望亲自管理 Skill 命令、会话编排、Ticket 格式、
+Git 流程和工程角色的产品设计者与产品负责人。
 
-MAGA 是一个独立、开源、实验性的 Codex 插件与项目初始化器。
-它面向懂产品、体验和基本软件边界，但不希望亲自管理 Skill 命令、会话编排、
-Ticket 格式、Git 流程和工程角色的产品设计者与产品负责人。
+| 你负责 | MAGA 负责 | 最终得到 |
+| --- | --- | --- |
+| 产品方向、体验判断与关键取舍 | 选择方法、组织上下文、协调任务与验证结果 | 一个持续推进、可以检查和恢复的产品项目 |
 
-用户始终从一个置顶的 **Project Lead（产品主理）** 开始。Project Lead 会在
-目标具体后，按需创建带明确对象的外部调研、原型验证、诊断、审查或交付任务，
-整合结果后再归档。初始化不会生成一排空的“部门窗口”。
+> **“竞选承诺”**：一个入口，按需组队；少一点流程负担，多一点可检查的交付。
 
-> 当前版本：`0.8.0`。这是公开实验，不是成熟度认证，也不是任何上游项目的
+用户始终从一个置顶的 **Project Lead（产品主理）** 开始。目标具体后，它才按需
+创建有明确对象的调研、原型、诊断、审查或交付任务；结果整合后即归档，不会先
+生成一排空的“部门窗口”。
+
+> [!NOTE]
+> 当前版本为 `0.8.0`。这是公开实验，不是成熟度认证，也不是任何上游项目的
 > 官方发行版。
+
+## 为什么叫 MAGA
+
+GitHub 上有许多优秀的 Skills，它们大多诞生在 coder 的工作现场，因此很自然地
+要求用户知道该调用哪个命令、怎样拆 Ticket、何时切换会话，以及如何组织工程
+角色。这对工程工作很合理；只是产品设计者有时还没讨论第一个产品问题，就先上了
+一堂 AI 工程管理速成课。
+
+MAGA 是对这点小摩擦的一个带梗回应：**做出好产品，不该要求每个人先变成
+coder 或 AI 工作流管理员。**
+
+| 许多 Skills 的自然起点 | MAGA 换一个起点 |
+| --- | --- |
+| 先选择 Skill、命令和工程流程 | 先说清用户、问题和想实现的体验 |
+| 由用户拆任务、切会话、管理角色 | 由一个 Project Lead 按证据路由工作 |
+| 用“代码是否完成”判断进度 | 用“产品结果是否可观察、可检查”判断进度 |
+
+这不是降低工程标准。MAGA 保留调研、建模、原型、实现、诊断、审查和验证的
+专业方法，只把复杂的操作面收进插件，让产品设计者继续使用产品语言。
 
 ## 一分钟开始
 
-### 只安装插件
+### 安装到现有 Codex 环境
 
-在要使用 MAGA 的 Codex 环境中运行：
+只添加 MAGA marketplace 并安装插件，不创建项目、不初始化 Git，也不启动
+Codex：
 
 ```powershell
 npx github:thevenomsnake/MAGA install
 ```
 
-这条命令只添加 MAGA marketplace 并安装插件，不创建项目、不初始化 Git、
-不启动 Codex。适合先在现有项目或隔离实例中试用 Skills。
+适合先在现有项目或隔离实例中试用 Skills。
 
 ### 初始化一个新项目
 
-在空文件夹中运行：
+在空文件夹中运行，或传入一个新的空目录：
 
 ```powershell
 npx github:thevenomsnake/MAGA init
-```
-
-也可以指定一个新的空目录：
-
-```powershell
 npx github:thevenomsnake/MAGA init ./my-product
 ```
 
