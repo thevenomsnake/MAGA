@@ -1,0 +1,211 @@
+<h1 align="center">MAGA</h1>
+
+<p align="center"><strong>Make Apps Great Again</strong></p>
+
+<p align="center">머릿속에 그린 소프트웨어를 실제로 만드세요.</p>
+
+<p align="center">
+  제품 디자이너, 제품 책임자, 처음 소프트웨어를 만드는 사람을 위한 도구입니다.<br>
+  제품 판단은 당신이 내리고, MAGA는 그것을 실행하고 확인할 수 있는 소프트웨어로 바꿉니다.
+</p>
+
+<p align="center">
+  <a href="./README.md">English</a> ·
+  <a href="./README.zh-CN.md">简体中文</a> ·
+  <a href="./README.ja.md">日本語</a> ·
+  <strong>한국어</strong> ·
+  <a href="./README.es.md">Español</a>
+</p>
+
+MAGA는 Codex Desktop에 설치하는 제품 제작 워크플로입니다. 사용자, 문제, 경험, 제약, 트레이드오프를 제품 언어로 설명하면 지속적으로 일하는 Project Lead가 적절한 방법을 선택하고 조사, 프로토타이핑, 구현, 검증, 수정을 조율합니다.
+
+코드를 이해하거나 Skills를 고르거나 엔지니어링 세션을 관리하거나 코드를 리뷰할 필요가 없습니다. 제품의 동작, 사용 경험, 비즈니스 결과를 보고 승인하면 됩니다.
+
+> [!NOTE]
+> MAGA는 시각적 no-code 빌더가 아닙니다. 제품에는 여전히 코드가 있지만 구현 계층은 Codex가 담당합니다. 제품 의도, 우선순위, 제약, 승인 판단은 당신이 유지합니다.
+
+## 시작하기
+
+[Codex Desktop](https://openai.com/codex/), Codex CLI, Node.js 18 이상, Git이 필요합니다. Git 저장소를 초기화하지 않으려면 `--no-git`을 추가하세요.
+
+```bash
+npx github:thevenomsnake/MAGA init ./my-product
+```
+
+새 프로젝트를 열고 만들고 싶은 것을 설명하세요.
+
+```text
+독립 디자이너가 고객 피드백을 정리할 수 있는 도구를 만들고 싶습니다.
+피드백은 프로젝트별로 보관하고, 어떤 문제가 납품을 막는지 바로 볼 수 있어야 합니다.
+```
+
+MAGA는 처음으로 확인할 수 있는 제품 결과를 정하고, 방향이나 권한 범위를 바꿀 질문만 한 뒤 필요한 작업을 시작합니다. 아이디어를 먼저 기술 작업으로 번역할 필요가 없습니다.
+
+기존 환경에 플러그인만 설치하려면:
+
+```bash
+npx github:thevenomsnake/MAGA install
+```
+
+초기화한 프로젝트와 Project Lead를 다시 시작하려면:
+
+```bash
+npx github:thevenomsnake/MAGA start ./my-product
+```
+
+## Why MAGA
+
+### Codex가 이미 충분히 좋은데 왜 래퍼 앱이 필요한가요?
+
+Codex는 이미 어려운 엔지니어링 작업을 수행합니다. 저장소를 이해하고, 코드를 작성·수정하고, 검사를 실행하고, 변경 사항을 리뷰하고, 여러 프로젝트 채팅에서 작업하고, 재사용 가능한 Skills를 적용할 수 있습니다. OpenAI의 공식 가이드도 같은 발전 경로를 설명합니다. Codex에 지속 가능한 컨텍스트를 제공하고, 반복 작업을 Skills로 만들고, 안정된 기능을 플러그인으로 패키징합니다. 공식 [Codex 모범 사례](https://learn.chatgpt.com/guides/best-practices), [Skills 문서](https://learn.chatgpt.com/docs/build-skills), [플러그인 문서](https://developers.openai.com/plugins/)를 참고하세요.
+
+Codex라는 이름부터 중심이 코드라는 점을 보여 줍니다. 기본 용어와 확장 방식은 작업을 엔지니어링 과제로 설명하고 기술 결과를 검토할 수 있는 사람이 가장 쉽게 활용할 수 있습니다.
+
+제품 담당자는 종종 “기술도 모르면서 지시만 한다”는 말을 듣습니다. 그렇다면 끝까지 지시하세요. MAGA는 제품 목표와 트레이드오프는 당신이 정하고, 코드는 Codex에 맡기도록 해 주는 플러그인입니다.
+
+> **거침없이 지시하고, 책임 있게 승인하세요.**
+
+MAGA가 존재하는 이유는 모델의 능력과 제품 협업이 서로 다른 문제이기 때문입니다.
+
+일반적인 Skill은 하나의 반복 작업을 안정적으로 만듭니다. 하지만 Skills 모음은 여전히 사용자가 다음에 어떤 작업을 할지, 기술 워크플로를 어떻게 순서화할지, 각 작업에 어떤 컨텍스트가 필요한지, 코드 diff를 어떻게 판단할지 알고 있다고 가정하기 쉽습니다.
+
+MAGA는 그 위에 다음 운영 모델을 추가합니다.
+
+- 제품을 마주하는 하나의 Project Lead가 일상적인 제품 언어를 받습니다.
+- 의도 기반 라우팅이 현재 증거에 따라 Skills와 방법을 선택합니다.
+- 지속 가능한 프로젝트 상태가 결정, 경계, 역할, 승인된 작업을 보존합니다.
+- Product Owner는 코드 리뷰 대신 제품 승인으로 판단합니다.
+
+엄밀히 말하면 MAGA는 두 번째 앱이나 대체 UI가 아닙니다. 인터페이스는 계속 Codex Desktop입니다. 래퍼에 해당하는 것은 제품 의도를 조율된 엔지니어링 작업으로 바꾸는 설치형 작업 계약입니다.
+
+<p align="center">
+  <img src="./assets/maga-operating-model.svg" alt="진입, 조율, 기술 작업, 승인, 연속성에서 Traditional Skills와 MAGA의 행동 비교" width="100%">
+</p>
+
+## 누구를 위한 것인가
+
+| 현재 역할 | 제공하는 핵심 정보 | MAGA가 담당하는 일 |
+| --- | --- | --- |
+| 처음 소프트웨어를 만드는 사람 | 해결할 문제, 대상 사용자, 기본 기대 | 필요한 확인과 점검 가능한 결과까지의 경로 |
+| 제품 디자이너 | 경험 기준, 정보 구조, 상호작용 트레이드오프 | 조사, 프로토타이핑, 구현, 검증 방법 |
+| 제품 책임자 또는 관리자 | 목표, 우선순위, 위험, 자원, 의사결정 범위 | 지속적 컨텍스트, 실행 조율, 실제 결정이 필요한 사안의 제시 |
+
+이미 제품 라인이나 여러 직군이 함께하는 팀을 이끌고 있다면 MAGA를 더 쉽게 사용할 수 있습니다. 가장 중요한 입력인 목표, 우선순위, 경험 기준, 위험 판단, 권한 경계를 이미 가지고 있기 때문입니다. MAGA는 그 역할에 프로그래밍 전문성을 추가로 요구하지 않습니다.
+
+## 작업 계약
+
+| 하지 않아도 되는 일 | 계속 직접 결정하는 일 |
+| --- | --- |
+| 코드 작성, 읽기, 리뷰 | 제품이 누구의 어떤 문제를 해결하는지 |
+| 내부 Skills 또는 엔지니어링 흐름 선택 | 양보할 수 없는 경험과 비즈니스 제약 |
+| Tickets 분할, 작업 이름 지정, 세션 관리 | 우선순위와 허용 가능한 트레이드오프 |
+| 테스트 프레임워크 또는 구현 아키텍처 선택 | 동작하는 결과가 제품 문제를 해결하는지 |
+
+코드 리뷰, 테스트, 디버깅, 기술 검증은 계속 수행됩니다. 다만 Product Owner에게 두 번째 전문 직무를 요구하지 않고, Project Lead가 관리하는 엔지니어링 증거가 됩니다.
+
+## 제품을 설명한 뒤 일어나는 일
+
+1. **결과 정렬.** MAGA가 사용자, 문제, 처음 관찰할 수 있는 가치, 제공 형태, 중요한 제약을 파악합니다.
+2. **다음 증거 선택.** Project Lead가 확인, 조사, 프로토타입, 구현, 검증, 진단 중 무엇이 필요한지 결정합니다.
+3. **가장 작은 점검 가능 단위 제작.** Codex가 구현 선택을 처리하고 실행하거나 보고 검증할 수 있는 결과를 만듭니다.
+4. **엔지니어링 작업 확인.** 테스트, 대상이 명확한 리뷰, 진단으로 기술적 타당성을 확인합니다.
+5. **제품 판단으로 복귀.** 당신이 동작과 경험을 평가하고 다음 결정을 제품 언어로 설명합니다.
+
+예를 들면:
+
+```text
+아직 작업 관리 도구처럼 보입니다. 먼저 이번 주에 무엇이 바뀌었는지 보여주고,
+그 변화에서 담당자를 찾아갈 수 있게 하고 싶습니다.
+```
+
+이 피드백은 정보 구조와 다음 구현을 바꿉니다. 컴포넌트 이름이나 코드 줄을 지정할 필요가 없습니다.
+
+## MAGA가 기록하는 것
+
+1. **의도:** 사용자, 문제, 기대 결과, 제약.
+2. **라우팅:** 다음 단계가 확인, 조사, 설계, 구현, 검증, 수정 중 무엇인지.
+3. **상태:** 승인된 결정, 열린 질문, 진행 중인 작업, 다음으로 유용한 결과.
+4. **권한:** 승인된 행동과 새로운 결정이 필요한 행동.
+5. **증거:** 프로토타입, 실제 동작, 테스트, 진단, 제품 승인.
+
+이 정보는 프로젝트에 저장됩니다. 새 채팅은 대화 기록을 제품 기록으로 취급하지 않고 지속 가능한 상태에서 복구할 수 있습니다.
+
+## 제품 및 권한 경계
+
+MAGA는 승인된 작업을 자율적으로 진행하지만 하나의 자연어 요청을 무제한 권한으로 확대하지 않습니다.
+
+- 지정된 프로젝트 안의 되돌릴 수 있는 작업과 위험 수준에 맞는 검사는 일반 실행에 해당합니다.
+- 배포, 결제, 계정 작업, 외부 메시지, 되돌릴 수 없는 삭제에는 명시적 권한이 필요합니다.
+- 기존 결정에서 추론할 수 없는 제품 트레이드오프는 Product Owner에게 돌아갑니다.
+- Codex Desktop이 계속 사용자 인터페이스이며 MAGA는 별도 대시보드를 만들지 않습니다.
+
+## 구성
+
+현재 릴리스는 **v0.9.0**입니다. 등록된 Skills 15개와 필요할 때만 로드하는 내부 방법 라이브러리를 포함합니다.
+
+| 계층 | 책임 |
+| --- | --- |
+| Project Lead | 제품 언어 수신, 상태 유지, 방법 선택, 작업 조율 |
+| 제품 발견 | 확인, 조사, 도메인 언어, 개념, 우선순위 |
+| 설계와 전달 | 계획, 프로토타이핑, 구현, 검증, 완료 |
+| 진단과 단순화 | 디버깅, 코드 리뷰, 불필요한 복잡성 제거 |
+| 방법 라이브러리 | 매 대화의 컨텍스트를 차지하지 않도록 상위 워크플로를 필요할 때만 로드 |
+
+구현 살펴보기: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [제품 중심 Project Lead](./playbooks/product-oriented-project-lead.md)
+
+<details>
+<summary><strong>라우팅, 작업, 권한</strong></summary>
+
+### 라우팅
+
+Project Lead는 먼저 필요한 증거의 종류를 파악한 뒤 등록된 Skill 또는 내부 방법을 선택합니다. 사용자가 Skill을 명시적으로 호출할 수 있지만 일반적인 제품 작업에는 필요하지 않습니다.
+
+### 작업 경계
+
+기본적으로 현재 작업에서 계속 진행합니다. 병렬 실행, 분리된 컨텍스트, 별도 권한 경계, 독립 승인이 필요한 구체적인 대상이 있을 때만 별도 작업을 만듭니다. 비어 있는 조사, 프로토타입, 구현, 리뷰 공간을 미리 만들지 않습니다.
+
+### 권한
+
+자연어 승인은 명확히 설명된 현재 제품 단위에 적용됩니다. 이후 Tickets나 크게 확장된 결과까지 자동으로 승인하지 않습니다.
+
+자세히 보기: [Capability routing](./plugins/maga/skills/project-lead/references/capability-routing.md) · [Native Codex loop](./plugins/maga/skills/project-lead/references/native-codex-loop.md) · [Project memory](./plugins/maga/skills/project-lead/references/project-memory.md)
+
+</details>
+
+<details>
+<summary><strong>설치 동작</strong></summary>
+
+`install`은 MAGA marketplace를 추가하거나 업데이트하고 `maga@maga`를 설치합니다.
+
+`init`은 빈 디렉터리를 받아 다음을 수행합니다.
+
+1. 플러그인을 설치합니다.
+2. `.ai-workflow/PROJECT.md`, `AGENTS.md`, `.gitignore`를 작성합니다.
+3. Git을 초기화하고 사용자 정보가 설정되어 있으면 첫 커밋을 만듭니다.
+4. 이름이 명확한 Project Lead 작업을 만들거나 재사용합니다.
+5. Codex Desktop에서 프로젝트를 엽니다.
+
+`start`는 기존 프로젝트 상태를 읽고 프로젝트 파일을 다시 쓰지 않은 채 Project Lead를 복구합니다. 전체 옵션은 `npx github:thevenomsnake/MAGA --help`에서 확인할 수 있습니다.
+
+</details>
+
+## 상위 프로젝트와 라이선스
+
+MAGA는 고정된 리비전의 검증된 방법을 적용합니다.
+
+- [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 22개의 워크플로 자료. `2ab9580`에 고정.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): 최소 구현, 복잡성 리뷰, 라이프사이클 Hooks. `16f2980`에 고정.
+
+라우팅, 프로젝트 상태, 설치 프로그램, Project Lead 계약은 MAGA의 로컬 적용입니다. 출처, 변경 사항, 라이선스는 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)에 기록되어 있습니다.
+
+## 조사와 플레이북
+
+- [조사 인덱스](./research/README.md)
+- [제품 중심 Project Lead](./playbooks/product-oriented-project-lead.md)
+- [다중 세션 협업](./playbooks/multi-session-collaboration.md)
+- [Codex 기본 Ticket 오케스트레이션](./playbooks/codex-ticket-orchestration.md)
+- [AI-slop 조사](./research/kill-ai-slop.md)
+
+## License
+
+MAGA는 [MIT License](./LICENSE)로 공개됩니다. 타사 자료에는 각 라이선스가 적용됩니다. 자세한 내용은 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)를 참고하세요.

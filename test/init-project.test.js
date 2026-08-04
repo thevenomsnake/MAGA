@@ -102,36 +102,56 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.equal(manifest.interface.defaultPrompt.length, 3);
 });
 
-test("ships the product-facing GitHub guide and operating-model hero", () => {
-  const readme = fs.readFileSync(path.join(REPOSITORY_ROOT, "README.md"), "utf8");
-  const diagram = readme.match(/```mermaid\n([\s\S]+?)```/)?.[1];
-  const hero = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "assets", "maga-product-vision-hero.png"),
+test("ships localized product guides and one English operating-model comparison", () => {
+  const readmeFiles = [
+    "README.md",
+    "README.zh-CN.md",
+    "README.ja.md",
+    "README.ko.md",
+    "README.es.md",
+  ];
+  const readmes = readmeFiles.map((file) =>
+    fs.readFileSync(path.join(REPOSITORY_ROOT, file), "utf8")
+  );
+  const readme = readmes[0];
+  const comparison = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "assets", "maga-operating-model.svg"),
+    "utf8",
   );
 
-  assert.match(readme, /assets\/maga-product-vision-hero\.png/);
-  assert.match(readme, /把你心目中的软件做出来/);
-  assert.match(readme, /面向产品设计者、产品负责人和第一次做软件的人/);
-  assert.match(readme, /不需要阅读或 review 代码/);
-  assert.match(readme, /产品意图 → Project Lead 路由 → 研究 \/ 原型 \/ 构建 \/ 诊断 → 可验收软件/);
-  assert.match(readme, /## 为什么需要 MAGA/);
-  assert.match(readme, /## 谁会用得顺手/);
-  assert.match(readme, /## 产品边界/);
-  assert.doesNotMatch(readme, /玩梗|带梗|竞选承诺|No rallies/i);
-  assert.ok(diagram);
-  const shapedNodeIds = [...diagram.matchAll(/\b([A-Z][A-Z0-9]*)\s*(?=\[|\{)/g)].map(
-    (match) => match[1],
-  );
+  for (const localizedReadme of readmes) {
+    assert.match(localizedReadme, /assets\/maga-operating-model\.svg/);
+    assert.doesNotMatch(localizedReadme, /玩梗|带梗|竞选承诺|No rallies|explaining the joke/i);
+  }
+
+  assert.match(readme, /Build the software you have in mind/);
+  assert.match(readme, /For product designers, product leaders, and first-time builders/);
+  assert.match(readme, /You do not need to understand code[\s\S]+or review code/);
+  assert.match(readme, /## Why MAGA/);
+  assert.match(readme, /Why do we need a wrapper app when Codex is already good enough\?/);
+  assert.match(readme, /The name Codex makes its center of gravity clear: code/);
+  assert.match(readme, /"non-technical people who just tell engineers what to do\."/);
+  assert.match(readme, /Direct without restraint\. Accept with judgment\./);
+  assert.match(readme, /model capability and product collaboration are different problems/);
+  assert.doesNotMatch(readme, /```mermaid|maga-product-vision-hero|maga-routing-hero/);
+
+  for (const label of [
+    "ENTRY",
+    "ORCHESTRATION",
+    "TECHNICAL WORK",
+    "ACCEPTANCE",
+    "CONTINUITY",
+  ]) {
+    assert.match(comparison, new RegExp(`>${label}<`));
+  }
+  assert.match(comparison, /THE SAME CODEX\. A DIFFERENT OPERATING MODEL\./);
+  assert.match(comparison, /YOU OPERATE THE TOOLCHAIN/);
+  assert.match(comparison, /YOU OWN THE PRODUCT/);
+  assert.match(comparison, /viewBox="0 0 1600 1040"/);
   assert.deepEqual(
-    shapedNodeIds.filter((id, index) => shapedNodeIds.indexOf(id) !== index),
-    [],
+    fs.readdirSync(path.join(REPOSITORY_ROOT, "assets")).sort(),
+    ["maga-operating-model.svg"],
   );
-  assert.deepEqual(
-    [...hero.subarray(0, 8)],
-    [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
-  );
-  assert.ok(hero.readUInt32BE(16) >= 1600);
-  assert.ok(hero.readUInt32BE(20) >= 500);
 });
 
 test("keeps package, plugin, workflow, and bridge versions aligned", () => {

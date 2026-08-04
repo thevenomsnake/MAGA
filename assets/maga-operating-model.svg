@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Traditional Skills and MAGA use the same Codex with different operating models</title>
+  <desc id="desc">Traditional Skills ask the user to choose and sequence engineering workflows, manage technical steps, inspect code, and rebuild context. MAGA asks the Product Owner for the desired outcome, routes methods through a Project Lead, lets Codex handle engineering work, asks the user to inspect product behavior, and resumes from durable product decisions.</desc>
+
+  <rect width="1600" height="1040" fill="#fafaf7"/>
+
+  <text x="80" y="92" fill="#111827" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="-1.2">THE SAME CODEX. A DIFFERENT OPERATING MODEL.</text>
+  <text x="80" y="140" fill="#5f6673" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="23">Traditional Skills optimize individual technical jobs. MAGA coordinates them around a product outcome.</text>
+
+  <line x1="800" y1="205" x2="800" y2="920" stroke="#c8cdd5" stroke-width="2"/>
+
+  <text x="100" y="232" fill="#3f4652" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="25" font-weight="700">TRADITIONAL SKILLS</text>
+  <text x="100" y="268" fill="#717784" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="19">The operator drives the engineering workflow.</text>
+
+  <text x="860" y="232" fill="#1546d8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="25" font-weight="700">MAGA</text>
+  <text x="860" y="268" fill="#4b5563" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="19">The Product Owner drives product decisions.</text>
+
+  <line x1="120" y1="332" x2="120" y2="820" stroke="#aeb4bd" stroke-width="3"/>
+  <line x1="880" y1="332" x2="880" y2="820" stroke="#1546d8" stroke-width="4"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif">
+    <g>
+      <circle cx="120" cy="340" r="10" fill="#fafaf7" stroke="#6b7280" stroke-width="3"/>
+      <text x="158" y="329" fill="#6b7280" font-size="15" font-weight="700" letter-spacing="1.2">ENTRY</text>
+      <text x="158" y="361" fill="#111827" font-size="25" font-weight="650">Choose a skill or command</text>
+    </g>
+    <g>
+      <circle cx="120" cy="460" r="10" fill="#fafaf7" stroke="#6b7280" stroke-width="3"/>
+      <text x="158" y="449" fill="#6b7280" font-size="15" font-weight="700" letter-spacing="1.2">ORCHESTRATION</text>
+      <text x="158" y="481" fill="#111827" font-size="25" font-weight="650">Choose and sequence workflows</text>
+    </g>
+    <g>
+      <circle cx="120" cy="580" r="10" fill="#fafaf7" stroke="#6b7280" stroke-width="3"/>
+      <text x="158" y="569" fill="#6b7280" font-size="15" font-weight="700" letter-spacing="1.2">TECHNICAL WORK</text>
+      <text x="158" y="601" fill="#111827" font-size="25" font-weight="650">Provide steps and manage sessions</text>
+    </g>
+    <g>
+      <circle cx="120" cy="700" r="10" fill="#fafaf7" stroke="#6b7280" stroke-width="3"/>
+      <text x="158" y="689" fill="#6b7280" font-size="15" font-weight="700" letter-spacing="1.2">ACCEPTANCE</text>
+      <text x="158" y="721" fill="#111827" font-size="25" font-weight="650">Inspect code and diffs</text>
+    </g>
+    <g>
+      <circle cx="120" cy="820" r="10" fill="#fafaf7" stroke="#6b7280" stroke-width="3"/>
+      <text x="158" y="809" fill="#6b7280" font-size="15" font-weight="700" letter-spacing="1.2">CONTINUITY</text>
+      <text x="158" y="841" fill="#111827" font-size="25" font-weight="650">Rebuild context for the next task</text>
+    </g>
+
+    <g>
+      <circle cx="880" cy="340" r="11" fill="#1546d8"/>
+      <text x="918" y="329" fill="#1546d8" font-size="15" font-weight="700" letter-spacing="1.2">ENTRY</text>
+      <text x="918" y="361" fill="#111827" font-size="25" font-weight="650">Describe the product outcome</text>
+    </g>
+    <g>
+      <circle cx="880" cy="460" r="11" fill="#1546d8"/>
+      <text x="918" y="449" fill="#1546d8" font-size="15" font-weight="700" letter-spacing="1.2">ORCHESTRATION</text>
+      <text x="918" y="481" fill="#111827" font-size="25" font-weight="650">Project Lead routes methods and tasks</text>
+    </g>
+    <g>
+      <circle cx="880" cy="580" r="11" fill="#1546d8"/>
+      <text x="918" y="569" fill="#1546d8" font-size="15" font-weight="700" letter-spacing="1.2">TECHNICAL WORK</text>
+      <text x="918" y="601" fill="#111827" font-size="25" font-weight="650">Codex handles code, tests, and review</text>
+    </g>
+    <g>
+      <circle cx="880" cy="700" r="11" fill="#1546d8"/>
+      <text x="918" y="689" fill="#1546d8" font-size="15" font-weight="700" letter-spacing="1.2">ACCEPTANCE</text>
+      <text x="918" y="721" fill="#111827" font-size="25" font-weight="650">Inspect behavior, experience, and results</text>
+    </g>
+    <g>
+      <circle cx="880" cy="820" r="11" fill="#1546d8"/>
+      <text x="918" y="809" fill="#1546d8" font-size="15" font-weight="700" letter-spacing="1.2">CONTINUITY</text>
+      <text x="918" y="841" fill="#111827" font-size="25" font-weight="650">Resume from durable product decisions</text>
+    </g>
+  </g>
+
+  <line x1="80" y1="912" x2="1520" y2="912" stroke="#c8cdd5" stroke-width="2"/>
+  <text x="100" y="966" fill="#3f4652" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700">YOU OPERATE THE TOOLCHAIN</text>
+  <text x="860" y="966" fill="#1546d8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700">YOU OWN THE PRODUCT</text>
+</svg>
