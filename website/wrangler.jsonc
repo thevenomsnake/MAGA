@@ -1,0 +1,17 @@
+{
+  "name": "maga-homepage",
+  "compatibility_date": "2026-08-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./public/"
+  },
+  "routes": [
+    {
+      "pattern": "maga.sumimi.jp",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

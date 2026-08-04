@@ -11,4 +11,7 @@ Thumbs.db
 .env.*
 !.env.example
 tmp/
-
+.cache/
+node_modules/
+dist/
+.wrangler/
