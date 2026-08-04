@@ -102,25 +102,22 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.equal(manifest.interface.defaultPrompt.length, 3);
 });
 
-test("ships the GitHub routing guide and hero", () => {
+test("ships the product-facing GitHub guide and operating-model hero", () => {
   const readme = fs.readFileSync(path.join(REPOSITORY_ROOT, "README.md"), "utf8");
   const diagram = readme.match(/```mermaid\n([\s\S]+?)```/)?.[1];
   const hero = fs.readFileSync(
-    path.join(REPOSITORY_ROOT, "assets", "maga-routing-hero.png"),
+    path.join(REPOSITORY_ROOT, "assets", "maga-product-vision-hero.png"),
   );
 
-  assert.match(readme, /assets\/maga-routing-hero\.png/);
-  assert.match(readme, /raw\.githubusercontent\.com\/thevenomsnake\/MAGA\/main\/assets\/maga-routing-hero\.png/);
-  assert.match(readme, /Make Apps Great Again → MAGA/);
-  assert.match(readme, /## 自动路由如何工作/);
-  assert.match(readme, /### Project Lead 完整路由表/);
-  assert.match(readme, /### 授权如何约束自动路由/);
-  assert.match(readme, /### 自动路由的现实边界/);
-  assert.match(readme, /同一 Ticket 在范围不变时[\s\S]+保留原有 `approved`/);
-  assert.match(readme, /执行中被撤销时，在安全[\s\S]+边界停止/);
-  assert.match(readme, /共享 checkout[\s\S]+协调者保持只读/);
-  assert.match(readme, /visual critique/);
-  assert.match(readme, /release handoff/);
+  assert.match(readme, /assets\/maga-product-vision-hero\.png/);
+  assert.match(readme, /把你心目中的软件做出来/);
+  assert.match(readme, /面向产品设计者、产品负责人和第一次做软件的人/);
+  assert.match(readme, /不需要阅读或 review 代码/);
+  assert.match(readme, /产品意图 → Project Lead 路由 → 研究 \/ 原型 \/ 构建 \/ 诊断 → 可验收软件/);
+  assert.match(readme, /## 为什么需要 MAGA/);
+  assert.match(readme, /## 谁会用得顺手/);
+  assert.match(readme, /## 产品边界/);
+  assert.doesNotMatch(readme, /玩梗|带梗|竞选承诺|No rallies/i);
   assert.ok(diagram);
   const shapedNodeIds = [...diagram.matchAll(/\b([A-Z][A-Z0-9]*)\s*(?=\[|\{)/g)].map(
     (match) => match[1],
