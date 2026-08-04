@@ -1,20 +1,21 @@
 # Codex 原生 Ticket 编排
 
-> 状态：MAGA 0.9.0 内部编排流程。上游 `to-tickets` 与 `implement`
+> 状态：MAGA 0.10.0 内部编排流程。上游 `to-tickets` 与 `implement`
 > 的工作方法已保留在插件内部，不再作为需要用户选择的 Skill 入口。
 
 ## 改造目标
 
 Matt Skills 已经定义了一个有效边界：ticket 写清以后，应交给只围绕该 ticket 工作的新鲜实现会话。但上游流程需要人手动打开新会话并选择实现入口，没有负责创建会话、投递任务和等待结果。
 
-Codex 已经提供项目任务、worktree、消息发送和任务等待能力，因此这段人工操作由 MAGA 的 Project Lead、内部方法与 Ticket 编排 Skill 接管。用户不需要记住上游入口名或任何 slash command；他只需要批准产品范围并要求开始执行。
+Codex 已经提供项目任务、worktree、消息发送和任务等待能力，因此这段人工操作由 MAGA 的 Project Lead、内部方法与 Ticket 编排 Skill 接管。用户不需要记住上游入口名或任何 slash command；他只需要批准产品范围，并用产品语言确认系统提出的具名新任务。
 
 ```mermaid
 flowchart TD
     A["用户批准产品范围"] --> B["协调任务读取 ticket 索引"]
     B --> R["恢复已有任务状态并去重"]
     R --> C["选择无阻塞 ticket"]
-    C --> D["命名并创建同项目 Codex 任务"]
+    C --> P["用户批准具名新任务"]
+    P --> D["创建同项目 Codex 任务"]
     D --> E["投递 ticket 指针"]
     E --> F["执行任务实现、定向验证并提交"]
     F --> G["协调任务读取结果并集成"]
@@ -26,7 +27,7 @@ flowchart TD
 
 ## 用户如何触发
 
-不需要显式选择 skill。自然语言只需确认当前 Ticket 集合已经批准并可以开始执行。例如：
+不需要显式选择 skill。自然语言先确认当前 Ticket 集合可以执行；若 MAGA 判断需要独立任务，它会提出确定性标题并再取得明确批准。例如：
 
 ```text
 这个拆分可以，按这些 Tickets 开始执行。
@@ -36,7 +37,7 @@ flowchart TD
 继续推进已经批准、没有阻塞的任务。
 ```
 
-这不是要求用户学习内部命令，而是确认系统可以开始执行。一次批准覆盖本轮已明确描述的 Ticket 集合，并分别写入每张 Ticket 的 `authorization: approved`；不应在每张 Ticket 或每个 worker 前重复询问，也不得把批准延伸到未来新增或实质扩大的 Ticket。是否创建独立任务由系统根据注意力和权限边界内部决定。
+这不是要求用户学习内部命令。`authorization: approved` 表示产品工作可以执行；新建 Codex 任务则需要用户明确批准系统提出的具体标题。系统仍然自动判断职责和是否值得分出任务；一条回答可以批准一组列清楚的标题，不必逐个询问。两类批准都不得延伸到未来新增、替代重试或实质扩大的 Ticket。
 
 ## 内部职责
 
@@ -86,6 +87,7 @@ ticket 是可恢复的持久真源，至少保存：
 ```text
 Authorization: pending | approved | revoked
 Status: ready | creating | running | needs-decision | completed | integrated | failed | deferred
+Task opening: pending | approved | not-needed
 Task title: <确定性名称>
 Attempt: <正整数>
 Result commit: <完成后填写>
@@ -105,7 +107,7 @@ failed/running -> superseded -> archived
 两者不能混为一谈：
 
 - 只有 `authorization: approved` 的 Ticket 才能进入执行 frontier；
-- 是否创建新 Codex 任务只是内部执行选择，不是另一项用户权限；
+- 是否值得提出新 Codex 任务由系统内部判断，但实际创建需要用户明确批准该标题和尝试；
 - `completed` 只表示执行任务已经产生 commit；
 - `integrated` 表示该 commit 已进入目标分支；
 - 下游 ticket 只在 blocker `integrated` 后释放；
@@ -117,7 +119,7 @@ thread ID、host ID、client thread ID、等待 cursor 和 worktree 位置只属
 
 ## 创建会话
 
-协调任务先用 Codex 项目列表确认当前项目，再把 Ticket 状态设为 `creating`，然后创建带有确定性标题的同项目任务。仓库规则允许 worktree 所在位置时才使用独立 worktree；如果项目内容必须留在原项目目录，则所有写入任务使用该目录并严格串行。Ticket 必须已经存在于新任务能读取的仓库状态或远程 tracker 中。
+协调任务先用 Codex 项目列表确认当前项目，确认 `Task opening: approved` 对应本次确定性标题和尝试，再把 Ticket 状态设为 `creating` 并创建同项目任务。仓库规则允许 worktree 所在位置时才使用独立 worktree；如果项目内容必须留在原项目目录，则所有写入任务使用该目录并严格串行。Ticket 必须已经存在于新任务能读取的仓库状态或远程 tracker 中。
 
 创建 worktree 是异步过程。Codex 可能立即返回可操作的 `threadId`，也可能先返回 `clientThreadId`：
 
@@ -145,7 +147,7 @@ thread ID、host ID、client thread ID、等待 cursor 和 worktree 位置只属
 
 任务需要产品决定时进入 `needs-decision`。协调任务把问题转换成产品语言询问用户，把答案先写回 ticket 或决策记录，再向原执行任务发送后续消息。能够继续的任务不新建替代会话。
 
-只有原任务上下文或 worktree 已不可用时才创建替代任务。替代任务读取原 ticket 和必要的持久失败事实，不继承整段失败聊天。
+只有原任务上下文或 worktree 已不可用时才提出替代任务。替代任务也是新任务，必须获得用户对重试标题的明确批准；创建后只读取原 ticket 和必要的持久失败事实，不继承整段失败聊天。
 
 ## 完成与归档
 

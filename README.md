@@ -130,9 +130,29 @@ MAGA can advance authorized work without turning one natural-language request in
 - Product trade-offs that cannot be inferred from existing decisions return to the Product Owner.
 - Codex in the ChatGPT desktop app remains the user interface; MAGA does not create a parallel dashboard.
 
+## Models by responsibility
+
+MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. It has seven stable responsibility slots, each with a prefilled Balanced recommendation:
+
+| Responsibility | What it does | Balanced recommendation |
+| --- | --- | --- |
+| Project Lead (`project-lead`) | Coordinates the product, evidence, and next decision | Sol · medium |
+| Research (`research`) | Gathers and compares relevant evidence | Terra · medium |
+| Prototype (`prototype`) | Turns an experience direction into something inspectable | Sol · medium |
+| Delivery (`delivery`) | Builds the smallest accepted product slice | Terra · medium |
+| Diagnosis (`diagnosis`) | Isolates failures and their causes | Sol · high |
+| Review (`review`) | Challenges product and engineering evidence | Sol · high |
+| Release (`release`) | Checks completion, risk, and readiness | Sol · high |
+
+**Sol** is the default for ambiguous synthesis and consequential judgment. **Terra** is the faster, more economical choice for bounded execution. **Luna** is available for narrow, repeatable work where latency and cost matter more than broad judgment. For thinking depth, **low** suits mechanical work, **medium** is the normal balance, and **high** spends more reasoning on uncertainty or risk.
+
+Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA chat with an in-chat configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Balanced remains a recommendation and MAGA uses the Codex host defaults until you click **Save** once. That first save explicitly confirms and freezes all seven rows. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
+
+Saved changes apply only to new tasks that you explicitly approve in product language; MAGA may propose and route a clearly named task, but it does not create one without your approval. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
+
 ## What is inside
 
-The current release is **v0.9.0**. It contains 15 registered Skills and an internal method library loaded only when needed.
+The current release is **v0.10.0**. It contains 15 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
 
 | Layer | Responsibility |
 | --- | --- |
@@ -153,7 +173,7 @@ The Project Lead first identifies the type of evidence needed, then selects a re
 
 ### Task boundaries
 
-Work stays in the current task by default. MAGA creates a separate task only for a concrete object that benefits from parallel work, isolated context, a distinct permission boundary, or independent acceptance. It does not pre-create empty research, prototype, implementation, or review rooms.
+Work stays in the current task by default. MAGA proposes a separate task only for a concrete object that benefits from parallel work, isolated context, a distinct permission boundary, or independent acceptance, then asks for your approval using its specific title. One answer can approve a clearly listed batch. It does not pre-create empty research, prototype, implementation, or review rooms.
 
 ### Authorization
 

@@ -13,6 +13,29 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 - Treat a Codex task as an attention workspace for one concrete object, not as a
   menu item or permanent department.
 
+## Use Stable Responsibility Profiles
+
+MAGA exposes seven settings slots. They are stable routing keys, not an org chart
+and not one setting per Skill:
+
+| Work responsibility | Profile key | Balanced recommendation |
+| --- | --- | --- |
+| Product conversation, decisions, and integration | `project-lead` | Sol / medium |
+| Source-backed external facts | `research` | Terra / medium |
+| Interaction and visual exploration | `prototype` | Sol / medium |
+| Bounded product implementation | `delivery` | Terra / medium |
+| Evidence-led failure investigation | `diagnosis` | Sol / high |
+| Independent acceptance and quality review | `review` | Sol / high |
+| Privacy, migration, permissions, and release | `release` | Sol / high |
+
+The Product Owner may change every row in MAGA's settings panel. Balanced values
+remain recommendations until the complete panel is explicitly saved. Resolve an
+explicitly saved profile immediately before an approved task creation and pass
+non-null model and thinking values to the native task tool. If nothing was saved,
+omit both so the host defaults apply. Do not select compute from perceived task
+difficulty, and do not store environment-specific model names in project files.
+Direct manual invocation of a registered Skill inherits its current task.
+
 ## Load Internal Methods By Exact Path
 
 MAGA distributes thirteen upstream workflows as internal method resources, not
@@ -53,14 +76,14 @@ project already uses it or the user explicitly intends that external effect.
 | Signal in the request or durable state | Internal method | Default workspace |
 | --- | --- | --- |
 | Product behavior, audience, or value is materially unclear | Apply registered `grilling`; load [grill-me](../../../methods/grill-me/METHOD.md) or [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) for the appropriate persistence mode | Current Project Lead |
-| A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh research task when the question is bounded and substantial; otherwise current task |
-| A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh prototype task when it produces an inspectable artifact |
+| A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh `research` task for an approved bounded Ticket |
+| A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh `prototype` task for an approved bounded Ticket |
 | The destination is clear but the route is too large for one attention window | Load [wayfinder](../../../methods/wayfinder/METHOD.md) to resolve decision fog before delivery | Bounded decision tasks; do not create a generic planning room |
 | Decisions are sufficiently closed | Load [to-spec](../../../methods/to-spec/METHOD.md) to synthesize what is already known | Current Project Lead unless publication needs an independent boundary |
 | An accepted result must survive the current conversation or cross responsibilities | Load [to-tickets](../../../methods/to-tickets/METHOD.md) and form product Tickets with explicit blockers and authorization | Durable project state first; tasks only for approved Tickets |
-| An approved Ticket is ready | Load [implement](../../../methods/implement/METHOD.md) and apply any risk-justified registered capability | Current task or a fresh delivery task |
-| A concrete failure is observed | Apply diagnosis before proposing a fix | Fresh diagnosis task only when isolation or a long evidence trail helps |
-| A result is ready for independent acceptance | Apply the smallest review needed for the documented risk | Fresh review task only when independence is material |
+| An approved implementation Ticket is ready | Load [implement](../../../methods/implement/METHOD.md) and apply any risk-justified registered capability | Fresh `delivery` task |
+| A concrete failure is observed | Apply diagnosis before proposing a fix | Fresh `diagnosis` task for an approved bounded Ticket |
+| A result is ready for independent acceptance | Apply the smallest review needed for the documented risk | Fresh `review` task when independent acceptance is material |
 | Context is polluted or a branch of work needs isolation | Load [handoff](../../../methods/handoff/METHOD.md), then recover from durable project state in a fresh task | Replacement or bounded worker, never a generic handoff room |
 
 Registered specialist Skills may still be selected normally. Internal methods
@@ -76,8 +99,9 @@ Ticket.
 
 ## Open A Fresh Workspace Only When It Pays
 
-Create a same-project task only after its work object and completion boundary are
-concrete and at least one condition holds:
+Propose a same-project task only after its work object and completion boundary are
+concrete and at least one condition holds. Create it only after the Product Owner
+explicitly requests or approves that deterministic task title:
 
 - it produces an independent artifact or finding;
 - it needs a substantially different source set or professional context;

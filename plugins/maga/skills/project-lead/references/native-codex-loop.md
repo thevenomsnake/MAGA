@@ -6,10 +6,12 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 
 - Keep one product-facing Project Lead task, named and pinned.
 - Never pre-create empty capability tasks. Create a worker only for a concrete research question, prototype decision, diagnosis, review, or delivery outcome.
+- A new Codex task requires explicit Product Owner approval for its deterministic title and attempt. MAGA chooses the useful responsibility automatically; work authorization alone is not task-creation permission.
 - Keep durable roles in `.ai-workflow/roles/`; never use a task transcript as role memory.
 - Pin a role-management task only for a `managed queue` role.
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.
+- Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved Balanced values are recommendations; omit overrides and use the host default.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
 
@@ -40,8 +42,9 @@ specific object is not authoritative and should not be created.
 ## Run One Closure Cycle
 
 ```text
-approved Ticket
+approved Ticket + explicitly approved named task
   -> durable contract committed
+  -> responsibility profile resolved against the destination host
   -> native task creating/running
   -> completed or needs-decision
   -> result integrated
@@ -70,4 +73,4 @@ When a worker returns `completed`:
 
 ## Continue The Product
 
-Keep the Project Lead task open after a slice completes. A new product request creates the next Ticket from current durable state. Replace the Project Lead task only when its attention workspace is polluted or recovery from the repository is cheaper; give the replacement the same deterministic title and archive the old task after the new one has recovered.
+Keep the Project Lead task open after a slice completes. A new product request creates the next Ticket from current durable state. Replace the Project Lead task only when its attention workspace is polluted, recovery from the repository is cheaper, or the Product Owner explicitly asks the saved new Project Lead configuration to take over. Start the replacement under a unique temporary takeover title and leave it unpinned. After it recovers read-only from durable state, archive the old Project Lead, rename the replacement to the canonical title, and pin it. If recovery fails, archive the temporary task and keep the old Project Lead authoritative.

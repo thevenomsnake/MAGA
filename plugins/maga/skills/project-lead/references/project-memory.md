@@ -88,10 +88,11 @@ Always materialize the Project Lead during onboarding. Add another role only whe
 - Reads first: <small repository-relative entrypoints>
 - Produces: <result and evidence>
 - Authority: <allowed side effects and required approvals>
+- Primary workspace: project-lead | research | prototype | delivery | diagnosis | review | release
 - Session shape: direct execution | managed queue
 ```
 
-Use `managed queue` only for multiple approved Tickets, independent long-lived professional context, or distinct permissions. Otherwise use `direct execution`.
+Use `managed queue` only for multiple approved Tickets, independent long-lived professional context, or distinct permissions. Otherwise use `direct execution`. `Primary workspace` selects a stable MAGA responsibility profile; it never stores a model name or reasoning depth in Git.
 
 ## Ticket Contract
 
@@ -137,6 +138,7 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 
 ## Execution
 
+- Task opening: pending | approved | not-needed
 - Task title: pending
 - Attempt: pending
 
@@ -151,23 +153,29 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 
 Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integrated`, `failed`, or `deferred`. Move Ticket detail out of the active working set only after it is `integrated` or explicitly `deferred`. Archive a worker task only after its result is durably recorded as integrated, deferred, or superseded; keep `PROJECT.md` focused on current work.
 
-Leave `Task title` and `Attempt` as `pending` while the Ticket is unclaimed or
-stays in the current focused task. Before creating a fresh task, persist its
-deterministic title and a positive attempt number. Record the observed validation
+Leave `Task opening`, `Task title`, and `Attempt` as `pending` while the Ticket is
+unclaimed. Use `Task opening: not-needed` when work stays in the current focused
+task. Before creating a fresh task, persist its deterministic title, a positive
+attempt number, and the Product Owner's explicit approval for that exact task.
+Record the observed validation
 fact and commit or artifact identity before marking the worker completed.
 
-Omit `workspace` when the Ticket stays in the current focused task. When a fresh
-task is useful, set it to the smallest stable capability label needed for a
-specific task title; it describes the attention workspace, not a permanent role.
+Omit `workspace` only when the Ticket stays as Project Lead work in the current
+focused task. Set `workspace` to the smallest stable responsibility label for
+research, prototype, delivery, diagnosis, review, or release work. A specialist
+workspace requires a configured fresh task so its model and reasoning depth can
+take effect. The label describes attention and compute routing, not a permanent
+role. Keep the actual model, depth, availability, and fallback out of tracked
+project memory.
 
 ## Authorization
 
-Treat authorization as part of each Ticket, not as permission to create Codex tasks:
+Treat execution authorization and permission to open a Codex task as separate facts:
 
 - Use `pending` before the Ticket's research, prototype, diagnosis, review, delivery, or release work is authorized; use `approved` for an explicitly authorized Ticket and `revoked` when the Product Owner withdraws authorization.
-- Accept natural language such as "start", "build it", or "continue" as approval for the currently described Ticket set. Update every Ticket in that set together; do not ask once per worker.
+- Accept natural language such as "start", "build it", or "continue" as execution approval for the currently described Ticket set. Update every Ticket in that set together.
 - Do not copy approval to a future Ticket. If an approved Ticket's outcome, acceptance, boundaries, cost, private-data use, external effect, destructive action, or release scope materially expands, return it to `pending`.
-- Choose whether to work in the current task or create a fresh Codex task internally after approval. Task creation does not require a second permission.
+- Decide internally whether fresh attention is useful, but do not create a new Codex task unless the Product Owner explicitly requested one or approves the proposed deterministic title. Ask once for a clearly listed batch rather than once per worker. Record that permission as `Task opening: approved` for the exact title and attempt; it does not carry to replacements or future Tickets.
 - Keep `approved` for a same-scope retry. Return a deferred Ticket to `pending` before resuming it later.
 - Do not dispatch or continue new side effects for a `pending` or `revoked` Ticket. When authorization is revoked during execution, stop at a safe boundary and return control to the Product Owner.
 - Treat approval as authority only for the Ticket's written scope. It does not implicitly allow accounts, costs, sensitive data, external publication, destructive actions, migration, production changes, or release.

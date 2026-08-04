@@ -1,6 +1,6 @@
 ---
 name: orchestrate-tickets
-description: Internal Codex execution workflow for coordinating and recovering approved research, prototype, diagnosis, review, delivery, or release Tickets by naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when an approved durable Ticket needs a fresh attention workspace or when a durable role needs a management task. Do not use for vague product discovery, an unapproved plan, or work that is cheaper to finish in the current focused task.
+description: Internal Codex execution workflow for coordinating and recovering approved research, prototype, diagnosis, review, delivery, or release Tickets by resolving their saved responsibility model and reasoning depth, naming and creating fresh same-project tasks, continuing them with messages, waiting for results, preventing duplicate dispatch, integrating outcomes, and archiving finished tasks. Use when an approved durable Ticket has a specialist workspace or when a durable role needs a management task. Do not use for vague product discovery or an unapproved plan.
 ---
 
 # Orchestrate Tickets
@@ -16,7 +16,8 @@ unless the user asks.
 
 Proceed only when:
 
-- The Product Owner approved the currently described Ticket set and every selected Ticket records `authorization: approved`. Natural language is sufficient; if approval is expressed in the current turn, persist it on exactly those Tickets before dispatch.
+- The Product Owner approved the currently described Ticket set and every selected Ticket records `authorization: approved`.
+- For every task that does not already exist, the Product Owner explicitly asked for that separate task or approved its deterministic title. A clearly listed batch may be approved together. Record `Task opening: approved` for the exact title and attempt before dispatch.
 - Each Ticket is a durable work contract with a user-visible outcome, acceptance criteria, blockers, authorization, and status.
 - The contract is reachable from the worker's starting repository state or issue tracker.
 - Codex task coordination tools are available.
@@ -50,7 +51,7 @@ For example: `Inventory · Prototype · T002 Mobile stock adjustment flow`.
 For a role whose contract says `Session shape: managed queue`:
 
 1. Reuse an active same-project task with the deterministic manager title.
-2. If none exists, create one, pin it with `codex_app__set_thread_pinned`, and give it the role contract plus current project index as its only durable entrypoints.
+2. If none exists, propose its deterministic manager title and create it only after explicit Product Owner approval; then pin it with `codex_app__set_thread_pinned` and give it the role contract plus current project index as its only durable entrypoints.
 3. Send newly approved Ticket pointers to that manager instead of creating another manager.
 4. Let the manager apply this worker lifecycle within its role boundary; it must return product decisions and cross-role conflicts to the Project Lead.
 5. Keep the role in repository state. Archive its manager task only when the role is retired or replaced, and record that durable fact first.
@@ -76,6 +77,7 @@ Keep the ticket or tracker as the durable source of truth:
 ```text
 Authorization: pending | approved | revoked
 Status: ready | creating | running | needs-decision | completed | integrated | failed | deferred
+Task opening: pending | approved | not-needed
 Task title: <deterministic title>
 Attempt: <positive integer>
 Result commit: <set on completion>
@@ -113,8 +115,8 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 
 ## Choose The Smallest Execution Shape
 
-1. Complete one small, self-contained ticket in the current task when its attention workspace is still focused.
-2. Use a fresh project task when a Ticket needs a distinct professional context, write boundary, permission boundary, or clean recovery point.
+1. Keep a small, self-contained Ticket in the current task only when it has no specialist `workspace` and remains Project Lead work.
+2. Propose a fresh project task for every Ticket whose workspace is `research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`. Create it only after explicit approval; the fresh task is required for its responsibility model and reasoning depth to take effect.
 3. Run tickets sequentially by default.
 4. Run tickets in parallel only when their blockers are complete, their write scopes do not conflict, and each task has an isolated worktree.
 
@@ -126,15 +128,51 @@ Select Tickets with `authorization: approved` that are `ready`, unclaimed, unblo
 
 If no ticket is ready, report the blocking product decision, dependency, permission, or external condition. Downstream tickets become ready only after every blocker is `integrated`, not merely `completed`.
 
+## Resolve The Responsibility Profile
+
+The Ticket's `workspace` is its compute-profile key. Immediately before creating
+a worker or manager, call the bundled `resolve_maga_compute_profile` tool with
+that stable key. For a manager, use the role contract's `Primary workspace`.
+If the Product Owner explicitly requested a model or depth for this task, pass
+that as the resolver's one-task override; otherwise omit it.
+
+- Pass `actual.model` to `codex_app__create_thread.model` and
+  `actual.effort` to `codex_app__create_thread.thinking`. Omit a null value so
+  the host applies its default.
+- Use this precedence: explicit Product Owner choice for this task, then the
+  saved responsibility setting, then the host default. Balanced is the panel's
+  recommendation until explicitly saved. Never upgrade or downgrade because the Ticket appears easy, hard,
+  urgent, or important.
+- Resolution compares the choice with a reference catalog only; task creation
+  performs authoritative destination-host validation. A reference-catalog notice
+  does not replace an explicitly saved choice. If the destination rejects model
+  or thinking, apply the one bounded host-default retry below and tell the Project
+  Lead before continuing; do not persist either choice in the Ticket or repository.
+- A setting change affects newly created tasks. Continue an existing healthy
+  task without switching its model; create a replacement only for the normal
+  replacement reasons in this workflow.
+- If the bundled resolver is unavailable, omit model and thinking, use the host
+  default, and report that MAGA configuration could not be applied. Do not guess.
+
+Direct manual use of a Matt or Ponytail Skill inherits the current task's model.
+Do not wrap or rewrite those Skills to simulate responsibility routing.
+
 ## Create A Worker
 
 1. Resolve the current saved project with `codex_app__list_projects`. Stop rather than selecting an ambiguous or different project.
 2. Confirm no active task already has the deterministic title.
-3. Set the ticket to `creating`, record its task title and attempt, then call `codex_app__create_thread` with that title and the initial prompt below.
-4. For a Git repository, use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer.
-5. If creation returns a real `threadId`, retain it only at runtime. Set the ticket to `running` when the tracker can be updated without touching the worker's checkout. With a file-backed tracker in the shared checkout, leave it at `creating` and keep the coordinator read-only until the worker stops.
-6. If creation returns only `clientThreadId`, leave the ticket at `creating`. Never pass a client ID to read, send, wait, archive, or other tools that require `threadId`. Resolve the real task later by its deterministic title through `codex_app__list_threads`.
-7. If creation fails, set the ticket to `failed` with the concrete reason.
+3. Confirm `Task opening: approved` records the Product Owner's explicit permission for this exact title and attempt. If not, return the named proposal to the Project Lead; do not call task creation tools.
+4. Resolve the Ticket's responsibility profile as above.
+5. Set the ticket to `creating`, record its task title and attempt, then call `codex_app__create_thread` with that title, the resolved model and thinking, and the initial prompt below.
+6. For a Git repository, use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer.
+7. If creation returns a real `threadId`, retain it only at runtime. Set the ticket to `running` when the tracker can be updated without touching the worker's checkout. With a file-backed tracker in the shared checkout, leave it at `creating` and keep the coordinator read-only until the worker stops.
+8. If creation returns only `clientThreadId`, leave the ticket at `creating`. Never pass a client ID to read, send, wait, archive, or other tools that require `threadId`. Resolve the real task later by its deterministic title through `codex_app__list_threads`.
+9. If creation fails, set the ticket to `failed` with the concrete reason.
+
+If creation rejects only the selected model or thinking on a different
+destination host, retry once with those overrides omitted, disclose that host
+fallback, and then continue the normal lifecycle. Do not retry broader creation,
+permission, project, or worktree failures under this exception.
 
 Use this initial prompt:
 
@@ -188,7 +226,7 @@ Do not call the overall plan complete until every accepted ticket is integrated 
 
 Prefer continuing the existing worker when a focused follow-up can fix the problem. Create a replacement only when the original context or worktree is unusable.
 
-Before replacement, record the failed attempt, treat the old worker as superseded, archive it, increment `Attempt`, and use the retry title. A replacement receives the original ticket pointer plus only the durable failure fact needed to avoid repetition; it does not receive the old transcript.
+Before replacement, record the failed attempt, treat the old worker as superseded, increment `Attempt`, and propose the retry title. A replacement is another new task and requires explicit Product Owner approval. After approval, archive the old worker and create the replacement with the original ticket pointer plus only the durable failure fact needed to avoid repetition; it does not receive the old transcript.
 
 ## Keep The Product Conversation Clean
 

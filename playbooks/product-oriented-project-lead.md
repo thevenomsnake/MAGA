@@ -109,7 +109,7 @@ Project Lead 可以询问：
 
 `project-lead` 是产品入口和角色编排层。它根据事实选择研究、领域建模、原型、最小实现、诊断、视觉审查等能力，不要求用户知道调用过程。
 
-`orchestrate-tickets` 是更低一层的 Codex 任务运行时：在 Ticket 已记录 `authorization: approved` 后创建、等待、恢复和归档执行会话。它不负责决定产品方向，也不应该继续膨胀成项目负责人。
+`orchestrate-tickets` 是更低一层的 Codex 任务运行时：在 Ticket 已记录 `authorization: approved`，且用户明确批准本次具名新任务后，创建、等待、恢复和归档执行会话。它不负责决定产品方向，也不应该继续膨胀成项目负责人。
 
 Matt Skills 中的 spec、tickets 和 implement 可以作为内部方法继续吸收，但显式阶段、强制工程术语和默认重验证不再构成用户路径。
 

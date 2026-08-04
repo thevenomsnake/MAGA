@@ -54,6 +54,26 @@ Si no entiendes la solicitud, responde:
 
 Las capacidades instaladas se cargan en chats nuevos. Cuando termine la configuración, permanece en el mismo proyecto e inicia un **chat nuevo de Codex**. Conserva el chat de instalación por si necesitas consultar un error.
 
+### Opcional: elegir modelos por responsabilidad
+
+Balanced es la recomendación que aparece rellenada de antemano, pero no se activa hasta que pulsas **Save** por primera vez; mientras no guardes, se usan los valores predeterminados del host de Codex. Para ajustar la calidad, la velocidad y el coste, abre la página de detalles del plugin MAGA y selecciona su starter prompt **Configure**. Codex iniciará un chat de MAGA y abrirá un panel de configuración dentro de la conversación. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios.
+
+| Responsabilidad | Valor inicial Balanced |
+| --- | --- |
+| Project Lead | Sol · medium |
+| Investigación | Terra · medium |
+| Prototipo | Sol · medium |
+| Entrega | Terra · medium |
+| Diagnóstico | Sol · high |
+| Revisión | Sol · high |
+| Lanzamiento | Sol · high |
+
+Usa **Sol** para la ambigüedad, la síntesis y las decisiones con consecuencias; **Terra** para trabajo acotado más rápido y económico; y **Luna** para tareas estrechas y repetibles. En profundidad de razonamiento, **low** sirve para trabajo mecánico, **medium** ofrece el equilibrio habitual y **high** dedica más razonamiento a la incertidumbre y el riesgo.
+
+La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, no en esta carpeta de producto ni en su historial de Git. Solo se aplica a tareas nuevas cuya creación apruebes explícitamente después; las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que el Project Lead actual use la configuración nueva, pide «retoma el trabajo con la configuración nueva» y aprueba la creación de una tarea de sustitución.
+
+MAGA decide automáticamente qué responsabilidad y configuración corresponden, pero antes de crear una tarea nueva de Codex solicita tu consentimiento con lenguaje de producto. Puedes aprobar de una vez un grupo de tareas que ya tengan nombre. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` guardados al host de destino de la tarea nueva para su validación final. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco eleva la configuración porque una petición parezca difícil.
+
 ## 5. Describir el primer producto
 
 Puedes comenzar con una sola frase:
@@ -146,4 +166,3 @@ Necesitar cada vez menos MAGA es el resultado previsto.
 - [Proyectos y chats](https://learn.chatgpt.com/docs/projects)
 - [Instalar y usar plugins](https://learn.chatgpt.com/docs/plugins)
 - [Autorizaciones y seguridad](https://learn.chatgpt.com/docs/agent-approvals-security)
-

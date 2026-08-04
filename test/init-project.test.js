@@ -26,13 +26,14 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.9\.0/);
+  assert.match(project, /workflow_version: 0\.10\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
   const agents = fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8");
   assert.match(agents, /Never ask the user to invoke a Skill/);
   assert.match(agents, /Do not pre-create generic discussion, research, prototype, or implementation tasks/);
+  assert.match(agents, /create it only after the Product Owner explicitly approves that title/);
 });
 
 test("ships per-Ticket execution authorization", () => {
@@ -100,6 +101,8 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(orchestration, /Never create or keep a worker titled only with a generic capability/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
   assert.equal(manifest.interface.defaultPrompt.length, 3);
+  assert.equal(manifest.mcpServers, "./.mcp.json");
+  assert.match(manifest.interface.defaultPrompt.join(" "), /model and reasoning depth/);
 });
 
 test("ships localized product guides, beginner manuals, and one English comparison", () => {

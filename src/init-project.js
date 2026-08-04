@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.9.0";
+const WORKFLOW_VERSION = "0.10.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -87,7 +87,7 @@ function agentsDocument() {
 
 - Treat the user as Product Owner and keep one Project Lead as the product-facing entry.
 - Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
-- Do not pre-create generic discussion, research, prototype, or implementation tasks. Keep product discussion in the Project Lead and create a specifically named task only after its work object and boundary are concrete.
+- Do not pre-create generic discussion, research, prototype, or implementation tasks. Keep product discussion in the Project Lead; propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.
 - Keep roles durable and Codex task instances replaceable. Do not store task IDs or machine paths in tracked files.

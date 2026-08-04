@@ -130,9 +130,31 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 - Las decisiones de producto que no se pueden deducir de decisiones anteriores vuelven al Product Owner.
 - Codex en la aplicación de escritorio de ChatGPT sigue siendo la interfaz; MAGA no crea un panel paralelo.
 
+## Modelos por responsabilidad
+
+MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. Dispone de siete responsabilidades estables. Balanced es la recomendación que aparece rellenada de antemano, pero no se activa hasta que pulsas **Save** por primera vez; mientras no guardes, se usan los valores predeterminados del host de Codex.
+
+| Responsabilidad | Qué hace | Valor inicial Balanced |
+| --- | --- | --- |
+| Project Lead (`project-lead`) | Coordina el producto, la evidencia y la siguiente decisión | Sol · medium |
+| Investigación (`research`) | Reúne y compara la evidencia relevante | Terra · medium |
+| Prototipo (`prototype`) | Convierte una dirección de experiencia en algo verificable | Sol · medium |
+| Entrega (`delivery`) | Construye la unidad mínima de producto acordada | Terra · medium |
+| Diagnóstico (`diagnosis`) | Aísla los fallos y sus causas | Sol · high |
+| Revisión (`review`) | Cuestiona la evidencia de producto e ingeniería | Sol · high |
+| Lanzamiento (`release`) | Comprueba el cierre, el riesgo y la preparación | Sol · high |
+
+**Sol** está pensado para sintetizar información ambigua y tomar decisiones con consecuencias. **Terra** es más rápido y económico para trabajo acotado. **Luna** está disponible para tareas estrechas y repetibles, cuando importan más la latencia y el coste que un juicio amplio. En profundidad de razonamiento, **low** sirve para trabajo mecánico, **medium** ofrece el equilibrio habitual y **high** dedica más razonamiento a la incertidumbre o el riesgo.
+
+Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige su starter prompt **Configure**. Se iniciará un chat de MAGA con un panel de configuración dentro de la conversación. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios. La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, fuera del repositorio del producto y de su historial de Git.
+
+La configuración guardada solo se aplica a las tareas nuevas que se creen explícitamente después. Las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que un Project Lead existente continúe con la configuración nueva, debes pedir explícitamente «retoma el trabajo con la configuración nueva» y aprobar la creación de una tarea de sustitución.
+
+MAGA decide automáticamente qué responsabilidad y configuración corresponden, pero antes de crear una tarea nueva de Codex solicita tu consentimiento explícito con lenguaje de producto. Puedes aprobar de una vez un grupo de tareas que ya tengan nombre. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` que guardaste explícitamente al host de destino de la tarea nueva para que allí se validen. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco sube silenciosamente de modelo porque una tarea parezca difícil.
+
 ## Qué incluye
 
-La versión actual es **v0.9.0**. Contiene 15 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
+La versión actual es **v0.10.0**. Contiene 15 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
 
 | Capa | Responsabilidad |
 | --- | --- |

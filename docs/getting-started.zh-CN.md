@@ -60,6 +60,24 @@ Codex 应该自行检查环境、获取 MAGA、初始化项目并验证结果。
 2. 新建一个 **Codex 聊天**。
 3. 暂时保留安装聊天，后续出错时可以查完整错误信息。
 
+### 可选：按职责选择模型
+
+预填的 Balanced 推荐是很好的起点。打开 MAGA 插件详情页，选择 **Configure** starter prompt。Codex 会新建一个 MAGA 聊天，并在聊天中打开配置面板。这个面板不会嵌在插件详情页中，因为当前 Codex 插件页面还不支持任意自定义表单。
+
+| 职责 | Balanced 推荐值 |
+| --- | --- |
+| Project Lead | Sol · medium |
+| 研究 | Terra · medium |
+| 原型 | Sol · medium |
+| 交付 | Terra · medium |
+| 诊断 | Sol · high |
+| 审查 | Sol · high |
+| 发布 | Sol · high |
+
+**Sol** 适合模糊信息、综合判断和后果较重的决定；**Terra** 更快、更经济，适合边界清楚的工作；**Luna** 适合狭窄、重复的任务。思考深度中，**low** 适合机械任务，**medium** 是日常平衡，**high** 会为不确定性和风险投入更多推理。
+
+在点击 **保存** 前，这些只是推荐，MAGA 使用 Codex 宿主默认值。第一次保存会把全部 7 个职责作为明确选择冻结在当前实例的 Codex Home，而不是产品文件夹或 Git 历史；之后只合并你改动的职责。保存的选择只用于你明确批准的新任务；已有任务不变，Project Lead 也只会在新建或你明确要求创建 replacement 接手时采用。面板的 `model/list` 只是参考目录；创建获批任务时，目标宿主会做最终验证。若目标宿主拒绝保存的选择，MAGA 才省略 overrides 重试一次，并告诉你使用了宿主默认值。
+
 ## 5. 描述第一个产品
 
 一句话就能开始：
@@ -164,4 +182,3 @@ MAGA 是过渡坡道，不是永久中间层。当你能做到下面这些事，
 - [项目与聊天](https://learn.chatgpt.com/docs/projects)
 - [安装和使用插件](https://learn.chatgpt.com/docs/plugins)
 - [授权与安全](https://learn.chatgpt.com/docs/agent-approvals-security)
-

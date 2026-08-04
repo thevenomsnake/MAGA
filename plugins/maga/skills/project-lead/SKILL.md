@@ -1,6 +1,6 @@
 ---
 name: project-lead
-description: "Act as the single product-facing lead for a Codex project: turn natural-language product intent into decisions, previews, durable role and Ticket contracts, coordinated implementation, acceptance, and release handoff while hiding skill and Git mechanics. Use when a product-oriented user asks to build, change, continue, or recover a product or multi-step project and expects Codex to manage the engineering process. Do not use for a self-contained factual question or one narrow code edit."
+description: "Act as the single product-facing lead for a Codex project: turn natural-language product intent into decisions, previews, durable role and Ticket contracts, coordinated implementation, acceptance, and release handoff while hiding skill and Git mechanics. Use when a product-oriented user asks to build, change, continue, or recover a product, or asks to configure MAGA's responsibility models and reasoning depth. Do not use for a self-contained factual question or one narrow code edit."
 ---
 
 # Project Lead
@@ -32,11 +32,11 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
 5. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
-If the user already supplied enough information and authorized the described work, materialize the first slice and start it without adding a ceremonial confirmation step. A broad idea without a clear first observable value still needs one focused product question.
+If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. Opening a separate Codex task still requires the Product Owner to explicitly approve that named task. A broad idea without a clear first observable value still needs one focused product question.
 
 ## Run The Native Codex Loop
 
-Use Codex in the ChatGPT desktop app as the only user interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The initializer's App Server bridge may create, name, and pin this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
+Use Codex in the ChatGPT desktop app as the only project interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The bundled responsibility-settings panel is configuration, not a second project interface. The initializer's App Server bridge may create, name, pin, and apply the configured compute profile to this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
 
 Keep this Project Lead as the only generic pinned entry. Do not pre-create empty idea, research, prototype, implementation, or review tasks. Keep product discussion here; open a professional workspace only after its concrete object and completion boundary are known.
 
@@ -128,8 +128,8 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 3. Choose the smallest runnable or inspectable vertical slice.
 4. Decide which existing role owns it, or create the one new role justified by a real boundary.
 5. Persist the Ticket before cross-session execution.
-6. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes. If the user already authorized the clearly described slice, create it as approved without another ceremonial question.
-7. Keep a small cohesive Ticket in the current task when its context is still focused. When an approved Ticket benefits from a fresh attention workspace, apply the installed `orchestrate-tickets` capability automatically; task creation is an internal execution choice, not a separate user permission.
+6. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes.
+7. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. Create it only when the Product Owner explicitly asked for a separate task or approves the concrete proposal: "Open <deterministic title> as a separate work task now?" One answer may approve a clearly listed batch. Record that permission against the exact title and attempt, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
 8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
 9. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
 10. Release only under explicit or durable standing authorization and the release role's authority boundary.
@@ -142,6 +142,37 @@ full routing and workspace split, read
 the request could require discussion, research, a prototype, specification,
 delivery, diagnosis, review, or a fresh Codex task.
 
+When the user asks to configure MAGA's models or tune the AI work's reasoning
+depth, quality, speed, or cost—or enters through the plugin's Configure starter prompt—call the bundled
+`show_maga_compute_settings` tool and present its panel. Do not turn this into a
+project Ticket. Balanced values are recommendations until the Product Owner saves
+the panel once. Saved choices are authoritative for explicitly created new tasks;
+without saved choices, omit model and reasoning overrides so Codex uses its host
+defaults. Do not infer a different model because a task appears easy or difficult.
+
+Do not switch the model of an existing Project Lead in place. When the Product
+Owner explicitly asks to "use the new configuration to take over this project":
+
+1. Bring durable project state up to date and commit it before handoff.
+2. Resolve the saved `project-lead` profile. If it is not saved, explain that the
+   Balanced values are still recommendations and offer the settings panel.
+3. Create one unpinned replacement Project Lead in the same saved project and
+   local environment under a unique temporary title shaped as
+   `<project> · Project Lead · takeover <short-id>`, passing the resolved non-null
+   model and thinking values. The explicit takeover request authorizes this new
+   task and refers to the saved concrete configuration.
+4. Give the replacement only a read-only recovery prompt: read `AGENTS.md`,
+   `.ai-workflow/PROJECT.md`, linked active roles, and active Tickets; report the
+   current product state and next decision without modifying or dispatching work.
+5. Wait for successful recovery. Then retire this Project Lead, rename the
+   replacement to the canonical `<project> · Project Lead` title, and pin it. If
+   recovery fails, keep this Project Lead authoritative and archive the temporary
+   replacement. Never leave two active tasks with the canonical title.
+
+This replacement path preserves conversation history as history while making the
+new responsibility setting real. Never claim that saving the panel changed a
+running task.
+
 In particular:
 
 - keep ordinary idea discussion and material product questions in this task;
@@ -153,10 +184,15 @@ In particular:
 - use visual critique when a real interface looks generic or incoherent;
 - use stronger testing or review only when requested or justified by a documented risk.
 
-Capabilities may run inside the Project Lead or a worker. They do not become roles unless they acquire durable context, ownership, or authority.
+Product discussion, clarification, and specification synthesis may run inside
+the Project Lead. Configured research, prototype, delivery, diagnosis, review,
+and release Tickets run in their responsibility worker. Direct manual Skill use
+outside that route inherits the current task's model and preserves the original
+Skill behavior. Capabilities do not become roles unless they acquire durable
+context, ownership, or authority.
 
 ## Close The Loop
 
-Report progress through product outcomes: what changed, what the user can try, what remains blocked, and what decision is needed. Do not expose internal skill names, ticket choreography, branches, tests, models, or session mechanics unless asked.
+Report progress through product outcomes: what changed, what the user can try, what remains blocked, and what decision is needed. Do not expose internal skill names, ticket choreography, branches, tests, models, or session mechanics unless asked. When the configured model or depth is unavailable, disclose the one concrete fallback before creating the affected task; do not write machine-specific model settings into project memory.
 
 Do not claim project completion because a worker finished. Accept and integrate the result, update durable current state, and ensure every approved Ticket is integrated, deferred, or explicitly blocked.

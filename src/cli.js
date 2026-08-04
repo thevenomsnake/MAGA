@@ -128,7 +128,12 @@ async function startProjectLead(options, projectName) {
     projectName,
     onReady,
   });
-  return { title: result.title, reused: result.reused, opened: options.open };
+  return {
+    title: result.title,
+    reused: result.reused,
+    opened: options.open,
+    compute: result.compute,
+  };
 }
 
 export async function runCli(argv, dependencies = {}) {
@@ -157,6 +162,12 @@ export async function runCli(argv, dependencies = {}) {
       write(`${JSON.stringify({ targetDir: options.targetDir, projectLead })}\n`);
     } else {
       write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
+      if (projectLead.compute?.fallback?.length) {
+        write(`Model notice: ${projectLead.compute.fallback.join(" ")}\n`);
+      }
+      if (projectLead.compute?.configWarning) {
+        write(`MAGA settings warning: ${projectLead.compute.configWarning}\n`);
+      }
     }
     return;
   }
@@ -180,6 +191,12 @@ export async function runCli(argv, dependencies = {}) {
 
   if (projectLead) {
     write(`${projectLead.reused ? "Opened" : "Created"} ${projectLead.title}.\n`);
+    if (projectLead.compute?.fallback?.length) {
+      write(`Model notice: ${projectLead.compute.fallback.join(" ")}\n`);
+    }
+    if (projectLead.compute?.configWarning) {
+      write(`MAGA settings warning: ${projectLead.compute.configWarning}\n`);
+    }
   }
 
   if (result.commit === "skipped-no-identity") {

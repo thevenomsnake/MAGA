@@ -66,8 +66,17 @@ function quotedMetadataValue(metadata, key) {
 
 function repositoryFiles(root) {
   const files = [];
+  const ignoredDirectories = new Set([
+    ".git",
+    ".tmp",
+    ".cache",
+    "tmp",
+    "node_modules",
+    "dist",
+    ".wrangler",
+  ]);
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
-    if (entry.name === ".git" || entry.name === "tmp") continue;
+    if (entry.isDirectory() && ignoredDirectories.has(entry.name)) continue;
     const target = path.join(root, entry.name);
     if (entry.isDirectory()) files.push(...repositoryFiles(target));
     else files.push(target);

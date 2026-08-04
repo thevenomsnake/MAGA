@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "maga-responsibility-settings": {
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "./mcp/server.mjs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAGA responsibility settings</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f2eb;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-strong: #ffffff;
+      --ink: #171816;
+      --muted: #686a64;
+      --line: rgba(23, 24, 22, 0.12);
+      --accent: #e3422f;
+      --accent-dark: #b92d1f;
+      --ok: #227554;
+      --warn: #9a5d10;
+      --shadow: 0 14px 44px rgba(45, 36, 23, 0.10);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #171714;
+        --surface: rgba(36, 36, 32, 0.92);
+        --surface-strong: #2a2a25;
+        --ink: #f6f3eb;
+        --muted: #b8b5ac;
+        --line: rgba(246, 243, 235, 0.13);
+        --accent: #ff6956;
+        --accent-dark: #ff8b7d;
+        --ok: #62c59a;
+        --warn: #f1b45e;
+        --shadow: 0 16px 48px rgba(0, 0, 0, 0.26);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 92% -12%, rgba(227, 66, 47, 0.18), transparent 35%),
+        var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .shell { max-width: 980px; margin: 0 auto; padding: 24px; }
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 5px 0 4px; font-size: clamp(24px, 5vw, 36px); line-height: 1.05; letter-spacing: -.035em; }
+    .lede { max-width: 690px; margin: 0; color: var(--muted); }
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 7px 11px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .principle {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    .principle strong { color: var(--accent); }
+    .model-guide {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .model-note {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--surface) 74%, transparent);
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .model-note strong { display: block; color: var(--ink); font-size: 13px; }
+    .grid { display: grid; gap: 10px; }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.4fr) minmax(150px, .8fr) minmax(135px, .65fr) minmax(180px, 1fr);
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 14px;
+    }
+    .role-title { font-weight: 750; font-size: 15px; }
+    .role-copy, .field-label, .actual { color: var(--muted); font-size: 12px; }
+    .field-label { display: block; margin: 0 0 5px 2px; font-weight: 700; letter-spacing: .02em; }
+    select {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-strong);
+      color: var(--ink);
+      padding: 7px 30px 7px 9px;
+      font: inherit;
+    }
+    select:focus-visible, button:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 38%, transparent); outline-offset: 2px; }
+    .actual { border-left: 2px solid var(--ok); padding-left: 10px; }
+    .actual.fallback { border-left-color: var(--warn); color: var(--warn); }
+    .actual strong { display: block; color: var(--ink); font-size: 12px; }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+    button {
+      min-height: 40px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      padding: 8px 14px;
+      background: var(--surface-strong);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    button.primary { border-color: var(--accent); background: var(--accent); color: white; }
+    button.primary:hover { background: var(--accent-dark); }
+    button:disabled { opacity: .55; cursor: wait; }
+    .status { margin-left: auto; color: var(--muted); font-size: 12px; text-align: right; }
+    .status.error { color: var(--warn); }
+    .loading { padding: 40px 12px; color: var(--muted); text-align: center; }
+    .footnote { margin: 12px 2px 0; color: var(--muted); font-size: 12px; }
+    @media (max-width: 760px) {
+      .shell { padding: 16px; }
+      header { grid-template-columns: 1fr; }
+      .badge { justify-self: start; }
+      .model-guide { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr 1fr; }
+      .role { grid-column: 1 / -1; }
+      .actual { grid-column: 1 / -1; }
+      .actions { flex-wrap: wrap; }
+      .status { width: 100%; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <div class="eyebrow">Make Apps Great Again</div>
+        <h1 id="title">Responsibility settings</h1>
+        <p class="lede" id="lede">Review the model and reasoning depth recommended for each kind of work, then save the choices you want MAGA to use.</p>
+      </div>
+      <div class="badge" id="scope">Current Codex Home</div>
+    </header>
+
+    <section class="principle">
+      <strong id="principle-label">Your choice wins.</strong>
+      <span id="principle-copy">Balanced values are recommendations until you save them. MAGA does not silently upgrade a task because it looks difficult.</span>
+    </section>
+
+    <section class="model-guide" aria-label="Model guide">
+      <div class="model-note"><strong>Sol</strong><span id="sol-guide">Best judgment for ambiguity and risk.</span></div>
+      <div class="model-note"><strong>Terra</strong><span id="terra-guide">Best balance for bounded everyday work.</span></div>
+      <div class="model-note"><strong>Luna</strong><span id="luna-guide">Fastest and most economical for narrow work.</span></div>
+    </section>
+
+    <div id="content" class="loading">Loading available models…</div>
+    <p class="footnote" id="footnote">These preferences stay outside the project repository. Saved choices apply to new tasks; running tasks keep their current settings.</p>
+  </main>
+
+  <script>
+    const zh = (navigator.language || document.documentElement.lang || "").toLowerCase().startsWith("zh");
+    const copy = zh ? {
+      title: "职责设置",
+      lede: "查看每类工作的模型与思考深度建议，再保存你希望 MAGA 使用的选择。",
+      scope: "当前 Codex Home",
+      principleLabel: "你的设置优先。",
+      principleCopy: "均衡值在保存前只是推荐。MAGA 不会因为任务“看起来很难”而擅自升级模型。",
+      solGuide: "判断力最强，适合模糊问题与风险。",
+      terraGuide: "质量、速度和成本最均衡，适合边界明确的日常工作。",
+      lunaGuide: "更快且经济，适合狭窄而重复的工作。",
+      footnote: "这些偏好不会进入项目 Git。保存后的选择用于新建任务；正在运行的任务保持原设置。",
+      model: "模型",
+      effort: "思考深度",
+      recommended: "推荐配置",
+      nextTask: "下一个新任务",
+      hostDefault: "Codex 宿主默认",
+      hostDepth: "默认深度",
+      balanced: "恢复均衡默认值",
+      save: "保存设置",
+      saving: "正在保存…",
+      saved: "已保存。新任务会使用这些设置；已有任务保持不变。Project Lead 在新建或明确接手时生效。",
+      ready: "可修改后保存。",
+      activate: "点击保存，确认并启用这套均衡建议。",
+      noChanges: "没有需要保存的修改。",
+      unavailable: "参考目录未列出",
+      noCatalog: "无法读取参考模型目录；新任务的目标宿主会验证已保存选择。",
+      loading: "正在读取可用模型…",
+    } : {
+      title: "Responsibility settings",
+      lede: "Review the model and reasoning depth recommended for each kind of work, then save the choices you want MAGA to use.",
+      scope: "Current Codex Home",
+      principleLabel: "Your choice wins.",
+      principleCopy: "Balanced values are recommendations until you save them. MAGA does not silently upgrade a task because it looks difficult.",
+      solGuide: "Best judgment for ambiguity and risk.",
+      terraGuide: "Best balance for bounded everyday work.",
+      lunaGuide: "Fast and economical for narrow work.",
+      footnote: "These preferences stay outside the project repository. Saved choices apply to new tasks; running tasks keep their current settings.",
+      model: "Model",
+      effort: "Reasoning depth",
+      recommended: "Recommended",
+      nextTask: "Next new task",
+      hostDefault: "Codex host default",
+      hostDepth: "default depth",
+      balanced: "Restore balanced defaults",
+      save: "Save settings",
+      saving: "Saving…",
+      saved: "Saved. New tasks use these settings; existing tasks stay unchanged. Project Lead uses them when newly created or explicitly replaced.",
+      ready: "Adjust any row, then save.",
+      activate: "Save once to confirm and activate these Balanced recommendations.",
+      noChanges: "There are no changes to save.",
+      unavailable: "not in reference catalog",
+      noCatalog: "The reference model catalog is unavailable. The destination host will validate saved choices when a task is created.",
+      loading: "Loading available models…",
+    };
+
+    document.getElementById("title").textContent = copy.title;
+    document.getElementById("lede").textContent = copy.lede;
+    document.getElementById("scope").textContent = copy.scope;
+    document.getElementById("principle-label").textContent = copy.principleLabel;
+    document.getElementById("principle-copy").textContent = copy.principleCopy;
+    document.getElementById("sol-guide").textContent = copy.solGuide;
+    document.getElementById("terra-guide").textContent = copy.terraGuide;
+    document.getElementById("luna-guide").textContent = copy.lunaGuide;
+    document.getElementById("footnote").textContent = copy.footnote;
+    document.getElementById("content").textContent = copy.loading;
+
+    const effortLabels = zh ? {
+      none: "无", minimal: "最少", low: "低 · 快速", medium: "中 · 均衡",
+      high: "高 · 深入", xhigh: "超高", max: "最大", ultra: "极致",
+    } : {
+      none: "None", minimal: "Minimal", low: "Low · fast", medium: "Medium · balanced",
+      high: "High · thorough", xhigh: "Extra high", max: "Maximum", ultra: "Ultra",
+    };
+    const roleLabels = zh ? {
+      "project-lead": ["项目负责人", "产品对话、决策、编排与整合。"],
+      research: ["外部调研", "能影响产品决策的有来源事实。"],
+      prototype: ["体验原型", "在正式交付前判断交互与视觉方向。"],
+      delivery: ["产品交付", "结果已明确后的有边界实现。"],
+      diagnosis: ["问题诊断", "针对具体失败进行证据驱动的调查。"],
+      review: ["独立审查", "与风险匹配的验收和质量复核。"],
+      release: ["发布与风险", "隐私、权限、迁移和对外发布边界。"],
+    } : {};
+
+    const pending = new Map();
+    let nextRequestId = 1;
+    let snapshot = null;
+
+    function request(method, params) {
+      const id = nextRequestId++;
+      window.parent.postMessage({ jsonrpc: "2.0", id, method, params }, "*");
+      return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+    }
+
+    function structured(value) {
+      return value?.structuredContent || value?.toolOutput?.structuredContent || value?.toolOutput || value;
+    }
+
+    function option(value, label, selected) {
+      const element = document.createElement("option");
+      element.value = value;
+      element.textContent = label;
+      element.selected = selected;
+      return element;
+    }
+
+    function modelOptionsFor(role) {
+      const models = [...(snapshot.models || [])];
+      const required = [role.preferred?.model, snapshot.defaults?.[role.key]?.model].filter(Boolean);
+      for (const modelId of required.reverse()) {
+        if (!models.some((model) => model.id === modelId)) {
+          models.unshift({ id: modelId, displayName: `${modelId} · ${copy.unavailable}`, supportedReasoningEfforts: [] });
+        }
+      }
+      return models;
+    }
+
+    function effortsFor(modelId) {
+      const model = (snapshot.models || []).find((entry) => entry.id === modelId);
+      return model?.supportedReasoningEfforts?.length
+        ? model.supportedReasoningEfforts
+        : Object.keys(effortLabels);
+    }
+
+    function updateEffortSelect(row, preferred) {
+      const modelSelect = row.querySelector("[data-model]");
+      const effortSelect = row.querySelector("[data-effort]");
+      const efforts = effortsFor(modelSelect.value);
+      if (preferred && !efforts.includes(preferred)) efforts.unshift(preferred);
+      const wanted = preferred || efforts[0];
+      effortSelect.replaceChildren(...efforts.map((effort) => option(
+        effort,
+        `${effortLabels[effort] || effort}${effortsFor(modelSelect.value).includes(effort) ? "" : ` · ${copy.unavailable}`}`,
+        effort === wanted,
+      )));
+    }
+
+    function render(value) {
+      const next = structured(value);
+      if (!next?.responsibilities) return;
+      snapshot = next;
+      const content = document.getElementById("content");
+      content.className = "";
+      content.replaceChildren();
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      for (const role of snapshot.responsibilities) {
+        const row = document.createElement("section");
+        row.className = "row";
+        row.dataset.key = role.key;
+
+        const roleBlock = document.createElement("div");
+        roleBlock.className = "role";
+        const title = document.createElement("div");
+        title.className = "role-title";
+        title.textContent = roleLabels[role.key]?.[0] || role.label;
+        const description = document.createElement("div");
+        description.className = "role-copy";
+        description.textContent = roleLabels[role.key]?.[1] || role.description;
+        roleBlock.append(title, description);
+
+        const modelField = document.createElement("label");
+        const modelLabel = document.createElement("span");
+        modelLabel.className = "field-label";
+        modelLabel.textContent = copy.model;
+        const modelSelect = document.createElement("select");
+        modelSelect.dataset.model = "";
+        modelSelect.setAttribute("aria-label", `${title.textContent} ${copy.model}`);
+        for (const model of modelOptionsFor(role)) {
+          modelSelect.append(option(model.id, model.displayName || model.id, model.id === role.preferred.model));
+        }
+        modelField.append(modelLabel, modelSelect);
+
+        const effortField = document.createElement("label");
+        const effortLabel = document.createElement("span");
+        effortLabel.className = "field-label";
+        effortLabel.textContent = copy.effort;
+        const effortSelect = document.createElement("select");
+        effortSelect.dataset.effort = "";
+        effortSelect.setAttribute("aria-label", `${title.textContent} ${copy.effort}`);
+        effortField.append(effortLabel, effortSelect);
+
+        const actual = document.createElement("div");
+        const confirmed = snapshot.source === "saved";
+        actual.className = `actual${confirmed && role.fallback?.length ? " fallback" : ""}`;
+        const actualLabel = document.createElement("strong");
+        actualLabel.textContent = confirmed ? copy.nextTask : copy.recommended;
+        const actualValue = document.createElement("span");
+        actualValue.textContent = confirmed
+          ? (role.actual?.model
+            ? `${role.actual.model} · ${role.actual.effort ? (effortLabels[role.actual.effort] || role.actual.effort) : copy.hostDepth}`
+            : copy.hostDefault)
+          : `${role.preferred.model} · ${effortLabels[role.preferred.effort] || role.preferred.effort}`;
+        actual.append(actualLabel, actualValue);
+        if (role.fallback?.length) actual.title = role.fallback.join(" ");
+
+        row.append(roleBlock, modelField, effortField, actual);
+        grid.append(row);
+        updateEffortSelect(row, role.preferred.effort);
+        row.dataset.initialModel = modelSelect.value;
+        row.dataset.initialEffort = effortSelect.value;
+        modelSelect.addEventListener("change", () => updateEffortSelect(row, effortSelect.value));
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+      const reset = document.createElement("button");
+      reset.type = "button";
+      reset.textContent = copy.balanced;
+      const save = document.createElement("button");
+      save.type = "button";
+      save.className = "primary";
+      save.textContent = copy.save;
+      const status = document.createElement("div");
+      status.className = "status";
+      status.setAttribute("aria-live", "polite");
+      status.textContent = snapshot.configWarning
+        || (snapshot.source === "saved"
+          ? (snapshot.catalogWarning ? copy.noCatalog : copy.ready)
+          : copy.activate);
+      if (snapshot.configWarning) status.className = "status error";
+
+      reset.onclick = () => {
+        for (const row of grid.querySelectorAll(".row")) {
+          const defaults = snapshot.defaults[row.dataset.key];
+          row.querySelector("[data-model]").value = defaults.model;
+          updateEffortSelect(row, defaults.effort);
+        }
+        status.textContent = copy.ready;
+      };
+
+      save.onclick = async () => {
+        const profiles = {};
+        const activateAll = snapshot.source !== "saved";
+        for (const row of grid.querySelectorAll(".row")) {
+          const model = row.querySelector("[data-model]").value;
+          const effort = row.querySelector("[data-effort]").value;
+          if (activateAll || model !== row.dataset.initialModel || effort !== row.dataset.initialEffort) {
+            profiles[row.dataset.key] = { model, effort };
+          }
+        }
+        if (Object.keys(profiles).length === 0) {
+          status.textContent = copy.noChanges;
+          return;
+        }
+        save.disabled = true;
+        reset.disabled = true;
+        status.className = "status";
+        status.textContent = copy.saving;
+        try {
+          const result = await request("tools/call", {
+            name: "save_maga_compute_profiles",
+            arguments: { expectedRevision: snapshot.revision, profiles },
+          });
+          render(result);
+          const latestStatus = document.querySelector(".status");
+          if (latestStatus) latestStatus.textContent = copy.saved;
+        } catch (error) {
+          status.className = "status error";
+          status.textContent = error?.message || String(error);
+          save.disabled = false;
+          reset.disabled = false;
+        }
+      };
+
+      actions.append(reset, save, status);
+      content.append(grid, actions);
+    }
+
+    window.addEventListener("message", (event) => {
+      if (event.source !== window.parent) return;
+      const message = event.data;
+      if (!message || message.jsonrpc !== "2.0") return;
+      if (message.id !== undefined && pending.has(message.id)) {
+        const entry = pending.get(message.id);
+        pending.delete(message.id);
+        if (message.error) entry.reject(message.error);
+        else entry.resolve(message.result);
+        return;
+      }
+      if (message.method === "ui/notifications/tool-result") render(message.params);
+    }, { passive: true });
+
+    if (window.openai?.toolOutput) render(window.openai.toolOutput);
+  </script>
+</body>
+</html>

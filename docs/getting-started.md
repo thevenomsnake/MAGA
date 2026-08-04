@@ -60,6 +60,24 @@ Installed plugin capabilities become available to new chats. When Codex says set
 2. Start a **new Codex chat**.
 3. Leave the installation chat available in case you need its error details later.
 
+### Optional: choose models by responsibility
+
+The prefilled Balanced recommendation is a good place to start. Open the MAGA plugin detail page and select its **Configure** starter prompt. Codex will start a MAGA chat and open an in-chat configuration panel. The panel is not embedded in the plugin detail page because current Codex plugin pages do not support arbitrary custom forms.
+
+| Responsibility | Balanced recommendation |
+| --- | --- |
+| Project Lead | Sol · medium |
+| Research | Terra · medium |
+| Prototype | Sol · medium |
+| Delivery | Terra · medium |
+| Diagnosis | Sol · high |
+| Review | Sol · high |
+| Release | Sol · high |
+
+Use **Sol** for ambiguity, synthesis, and consequential judgment; **Terra** for faster, more economical bounded work; and **Luna** for narrow, repeatable work. **Low** thinking depth suits mechanical work, **medium** is the everyday balance, and **high** spends more reasoning on uncertainty and risk.
+
+Until you click **Save**, these are recommendations and MAGA uses the Codex host defaults. The first save confirms and freezes all seven rows in the current Codex Home, not this product folder or its Git history; later saves merge only the rows you changed. Saved choices apply only to new tasks you explicitly approve. Existing tasks stay unchanged, and Project Lead adopts them only when newly created or explicitly replaced at your request. The panel's `model/list` is only a reference catalog. The destination host performs final validation when MAGA creates an approved task; if it rejects the saved choice, MAGA retries once without overrides and tells you that the host default was used.
+
 ## 5. Describe the first product
 
 You can begin with one sentence:
@@ -164,4 +182,3 @@ Needing less MAGA is the intended outcome.
 - [Projects and chats](https://learn.chatgpt.com/docs/projects)
 - [Install and use plugins](https://learn.chatgpt.com/docs/plugins)
 - [Approvals and security](https://learn.chatgpt.com/docs/agent-approvals-security)
-

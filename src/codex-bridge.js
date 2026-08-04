@@ -2,14 +2,35 @@ import { spawn } from "node:child_process";
 import { EventEmitter, once } from "node:events";
 import path from "node:path";
 import readline from "node:readline";
+import {
+  loadComputeSettings,
+  resolveComputeProfile,
+} from "../plugins/maga/runtime/compute-profiles.mjs";
 
-const BRIDGE_VERSION = "0.9.0";
+const BRIDGE_VERSION = "0.10.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-class CodexBridge {
+function isComputeSelectionError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return /\b(model|reasoning|effort|thinking)\b/i.test(message)
+    && /\b(invalid|unsupported|unavailable|unknown|not allowed|does not support|reject)/i.test(message);
+}
+
+function withHostComputeFallback(compute) {
+  return {
+    ...compute,
+    actual: { model: null, effort: null },
+    fallback: [
+      ...(compute.fallback || []),
+      "The destination host rejected the configured model or reasoning depth; using its defaults.",
+    ],
+  };
+}
+
+export class CodexBridge {
   constructor({ cwd, command = "codex", timeoutMs = 120_000 } = {}) {
     this.cwd = path.resolve(cwd || process.cwd());
     this.command = command;
@@ -113,8 +134,16 @@ class CodexBridge {
     return result.data || [];
   }
 
-  async createThread({ cwd = this.cwd, title, pinned = true }) {
-    const result = await this.request("thread/start", { cwd: path.resolve(cwd) });
+  async listModels({ includeHidden = false } = {}) {
+    const result = await this.request("model/list", { includeHidden, limit: 100 });
+    return result.data || [];
+  }
+
+  async createThread({ cwd = this.cwd, title, pinned = true, model } = {}) {
+    const result = await this.request("thread/start", {
+      cwd: path.resolve(cwd),
+      model,
+    });
     const threadId = result.thread?.id;
     if (!threadId) throw new Error("thread/start returned no thread id");
 
@@ -123,10 +152,12 @@ class CodexBridge {
     return { ...result.thread, id: threadId, name: title, isPinned: pinned };
   }
 
-  async sendMessage(threadId, text) {
+  async sendMessage(threadId, text, { model, effort } = {}) {
     const result = await this.request("turn/start", {
       threadId,
       input: [{ type: "text", text }],
+      model,
+      effort,
     });
     const turnId = result.turn?.id;
     if (!turnId) throw new Error("turn/start returned no turn id");
@@ -140,6 +171,10 @@ class CodexBridge {
 
   readThread(threadId) {
     return this.request("thread/read", { threadId, includeTurns: true });
+  }
+
+  archiveThread(threadId) {
+    return this.request("thread/archive", { threadId });
   }
 
   waitForTurn(threadId, turnId) {
@@ -188,15 +223,25 @@ product-facing Project Lead. The project is in onboarding state; do not inspect 
 modify files and do not run tools in this first turn. In the Product Owner's system
 locale (${locale}), briefly say they can describe a product idea, ask for external
 research, request a small experience prototype, or continue an existing direction;
-MAGA will open specifically named work tasks only when useful. Then ask what they want
+  MAGA will propose specifically named work tasks only when useful and open them only
+  after the Product Owner approves. Then ask what they want
 to build and who should use it. Do not mention Skills, commands, Git, testing, roles,
 tickets, models, or internal workflow.`;
 }
 
-export async function launchProjectLead({ targetDir, projectName, timeoutMs, onReady } = {}) {
+export async function launchProjectLead({
+  targetDir,
+  projectName,
+  timeoutMs,
+  onReady,
+  bridgeFactory,
+  computeSettings,
+} = {}) {
   const cwd = path.resolve(targetDir || process.cwd());
   const title = `${projectName || path.basename(cwd)} · Project Lead`;
-  const bridge = new CodexBridge({ cwd, timeoutMs });
+  const bridge = bridgeFactory
+    ? bridgeFactory({ cwd, timeoutMs })
+    : new CodexBridge({ cwd, timeoutMs });
 
   try {
     await bridge.connect();
@@ -204,13 +249,71 @@ export async function launchProjectLead({ targetDir, projectName, timeoutMs, onR
       .find((thread) => thread.name === title);
     if (existing) {
       await onReady?.({ title, reused: true });
-      return { threadId: existing.id, title, reused: true };
+      return { threadId: existing.id, title, reused: true, compute: null };
     }
 
-    const thread = await bridge.createThread({ cwd, title, pinned: true });
-    await onReady?.({ title, reused: false });
-    await bridge.sendMessage(thread.id, projectLeadPrompt());
-    return { threadId: thread.id, title, reused: false };
+    let models = [];
+    try {
+      models = await bridge.listModels();
+    } catch {
+      // This bridge talks to the same app-server that will create the Project
+      // Lead, so an unavailable catalog safely falls back to host defaults.
+    }
+    let compute = resolveComputeProfile("project-lead", {
+      settings: computeSettings || loadComputeSettings(),
+      models,
+      catalogMode: "authoritative",
+    });
+    let usingHostDefaults = false;
+    let thread;
+    try {
+      thread = await bridge.createThread({
+        cwd,
+        title,
+        pinned: true,
+        model: compute.actual.model || undefined,
+      });
+    } catch (error) {
+      if (!compute.actual.model || !isComputeSelectionError(error)) throw error;
+      compute = withHostComputeFallback(compute);
+      usingHostDefaults = true;
+      thread = await bridge.createThread({ cwd, title, pinned: true });
+    }
+
+    let readyNotified = false;
+    try {
+      await onReady?.({ title, reused: false });
+      readyNotified = true;
+      await bridge.sendMessage(thread.id, projectLeadPrompt(), {
+        model: usingHostDefaults ? undefined : (compute.actual.model || undefined),
+        effort: usingHostDefaults ? undefined : (compute.actual.effort || undefined),
+      });
+    } catch (error) {
+      // A named, pinned task with no completed onboarding turn is not a valid
+      // Project Lead. Remove it from active listings so a later start can retry.
+      const canRetry = !usingHostDefaults
+        && (compute.actual.model || compute.actual.effort)
+        && isComputeSelectionError(error);
+      if (!canRetry) {
+        await bridge.archiveThread(thread.id).catch(() => {});
+        throw error;
+      }
+
+      // Do not create a duplicate canonical title if the failed task could not
+      // be retired. A retry is safe only after cleanup succeeds.
+      await bridge.archiveThread(thread.id);
+      compute = withHostComputeFallback(compute);
+      usingHostDefaults = true;
+      thread = await bridge.createThread({ cwd, title, pinned: true });
+      try {
+        if (!readyNotified) await onReady?.({ title, reused: false });
+        await bridge.sendMessage(thread.id, projectLeadPrompt());
+      } catch (retryError) {
+        await bridge.archiveThread(thread.id).catch(() => {});
+        throw retryError;
+      }
+    }
+    return { threadId: thread.id, title, reused: false, compute };
   } finally {
     await bridge.close();
   }
