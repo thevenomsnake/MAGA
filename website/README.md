@@ -8,4 +8,9 @@ Serve `public/` with any static file server.
 
 ## Cloudflare deployment
 
-`wrangler.jsonc` points Workers Static Assets at `public/` and declares `maga.sumimi.jp` as the custom domain. After Cloudflare authentication is available, deploy from this directory with Wrangler or the official Cloudflare API tooling.
+`wrangler.jsonc` points Workers Static Assets at `public/` and declares `maga.sumimi.jp` as the custom domain. Deploy from this directory with Wrangler or the official Cloudflare API tooling.
+
+## Production
+
+- Worker: `maga-homepage`
+- URL: <https://maga.sumimi.jp/>
