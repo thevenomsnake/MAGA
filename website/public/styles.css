@@ -167,6 +167,47 @@ button {
   margin-left: auto;
 }
 
+.sumimi-credit {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.8rem;
+  padding: 0.45rem 0.8rem 0.5rem 0.9rem;
+  gap: 0.7rem;
+  color: #fff;
+  border-left: 4px solid var(--red);
+  background: var(--navy);
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.sumimi-credit:hover,
+.sumimi-credit:focus-visible {
+  background: var(--navy-deep);
+  transform: translateY(-2px);
+}
+
+.sumimi-credit span,
+.sumimi-credit small {
+  margin: 0;
+  color: #fff;
+  font-family: var(--display);
+  font-size: 0.67rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sumimi-credit img {
+  display: block;
+  width: 5.9rem;
+  height: auto;
+}
+
+.sumimi-credit-header {
+  flex: 0 0 auto;
+}
+
 .nav-toggle {
   display: none;
   width: 3rem;
@@ -651,6 +692,15 @@ button {
   font-weight: 900;
 }
 
+.footer-brand .sumimi-credit-footer {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.sumimi-credit-footer img {
+  width: 5.2rem;
+}
+
 .footer-links,
 .language-links {
   display: flex;
@@ -685,6 +735,10 @@ button {
 }
 
 @media (max-width: 74rem) {
+  .sumimi-credit-header {
+    display: none;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
