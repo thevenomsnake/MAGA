@@ -22,16 +22,22 @@
     <title>MAGA by Sumimi — Make App Great Again</title>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
     <div class="page" id="top">
       <header class="site-header" data-header>
-        <a class="wordmark" href="#top" aria-label="MAGA home">MAGA</a>
+        <a
+          class="wordmark"
+          href="#top"
+          aria-label="MAGA home"
+          data-i18n-aria-label="a11y.home"
+        >MAGA</a>
 
         <button
           class="nav-toggle"
           type="button"
           aria-label="Open navigation"
+          data-i18n-aria-label="a11y.openNav"
           aria-expanded="false"
           aria-controls="primary-navigation"
           data-nav-toggle
@@ -40,10 +46,16 @@
           <span></span>
         </button>
 
-        <nav class="primary-nav" id="primary-navigation" aria-label="Primary" data-nav>
-          <a href="#how-it-works">How it works</a>
-          <a href="#for-you">For you</a>
-          <a href="#get-started">Get started</a>
+        <nav
+          class="primary-nav"
+          id="primary-navigation"
+          aria-label="Primary"
+          data-i18n-aria-label="a11y.primaryNav"
+          data-nav
+        >
+          <a href="#how-it-works" data-i18n="nav.how">How it works</a>
+          <a href="#for-you" data-i18n="nav.forYou">For you</a>
+          <a href="#get-started" data-i18n="nav.start">Get started</a>
           <a
             href="https://github.com/thevenomsnake/MAGA"
             target="_blank"
@@ -51,14 +63,33 @@
           >GitHub</a>
         </nav>
 
+        <label class="language-switcher">
+          <span class="visually-hidden" data-i18n="a11y.languageSelector">Choose language</span>
+          <select
+            aria-label="Choose language"
+            data-i18n-aria-label="a11y.languageSelector"
+            data-language-select
+          >
+            <option value="en">EN</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="es">ES</option>
+          </select>
+          <svg viewBox="0 0 12 8" aria-hidden="true" focusable="false">
+            <path d="M1 1.25 6 6.25l5-5" />
+          </svg>
+        </label>
+
         <a
           class="sumimi-credit sumimi-credit-header"
           href="https://sumimi.jp/"
           target="_blank"
           rel="noreferrer"
           aria-label="Developed by Sumimi"
+          data-i18n-aria-label="a11y.developedBy"
         >
-          <span>Developed by</span>
+          <span data-i18n="brand.developedBy">Developed by</span>
           <img
             src="./assets/sumimi-wordmark.webp"
             alt=""
@@ -80,44 +111,50 @@
             </h1>
 
             <div class="hero-message">
-              <p class="hero-subtitle">A great way for a non-coder to build an app</p>
-              <p class="hero-body">
+              <p class="hero-subtitle" data-i18n="hero.subtitle">A great way for a non-coder to build an app</p>
+              <p class="hero-body" data-i18n="hero.body">
                 You make the product decisions. MAGA turns them into working,
                 inspectable software.
               </p>
             </div>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#get-started">Start building</a>
+              <a class="button button-primary" href="#get-started" data-i18n="hero.start">Start building</a>
               <a
                 class="button button-secondary"
                 href="https://github.com/thevenomsnake/MAGA"
                 target="_blank"
                 rel="noreferrer"
+                data-i18n="hero.github"
               >View on GitHub</a>
             </div>
           </div>
 
-          <ol class="hero-flow" aria-label="How MAGA works" data-reveal>
+          <ol
+            class="hero-flow"
+            aria-label="How MAGA works"
+            data-i18n-aria-label="a11y.heroFlow"
+            data-reveal
+          >
             <li>
               <span class="flow-number">01</span>
-              <strong>You decide</strong>
-              <p>Define the outcome and what matters.</p>
+              <strong data-i18n="flow.decideTitle">You decide</strong>
+              <p data-i18n="flow.decideBody">Define the outcome and what matters.</p>
             </li>
             <li>
               <span class="flow-number">02</span>
-              <strong>MAGA leads</strong>
-              <p>MAGA routes the work and sets the plan.</p>
+              <strong data-i18n="flow.leadsTitle">MAGA leads</strong>
+              <p data-i18n="flow.leadsBody">MAGA routes the work and sets the plan.</p>
             </li>
             <li>
               <span class="flow-number">03</span>
-              <strong>Codex builds</strong>
-              <p>Codex builds and checks the code.</p>
+              <strong data-i18n="flow.buildsTitle">Codex builds</strong>
+              <p data-i18n="flow.buildsBody">Codex builds and checks the code.</p>
             </li>
             <li>
               <span class="flow-number">04</span>
-              <strong>You accept</strong>
-              <p>Inspect the result and accept it.</p>
+              <strong data-i18n="flow.acceptTitle">You accept</strong>
+              <p data-i18n="flow.acceptBody">Inspect the result and accept it.</p>
             </li>
           </ol>
         </section>
@@ -125,44 +162,49 @@
         <section class="how section-shell" id="how-it-works" aria-labelledby="how-title">
           <div class="how-heading" data-reveal>
             <h2 id="how-title">
-              <span>One product lead.</span>
-              <span>The whole build.</span>
+              <span data-i18n="how.title1">One product lead.</span>
+              <span data-i18n="how.title2">The whole build.</span>
             </h2>
-            <p>
+            <p data-i18n="how.body">
               MAGA turns product intent into the next useful piece of evidence —
               then keeps the work moving.
             </p>
           </div>
 
-          <ol class="process-rail" aria-label="The MAGA product loop" data-reveal>
-            <li><span>01</span><strong>Align the outcome</strong></li>
-            <li><span>02</span><strong>Choose the next evidence</strong></li>
-            <li><span>03</span><strong>Build the smallest inspectable slice</strong></li>
-            <li><span>04</span><strong>Return to product judgment</strong></li>
+          <ol
+            class="process-rail"
+            aria-label="The MAGA product loop"
+            data-i18n-aria-label="a11y.productLoop"
+            data-reveal
+          >
+            <li><span>01</span><strong data-i18n="loop.align">Align the outcome</strong></li>
+            <li><span>02</span><strong data-i18n="loop.choose">Choose the next evidence</strong></li>
+            <li><span>03</span><strong data-i18n="loop.build">Build the smallest inspectable slice</strong></li>
+            <li><span>04</span><strong data-i18n="loop.return">Return to product judgment</strong></li>
           </ol>
         </section>
 
         <section class="audience" id="for-you" aria-labelledby="audience-title">
           <div class="section-shell audience-layout">
             <blockquote data-reveal>
-              Direct without restraint.<br />
-              Accept with judgment.
+              <span data-i18n="audience.quote1">Direct without restraint.</span><br />
+              <span data-i18n="audience.quote2">Accept with judgment.</span>
             </blockquote>
 
             <div class="audience-table" data-reveal>
-              <h2 id="audience-title">Built for product thinkers</h2>
+              <h2 id="audience-title" data-i18n="audience.title">Built for product thinkers</h2>
               <div class="audience-columns">
                 <article>
-                  <h3>First-time builders</h3>
-                  <p>Bring the problem and the expectation.</p>
+                  <h3 data-i18n="audience.firstTitle">First-time builders</h3>
+                  <p data-i18n="audience.firstBody">Bring the problem and the expectation.</p>
                 </article>
                 <article>
-                  <h3>Product designers</h3>
-                  <p>Bring the experience and the trade-offs.</p>
+                  <h3 data-i18n="audience.designTitle">Product designers</h3>
+                  <p data-i18n="audience.designBody">Bring the experience and the trade-offs.</p>
                 </article>
                 <article>
-                  <h3>Product leaders</h3>
-                  <p>Bring the goals and the decision boundaries.</p>
+                  <h3 data-i18n="audience.leaderTitle">Product leaders</h3>
+                  <p data-i18n="audience.leaderBody">Bring the goals and the decision boundaries.</p>
                 </article>
               </div>
             </div>
@@ -173,29 +215,33 @@
           <div class="section-shell start-layout">
             <div class="start-copy" data-reveal>
               <h2 id="start-title">
-                <span>Start with</span>
-                <span>one product sentence.</span>
+                <span data-i18n="start.title1">Start with</span>
+                <span data-i18n="start.title2">one product sentence.</span>
               </h2>
-              <p>
+              <p data-i18n="start.body">
                 No terminal experience required. Open Codex, choose an empty project
                 folder, and paste the setup request.
               </p>
 
               <ol class="start-steps">
-                <li><span>01</span><strong>Open ChatGPT desktop</strong></li>
-                <li><span>02</span><strong>Choose Codex</strong></li>
-                <li><span>03</span><strong>Open an empty project folder</strong></li>
+                <li><span>01</span><strong data-i18n="start.step1">Open ChatGPT desktop</strong></li>
+                <li><span>02</span><strong data-i18n="start.step2">Choose Codex</strong></li>
+                <li><span>03</span><strong data-i18n="start.step3">Open an empty project folder</strong></li>
               </ol>
             </div>
 
             <div class="prompt-area" data-reveal>
-              <div class="prompt-panel" aria-label="MAGA setup request">
+              <div
+                class="prompt-panel"
+                aria-label="MAGA setup request"
+                data-i18n-aria-label="a11y.setupRequest"
+              >
                 <span class="prompt-caret" aria-hidden="true">&gt;_</span>
-                <p id="setup-request">Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize MAGA in this folder, verify that it works, and tell me when to start a new chat.</p>
+                <p id="setup-request" data-i18n="start.prompt">Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize MAGA in this folder, verify that it works, and tell me when to start a new chat.</p>
               </div>
 
               <div class="prompt-actions">
-                <button class="button button-copy" type="button" data-copy>
+                <button class="button button-copy" type="button" data-copy data-i18n="start.copy">
                   Copy setup request
                 </button>
                 <a
@@ -203,6 +249,8 @@
                   href="https://github.com/thevenomsnake/MAGA/blob/main/docs/getting-started.md"
                   target="_blank"
                   rel="noreferrer"
+                  data-guide-link
+                  data-i18n="start.guide"
                 >Read the beginner guide</a>
               </div>
               <p class="copy-status" role="status" aria-live="polite" data-copy-status></p>
@@ -223,8 +271,9 @@
               target="_blank"
               rel="noreferrer"
               aria-label="A project by Sumimi"
+              data-i18n-aria-label="a11y.projectBy"
             >
-              <small>A project by</small>
+              <small data-i18n="brand.projectBy">A project by</small>
               <img
                 src="./assets/sumimi-wordmark.webp"
                 alt=""
@@ -236,18 +285,26 @@
             </a>
           </div>
 
-          <nav class="footer-links" aria-label="Project links">
+          <nav
+            class="footer-links"
+            aria-label="Project links"
+            data-i18n-aria-label="a11y.projectLinks"
+          >
             <a href="https://github.com/thevenomsnake/MAGA">GitHub</a>
-            <a href="https://github.com/thevenomsnake/MAGA/tree/main/docs">Docs</a>
+            <a href="https://github.com/thevenomsnake/MAGA/tree/main/docs" data-i18n="footer.docs">Docs</a>
             <a href="https://github.com/thevenomsnake/MAGA/blob/main/LICENSE">MIT License</a>
           </nav>
 
-          <nav class="language-links" aria-label="Languages">
-            <a href="https://github.com/thevenomsnake/MAGA/blob/main/README.md" lang="en">English</a>
-            <a href="https://github.com/thevenomsnake/MAGA/blob/main/README.zh-CN.md" lang="zh-CN">简体中文</a>
-            <a href="https://github.com/thevenomsnake/MAGA/blob/main/README.ja.md" lang="ja">日本語</a>
-            <a href="https://github.com/thevenomsnake/MAGA/blob/main/README.ko.md" lang="ko">한국어</a>
-            <a href="https://github.com/thevenomsnake/MAGA/blob/main/README.es.md" lang="es">Español</a>
+          <nav
+            class="language-links"
+            aria-label="Languages"
+            data-i18n-aria-label="a11y.languages"
+          >
+            <button type="button" lang="en" data-language="en">English</button>
+            <button type="button" lang="zh-CN" data-language="zh">简体中文</button>
+            <button type="button" lang="ja" data-language="ja">日本語</button>
+            <button type="button" lang="ko" data-language="ko">한국어</button>
+            <button type="button" lang="es" data-language="es">Español</button>
           </nav>
         </div>
         <div class="double-rule double-rule-bottom" aria-hidden="true"></div>
