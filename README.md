@@ -17,7 +17,7 @@
   <a href="./README.es.md">Español</a>
 </p>
 
-MAGA is an installable product-building workflow for Codex Desktop. You describe the user, problem, experience, constraints, and trade-offs in product language. A persistent Project Lead selects the right methods and coordinates research, prototyping, implementation, validation, and repair.
+MAGA is a product-building plugin and on-ramp to Codex Desktop. You describe the user, problem, experience, constraints, and trade-offs in product language. A persistent Project Lead selects the right methods and coordinates research, prototyping, implementation, validation, and repair while you learn the practices behind that work.
 
 You do not need to understand code, choose Skills, manage engineering sessions, or review code. You accept the product by inspecting its behavior, experience, and business result.
 
@@ -55,7 +55,7 @@ npx github:thevenomsnake/MAGA start ./my-product
 
 ## Why MAGA
 
-### Why do we need a wrapper app when Codex is already good enough?
+### Why a plugin instead of a wrapper app?
 
 Codex already performs difficult engineering work. It can inspect repositories, write and modify code, run checks, review changes, work across project chats, and apply reusable Skills. OpenAI's own guidance describes the same progression: give Codex durable context, encode repeatable work as Skills, and package stable capabilities as plugins. See the official [Codex best practices](https://learn.chatgpt.com/guides/best-practices), [Skills documentation](https://learn.chatgpt.com/docs/build-skills), and [plugin documentation](https://developers.openai.com/plugins/).
 
@@ -64,6 +64,10 @@ The name Codex makes its center of gravity clear: code. Its default vocabulary a
 Product people are often dismissed as "non-technical people who just tell engineers what to do." Fine. MAGA is the plugin that lets them do exactly that without restraint: they set the product goals and trade-offs; Codex handles the code.
 
 > **Direct without restraint. Accept with judgment.**
+
+You do not need another application between you and Codex. The company building both the model and the client is best positioned to keep them aligned, much as Apple can tune its chips and operating systems together: the product roadmap, capability boundaries, interface, and release cycle move as one. Codex will keep evolving. An independent wrapper must chase every new capability, interaction, and permission model; a plugin stays inside the native product, adds only the missing product practices, and can be uninstalled when you no longer need it.
+
+MAGA is deliberately an on-ramp, not a permanent layer. It starts with language and decisions that product people already understand, then makes the underlying practices visible: framing outcomes, gathering evidence, setting constraints, managing trade-offs, and accepting working software. The intended end state is greater autonomy, not permanent dependence. If you eventually need less of MAGA—or none at all—because you can work with Codex directly, the plugin has done its job.
 
 MAGA exists because model capability and product collaboration are different problems.
 
@@ -75,8 +79,6 @@ MAGA adds an operating model above those capabilities:
 - Intent-based routing chooses Skills and methods from the current evidence.
 - Durable project state preserves decisions, boundaries, roles, and approved work.
 - Product acceptance replaces code review as the Product Owner's interface.
-
-Strictly speaking, MAGA is not a second application or a replacement interface. Codex Desktop remains the interface. The wrapper is the installed working contract that decides how product intent becomes coordinated engineering work.
 
 <p align="center">
   <img src="./assets/maga-operating-model.svg" alt="Behavior comparison between Traditional Skills and MAGA across entry, orchestration, technical work, acceptance, and continuity" width="100%">

@@ -128,11 +128,18 @@ test("ships localized product guides and one English operating-model comparison"
   assert.match(readme, /For product designers, product leaders, and first-time builders/);
   assert.match(readme, /You do not need to understand code[\s\S]+or review code/);
   assert.match(readme, /## Why MAGA/);
-  assert.match(readme, /Why do we need a wrapper app when Codex is already good enough\?/);
+  assert.match(readme, /Why a plugin instead of a wrapper app\?/);
+  assert.match(readme, /Codex will keep evolving/);
+  assert.match(readme, /Apple can tune its chips and operating systems together/);
+  assert.match(readme, /can be uninstalled when you no longer need it/);
+  assert.match(readme, /an on-ramp, not a permanent layer/);
+  assert.match(readme, /greater autonomy, not permanent dependence/);
+  assert.match(readme, /the plugin has done its job/);
   assert.match(readme, /The name Codex makes its center of gravity clear: code/);
   assert.match(readme, /"non-technical people who just tell engineers what to do\."/);
   assert.match(readme, /Direct without restraint\. Accept with judgment\./);
   assert.match(readme, /model capability and product collaboration are different problems/);
+  assert.doesNotMatch(readme, /The wrapper is the installed working contract/);
   assert.doesNotMatch(readme, /```mermaid|maga-product-vision-hero|maga-routing-hero/);
 
   for (const label of [

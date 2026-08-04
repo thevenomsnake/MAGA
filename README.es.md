@@ -17,7 +17,7 @@
   <strong>Español</strong>
 </p>
 
-MAGA es un flujo de trabajo instalable para crear productos con Codex Desktop. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación.
+MAGA es un plugin de transición para que la gente de producto empiece a crear con Codex Desktop. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación mientras hace visibles las prácticas que hay detrás.
 
 No necesitas entender código, elegir Skills, gestionar sesiones de ingeniería ni revisar código. Aceptas el producto evaluando su comportamiento, su experiencia y su resultado de negocio.
 
@@ -55,7 +55,7 @@ npx github:thevenomsnake/MAGA start ./my-product
 
 ## Why MAGA
 
-### ¿Por qué necesitamos una capa sobre Codex si Codex ya es suficientemente bueno?
+### ¿Por qué un plugin y no una aplicación envoltorio?
 
 Codex ya realiza trabajo de ingeniería complejo. Puede entender repositorios, escribir y modificar código, ejecutar comprobaciones, revisar cambios, trabajar entre conversaciones de un proyecto y aplicar Skills reutilizables. La guía oficial de OpenAI describe la misma evolución: proporcionar contexto duradero a Codex, convertir el trabajo repetible en Skills y distribuir capacidades estables como plugins. Consulta las [prácticas recomendadas de Codex](https://learn.chatgpt.com/guides/best-practices), la [documentación de Skills](https://learn.chatgpt.com/docs/build-skills) y la [documentación de plugins](https://developers.openai.com/plugins/).
 
@@ -64,6 +64,10 @@ El propio nombre Codex deja claro su centro de gravedad: el código. Su vocabula
 A la gente de producto se le suele decir que “no entiende la tecnología y solo da órdenes”. De acuerdo: llevemos esa dirección hasta el final. MAGA es el plugin que permite decidir objetivos y compromisos de producto sin freno, mientras Codex se encarga del código.
 
 > **Dirige sin freno. Acepta con criterio.**
+
+No necesitas otra aplicación entre tú y Codex. La empresa que crea tanto el modelo como el cliente está en la mejor posición para mantenerlos alineados, igual que Apple puede ajustar conjuntamente sus chips y sus sistemas operativos: la hoja de ruta, los límites de capacidad, la interfaz y el ciclo de lanzamientos avanzan como una sola pieza. Codex seguirá evolucionando. Una aplicación envoltorio independiente debe perseguir cada nueva capacidad, interacción y modelo de permisos; un plugin permanece dentro del producto nativo, añade solo las prácticas de producto que faltan y se puede desinstalar cuando ya no lo necesites.
+
+MAGA está diseñado deliberadamente como un plugin de transición. Empieza con el lenguaje y las decisiones que la gente de producto ya conoce y va mostrando las prácticas subyacentes: definir resultados, reunir evidencia, establecer restricciones, gestionar compromisos y aceptar software funcional. El objetivo es aumentar tu autonomía, no crear una dependencia permanente. Si algún día puedes trabajar directamente con Codex y necesitas menos MAGA, o ninguno, el plugin habrá cumplido su función.
 
 MAGA existe porque la capacidad del modelo y la colaboración de producto son problemas distintos.
 
@@ -75,8 +79,6 @@ MAGA añade un modelo operativo por encima de esas capacidades:
 - El enrutamiento por intención elige Skills y métodos según la evidencia disponible.
 - El estado duradero del proyecto conserva decisiones, límites, roles y trabajo autorizado.
 - La aceptación de producto sustituye a la revisión de código como interfaz del Product Owner.
-
-En sentido estricto, MAGA no es una segunda aplicación ni una interfaz alternativa. Codex Desktop sigue siendo la interfaz. La capa envolvente es el contrato de trabajo instalado que determina cómo una intención de producto se convierte en trabajo de ingeniería coordinado.
 
 <p align="center">
   <img src="./assets/maga-operating-model.svg" alt="Comparación de comportamiento entre Traditional Skills y MAGA en entrada, coordinación, trabajo técnico, aceptación y continuidad" width="100%">
