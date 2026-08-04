@@ -17,7 +17,7 @@
   <a href="./README.es.md">Español</a>
 </p>
 
-MAGA is a product-building plugin and on-ramp to Codex Desktop. You describe the user, problem, experience, constraints, and trade-offs in product language. A persistent Project Lead selects the right methods and coordinates research, prototyping, implementation, validation, and repair while you learn the practices behind that work.
+MAGA is a product-building plugin and on-ramp to Codex in the ChatGPT desktop app. You describe the user, problem, experience, constraints, and trade-offs in product language. A persistent Project Lead selects the right methods and coordinates research, prototyping, implementation, validation, and repair while you learn the practices behind that work.
 
 You do not need to understand code, choose Skills, manage engineering sessions, or review code. You accept the product by inspecting its behavior, experience, and business result.
 
@@ -26,32 +26,21 @@ You do not need to understand code, choose Skills, manage engineering sessions, 
 
 ## Start here
 
-You need [Codex Desktop](https://openai.com/codex/), the Codex CLI, Node.js 18 or later, and Git. Add `--no-git` if you do not want MAGA to initialize a repository.
+No terminal experience is required. If you have never used Codex before, follow the **[complete beginner guide](./docs/getting-started.md)** from installing the desktop app through accepting your first working result.
 
-```bash
-npx github:thevenomsnake/MAGA init ./my-product
-```
+1. Open the [ChatGPT desktop app](https://learn.chatgpt.com/docs/quickstart?setup=app), sign in, and choose **Codex**.
+2. Create or open an empty local project folder.
+3. Paste this message into Codex:
 
-Open the new project and describe what you want to make:
+> Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize MAGA in this folder, verify that it works, and tell me when to start a new chat. Perform the technical steps yourself and ask me only for approvals that are actually required.
 
-```text
-I want a tool that helps independent designers organize client feedback.
-Feedback should stay attached to a project, and I need to see which issues are blocking delivery.
-```
+Read each approval request and allow it only when it refers to this folder, GitHub, or a prerequisite Codex has just explained. You do not need to copy commands into a terminal.
 
-MAGA identifies the first useful product outcome, asks only questions that can change the direction or permission boundary, and starts the appropriate work. You do not have to translate the idea into technical tasks first.
+When Codex confirms the setup is complete, start a **new chat in the same project** and describe the product:
 
-Install only the plugin in an existing environment:
+> Use MAGA as my Project Lead. I want a tool that helps independent designers organize client feedback. Feedback should stay attached to a project, and I need to see which issues are blocking delivery. I do not know code, so keep questions in product language and give me working results I can inspect.
 
-```bash
-npx github:thevenomsnake/MAGA install
-```
-
-Resume an initialized project and its Project Lead:
-
-```bash
-npx github:thevenomsnake/MAGA start ./my-product
-```
+That is enough to begin. MAGA identifies the first useful outcome and asks only questions that can change the product direction or permission boundary.
 
 ## Why MAGA
 
@@ -139,7 +128,7 @@ MAGA can advance authorized work without turning one natural-language request in
 - Reversible work inside the named project and risk-matched checks are normal execution.
 - Publishing, payment, account actions, external messages, and irreversible deletion require explicit authority.
 - Product trade-offs that cannot be inferred from existing decisions return to the Product Owner.
-- Codex Desktop remains the user interface; MAGA does not create a parallel dashboard.
+- Codex in the ChatGPT desktop app remains the user interface; MAGA does not create a parallel dashboard.
 
 ## What is inside
 
@@ -185,9 +174,9 @@ Read more: [Capability routing](./plugins/maga/skills/project-lead/references/ca
 2. Writes `.ai-workflow/PROJECT.md`, `AGENTS.md`, and `.gitignore`.
 3. Initializes Git and creates an initial commit when an identity is configured.
 4. Creates or reuses one clearly named Project Lead task.
-5. Opens the project in Codex Desktop.
+5. Opens the project in the ChatGPT desktop app with Codex.
 
-`start` reads existing project state and restores the Project Lead without rewriting project files. Run `npx github:thevenomsnake/MAGA --help` for all options.
+`start` reads existing project state and restores the Project Lead without rewriting project files. These details are for maintainers; normal users can ask Codex to perform setup, recovery, or removal.
 
 </details>
 

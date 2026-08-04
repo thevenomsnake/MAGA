@@ -102,7 +102,7 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.equal(manifest.interface.defaultPrompt.length, 3);
 });
 
-test("ships localized product guides and one English operating-model comparison", () => {
+test("ships localized product guides, beginner manuals, and one English comparison", () => {
   const readmeFiles = [
     "README.md",
     "README.zh-CN.md",
@@ -113,20 +113,45 @@ test("ships localized product guides and one English operating-model comparison"
   const readmes = readmeFiles.map((file) =>
     fs.readFileSync(path.join(REPOSITORY_ROOT, file), "utf8")
   );
+  const guideFiles = [
+    "docs/getting-started.md",
+    "docs/getting-started.zh-CN.md",
+    "docs/getting-started.ja.md",
+    "docs/getting-started.ko.md",
+    "docs/getting-started.es.md",
+  ];
+  const guides = guideFiles.map((file) =>
+    fs.readFileSync(path.join(REPOSITORY_ROOT, file), "utf8")
+  );
   const readme = readmes[0];
+  const guide = guides[0];
   const comparison = fs.readFileSync(
     path.join(REPOSITORY_ROOT, "assets", "maga-operating-model.svg"),
     "utf8",
   );
 
-  for (const localizedReadme of readmes) {
+  for (const [index, localizedReadme] of readmes.entries()) {
     assert.match(localizedReadme, /assets\/maga-operating-model\.svg/);
+    assert.ok(localizedReadme.includes(guideFiles[index]));
+    assert.doesNotMatch(localizedReadme, /npx github:thevenomsnake\/MAGA/);
     assert.doesNotMatch(localizedReadme, /玩梗|带梗|竞选承诺|No rallies|explaining the joke/i);
+  }
+
+  for (const localizedGuide of guides) {
+    assert.match(localizedGuide, /github\.com\/thevenomsnake\/MAGA/);
+    assert.match(localizedGuide, /Uninstall plugin/);
+    assert.match(localizedGuide, /agent-approvals-security/);
   }
 
   assert.match(readme, /Build the software you have in mind/);
   assert.match(readme, /For product designers, product leaders, and first-time builders/);
   assert.match(readme, /You do not need to understand code[\s\S]+or review code/);
+  assert.match(readme, /No terminal experience is required/);
+  assert.match(readme, /Perform the technical steps yourself/);
+  assert.match(readme, /new chat in the same project/);
+  assert.match(guide, /This guide assumes you have never used Codex/);
+  assert.match(guide, /Inspect the product without reviewing code/);
+  assert.match(guide, /Graduate from MAGA/);
   assert.match(readme, /## Why MAGA/);
   assert.match(readme, /Why a plugin instead of a wrapper app\?/);
   assert.match(readme, /Codex will keep evolving/);

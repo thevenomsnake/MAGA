@@ -17,7 +17,7 @@
   <strong>Español</strong>
 </p>
 
-MAGA es un plugin de transición para que la gente de producto empiece a crear con Codex Desktop. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación mientras hace visibles las prácticas que hay detrás.
+MAGA es un plugin de transición para que la gente de producto empiece a crear con Codex en la aplicación de escritorio de ChatGPT. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación mientras hace visibles las prácticas que hay detrás.
 
 No necesitas entender código, elegir Skills, gestionar sesiones de ingeniería ni revisar código. Aceptas el producto evaluando su comportamiento, su experiencia y su resultado de negocio.
 
@@ -26,32 +26,21 @@ No necesitas entender código, elegir Skills, gestionar sesiones de ingeniería 
 
 ## Empieza aquí
 
-Necesitas [Codex Desktop](https://openai.com/codex/), Codex CLI, Node.js 18 o posterior y Git. Añade `--no-git` si no quieres que MAGA inicialice un repositorio.
+No necesitas saber usar una terminal. Si nunca has usado Codex, sigue la **[guía completa para principiantes](./docs/getting-started.es.md)** desde la instalación de la aplicación hasta la aceptación del primer resultado.
 
-```bash
-npx github:thevenomsnake/MAGA init ./my-product
-```
+1. Abre la [aplicación de escritorio de ChatGPT](https://learn.chatgpt.com/docs/quickstart?setup=app), inicia sesión y elige **Codex**.
+2. Crea o abre una carpeta local vacía para el proyecto.
+3. Pega este mensaje en Codex:
 
-Abre el proyecto nuevo y describe lo que quieres crear:
+> Configura este proyecto con el plugin MAGA de https://github.com/thevenomsnake/MAGA. Comprueba e instala los requisitos que falten, inicializa MAGA en esta carpeta, verifica que funciona y dime cuándo debo iniciar un chat nuevo. Realiza tú los pasos técnicos y pídeme únicamente las autorizaciones que sean realmente necesarias.
 
-```text
-Quiero una herramienta que ayude a diseñadores independientes a organizar comentarios de clientes.
-Los comentarios deben quedar asociados a cada proyecto y necesito ver qué problemas bloquean la entrega.
-```
+Lee cada solicitud de autorización y acéptala solo si se refiere a esta carpeta, a GitHub o a un requisito que Codex acaba de explicar. No necesitas copiar comandos en una terminal.
 
-MAGA identifica el primer resultado útil del producto, pregunta únicamente lo que pueda cambiar la dirección o los permisos e inicia el trabajo adecuado. No tienes que traducir antes la idea a tareas técnicas.
+Cuando Codex confirme que ha terminado, inicia un **chat nuevo en el mismo proyecto** y describe el producto:
 
-Para instalar solamente el plugin en un entorno existente:
+> Usa MAGA como mi Project Lead. Quiero una herramienta que ayude a diseñadores independientes a organizar comentarios de clientes. Los comentarios deben quedar asociados a cada proyecto y necesito ver qué problemas bloquean la entrega. No sé programar, así que pregunta solo con lenguaje de producto y dame resultados funcionales que pueda inspeccionar.
 
-```bash
-npx github:thevenomsnake/MAGA install
-```
-
-Para retomar un proyecto inicializado y su Project Lead:
-
-```bash
-npx github:thevenomsnake/MAGA start ./my-product
-```
+Eso basta para empezar. MAGA identifica el primer resultado útil y pregunta solo lo que puede cambiar la dirección del producto o el límite de permisos.
 
 ## Why MAGA
 
@@ -139,7 +128,7 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 - El trabajo reversible dentro del proyecto indicado y las comprobaciones proporcionales al riesgo forman parte de la ejecución normal.
 - Publicar, pagar, operar cuentas, enviar mensajes externos y borrar de forma irreversible requiere autorización explícita.
 - Las decisiones de producto que no se pueden deducir de decisiones anteriores vuelven al Product Owner.
-- Codex Desktop sigue siendo la interfaz; MAGA no crea un panel paralelo.
+- Codex en la aplicación de escritorio de ChatGPT sigue siendo la interfaz; MAGA no crea un panel paralelo.
 
 ## Qué incluye
 
@@ -185,9 +174,9 @@ Más información: [Enrutamiento de capacidades](./plugins/maga/skills/project-l
 2. Escribe `.ai-workflow/PROJECT.md`, `AGENTS.md` y `.gitignore`.
 3. Inicializa Git y crea un primer commit cuando existe una identidad configurada.
 4. Crea o reutiliza una tarea Project Lead con un nombre claro.
-5. Abre el proyecto en Codex Desktop.
+5. Abre el proyecto en Codex dentro de la aplicación de escritorio de ChatGPT.
 
-`start` lee el estado existente y restaura el Project Lead sin reescribir archivos del proyecto. Ejecuta `npx github:thevenomsnake/MAGA --help` para ver todas las opciones.
+`start` lee el estado existente y restaura el Project Lead sin reescribir archivos del proyecto. Estos detalles son para quienes mantienen el proyecto; una persona usuaria puede pedir a Codex que configure, recupere o elimine MAGA.
 
 </details>
 

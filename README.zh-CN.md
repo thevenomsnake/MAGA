@@ -17,7 +17,7 @@
   <a href="./README.es.md">Español</a>
 </p>
 
-MAGA 是一个帮助产品人上手 Codex Desktop 的产品构建过渡插件。你用产品语言描述用户、问题、体验、限制和取舍；一个持续工作的 Project Lead 会选择合适的方法，组织研究、原型、实现、验证和修复，同时让你逐步理解这些工作背后的实践。
+MAGA 是一个帮助产品人上手 ChatGPT 桌面客户端中 Codex 的产品构建过渡插件。你用产品语言描述用户、问题、体验、限制和取舍；一个持续工作的 Project Lead 会选择合适的方法，组织研究、原型、实现、验证和修复，同时让你逐步理解这些工作背后的实践。
 
 你不需要了解代码，不需要选择 Skills，不需要管理工程会话，也不需要 review 代码。你通过产品行为、使用体验和业务结果进行验收。
 
@@ -26,32 +26,21 @@ MAGA 是一个帮助产品人上手 Codex Desktop 的产品构建过渡插件。
 
 ## 现在开始
 
-你需要 [Codex Desktop](https://openai.com/codex/)、可用的 Codex CLI、Node.js 18 或更高版本，以及 Git。若不希望初始化 Git，可以在命令后加 `--no-git`。
+不需要懂终端。如果你从来没有用过 Codex，请从安装桌面客户端开始，跟着 **[完整新手指引](./docs/getting-started.zh-CN.md)** 一直做到第一次产品验收。
 
-```bash
-npx github:thevenomsnake/MAGA init ./my-product
-```
+1. 打开 [ChatGPT 桌面客户端](https://learn.chatgpt.com/docs/quickstart?setup=app)，登录，然后选择 **Codex**。
+2. 新建或打开一个空的本地项目文件夹。
+3. 把下面这段话发给 Codex：
 
-打开新项目，直接描述你想做的软件：
+> 请帮我为这个项目安装并配置 MAGA 插件：https://github.com/thevenomsnake/MAGA 。检查并安装缺少的必要环境，在当前文件夹初始化 MAGA，验证安装结果，然后告诉我什么时候需要新建聊天。技术步骤请由你完成，只在确实需要授权时让我确认。
 
-```text
-我想做一个帮助独立设计师整理客户反馈的工具。
-反馈需要按项目归档，并且让我一眼看出哪些问题正在阻塞交付。
-```
+阅读每一条授权请求；只有当它明确涉及当前文件夹、GitHub，或 Codex 刚刚解释过的必要环境时才同意。你不需要把命令复制到终端。
 
-MAGA 会识别第一个有用的产品结果，只询问会改变方向或授权边界的问题，然后开始合适的工作。你不需要先把想法翻译成技术任务。
+Codex 确认完成后，在**同一个项目中新建聊天**，直接描述产品：
 
-在已有环境中只安装插件：
+> 请让 MAGA 担任我的 Project Lead。我想做一个帮助独立设计师整理客户反馈的工具。反馈需要按项目归档，并且让我一眼看出哪些问题正在阻塞交付。我不懂代码，请只用产品语言提问，并给我可以直接检查的运行结果。
 
-```bash
-npx github:thevenomsnake/MAGA install
-```
-
-恢复已经初始化的项目及其 Project Lead：
-
-```bash
-npx github:thevenomsnake/MAGA start ./my-product
-```
+这样就足够开始。MAGA 会识别第一个有用的结果，只询问会改变产品方向或授权边界的问题。
 
 ## 为什么会有 MAGA
 
@@ -139,7 +128,7 @@ MAGA 可以自主推进已经授权的工作，但不会把一句自然语言扩
 - 明确项目内的可逆修改和风险匹配的检查属于正常执行。
 - 发布、付费、账户操作、外部消息和不可逆删除需要明确授权。
 - 无法从现有决定中推断的产品取舍会交还 Product Owner。
-- Codex Desktop 仍然是用户界面；MAGA 不会建立另一套仪表盘。
+- ChatGPT 桌面客户端中的 Codex 仍然是用户界面；MAGA 不会建立另一套仪表盘。
 
 ## 里面有什么
 
@@ -185,9 +174,9 @@ Project Lead 先判断需要哪类证据，再选择注册 Skill 或内部方法
 2. 写入 `.ai-workflow/PROJECT.md`、`AGENTS.md` 和 `.gitignore`。
 3. 初始化 Git；已配置身份时创建第一次提交。
 4. 创建或复用一个名称明确的 Project Lead 任务。
-5. 在 Codex Desktop 中打开项目。
+5. 在 ChatGPT 桌面客户端的 Codex 中打开项目。
 
-`start` 读取已有项目状态并恢复 Project Lead，不会重写项目文件。运行 `npx github:thevenomsnake/MAGA --help` 可查看全部参数。
+`start` 读取已有项目状态并恢复 Project Lead，不会重写项目文件。这些细节面向维护者；普通用户可以直接让 Codex 完成安装、恢复或卸载。
 
 </details>
 

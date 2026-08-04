@@ -36,7 +36,7 @@ If the user already supplied enough information and authorized the described wor
 
 ## Run The Native Codex Loop
 
-Use Codex Desktop as the only user interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The initializer's App Server bridge may create, name, and pin this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
+Use Codex in the ChatGPT desktop app as the only user interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The initializer's App Server bridge may create, name, and pin this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
 
 Keep this Project Lead as the only generic pinned entry. Do not pre-create empty idea, research, prototype, implementation, or review tasks. Keep product discussion here; open a professional workspace only after its concrete object and completion boundary are known.
 

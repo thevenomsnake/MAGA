@@ -1,6 +1,6 @@
 # Native Codex Loop
 
-Use this reference after a product Ticket is approved and work crosses Codex tasks. Codex Desktop is the sole user interface. Project files are durable memory; Codex tasks are replaceable attention workspaces.
+Use this reference after a product Ticket is approved and work crosses Codex tasks. Codex in the ChatGPT desktop app is the sole user interface. Project files are durable memory; Codex tasks are replaceable attention workspaces.
 
 ## Invariants
 

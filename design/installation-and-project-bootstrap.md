@@ -164,7 +164,7 @@ MAGA Plugin
 
 ### V3：Codex 原生完整闭环
 
-- Codex Desktop 是唯一用户界面，不开发独立聊天 UI、Dashboard 或任务面板；
+- ChatGPT 桌面客户端中的 Codex 是唯一用户界面，不开发独立聊天 UI、Dashboard 或任务面板；
 - 初始化器只用一次性 App Server bridge 创建、命名并置顶首个原生 Project Lead，随后退出；
 - Project Lead 在 Codex 内完成入职、职责形成、Ticket 投递、续发、等待、集成、状态更新和归档；
 - 用户始终回到同一个产品入口查看可用结果和作出不可替代的产品决定。

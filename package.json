@@ -10,13 +10,18 @@
     ".agents/",
     "bin/",
     "design/",
+    "docs/",
     "playbooks/",
     "plugins/",
     "research/",
     "src/",
     "LICENSE",
+    "README.es.md",
+    "README.ja.md",
+    "README.ko.md",
     "THIRD_PARTY_NOTICES.md",
-    "README.md"
+    "README.md",
+    "README.zh-CN.md"
   ],
   "scripts": {
     "test": "node --test test/*.test.js",
