@@ -145,7 +145,21 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. El panel ofrece tres configuraciones iniciales para las mismas siete responsabilidades.
+MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. Estos siete nombres no son puestos técnicos que tengas que aprender ni siete personas que debas contratar; son etiquetas internas que MAGA usa para repartir el trabajo.
+
+### Un ejemplo real: una peluquería pone en marcha reservas en línea
+
+Imagina que una peluquería de barrio quiere que sus clientes reserven sin llamar:
+
+- **Project Lead (`project-lead`) — quien lleva el proyecto:** Escucha «quiero que puedan reservar sin llamar», concreta qué debe incluir la primera versión y decide el siguiente paso.
+- **Investigación (`research`) — quien estudia el terreno:** Pregunta cómo reservan los clientes, compara otros negocios y aclara qué debe ocurrir con los horarios ocupados y las cancelaciones.
+- **Prototipo (`prototype`) — la prueba antes de construir:** Prepara un recorrido de reserva que se puede pulsar y probar, para que la dueña detecte problemas antes de invertir en la versión real.
+- **Entrega (`delivery`) — quien lo hace funcionar de verdad:** Convierte la idea aprobada en un servicio donde elegir una hora, reservar y recibir una confirmación funciona realmente.
+- **Diagnóstico (`diagnosis`) — el técnico de reparación:** Si la reserva aparece pero la confirmación no llega, localiza dónde se interrumpe el proceso y corrige la causa.
+- **Revisión (`review`) — quien hace la inspección:** Comprueba que no haya reservas dobles, que se respete la privacidad y que el resultado cumpla lo que pidió el negocio.
+- **Lanzamiento (`release`) — quien prepara la apertura:** Revisa permisos, copias de seguridad y la forma de volver atrás si algo falla antes de poner el servicio a disposición de los clientes.
+
+La tabla siguiente no te pide que gestiones siete disciplinas. Indica qué configuración de IA se encargará de cada parte cuando MAGA la necesite.
 
 | Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
 | --- | --- | --- | --- |

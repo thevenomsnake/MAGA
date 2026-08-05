@@ -143,7 +143,23 @@ MAGA can advance authorized work without turning one natural-language request in
 
 ## Models by responsibility
 
-MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. Its settings panel offers three starting profiles for the same seven responsibilities:
+MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. You do not need to know code or manage seven people yourself; these names are simply the internal labels MAGA uses to divide the work.
+
+### A real-world example of the seven responsibilities
+
+Imagine a neighborhood salon says, “I want customers to book online so we spend less time on the phone, but the same time slot must never be booked twice.” MAGA handles that goal like a complete product team:
+
+- **Project Lead (`project-lead`) — the project manager:** Turns that request into a clear first outcome—for example, customers can choose an available time, staff can see the booking, and double booking is blocked—then decides what comes first and coordinates the work.
+- **Research (`research`) — the field researcher:** Learns how customers and staff book today, compares similar services, and confirms real constraints such as cancellations and handling customer details.
+- **Prototype (`prototype`) — the dress rehearsal:** Creates a clickable booking flow that the owner can try before committing to the full build, so awkward steps are found early.
+- **Delivery (`delivery`) — the build team:** Turns the accepted trial flow into a working product that customers can book through and staff can use to manage time slots.
+- **Diagnosis (`diagnosis`) — the repair technician:** If a customer sees “booking confirmed” but never receives a confirmation, finds which part failed instead of blindly rebuilding everything.
+- **Review (`review`) — the inspector:** Checks that double booking is prevented, the owner’s requirements were not missed, and customer information is properly protected.
+- **Release (`release`) — the opening manager:** Confirms existing records are backed up, only the right people can access administration, and the launch steps are ready before opening the service to real customers.
+
+When you configure models, you are only deciding how much judgment and reasoning capacity each kind of work receives. MAGA handles the routing and coordination.
+
+Its settings panel offers three starting profiles for the same seven responsibilities:
 
 - **Pro · quality first:** Sol handles open-ended judgment and assurance; Terra handles scoped implementation. Luna is not used.
 - **Plus · regular use:** Sol protects the highest-value decisions, Terra handles everyday reasoning and tools, and Luna Max handles bounded delivery.
