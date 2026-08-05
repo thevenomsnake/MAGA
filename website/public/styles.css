@@ -118,6 +118,18 @@ button {
   text-transform: uppercase;
 }
 
+html:lang(zh-CN) [data-i18n] {
+  font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+
+html:lang(ja) [data-i18n] {
+  font-family: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", sans-serif;
+}
+
+html:lang(ko) [data-i18n] {
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", sans-serif;
+}
+
 .wordmark {
   display: inline-flex;
   align-items: center;
@@ -726,6 +738,109 @@ html:lang(es) .get-started h2 {
   color: rgba(255, 255, 255, 0.78);
 }
 
+html:lang(zh-CN) .prompt-panel [data-i18n],
+html:lang(ja) .prompt-panel [data-i18n],
+html:lang(ko) .prompt-panel [data-i18n] {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .hero-flow li {
+  padding-inline: clamp(0.8rem, 1.2vw, 1.2rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .hero-flow strong {
+  font-size: clamp(1.15rem, 1.25vw, 1.4rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .hero-flow p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .how-heading {
+  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.88fr);
+  gap: clamp(3rem, 6vw, 6rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .how h2 {
+  font-size: clamp(3.75rem, 4.4vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .how-heading > p {
+  font-size: clamp(1.2rem, 1.65vw, 1.65rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .process-rail li {
+  gap: 0.9rem;
+  padding-inline: 1rem 1.4rem;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .process-rail li:first-child {
+  padding-left: 0;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .process-rail span {
+  font-size: clamp(3rem, 4.25vw, 4.75rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .process-rail strong {
+  font-size: clamp(1.05rem, 1.15vw, 1.25rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience-layout {
+  grid-template-columns: minmax(22rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(3rem, 4.5vw, 4.5rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience blockquote {
+  padding-right: clamp(1.5rem, 3vw, 3rem);
+  font-size: clamp(3rem, 4vw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience h2 {
+  font-size: clamp(2.25rem, 3vw, 3.2rem);
+  line-height: 1.1;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience-columns article {
+  padding: 1.75rem clamp(1rem, 2vw, 2rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience h3 {
+  font-size: clamp(1.25rem, 1.45vw, 1.55rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .start-layout {
+  grid-template-columns: minmax(0, 0.95fr) minmax(30rem, 1.05fr);
+  gap: clamp(3rem, 4.5vw, 4.5rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .start-copy {
+  padding-right: clamp(2rem, 3vw, 3rem);
+}
+
+:is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .get-started h2 {
+  font-size: clamp(3.5rem, 4.5vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+html:lang(zh-CN) .how h2 span,
+html:lang(zh-CN) .audience blockquote span,
+html:lang(zh-CN) .get-started h2 span {
+  white-space: nowrap;
+}
+
 .site-footer {
   padding-block: 2rem;
   color: var(--navy);
@@ -835,6 +950,12 @@ html:lang(es) .get-started h2 {
   }
 
   .how-heading {
+    grid-template-columns: 1fr;
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .how-heading,
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience-layout,
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .start-layout {
     grid-template-columns: 1fr;
   }
 
@@ -951,6 +1072,36 @@ html:lang(es) .get-started h2 {
 
   .hero-name {
     font-size: clamp(6.5rem, 28vw, 8rem);
+  }
+
+  html:lang(zh-CN) .how h2 span,
+  html:lang(zh-CN) .audience blockquote span,
+  html:lang(zh-CN) .get-started h2 span {
+    white-space: normal;
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .how h2,
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .get-started h2 {
+    font-size: clamp(3rem, 14vw, 4rem);
+    line-height: 1.05;
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .audience blockquote {
+    font-size: clamp(3rem, 13vw, 3.75rem);
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .get-started h2 span {
+    text-wrap: balance;
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .start-steps li {
+    grid-template-columns: 4rem 1fr;
+  }
+
+  :is(html:lang(zh-CN), html:lang(ja), html:lang(ko)) .start-steps strong {
+    padding-left: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.25;
   }
 
   .hero-slogan {
