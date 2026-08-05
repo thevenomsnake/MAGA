@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Sumimi is a small development studio for data tools, research systems, and new ways of building software."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:title" content="Sumimi — Development studio" />
+    <meta
+      property="og:description"
+      content="Useful things from curious ideas. Explore Fairy, Research, and MAGA."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sumimi.jp/" />
+    <title>Sumimi — Development studio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23efff35%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2268%22 font-family=%22Arial%22>S</text></svg>" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Sumimi home">
+        <img src="./assets/sumimi-wordmark.webp" alt="Sumimi" width="512" height="154" />
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Open navigation"
+        data-nav-toggle
+      >
+        <span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation" data-nav>
+        <a class="nav-link is-active" href="#projects" data-i18n="nav.projects">Projects</a>
+        <a class="nav-link" href="#studio" data-i18n="nav.studio">Studio</a>
+        <a class="nav-link" href="https://research.sumimi.jp" data-i18n="nav.notes">Notes</a>
+        <div class="language-switch" aria-label="Language">
+          <button type="button" data-language="ja">JP</button>
+          <span aria-hidden="true">/</span>
+          <button type="button" class="is-current" data-language="en">EN</button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy" data-reveal>
+          <h1 id="hero-title">
+            <span data-i18n="hero.line1">We make</span><br />
+            <span data-i18n="hero.line2">useful things</span><br />
+            <span data-i18n="hero.line3">from</span>
+            <em data-i18n="hero.accent">curious</em><br />
+            <span data-i18n="hero.line4">ideas.</span>
+          </h1>
+          <p data-i18n="hero.body">
+            A small development studio for data tools, research systems, and new ways of building software.
+          </p>
+          <a class="outline-cta" href="#projects">
+            <span data-i18n="hero.cta">Explore the projects</span>
+            <svg viewBox="0 0 48 24" aria-hidden="true">
+              <path d="M1 12h43M34 3l10 9-10 9" />
+            </svg>
+          </a>
+          <p class="now-building"><span></span><span data-i18n="hero.now">Now building — Fairy</span></p>
+        </div>
+
+        <div class="ribbon-stage hero-ribbons" aria-hidden="true" data-reveal>
+          <div class="registration registration-a"></div>
+          <div class="registration registration-b"></div>
+          <div class="ribbon mint-ribbon">
+            <div class="micro-code">01<br />02 def transform(data):<br />03 &nbsp;&nbsp;for x in range(n):<br />04 &nbsp;&nbsp;&nbsp;&nbsp;yield x</div>
+            <small>sumimi.jp</small>
+          </div>
+          <div class="ribbon yellow-ribbon"><b>S</b><small>build / test / learn</small></div>
+          <div class="film-strip"></div>
+          <div class="ribbon-paper"><span>studio.sumimi</span><br />// tools for thought<br />// systems for insight<br />// software as craft</div>
+        </div>
+
+      </section>
+
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <header class="section-header" data-reveal>
+          <h2 id="projects-title" data-i18n="projects.title">Projects</h2>
+          <i></i>
+          <svg viewBox="0 0 48 24" aria-hidden="true"><path d="M1 12h43M34 3l10 9-10 9" /></svg>
+        </header>
+
+        <div class="project-index">
+          <a class="project-row project-fairy" href="https://fairy.sumimi.jp" data-reveal>
+            <span class="project-number">01</span>
+            <h3>Fairy</h3>
+            <div class="project-description">
+              <strong>fairy.sumimi.jp</strong>
+              <p data-i18n="projects.fairy.body">Data tools that turn scattered inputs into usable views.</p>
+            </div>
+            <div class="project-status">
+              <span class="status-line"><i class="status-dot coral"></i><span data-i18n="projects.fairy.status">Now building</span></span>
+              <small data-i18n="projects.fairy.note">formerly data.sumimi.jp</small>
+            </div>
+            <div class="project-art" aria-hidden="true"><i></i><i></i><b>S</b></div>
+            <svg class="row-arrow" viewBox="0 0 48 24" aria-hidden="true"><path d="M1 12h43M34 3l10 9-10 9" /></svg>
+          </a>
+
+          <a class="project-row project-research" href="https://research.sumimi.jp" data-reveal>
+            <span class="project-number">02</span>
+            <h3>Research</h3>
+            <div class="project-description">
+              <strong>research.sumimi.jp</strong>
+              <p data-i18n="projects.research.body">Notes, experiments, and evidence from how we build.</p>
+            </div>
+            <div class="project-status">
+              <span class="status-line"><i class="status-dot green"></i><span data-i18n="projects.research.status">Open</span></span>
+            </div>
+            <div class="project-art" aria-hidden="true"><i></i><i></i></div>
+            <svg class="row-arrow" viewBox="0 0 48 24" aria-hidden="true"><path d="M1 12h43M34 3l10 9-10 9" /></svg>
+          </a>
+
+          <a class="project-row project-maga" href="https://maga.sumimi.jp" data-reveal>
+            <span class="project-number">03</span>
+            <h3>MAGA</h3>
+            <div class="project-description">
+              <strong>maga.sumimi.jp</strong>
+              <p data-i18n="projects.maga.body">A product-lead workflow for building software with Codex.</p>
+            </div>
+            <div class="project-status">
+              <span class="status-line"><i class="status-dot gray"></i><span data-i18n="projects.maga.status">Coming next</span></span>
+            </div>
+            <div class="project-art" aria-hidden="true"><i></i><i></i></div>
+            <svg class="row-arrow" viewBox="0 0 48 24" aria-hidden="true"><path d="M1 12h43M34 3l10 9-10 9" /></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="studio" id="studio" aria-labelledby="studio-title">
+        <div class="studio-label" data-reveal><span></span><p data-i18n="studio.title">Studio</p></div>
+        <h2 id="studio-title" data-reveal>
+          <span data-i18n="studio.line1">Independent studio.</span>
+          <span data-i18n="studio.line2">Serious craft.</span>
+          <span data-i18n="studio.line3">Room for strange ideas.</span>
+        </h2>
+
+        <div class="studio-copy" data-reveal>
+          <p data-i18n="studio.body">
+            Sumimi is an independent development studio. We explore data, research, and human–AI collaboration by shipping things people can actually use.
+          </p>
+          <a class="outline-cta" href="https://research.sumimi.jp">
+            <span data-i18n="studio.cta">Read our working notes</span>
+            <svg viewBox="0 0 48 24" aria-hidden="true"><path d="M1 12h43M34 3l10 9-10 9" /></svg>
+          </a>
+          <p class="now-building"><span></span><span data-i18n="hero.now">Now building — Fairy</span></p>
+        </div>
+
+        <div class="ribbon-stage studio-ribbons" aria-hidden="true" data-reveal>
+          <div class="ribbon mint-ribbon"><div class="micro-code">for idea in questions:<br />&nbsp;&nbsp;prototype(idea)<br />&nbsp;&nbsp;learn()</div></div>
+          <div class="ribbon yellow-ribbon"><small>sumimi.jp</small></div>
+          <div class="film-strip"></div>
+          <div class="ribbon-paper">studio.sumimi<br />// tools for thought<br />// systems for insight<br />// software as craft</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="#top" aria-label="Sumimi home">
+        <img src="./assets/sumimi-wordmark.webp" alt="Sumimi" width="512" height="154" />
+      </a>
+      <nav aria-label="Project links">
+        <a href="https://fairy.sumimi.jp">Fairy</a>
+        <a href="https://research.sumimi.jp">Research</a>
+        <a href="https://maga.sumimi.jp">MAGA</a>
+        <a href="https://github.com/thevenomsnake">GitHub</a>
+      </nav>
+      <p>© 2026 Sumimi<br /><span data-i18n="footer.made">Made on the open web.</span></p>
+      <div class="orbit" aria-hidden="true"><i></i><i></i></div>
+    </footer>
+  </body>
+</html>
