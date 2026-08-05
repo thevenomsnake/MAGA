@@ -62,21 +62,21 @@ Codex 应该自行检查环境、获取 MAGA、初始化项目并验证结果。
 
 ### 可选：按职责选择模型
 
-预填的 Balanced 推荐是很好的起点。打开 MAGA 插件详情页，选择 **Configure** starter prompt。Codex 会新建一个 MAGA 聊天，并在聊天中打开配置面板。这个面板不会嵌在插件详情页中，因为当前 Codex 插件页面还不支持任意自定义表单。
+打开 MAGA 插件详情页，选择 **Configure** starter prompt。Codex 会新建一个 MAGA 聊天，并在聊天中打开配置面板。根据当前订阅与剩余额度选择起始方案，必要时再调整个别职责：
 
-| 职责 | Balanced 推荐值 |
-| --- | --- |
-| Project Lead | Sol · medium |
-| 研究 | Terra · medium |
-| 原型 | Sol · medium |
-| 交付 | Terra · medium |
-| 诊断 | Sol · high |
-| 审查 | Sol · high |
-| 发布 | Sol · high |
+| 职责 | Pro · 质量优先 | Plus · 常规使用 | Free / Go · 节省额度 |
+| --- | --- | --- | --- |
+| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 研究 | Sol · max | Sol · max | Terra · max |
+| 原型 | Sol · xhigh | Terra · high | Terra · high |
+| 交付 | Terra · xhigh | Luna · max | Luna · max |
+| 诊断 | Sol · max | Terra · xhigh | Terra · high |
+| 审查 | Sol · xhigh | Sol · high | Terra · high |
+| 发布 | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** 适合模糊信息、综合判断和后果较重的决定；**Terra** 更快、更经济，适合边界清楚的工作；**Luna** 适合狭窄、重复的任务。思考深度中，**low** 适合机械任务，**medium** 是日常平衡，**high** 会为不确定性和风险投入更多推理。
+Business、Enterprise 和 Edu 工作区可以先选 Plus；额度与工作区策略允许时再切换到 Pro。API key 用户按 token 预算选择。Sol 负责模糊问题与把关，Terra 是日常主力，Luna 只在定义清楚、可重复的交付中以 **max** 推荐。更高推理深度会花费更多时间和 token。
 
-在点击 **保存** 前，这些只是推荐，MAGA 使用 Codex 宿主默认值。第一次保存会把全部 7 个职责作为明确选择冻结在当前实例的 Codex Home，而不是产品文件夹或 Git 历史；之后只合并你改动的职责。保存的选择只用于你明确批准的新任务；已有任务不变，Project Lead 也只会在新建或你明确要求创建 replacement 接手时采用。面板的 `model/list` 只是参考目录；创建获批任务时，目标宿主会做最终验证。若目标宿主拒绝保存的选择，MAGA 才省略 overrides 重试一次，并告诉你使用了宿主默认值。
+在点击 **保存** 前，所选方案只是推荐，MAGA 使用 Codex 宿主默认值。第一次保存会把全部 7 个职责作为明确选择保存在当前实例的 Codex Home，而不是产品文件夹或 Git 历史；之后只合并你改动的职责。保存的选择只用于你明确批准的新任务；已有任务不变，Project Lead 也只会在新建或你明确要求创建 replacement 接手时采用。面板的 `model/list` 只是参考目录；创建获批任务时，目标宿主会做最终验证。若目标宿主拒绝保存的选择，MAGA 才省略 overrides 重试一次，并告诉你使用了宿主默认值。
 
 ## 5. 描述第一个产品
 

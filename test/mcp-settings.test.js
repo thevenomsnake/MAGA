@@ -13,20 +13,20 @@ const MODELS = [
   {
     id: "gpt-5.6-sol",
     displayName: "GPT-5.6-Sol",
-    supportedReasoningEfforts: ["low", "medium", "high"],
+    supportedReasoningEfforts: ["low", "medium", "high", "xhigh", "max", "ultra"],
     defaultReasoningEffort: "medium",
   },
   {
     id: "gpt-5.6-terra",
     displayName: "GPT-5.6-Terra",
     isDefault: true,
-    supportedReasoningEfforts: ["low", "medium", "high"],
+    supportedReasoningEfforts: ["low", "medium", "high", "xhigh", "max"],
     defaultReasoningEffort: "medium",
   },
   {
     id: "gpt-5.6-luna",
     displayName: "GPT-5.6-Luna",
-    supportedReasoningEfforts: ["low", "medium"],
+    supportedReasoningEfforts: ["low", "medium", "high", "xhigh", "max"],
     defaultReasoningEffort: "low",
   },
 ];
@@ -105,6 +105,11 @@ test("MCP app renders, saves, and resolves responsibility settings", async (t) =
 
   const shown = await server.request("tools/call", { name: "show_maga_compute_settings", arguments: {} });
   assert.equal(shown.structuredContent.responsibilities.length, 7);
+  assert.deepEqual(shown.structuredContent.presets.map(({ key }) => key), [
+    "pro-quality",
+    "plus-standard",
+    "quota-saver",
+  ]);
   assert.equal(shown.structuredContent.source, "balanced-defaults");
   assert.deepEqual(shown.structuredContent.responsibilities[0].actual, {
     model: null,

@@ -56,19 +56,19 @@ Codex が表示されない場合は、アカウントまたはワークスペ�
 
 ### 任意：責務ごとのモデルを選ぶ
 
-Balanced は設定画面にあらかじめ入っている推奨値です。ただし、最初に **Save** を押すまでは有効にならず、Codex ホストの既定値が使われます。品質、速度、コストの配分を設定するには、MAGA のプラグイン詳細ページで **Configure** starter prompt を選びます。MAGA のチャットが始まり、チャット内に設定パネルが開きます。現在の Codex プラグインページは任意のカスタムフォームを埋め込めないため、パネル自体は詳細ページ内には表示されません。
+MAGA のプラグイン詳細ページで **Configure** starter prompt を選び、現在の利用枠に合う開始構成を選びます。MAGA のチャットが始まり、チャット内に設定パネルが開きます。
 
-| 責務 | Balanced の初期値 |
-| --- | --- |
-| Project Lead | Sol · medium |
-| 調査 | Terra · medium |
-| プロトタイプ | Sol · medium |
-| デリバリー | Terra · medium |
-| 診断 | Sol · high |
-| レビュー | Sol · high |
-| リリース | Sol · high |
+| 責務 | Pro · 品質優先 | Plus · 通常利用 | Free / Go · 使用量節約 |
+| --- | --- | --- | --- |
+| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 調査 | Sol · max | Sol · max | Terra · max |
+| プロトタイプ | Sol · xhigh | Terra · high | Terra · high |
+| デリバリー | Terra · xhigh | Luna · max | Luna · max |
+| 診断 | Sol · max | Terra · xhigh | Terra · high |
+| レビュー | Sol · xhigh | Sol · high | Terra · high |
+| リリース | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** は曖昧な情報の統合や影響の大きい判断、**Terra** はより速く経済的な範囲の明確な作業、**Luna** は狭く反復的な作業に向いています。思考の深さは、**low** が機械的な作業、**medium** が日常的なバランス、**high** が不確実性やリスクにより多くの推論を割く設定です。
+Business、Enterprise、Edu は Plus から始め、利用枠とポリシーが許す場合に Pro を選べます。API key 利用者は token 予算で選択してください。Sol は曖昧さと品質判断、Terra は日常作業、Luna は完了条件が明確なデリバリーでのみ **max** を推奨します。
 
 最初の **Save** で設定を有効にし、7 つの責務を一つの完全な設定として固定します。保存先は現在の Codex Home であり、このプロダクトフォルダや Git 履歴ではありません。設定が適用されるのは、その後にあなたが明示的に作成を承認した新しいタスクだけで、既存タスクは変わりません。Project Lead も新しく作る場合にだけ適用されます。既存の Project Lead に新設定を使わせるには、「新しい設定で引き継いで」と明示し、代替タスクの作成を承認します。
 

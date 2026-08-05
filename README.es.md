@@ -10,11 +10,24 @@
 </p>
 
 <p align="center">
+  <a href="https://maga.sumimi.jp/"><strong>Sitio web</strong></a> ·
+  <a href="./docs/getting-started.es.md"><strong>Empezar</strong></a> ·
+  <a href="./assets/maga-operating-model.svg"><strong>Cómo funciona</strong></a> ·
+  <a href="./LICENSE">MIT License</a>
+</p>
+
+<p align="center">
   <a href="./README.md">English</a> ·
   <a href="./README.zh-CN.md">简体中文</a> ·
   <a href="./README.ja.md">日本語</a> ·
   <a href="./README.ko.md">한국어</a> ·
   <strong>Español</strong>
+</p>
+
+<p align="center">
+  <a href="https://maga.sumimi.jp/">
+    <img src="./website/design/hero-concept.png" alt="El sitio de MAGA muestra el flujo desde la decisión de producto hasta la aceptación" width="100%">
+  </a>
 </p>
 
 MAGA es un plugin de transición para que la gente de producto empiece a crear con Codex en la aplicación de escritorio de ChatGPT. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación mientras hace visibles las prácticas que hay detrás.
@@ -132,19 +145,19 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. Dispone de siete responsabilidades estables. Balanced es la recomendación que aparece rellenada de antemano, pero no se activa hasta que pulsas **Save** por primera vez; mientras no guardes, se usan los valores predeterminados del host de Codex.
+MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. El panel ofrece tres configuraciones iniciales para las mismas siete responsabilidades.
 
-| Responsabilidad | Qué hace | Valor inicial Balanced |
-| --- | --- | --- |
-| Project Lead (`project-lead`) | Coordina el producto, la evidencia y la siguiente decisión | Sol · medium |
-| Investigación (`research`) | Reúne y compara la evidencia relevante | Terra · medium |
-| Prototipo (`prototype`) | Convierte una dirección de experiencia en algo verificable | Sol · medium |
-| Entrega (`delivery`) | Construye la unidad mínima de producto acordada | Terra · medium |
-| Diagnóstico (`diagnosis`) | Aísla los fallos y sus causas | Sol · high |
-| Revisión (`review`) | Cuestiona la evidencia de producto e ingeniería | Sol · high |
-| Lanzamiento (`release`) | Comprueba el cierre, el riesgo y la preparación | Sol · high |
+| Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
+| --- | --- | --- | --- |
+| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| Investigación (`research`) | Sol · max | Sol · max | Terra · max |
+| Prototipo (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
+| Entrega (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
+| Diagnóstico (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
+| Revisión (`review`) | Sol · xhigh | Sol · high | Terra · high |
+| Lanzamiento (`release`) | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** está pensado para sintetizar información ambigua y tomar decisiones con consecuencias. **Terra** es más rápido y económico para trabajo acotado. **Luna** está disponible para tareas estrechas y repetibles, cuando importan más la latencia y el coste que un juicio amplio. En profundidad de razonamiento, **low** sirve para trabajo mecánico, **medium** ofrece el equilibrio habitual y **high** dedica más razonamiento a la incertidumbre o el riesgo.
+Los espacios Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. **Sol** cubre ambigüedad, criterio y acabado; **Terra** es el modelo habitual para trabajo acotado que todavía requiere razonamiento y herramientas. **Luna** solo se recomienda en **max** para entregas con un criterio de finalización claro. Cada fila se puede modificar después de aplicar una configuración.
 
 Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige su starter prompt **Configure**. Se iniciará un chat de MAGA con un panel de configuración dentro de la conversación. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios. La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, fuera del repositorio del producto y de su historial de Git.
 

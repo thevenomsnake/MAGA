@@ -1,12 +1,16 @@
 <h1 align="center">MAGA</h1>
 
-<p align="center"><strong>Make Apps Great Again</strong></p>
-
-<p align="center">Build the software you have in mind.</p>
+<p align="center">
+  <strong>Make Apps Great Again</strong><br>
+  Build the software you have in mind—without turning product work into a second career in engineering.<br>
+  You make the product decisions. MAGA turns them into working, inspectable software.
+</p>
 
 <p align="center">
-  For product designers, product leaders, and first-time builders.<br>
-  You make the product decisions. MAGA turns them into working, inspectable software.
+  <a href="https://maga.sumimi.jp/"><strong>Website</strong></a> ·
+  <a href="./docs/getting-started.md"><strong>Get started</strong></a> ·
+  <a href="#how-maga-works"><strong>How it works</strong></a> ·
+  <a href="./LICENSE">MIT License</a>
 </p>
 
 <p align="center">
@@ -17,14 +21,20 @@
   <a href="./README.es.md">Español</a>
 </p>
 
-MAGA is a product-building plugin and on-ramp to Codex in the ChatGPT desktop app. You describe the user, problem, experience, constraints, and trade-offs in product language. A persistent Project Lead selects the right methods and coordinates research, prototyping, implementation, validation, and repair while you learn the practices behind that work.
+<p align="center">
+  <a href="https://maga.sumimi.jp/">
+    <img src="./website/design/hero-concept.png" alt="MAGA website showing the product-owner workflow from decision to acceptance" width="100%">
+  </a>
+</p>
 
-You do not need to understand code, choose Skills, manage engineering sessions, or review code. You accept the product by inspecting its behavior, experience, and business result.
+MAGA is a product-building plugin and on-ramp to Codex in the ChatGPT desktop app. It gives a project one product-facing Project Lead that turns ordinary product language into the next useful piece of evidence: research, a prototype, a working slice, a diagnosis, or an independent review.
+
+You describe the user, problem, experience, constraints, and trade-offs. MAGA chooses the internal methods, keeps decisions in the project, coordinates bounded Codex tasks when needed, and returns working results for product acceptance. You do not need to choose Skills, manage engineering sessions, or review code.
 
 > [!NOTE]
 > MAGA is not a visual no-code builder. The product still has code. Codex owns that implementation layer; you retain product intent, priorities, constraints, and acceptance.
 
-## Start here
+## Start in three steps
 
 No terminal experience is required. If you have never used Codex before, follow the **[complete beginner guide](./docs/getting-started.md)** from installing the desktop app through accepting your first working result.
 
@@ -42,36 +52,37 @@ When Codex confirms the setup is complete, start a **new chat in the same projec
 
 That is enough to begin. MAGA identifies the first useful outcome and asks only questions that can change the product direction or permission boundary.
 
+## How MAGA works
+
+1. **You define the product outcome.** Describe the user, problem, experience, priorities, and limits in product language.
+2. **The Project Lead chooses the next evidence.** MAGA decides whether the work needs clarification, research, a prototype, implementation, diagnosis, or review.
+3. **Codex builds the smallest inspectable slice.** Engineering choices and risk-matched checks stay behind the product interface.
+4. **You accept the result.** Inspect the behavior and experience, then accept it, adjust it, or set the next direction.
+
+Product direction, active decisions, authority, Tickets, and evidence live in versionable project state. A fresh chat can recover from that state instead of treating a long transcript as the product record.
+
+<p align="center">
+  <img src="./assets/maga-operating-model.svg" alt="Behavior comparison between traditional Skills and MAGA across entry, orchestration, technical work, acceptance, and continuity" width="100%">
+</p>
+
 ## Why MAGA
 
 ### Why a plugin instead of a wrapper app?
 
 Codex already performs difficult engineering work. It can inspect repositories, write and modify code, run checks, review changes, work across project chats, and apply reusable Skills. OpenAI's own guidance describes the same progression: give Codex durable context, encode repeatable work as Skills, and package stable capabilities as plugins. See the official [Codex best practices](https://learn.chatgpt.com/guides/best-practices), [Skills documentation](https://learn.chatgpt.com/docs/build-skills), and [plugin documentation](https://developers.openai.com/plugins/).
 
-The name Codex makes its center of gravity clear: code. Its default vocabulary and extension model are easiest to operate when someone can frame work as engineering and inspect technical output.
-
-Product people are often dismissed as "non-technical people who just tell engineers what to do." Fine. MAGA is the plugin that lets them do exactly that without restraint: they set the product goals and trade-offs; Codex handles the code.
+Codex is strongest at the implementation layer. Product builders still need an operating model for deciding what matters, choosing the next evidence, preserving decisions, and accepting the result. MAGA adds that product layer without placing another application between you and Codex.
 
 > **Direct without restraint. Accept with judgment.**
 
-You do not need another application between you and Codex. The company building both the model and the client is best positioned to keep them aligned, much as Apple can tune its chips and operating systems together: the product roadmap, capability boundaries, interface, and release cycle move as one. Codex will keep evolving. An independent wrapper must chase every new capability, interaction, and permission model; a plugin stays inside the native product, adds only the missing product practices, and can be uninstalled when you no longer need it.
-
 MAGA is deliberately an on-ramp, not a permanent layer. It starts with language and decisions that product people already understand, then makes the underlying practices visible: framing outcomes, gathering evidence, setting constraints, managing trade-offs, and accepting working software. The intended end state is greater autonomy, not permanent dependence. If you eventually need less of MAGA—or none at all—because you can work with Codex directly, the plugin has done its job.
 
-MAGA exists because model capability and product collaboration are different problems.
-
-A conventional Skill usually makes one recurring job reliable. A collection of Skills still often assumes that the operator knows which job comes next, how to sequence technical workflows, what context each task needs, and how to judge a code diff.
-
-MAGA adds an operating model above those capabilities:
+A conventional Skill makes one recurring job more reliable. MAGA adds an operating model above a collection of capabilities:
 
 - One product-facing Project Lead receives ordinary product language.
 - Intent-based routing chooses Skills and methods from the current evidence.
 - Durable project state preserves decisions, boundaries, roles, and approved work.
 - Product acceptance replaces code review as the Product Owner's interface.
-
-<p align="center">
-  <img src="./assets/maga-operating-model.svg" alt="Behavior comparison between Traditional Skills and MAGA across entry, orchestration, technical work, acceptance, and continuity" width="100%">
-</p>
 
 ## Who it is for
 
@@ -132,21 +143,27 @@ MAGA can advance authorized work without turning one natural-language request in
 
 ## Models by responsibility
 
-MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. It has seven stable responsibility slots, each with a prefilled Balanced recommendation:
+MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. Its settings panel offers three starting profiles for the same seven responsibilities:
 
-| Responsibility | What it does | Balanced recommendation |
-| --- | --- | --- |
-| Project Lead (`project-lead`) | Coordinates the product, evidence, and next decision | Sol · medium |
-| Research (`research`) | Gathers and compares relevant evidence | Terra · medium |
-| Prototype (`prototype`) | Turns an experience direction into something inspectable | Sol · medium |
-| Delivery (`delivery`) | Builds the smallest accepted product slice | Terra · medium |
-| Diagnosis (`diagnosis`) | Isolates failures and their causes | Sol · high |
-| Review (`review`) | Challenges product and engineering evidence | Sol · high |
-| Release (`release`) | Checks completion, risk, and readiness | Sol · high |
+- **Pro · quality first:** Sol handles open-ended judgment and assurance; Terra handles scoped implementation. Luna is not used.
+- **Plus · regular use:** Sol protects the highest-value decisions, Terra handles everyday reasoning and tools, and Luna Max handles bounded delivery.
+- **Free / Go · quota saver:** Terra carries most work, Sol is reserved for release risk, and Luna Max handles clearly specified delivery.
 
-**Sol** is the default for ambiguous synthesis and consequential judgment. **Terra** is the faster, more economical choice for bounded execution. **Luna** is available for narrow, repeatable work where latency and cost matter more than broad judgment. For thinking depth, **low** suits mechanical work, **medium** is the normal balance, and **high** spends more reasoning on uncertainty or risk.
+| Responsibility | Pro · quality first | Plus · regular use | Free / Go · quota saver |
+| --- | --- | --- | --- |
+| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| Research (`research`) | Sol · max | Sol · max | Terra · max |
+| Prototype (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
+| Delivery (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
+| Diagnosis (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
+| Review (`review`) | Sol · xhigh | Sol · high | Terra · high |
+| Release (`release`) | Sol · xhigh | Sol · high | Sol · high |
 
-Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA chat with an in-chat configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Balanced remains a recommendation and MAGA uses the Codex host defaults until you click **Save** once. That first save explicitly confirms and freezes all seven rows. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
+Business, Enterprise, and Edu workspaces can start with the Plus profile, then use the Pro profile when their workspace allowance and model policy support it. API-key users should choose by their own token budget. Plan access and limits can change; see the current [Codex pricing and plan guide](https://learn.chatgpt.com/docs/pricing).
+
+The profiles follow the work rather than ranking the models: **Sol** is for ambiguity, judgment, and polish; **Terra** is the everyday workhorse for scoped work that still needs reasoning and tools; **Luna** is only recommended at **max**, for clear and repeatable delivery. Higher reasoning can take longer and use more tokens, and every row stays editable after a profile is applied.
+
+Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA chat with an in-chat configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Choose a profile, adjust any row, and click **Save**. Until that first save, the Codex host defaults stay active. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
 
 Saved changes apply only to new tasks that you explicitly approve in product language; MAGA may propose and route a clearly named task, but it does not create one without your approval. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
 
@@ -216,6 +233,12 @@ MAGA's routing, project state, installer, and Project Lead contract are local ad
 - [Multi-session collaboration](./playbooks/multi-session-collaboration.md)
 - [Native Codex Ticket orchestration](./playbooks/codex-ticket-orchestration.md)
 - [AI-slop research](./research/kill-ai-slop.md)
+
+## Help and feedback
+
+- Follow the [beginner guide](./docs/getting-started.md) for installation and first use.
+- Open a [GitHub issue](https://github.com/thevenomsnake/MAGA/issues) for a reproducible bug or a focused proposal.
+- Use the [MAGA website](https://maga.sumimi.jp/) for the product overview and current onboarding path.
 
 ## License
 

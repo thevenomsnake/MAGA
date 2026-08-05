@@ -11,7 +11,7 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - Pin a role-management task only for a `managed queue` role.
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.
-- Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved Balanced values are recommendations; omit overrides and use the host default.
+- Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved MAGA values are recommendations; omit overrides and use the host default.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
 

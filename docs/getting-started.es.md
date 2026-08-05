@@ -56,19 +56,19 @@ Las capacidades instaladas se cargan en chats nuevos. Cuando termine la configur
 
 ### Opcional: elegir modelos por responsabilidad
 
-Balanced es la recomendación que aparece rellenada de antemano, pero no se activa hasta que pulsas **Save** por primera vez; mientras no guardes, se usan los valores predeterminados del host de Codex. Para ajustar la calidad, la velocidad y el coste, abre la página de detalles del plugin MAGA y selecciona su starter prompt **Configure**. Codex iniciará un chat de MAGA y abrirá un panel de configuración dentro de la conversación. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios.
+Abre la página de detalles del plugin MAGA, selecciona su starter prompt **Configure** y elige la configuración inicial que encaje con tu uso disponible. Codex iniciará un chat de MAGA y abrirá el panel dentro de la conversación.
 
-| Responsabilidad | Valor inicial Balanced |
-| --- | --- |
-| Project Lead | Sol · medium |
-| Investigación | Terra · medium |
-| Prototipo | Sol · medium |
-| Entrega | Terra · medium |
-| Diagnóstico | Sol · high |
-| Revisión | Sol · high |
-| Lanzamiento | Sol · high |
+| Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
+| --- | --- | --- | --- |
+| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| Investigación | Sol · max | Sol · max | Terra · max |
+| Prototipo | Sol · xhigh | Terra · high | Terra · high |
+| Entrega | Terra · xhigh | Luna · max | Luna · max |
+| Diagnóstico | Sol · max | Terra · xhigh | Terra · high |
+| Revisión | Sol · xhigh | Sol · high | Terra · high |
+| Lanzamiento | Sol · xhigh | Sol · high | Sol · high |
 
-Usa **Sol** para la ambigüedad, la síntesis y las decisiones con consecuencias; **Terra** para trabajo acotado más rápido y económico; y **Luna** para tareas estrechas y repetibles. En profundidad de razonamiento, **low** sirve para trabajo mecánico, **medium** ofrece el equilibrio habitual y **high** dedica más razonamiento a la incertidumbre y el riesgo.
+Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. Sol cubre ambigüedad y control de calidad, Terra es el modelo habitual y Luna solo se recomienda en **max** para entregas con criterios claros.
 
 La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, no en esta carpeta de producto ni en su historial de Git. Solo se aplica a tareas nuevas cuya creación apruebes explícitamente después; las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que el Project Lead actual use la configuración nueva, pide «retoma el trabajo con la configuración nueva» y aprueba la creación de una tarea de sustitución.
 

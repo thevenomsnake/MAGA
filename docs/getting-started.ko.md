@@ -56,19 +56,19 @@ Codex가 보이지 않으면 계정 또는 워크스페이스에 Codex 권한이
 
 ### 선택 사항: 책임별 모델 고르기
 
-Balanced는 설정 화면에 미리 채워진 권장값입니다. 하지만 처음 **Save**를 누르기 전에는 활성화되지 않으며 Codex 호스트 기본값을 사용합니다. 품질, 속도, 비용의 균형을 설정하려면 MAGA 플러그인 상세 페이지에서 **Configure** starter prompt를 선택하세요. MAGA 채팅이 시작되고 채팅 안에서 설정 패널이 열립니다. 현재 Codex 플러그인 페이지는 임의의 사용자 지정 양식을 넣을 수 없으므로 패널 자체가 상세 페이지에 내장되지는 않습니다.
+MAGA 플러그인 상세 페이지에서 **Configure** starter prompt를 선택하고 현재 사용량에 맞는 시작 구성을 고르세요. MAGA 채팅이 시작되고 채팅 안에서 설정 패널이 열립니다.
 
-| 책임 | Balanced 기본값 |
-| --- | --- |
-| Project Lead | Sol · medium |
-| 조사 | Terra · medium |
-| 프로토타입 | Sol · medium |
-| 전달 | Terra · medium |
-| 진단 | Sol · high |
-| 리뷰 | Sol · high |
-| 릴리스 | Sol · high |
+| 책임 | Pro · 품질 우선 | Plus · 일반 사용 | Free / Go · 사용량 절약 |
+| --- | --- | --- | --- |
+| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 조사 | Sol · max | Sol · max | Terra · max |
+| 프로토타입 | Sol · xhigh | Terra · high | Terra · high |
+| 전달 | Terra · xhigh | Luna · max | Luna · max |
+| 진단 | Sol · max | Terra · xhigh | Terra · high |
+| 리뷰 | Sol · xhigh | Sol · high | Terra · high |
+| 릴리스 | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** 은 모호한 정보를 종합하거나 영향이 큰 판단을 할 때, **Terra** 는 더 빠르고 경제적인 범위가 명확한 작업에, **Luna** 는 좁고 반복적인 작업에 적합합니다. 추론 깊이는 **low** 가 기계적인 작업, **medium** 이 일상적인 균형, **high** 가 불확실성과 위험에 더 많은 추론을 쓰는 설정입니다.
+Business, Enterprise, Edu는 Plus로 시작한 뒤 사용량과 정책이 허용하면 Pro를 고를 수 있습니다. API key 사용자는 token 예산에 맞춰 선택하세요. Sol은 모호함과 품질 판단, Terra는 일상 작업, Luna는 완료 기준이 명확한 전달에만 **max**로 추천합니다.
 
 처음 **Save**를 누르면 설정이 활성화되고 일곱 책임 전체가 하나의 완전한 설정으로 고정됩니다. 설정은 현재 Codex Home에 저장되며 이 제품 폴더나 Git 기록에는 들어가지 않습니다. 그 이후 사용자가 생성을 명시적으로 승인한 새 작업에만 적용되며 기존 작업은 바뀌지 않습니다. Project Lead도 새로 만들 때만 적용됩니다. 기존 Project Lead가 새 설정으로 이어받게 하려면 “새 설정으로 이어받아 줘”라고 명시하고 대체 작업 생성을 승인해야 합니다.
 

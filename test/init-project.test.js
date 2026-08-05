@@ -135,6 +135,10 @@ test("ships localized product guides, beginner manuals, and one English comparis
 
   for (const [index, localizedReadme] of readmes.entries()) {
     assert.match(localizedReadme, /assets\/maga-operating-model\.svg/);
+    assert.match(localizedReadme, /website\/design\/hero-concept\.png/);
+    assert.match(localizedReadme, /https:\/\/maga\.sumimi\.jp\//);
+    assert.match(localizedReadme, /Sol · xhigh/);
+    assert.match(localizedReadme, /Luna · max/);
     assert.ok(localizedReadme.includes(guideFiles[index]));
     assert.doesNotMatch(localizedReadme, /npx github:thevenomsnake\/MAGA/);
     assert.doesNotMatch(localizedReadme, /玩梗|带梗|竞选承诺|No rallies|explaining the joke/i);
@@ -147,8 +151,8 @@ test("ships localized product guides, beginner manuals, and one English comparis
   }
 
   assert.match(readme, /Build the software you have in mind/);
-  assert.match(readme, /For product designers, product leaders, and first-time builders/);
-  assert.match(readme, /You do not need to understand code[\s\S]+or review code/);
+  assert.match(readme, /one product-facing Project Lead/);
+  assert.match(readme, /You do not need to choose Skills[\s\S]+or review code/);
   assert.match(readme, /No terminal experience is required/);
   assert.match(readme, /Perform the technical steps yourself/);
   assert.match(readme, /new chat in the same project/);
@@ -156,17 +160,15 @@ test("ships localized product guides, beginner manuals, and one English comparis
   assert.match(guide, /Inspect the product without reviewing code/);
   assert.match(guide, /Graduate from MAGA/);
   assert.match(readme, /## Why MAGA/);
+  assert.match(readme, /## How MAGA works/);
   assert.match(readme, /Why a plugin instead of a wrapper app\?/);
-  assert.match(readme, /Codex will keep evolving/);
-  assert.match(readme, /Apple can tune its chips and operating systems together/);
-  assert.match(readme, /can be uninstalled when you no longer need it/);
+  assert.match(readme, /Codex is strongest at the implementation layer/);
   assert.match(readme, /an on-ramp, not a permanent layer/);
   assert.match(readme, /greater autonomy, not permanent dependence/);
   assert.match(readme, /the plugin has done its job/);
-  assert.match(readme, /The name Codex makes its center of gravity clear: code/);
-  assert.match(readme, /"non-technical people who just tell engineers what to do\."/);
   assert.match(readme, /Direct without restraint\. Accept with judgment\./);
-  assert.match(readme, /model capability and product collaboration are different problems/);
+  assert.match(readme, /Pro · quality first[\s\S]+Plus · regular use[\s\S]+Free \/ Go · quota saver/);
+  assert.match(readme, /\*\*Luna\*\* is only recommended at \*\*max\*\*/);
   assert.doesNotMatch(readme, /The wrapper is the installed working contract/);
   assert.doesNotMatch(readme, /```mermaid|maga-product-vision-hero|maga-routing-hero/);
 

@@ -10,11 +10,24 @@
 </p>
 
 <p align="center">
+  <a href="https://maga.sumimi.jp/"><strong>公式サイト</strong></a> ·
+  <a href="./docs/getting-started.ja.md"><strong>はじめる</strong></a> ·
+  <a href="./assets/maga-operating-model.svg"><strong>仕組み</strong></a> ·
+  <a href="./LICENSE">MIT License</a>
+</p>
+
+<p align="center">
   <a href="./README.md">English</a> ·
   <a href="./README.zh-CN.md">简体中文</a> ·
   <strong>日本語</strong> ·
   <a href="./README.ko.md">한국어</a> ·
   <a href="./README.es.md">Español</a>
+</p>
+
+<p align="center">
+  <a href="https://maga.sumimi.jp/">
+    <img src="./website/design/hero-concept.png" alt="プロダクト判断から受け入れまでの流れを示す MAGA のウェブサイト" width="100%">
+  </a>
 </p>
 
 MAGA は、プロダクト職が ChatGPT デスクトップアプリの Codex を使い始めるための橋渡しとなるプロダクト構築プラグインです。対象ユーザー、課題、体験、制約、トレードオフをプロダクトの言葉で説明すると、継続的に働く Project Lead が適切な手法を選び、調査、プロトタイプ、実装、検証、修復を調整しながら、その背景にある実践を見えるようにします。
@@ -132,19 +145,19 @@ MAGA は承認済みの作業を自律的に進めますが、一つの自然言
 
 ## 責務ごとのモデル設定
 
-MAGA は通常のプロダクト対話からモデル選択を切り離しつつ、その判断を隠しません。7 つの安定した責務スロットがあり、Balanced は設定画面にあらかじめ入っている推奨値です。最初に **Save** を押すまでは有効にならず、Codex ホストの既定値が使われます。
+MAGA は通常のプロダクト対話からモデル選択を切り離しつつ、その判断を隠しません。設定画面には、同じ 7 つの責務に対する 3 つの開始構成があります。
 
-| 責務 | 担当すること | Balanced の初期値 |
-| --- | --- | --- |
-| Project Lead (`project-lead`) | プロダクト、証拠、次の判断を調整する | Sol · medium |
-| 調査 (`research`) | 関連する証拠を集めて比較する | Terra · medium |
-| プロトタイプ (`prototype`) | 体験の方向性を確認可能な成果にする | Sol · medium |
-| デリバリー (`delivery`) | 合意済みの最小プロダクト単位を構築する | Terra · medium |
-| 診断 (`diagnosis`) | 障害とその原因を切り分ける | Sol · high |
-| レビュー (`review`) | プロダクトとエンジニアリングの証拠を吟味する | Sol · high |
-| リリース (`release`) | 完了度、リスク、公開準備を確認する | Sol · high |
+| 責務 | Pro · 品質優先 | Plus · 通常利用 | Free / Go · 使用量節約 |
+| --- | --- | --- | --- |
+| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 調査 (`research`) | Sol · max | Sol · max | Terra · max |
+| プロトタイプ (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
+| デリバリー (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
+| 診断 (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
+| レビュー (`review`) | Sol · xhigh | Sol · high | Terra · high |
+| リリース (`release`) | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** は曖昧な情報の統合や、影響の大きい判断に向いています。**Terra** はより速く経済的で、範囲が明確な実行に向いています。**Luna** は、広い判断より応答速度とコストが重要な、狭く反復的な作業に使えます。思考の深さは、**low** が機械的な作業、**medium** が日常的なバランス、**high** が不確実性やリスクにより多くの推論を割く設定です。
+Business、Enterprise、Edu のワークスペースは Plus から始め、利用枠とポリシーが許す場合に Pro を使えます。API key 利用者は token 予算で選択してください。**Sol** は曖昧さ、判断、仕上げに、**Terra** は推論とツール利用を伴う日常作業に使います。**Luna** は完了条件が明確なデリバリーでのみ **max** を推奨します。適用後も各行を変更できます。
 
 変更するには、MAGA のプラグイン詳細ページで **Configure** starter prompt を選びます。MAGA のチャットが始まり、チャット内に設定パネルが開きます。現在の Codex プラグイン詳細ページは任意のカスタムフォームを埋め込めないため、設定パネル自体が詳細ページ内に表示されるわけではありません。最初の **Save** で設定を有効にし、7 つの責務を一つの完全な設定として固定します。設定は現在の Codex Home に保存され、プロダクトのリポジトリや Git 履歴には入りません。
 

@@ -5,6 +5,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
   BALANCED_DEFAULTS,
+  COMPUTE_PRESETS,
   RESPONSIBILITIES,
   computeConfigPath,
   loadComputeSettings,
@@ -33,31 +34,51 @@ const MODELS = [
     id: "gpt-5.6-terra",
     displayName: "GPT-5.6-Terra",
     isDefault: true,
-    supportedReasoningEfforts: ["low", "medium", "high"],
+    supportedReasoningEfforts: ["low", "medium", "high", "xhigh", "max"],
     defaultReasoningEffort: "medium",
   },
   {
     id: "gpt-5.6-luna",
     displayName: "GPT-5.6-Luna",
-    supportedReasoningEfforts: ["low", "medium"],
+    supportedReasoningEfforts: ["low", "medium", "high", "xhigh", "max"],
     defaultReasoningEffort: "low",
   },
 ];
 
-test("ships seven balanced responsibility defaults", () => {
+test("ships seven MAGA responsibility recommendations", () => {
   assert.deepEqual(
     RESPONSIBILITIES.map(({ key }) => key),
     ["project-lead", "research", "prototype", "delivery", "diagnosis", "review", "release"],
   );
   assert.deepEqual(BALANCED_DEFAULTS, {
-    "project-lead": { model: "gpt-5.6-sol", effort: "medium" },
-    research: { model: "gpt-5.6-terra", effort: "medium" },
-    prototype: { model: "gpt-5.6-sol", effort: "medium" },
-    delivery: { model: "gpt-5.6-terra", effort: "medium" },
-    diagnosis: { model: "gpt-5.6-sol", effort: "high" },
+    "project-lead": { model: "gpt-5.6-sol", effort: "xhigh" },
+    research: { model: "gpt-5.6-sol", effort: "max" },
+    prototype: { model: "gpt-5.6-terra", effort: "high" },
+    delivery: { model: "gpt-5.6-luna", effort: "max" },
+    diagnosis: { model: "gpt-5.6-terra", effort: "xhigh" },
     review: { model: "gpt-5.6-sol", effort: "high" },
     release: { model: "gpt-5.6-sol", effort: "high" },
   });
+});
+
+test("ships plan-aware starting profiles and recommends Luna only at Max", () => {
+  assert.deepEqual(COMPUTE_PRESETS.map(({ key }) => key), [
+    "pro-quality",
+    "plus-standard",
+    "quota-saver",
+  ]);
+  const pro = COMPUTE_PRESETS.find(({ key }) => key === "pro-quality");
+  const standard = COMPUTE_PRESETS.find(({ key }) => key === "plus-standard");
+  const saver = COMPUTE_PRESETS.find(({ key }) => key === "quota-saver");
+  assert.equal(Object.values(pro.profiles).some(({ model }) => model === "gpt-5.6-luna"), false);
+  assert.deepEqual(pro.profiles.delivery, { model: "gpt-5.6-terra", effort: "xhigh" });
+  assert.deepEqual(standard.profiles.delivery, { model: "gpt-5.6-luna", effort: "max" });
+  assert.deepEqual(saver.profiles.delivery, { model: "gpt-5.6-luna", effort: "max" });
+  for (const preset of COMPUTE_PRESETS) {
+    for (const profile of Object.values(preset.profiles)) {
+      if (profile.model === "gpt-5.6-luna") assert.equal(profile.effort, "max");
+    }
+  }
 });
 
 test("stores a complete explicit selection inside the selected Codex Home", (t) => {
@@ -138,7 +159,7 @@ test("falls back visibly when a configured model or depth is unavailable", () =>
     settings: { source: "saved", profiles: BALANCED_DEFAULTS },
     models: MODELS.filter(({ id }) => id !== "gpt-5.6-sol"),
   });
-  assert.deepEqual(missingModel.actual, { model: "gpt-5.6-sol", effort: "medium" });
+  assert.deepEqual(missingModel.actual, { model: "gpt-5.6-sol", effort: "xhigh" });
   assert.match(missingModel.fallback.join(" "), /gpt-5\.6-sol is not listed/);
 
   const unsupportedDepth = resolveComputeProfile("delivery", {
@@ -146,16 +167,16 @@ test("falls back visibly when a configured model or depth is unavailable", () =>
       source: "saved",
       profiles: {
         ...BALANCED_DEFAULTS,
-        delivery: { model: "gpt-5.6-luna", effort: "high" },
+        delivery: { model: "gpt-5.6-luna", effort: "ultra" },
       },
     },
     models: MODELS,
   });
-  assert.deepEqual(unsupportedDepth.actual, { model: "gpt-5.6-luna", effort: "high" });
+  assert.deepEqual(unsupportedDepth.actual, { model: "gpt-5.6-luna", effort: "ultra" });
   assert.match(unsupportedDepth.fallback.join(" "), /destination host will validate/);
 });
 
-test("keeps Balanced values as recommendations until the user saves them", () => {
+test("keeps MAGA values as recommendations until the user saves them", () => {
   const resolved = resolveComputeProfile("project-lead", {
     settings: { source: "balanced-defaults", profiles: BALANCED_DEFAULTS },
     models: MODELS,

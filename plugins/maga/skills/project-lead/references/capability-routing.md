@@ -18,23 +18,29 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 MAGA exposes seven settings slots. They are stable routing keys, not an org chart
 and not one setting per Skill:
 
-| Work responsibility | Profile key | Balanced recommendation |
+| Work responsibility | Profile key | Plus / regular-use recommendation |
 | --- | --- | --- |
-| Product conversation, decisions, and integration | `project-lead` | Sol / medium |
-| Source-backed external facts | `research` | Terra / medium |
-| Interaction and visual exploration | `prototype` | Sol / medium |
-| Bounded product implementation | `delivery` | Terra / medium |
-| Evidence-led failure investigation | `diagnosis` | Sol / high |
+| Product conversation, decisions, and integration | `project-lead` | Sol / xhigh |
+| Source-backed external facts | `research` | Sol / max |
+| Interaction and visual exploration | `prototype` | Terra / high |
+| Bounded product implementation | `delivery` | Luna / max |
+| Evidence-led failure investigation | `diagnosis` | Terra / xhigh |
 | Independent acceptance and quality review | `review` | Sol / high |
 | Privacy, migration, permissions, and release | `release` | Sol / high |
 
-The Product Owner may change every row in MAGA's settings panel. Balanced values
+The Product Owner may change every row in MAGA's settings panel. Recommended values
 remain recommendations until the complete panel is explicitly saved. Resolve an
 explicitly saved profile immediately before an approved task creation and pass
 non-null model and thinking values to the native task tool. If nothing was saved,
 omit both so the host defaults apply. Do not select compute from perceived task
 difficulty, and do not store environment-specific model names in project files.
 Direct manual invocation of a registered Skill inherits its current task.
+
+The panel also offers a `pro-quality` profile that uses Sol for open-ended judgment
+and Terra for scoped delivery, plus a `quota-saver` profile that uses Terra broadly.
+Luna appears only for clearly bounded delivery and only at `max`. The authoritative
+profile definitions live in `runtime/compute-profiles.mjs`; this routing table shows
+the default `plus-standard` starting point only.
 
 ## Load Internal Methods By Exact Path
 

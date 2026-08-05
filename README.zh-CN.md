@@ -10,11 +10,24 @@
 </p>
 
 <p align="center">
+  <a href="https://maga.sumimi.jp/"><strong>官方网站</strong></a> ·
+  <a href="./docs/getting-started.zh-CN.md"><strong>开始使用</strong></a> ·
+  <a href="./assets/maga-operating-model.svg"><strong>工作原理</strong></a> ·
+  <a href="./LICENSE">MIT License</a>
+</p>
+
+<p align="center">
   <a href="./README.md">English</a> ·
   <strong>简体中文</strong> ·
   <a href="./README.ja.md">日本語</a> ·
   <a href="./README.ko.md">한국어</a> ·
   <a href="./README.es.md">Español</a>
+</p>
+
+<p align="center">
+  <a href="https://maga.sumimi.jp/">
+    <img src="./website/design/hero-concept.png" alt="MAGA 网站展示从产品判断到验收的工作流程" width="100%">
+  </a>
 </p>
 
 MAGA 是一个帮助产品人上手 ChatGPT 桌面客户端中 Codex 的产品构建过渡插件。你用产品语言描述用户、问题、体验、限制和取舍；一个持续工作的 Project Lead 会选择合适的方法，组织研究、原型、实现、验证和修复，同时让你逐步理解这些工作背后的实践。
@@ -132,21 +145,27 @@ MAGA 可以自主推进已经授权的工作，但不会把一句自然语言扩
 
 ## 按职责配置模型
 
-MAGA 会把模型选择留在普通产品对话之外，但不会把这项决定藏起来。它提供 7 个稳定职责槽，每个职责都有一套预填的 Balanced 推荐值：
+MAGA 会把模型选择留在普通产品对话之外，但不会把这项决定藏起来。配置面板为同一组 7 个职责提供三套起始方案：
 
-| 职责 | 负责什么 | Balanced 推荐值 |
-| --- | --- | --- |
-| Project Lead (`project-lead`) | 协调产品、证据和下一个决定 | Sol · medium |
-| 研究 (`research`) | 收集并比较相关证据 | Terra · medium |
-| 原型 (`prototype`) | 把体验方向变成可检查的结果 | Sol · medium |
-| 交付 (`delivery`) | 构建已经对齐的最小产品切片 | Terra · medium |
-| 诊断 (`diagnosis`) | 定位故障及其原因 | Sol · high |
-| 审查 (`review`) | 质疑产品与工程证据是否成立 | Sol · high |
-| 发布 (`release`) | 检查完成度、风险和发布准备 | Sol · high |
+- **Pro · 质量优先：**开放式判断和把关使用 Sol，边界明确的实现使用 Terra，不使用 Luna。
+- **Plus · 常规使用：**最高价值判断使用 Sol，日常推理与工具调用使用 Terra，有边界交付使用 Luna Max。
+- **Free / Go · 节省额度：**大部分工作使用 Terra，发布风险保留 Sol，定义清楚的交付使用 Luna Max。
 
-**Sol** 适合模糊信息的综合判断和后果较重的决定；**Terra** 更快、更经济，适合边界清楚的执行；**Luna** 可用于狭窄、重复的工作，此时响应速度和成本比广泛判断更重要。思考深度中，**low** 适合机械任务，**medium** 是日常平衡，**high** 会为不确定性或风险投入更多推理。
+| 职责 | Pro · 质量优先 | Plus · 常规使用 | Free / Go · 节省额度 |
+| --- | --- | --- | --- |
+| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 研究 (`research`) | Sol · max | Sol · max | Terra · max |
+| 原型 (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
+| 交付 (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
+| 诊断 (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
+| 审查 (`review`) | Sol · xhigh | Sol · high | Terra · high |
+| 发布 (`release`) | Sol · xhigh | Sol · high | Sol · high |
 
-打开 MAGA 插件详情页，选择 **Configure** starter prompt。它会开启一个 MAGA 聊天，并在聊天中打开配置面板；当前 Codex 插件详情页还不能嵌入任意自定义表单。在第一次点击 **保存** 前，Balanced 只是推荐，MAGA 使用 Codex 宿主默认值；第一次保存会明确确认并冻结全部 7 个职责，之后只更新你实际改动的职责。设置保存在当前 Codex Home，不写入产品仓库，也不进入 Git 历史。
+Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区额度与模型策略允许时再切换到 Pro。API key 用户按自己的 token 预算选择。订阅可用性与额度可能变化，请以最新的 [Codex 价格与订阅说明](https://learn.chatgpt.com/docs/pricing)为准。
+
+三套方案按职责分工，而不是简单给模型排高低：**Sol** 负责模糊问题、判断和精修；**Terra** 是需要推理与工具调用的日常主力；**Luna** 只在验收标准清楚的交付中以 **max** 推荐。更高推理深度会花费更多时间和 token；套用方案后，每个职责仍可单独调整。
+
+打开 MAGA 插件详情页，选择 **Configure** starter prompt。它会开启一个 MAGA 聊天，并在聊天中打开配置面板；当前 Codex 插件详情页还不能嵌入任意自定义表单。先选择方案，再调整个别职责并点击 **保存**。首次保存前，Codex 宿主默认值仍然生效；之后只更新你实际改动的职责。设置保存在当前 Codex Home，不写入产品仓库，也不进入 Git 历史。
 
 保存后的修改只影响你用产品语言明确批准的新任务；MAGA 会自动判断职责并提出名称清楚的任务，但不会在你批准前创建。已有任务保持原设置。Project Lead 只会在首次新建，或你明确要求用新配置创建 replacement 接手项目时采用保存的配置。面板中的 `model/list` 只是参考目录，不代表每个目标环境的最终能力。MAGA 会把你保存的模型和深度交给新任务的目标宿主验证；若目标宿主拒绝，才省略 overrides 重试一次，并明确告知使用宿主默认值。它不会擅自换成另一档模型，也不会因为任务“看起来很难”就升级。
 

@@ -95,6 +95,18 @@
       font-size: 12px;
     }
     .model-note strong { display: block; color: var(--ink); font-size: 13px; }
+    .preset-section { margin-bottom: 16px; }
+    .preset-heading { margin: 0 0 8px; font-size: 13px; letter-spacing: .02em; }
+    .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .preset {
+      min-height: 92px;
+      border-radius: 12px;
+      padding: 11px 12px;
+      text-align: left;
+    }
+    .preset strong, .preset span { display: block; }
+    .preset span { margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.35; }
+    .preset[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); }
     .grid { display: grid; gap: 10px; }
     .row {
       display: grid;
@@ -157,6 +169,7 @@
       header { grid-template-columns: 1fr; }
       .badge { justify-self: start; }
       .model-guide { grid-template-columns: 1fr; }
+      .presets { grid-template-columns: 1fr; }
       .row { grid-template-columns: 1fr 1fr; }
       .role { grid-column: 1 / -1; }
       .actual { grid-column: 1 / -1; }
@@ -178,13 +191,18 @@
 
     <section class="principle">
       <strong id="principle-label">Your choice wins.</strong>
-      <span id="principle-copy">Balanced values are recommendations until you save them. MAGA does not silently upgrade a task because it looks difficult.</span>
+      <span id="principle-copy">MAGA recommendations stay inactive until you save them. MAGA does not silently change a task because it looks difficult.</span>
     </section>
 
     <section class="model-guide" aria-label="Model guide">
       <div class="model-note"><strong>Sol</strong><span id="sol-guide">Best judgment for ambiguity and risk.</span></div>
-      <div class="model-note"><strong>Terra</strong><span id="terra-guide">Best balance for bounded everyday work.</span></div>
-      <div class="model-note"><strong>Luna</strong><span id="luna-guide">Fastest and most economical for narrow work.</span></div>
+      <div class="model-note"><strong>Terra</strong><span id="terra-guide">The everyday workhorse for scoped work that still needs reasoning and tools.</span></div>
+      <div class="model-note"><strong>Luna</strong><span id="luna-guide">For clear, repeatable execution; MAGA recommends it only at Max.</span></div>
+    </section>
+
+    <section class="preset-section" aria-labelledby="preset-heading">
+      <h2 class="preset-heading" id="preset-heading">Choose a starting profile</h2>
+      <div class="presets" id="presets"></div>
     </section>
 
     <div id="content" class="loading">Loading available models…</div>
@@ -198,10 +216,10 @@
       lede: "查看每类工作的模型与思考深度建议，再保存你希望 MAGA 使用的选择。",
       scope: "当前 Codex Home",
       principleLabel: "你的设置优先。",
-      principleCopy: "均衡值在保存前只是推荐。MAGA 不会因为任务“看起来很难”而擅自升级模型。",
+      principleCopy: "MAGA 推荐配置在保存前不会生效。MAGA 不会因为任务“看起来很难”而擅自更换设置。",
       solGuide: "判断力最强，适合模糊问题与风险。",
-      terraGuide: "质量、速度和成本最均衡，适合边界明确的日常工作。",
-      lunaGuide: "更快且经济，适合狭窄而重复的工作。",
+      terraGuide: "日常主力，适合需要推理与工具调用的明确工作。",
+      lunaGuide: "适合清楚、可重复的执行；MAGA 仅在 Max 下推荐。",
       footnote: "这些偏好不会进入项目 Git。保存后的选择用于新建任务；正在运行的任务保持原设置。",
       model: "模型",
       effort: "思考深度",
@@ -209,25 +227,32 @@
       nextTask: "下一个新任务",
       hostDefault: "Codex 宿主默认",
       hostDepth: "默认深度",
-      balanced: "恢复均衡默认值",
+      balanced: "恢复 Plus 常规配置",
       save: "保存设置",
       saving: "正在保存…",
       saved: "已保存。新任务会使用这些设置；已有任务保持不变。Project Lead 在新建或明确接手时生效。",
       ready: "可修改后保存。",
-      activate: "点击保存，确认并启用这套均衡建议。",
+      activate: "点击保存，确认并启用这套 MAGA 推荐配置。",
       noChanges: "没有需要保存的修改。",
       unavailable: "参考目录未列出",
       noCatalog: "无法读取参考模型目录；新任务的目标宿主会验证已保存选择。",
       loading: "正在读取可用模型…",
+      presetHeading: "选择一套起始配置",
+      presetApplied: "已套用起始配置；保存后才会用于新任务。",
+      presets: {
+        "pro-quality": ["Pro · 质量优先", "Sol 负责判断与把关，Terra 负责明确实现；不使用 Luna。"],
+        "plus-standard": ["Plus · 常规使用", "Sol 做关键判断，Terra 做日常执行，Luna Max 做有边界交付。"],
+        "quota-saver": ["Free / Go · 节省额度", "主要使用 Terra，发布用 Sol，明确交付使用 Luna Max。"],
+      },
     } : {
       title: "Responsibility settings",
       lede: "Review the model and reasoning depth recommended for each kind of work, then save the choices you want MAGA to use.",
       scope: "Current Codex Home",
       principleLabel: "Your choice wins.",
-      principleCopy: "Balanced values are recommendations until you save them. MAGA does not silently upgrade a task because it looks difficult.",
+      principleCopy: "MAGA recommendations stay inactive until you save them. MAGA does not silently change a task because it looks difficult.",
       solGuide: "Best judgment for ambiguity and risk.",
-      terraGuide: "Best balance for bounded everyday work.",
-      lunaGuide: "Fast and economical for narrow work.",
+      terraGuide: "The everyday workhorse for scoped work that still needs reasoning and tools.",
+      lunaGuide: "For clear, repeatable execution; MAGA recommends it only at Max.",
       footnote: "These preferences stay outside the project repository. Saved choices apply to new tasks; running tasks keep their current settings.",
       model: "Model",
       effort: "Reasoning depth",
@@ -235,16 +260,23 @@
       nextTask: "Next new task",
       hostDefault: "Codex host default",
       hostDepth: "default depth",
-      balanced: "Restore balanced defaults",
+      balanced: "Restore Plus profile",
       save: "Save settings",
       saving: "Saving…",
       saved: "Saved. New tasks use these settings; existing tasks stay unchanged. Project Lead uses them when newly created or explicitly replaced.",
       ready: "Adjust any row, then save.",
-      activate: "Save once to confirm and activate these Balanced recommendations.",
+      activate: "Save once to confirm and activate these MAGA recommendations.",
       noChanges: "There are no changes to save.",
       unavailable: "not in reference catalog",
       noCatalog: "The reference model catalog is unavailable. The destination host will validate saved choices when a task is created.",
       loading: "Loading available models…",
+      presetHeading: "Choose a starting profile",
+      presetApplied: "Starting profile applied. Save before MAGA uses it for new tasks.",
+      presets: {
+        "pro-quality": ["Pro · quality first", "Sol handles judgment and assurance; Terra handles scoped implementation. No Luna."],
+        "plus-standard": ["Plus · regular use", "Sol handles key judgment, Terra everyday work, and Luna Max bounded delivery."],
+        "quota-saver": ["Free / Go · quota saver", "Mostly Terra, Sol for release, and Luna Max for clearly bounded delivery."],
+      },
     };
 
     document.getElementById("title").textContent = copy.title;
@@ -256,6 +288,7 @@
     document.getElementById("terra-guide").textContent = copy.terraGuide;
     document.getElementById("luna-guide").textContent = copy.lunaGuide;
     document.getElementById("footnote").textContent = copy.footnote;
+    document.getElementById("preset-heading").textContent = copy.presetHeading;
     document.getElementById("content").textContent = copy.loading;
 
     const effortLabels = zh ? {
@@ -299,7 +332,11 @@
 
     function modelOptionsFor(role) {
       const models = [...(snapshot.models || [])];
-      const required = [role.preferred?.model, snapshot.defaults?.[role.key]?.model].filter(Boolean);
+      const required = [
+        role.preferred?.model,
+        snapshot.defaults?.[role.key]?.model,
+        ...(snapshot.presets || []).map((preset) => preset.profiles?.[role.key]?.model),
+      ].filter(Boolean);
       for (const modelId of required.reverse()) {
         if (!models.some((model) => model.id === modelId)) {
           models.unshift({ id: modelId, displayName: `${modelId} · ${copy.unavailable}`, supportedReasoningEfforts: [] });
@@ -414,13 +451,56 @@
           : copy.activate);
       if (snapshot.configWarning) status.className = "status error";
 
-      reset.onclick = () => {
-        for (const row of grid.querySelectorAll(".row")) {
-          const defaults = snapshot.defaults[row.dataset.key];
-          row.querySelector("[data-model]").value = defaults.model;
-          updateEffortSelect(row, defaults.effort);
+      function selectedProfiles() {
+        return Object.fromEntries([...grid.querySelectorAll(".row")].map((row) => [
+          row.dataset.key,
+          {
+            model: row.querySelector("[data-model]").value,
+            effort: row.querySelector("[data-effort]").value,
+          },
+        ]));
+      }
+
+      function refreshPresetState() {
+        const selected = selectedProfiles();
+        for (const button of document.querySelectorAll("[data-preset]")) {
+          const preset = (snapshot.presets || []).find(({ key }) => key === button.dataset.preset);
+          const matches = preset && Object.entries(preset.profiles).every(([key, profile]) => (
+            selected[key]?.model === profile.model && selected[key]?.effort === profile.effort
+          ));
+          button.setAttribute("aria-pressed", String(Boolean(matches)));
         }
-        status.textContent = copy.ready;
+      }
+
+      function applyProfiles(profiles) {
+        for (const row of grid.querySelectorAll(".row")) {
+          const profile = profiles[row.dataset.key];
+          if (!profile) continue;
+          row.querySelector("[data-model]").value = profile.model;
+          updateEffortSelect(row, profile.effort);
+        }
+        refreshPresetState();
+        status.textContent = copy.presetApplied;
+      }
+
+      const presets = document.getElementById("presets");
+      presets.replaceChildren(...(snapshot.presets || []).map((preset) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "preset";
+        button.dataset.preset = preset.key;
+        const localized = copy.presets[preset.key] || [preset.label, preset.description];
+        const title = document.createElement("strong");
+        title.textContent = localized[0];
+        const description = document.createElement("span");
+        description.textContent = localized[1];
+        button.append(title, description);
+        button.onclick = () => applyProfiles(preset.profiles);
+        return button;
+      }));
+
+      reset.onclick = () => {
+        applyProfiles(snapshot.defaults);
       };
 
       save.onclick = async () => {
@@ -459,6 +539,11 @@
 
       actions.append(reset, save, status);
       content.append(grid, actions);
+      for (const row of grid.querySelectorAll(".row")) {
+        row.querySelector("[data-model]").addEventListener("change", refreshPresetState);
+        row.querySelector("[data-effort]").addEventListener("change", refreshPresetState);
+      }
+      refreshPresetState();
     }
 
     window.addEventListener("message", (event) => {

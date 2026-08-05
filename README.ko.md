@@ -10,11 +10,24 @@
 </p>
 
 <p align="center">
+  <a href="https://maga.sumimi.jp/"><strong>웹사이트</strong></a> ·
+  <a href="./docs/getting-started.ko.md"><strong>시작하기</strong></a> ·
+  <a href="./assets/maga-operating-model.svg"><strong>작동 방식</strong></a> ·
+  <a href="./LICENSE">MIT License</a>
+</p>
+
+<p align="center">
   <a href="./README.md">English</a> ·
   <a href="./README.zh-CN.md">简体中文</a> ·
   <a href="./README.ja.md">日本語</a> ·
   <strong>한국어</strong> ·
   <a href="./README.es.md">Español</a>
+</p>
+
+<p align="center">
+  <a href="https://maga.sumimi.jp/">
+    <img src="./website/design/hero-concept.png" alt="제품 판단에서 승인까지의 흐름을 보여 주는 MAGA 웹사이트" width="100%">
+  </a>
 </p>
 
 MAGA는 제품 담당자가 ChatGPT 데스크톱 앱의 Codex를 사용하기 시작하도록 돕는 전환용 제품 제작 플러그인입니다. 사용자, 문제, 경험, 제약, 트레이드오프를 제품 언어로 설명하면 지속적으로 일하는 Project Lead가 적절한 방법을 선택하고 조사, 프로토타이핑, 구현, 검증, 수정을 조율하면서 그 뒤의 실무 방식을 보여 줍니다.
@@ -132,19 +145,19 @@ MAGA는 승인된 작업을 자율적으로 진행하지만 하나의 자연어 
 
 ## 책임별 모델 설정
 
-MAGA는 일반적인 제품 대화에서는 모델 선택을 신경 쓰지 않게 하면서도 그 결정을 숨기지 않습니다. 안정적인 책임 슬롯 7개가 있으며 Balanced는 설정 화면에 미리 채워진 권장값입니다. 처음 **Save**를 누르기 전에는 활성화되지 않으며 Codex 호스트 기본값을 사용합니다.
+MAGA는 일반적인 제품 대화에서는 모델 선택을 신경 쓰지 않게 하면서도 그 결정을 숨기지 않습니다. 설정 패널은 같은 7개 책임에 세 가지 시작 구성을 제공합니다.
 
-| 책임 | 하는 일 | Balanced 기본값 |
-| --- | --- | --- |
-| Project Lead (`project-lead`) | 제품, 증거, 다음 결정을 조율 | Sol · medium |
-| 조사 (`research`) | 관련 증거를 수집하고 비교 | Terra · medium |
-| 프로토타입 (`prototype`) | 경험 방향을 확인 가능한 결과로 전환 | Sol · medium |
-| 전달 (`delivery`) | 합의된 최소 제품 단위를 구현 | Terra · medium |
-| 진단 (`diagnosis`) | 장애와 원인을 분리해 파악 | Sol · high |
-| 리뷰 (`review`) | 제품 및 엔지니어링 증거를 검토 | Sol · high |
-| 릴리스 (`release`) | 완료도, 위험, 출시 준비 상태를 확인 | Sol · high |
+| 책임 | Pro · 품질 우선 | Plus · 일반 사용 | Free / Go · 사용량 절약 |
+| --- | --- | --- | --- |
+| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
+| 조사 (`research`) | Sol · max | Sol · max | Terra · max |
+| 프로토타입 (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
+| 전달 (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
+| 진단 (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
+| 리뷰 (`review`) | Sol · xhigh | Sol · high | Terra · high |
+| 릴리스 (`release`) | Sol · xhigh | Sol · high | Sol · high |
 
-**Sol** 은 모호한 정보를 종합하거나 영향이 큰 판단을 할 때 적합합니다. **Terra** 는 더 빠르고 경제적이며 범위가 명확한 실행에 적합합니다. **Luna** 는 넓은 판단보다 응답 속도와 비용이 중요한 좁고 반복적인 작업에 사용할 수 있습니다. 추론 깊이는 **low** 가 기계적인 작업, **medium** 이 일상적인 균형, **high** 가 불확실성과 위험에 더 많은 추론을 쓰는 설정입니다.
+Business, Enterprise, Edu 워크스페이스는 Plus 구성으로 시작한 뒤 사용량과 정책이 허용하면 Pro를 사용할 수 있습니다. API key 사용자는 token 예산에 맞춰 선택하세요. **Sol** 은 모호함, 판단, 완성도에, **Terra** 는 추론과 도구 사용이 필요한 일상 작업에 사용합니다. **Luna** 는 완료 기준이 명확한 전달에만 **max** 로 추천합니다. 적용 후에도 각 항목을 바꿀 수 있습니다.
 
 변경하려면 MAGA 플러그인 상세 페이지에서 **Configure** starter prompt를 선택하세요. MAGA 채팅이 시작되고 채팅 안에서 설정 패널이 열립니다. 현재 Codex 플러그인 상세 페이지는 임의의 사용자 지정 양식을 넣을 수 없으므로 패널 자체가 상세 페이지에 내장되는 것은 아닙니다. 처음 **Save**를 누르면 설정이 활성화되고 일곱 책임 전체가 하나의 완전한 설정으로 고정됩니다. 설정은 현재 Codex Home에 저장되며 제품 저장소나 Git 기록에는 들어가지 않습니다.
 

@@ -22,35 +22,35 @@ export const RESPONSIBILITIES = Object.freeze([
     label: "Project Lead",
     description: "Product conversation, decisions, orchestration, and integration.",
     model: "gpt-5.6-sol",
-    effort: "medium",
+    effort: "xhigh",
   },
   {
     key: "research",
     label: "External Research",
     description: "Source-backed facts that can change a product decision.",
-    model: "gpt-5.6-terra",
-    effort: "medium",
+    model: "gpt-5.6-sol",
+    effort: "max",
   },
   {
     key: "prototype",
     label: "Experience Prototype",
     description: "Interaction and visual judgment before committing to delivery.",
-    model: "gpt-5.6-sol",
-    effort: "medium",
+    model: "gpt-5.6-terra",
+    effort: "high",
   },
   {
     key: "delivery",
     label: "Product Delivery",
     description: "Bounded implementation after the product result is clear.",
-    model: "gpt-5.6-terra",
-    effort: "medium",
+    model: "gpt-5.6-luna",
+    effort: "max",
   },
   {
     key: "diagnosis",
     label: "Diagnosis",
     description: "Evidence-led investigation of concrete failures.",
-    model: "gpt-5.6-sol",
-    effort: "high",
+    model: "gpt-5.6-terra",
+    effort: "xhigh",
   },
   {
     key: "review",
@@ -78,6 +78,49 @@ export const BALANCED_DEFAULTS = Object.freeze(Object.fromEntries(
     Object.freeze({ model, effort }),
   ]),
 ));
+
+function freezeProfiles(profiles) {
+  return Object.freeze(Object.fromEntries(
+    Object.entries(profiles).map(([key, profile]) => [key, Object.freeze({ ...profile })]),
+  ));
+}
+
+export const COMPUTE_PRESETS = Object.freeze([
+  Object.freeze({
+    key: "pro-quality",
+    label: "Pro · quality first",
+    description: "For ChatGPT Pro or a high workspace allowance. Uses Sol for judgment and Terra for implementation.",
+    profiles: freezeProfiles({
+      "project-lead": { model: "gpt-5.6-sol", effort: "xhigh" },
+      research: { model: "gpt-5.6-sol", effort: "max" },
+      prototype: { model: "gpt-5.6-sol", effort: "xhigh" },
+      delivery: { model: "gpt-5.6-terra", effort: "xhigh" },
+      diagnosis: { model: "gpt-5.6-sol", effort: "max" },
+      review: { model: "gpt-5.6-sol", effort: "xhigh" },
+      release: { model: "gpt-5.6-sol", effort: "xhigh" },
+    }),
+  }),
+  Object.freeze({
+    key: "plus-standard",
+    label: "Plus · regular use",
+    description: "For focused weekly work. Mixes Sol judgment, Terra execution, and Luna Max delivery.",
+    profiles: BALANCED_DEFAULTS,
+  }),
+  Object.freeze({
+    key: "quota-saver",
+    label: "Free / Go · quota saver",
+    description: "For lightweight use or a tight remaining allowance. Uses Terra broadly, Sol for release, and Luna Max for delivery.",
+    profiles: freezeProfiles({
+      "project-lead": { model: "gpt-5.6-terra", effort: "xhigh" },
+      research: { model: "gpt-5.6-terra", effort: "max" },
+      prototype: { model: "gpt-5.6-terra", effort: "high" },
+      delivery: { model: "gpt-5.6-luna", effort: "max" },
+      diagnosis: { model: "gpt-5.6-terra", effort: "high" },
+      review: { model: "gpt-5.6-terra", effort: "high" },
+      release: { model: "gpt-5.6-sol", effort: "high" },
+    }),
+  }),
+]);
 
 function requireResponsibility(key) {
   const responsibility = RESPONSIBILITY_BY_KEY.get(key);
@@ -328,7 +371,7 @@ export function resolveComputeProfile(
     return {
       ...resultBase,
       actual: { model: null, effort: null },
-      fallback: ["The Balanced recommendation is not active until it is saved; using the host default."],
+      fallback: ["The MAGA recommendation is not active until it is saved; using the host default."],
     };
   }
   const catalog = normalizeModelCatalog(models);
@@ -395,6 +438,7 @@ export function computeSettingsSnapshot({ settings = loadComputeSettings(), mode
     revision: settings.revision || null,
     configWarning: settings.warning || null,
     defaults: BALANCED_DEFAULTS,
+    presets: COMPUTE_PRESETS,
     models: catalog,
     responsibilities: RESPONSIBILITIES.map((responsibility) => ({
       key: responsibility.key,
