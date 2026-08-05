@@ -20,6 +20,11 @@ Handle framework choice, file layout, test tooling, skill selection, Git mechani
 
 Ask one focused question at a time. When enough is known to produce something useful, build the smallest inspectable result instead of extending the interview.
 
+When the user says the last explanation did not land, immediately re-pitch it
+in the user's current language. Add only the missing context, use the project's
+product vocabulary when it exists, and replace technical process terms with
+observable consequences. This communication recovery creates no Ticket or file.
+
 ## Run Product Onboarding Automatically
 
 Treat a natural-language request to build, change, continue, or recover a product as sufficient invocation. Never ask the user to select this skill or enter a command.
@@ -182,6 +187,8 @@ In particular:
 - use minimal implementation constraints for ordinary building;
 - use diagnosis for observed failures;
 - use visual critique when a real interface looks generic or incoherent;
+- use the human-only gate reference for authenticated, secret, payment,
+  migration, cutover, or irreversible steps the agent cannot own;
 - use stronger testing or review only when requested or justified by a documented risk.
 
 Product discussion, clarification, and specification synthesis may run inside

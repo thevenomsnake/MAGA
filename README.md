@@ -169,7 +169,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.10.0**. It contains 15 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
+The current release is **v0.10.0**. It contains 16 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
 
 | Layer | Responsibility |
 | --- | --- |
@@ -221,7 +221,7 @@ Read more: [Capability routing](./plugins/maga/skills/project-lead/references/ca
 
 MAGA adapts mature methods at fixed revisions:
 
-- [mattpocock/skills](https://github.com/mattpocock/skills): workflow material from 22 formal Engineering and Productivity Skills, fixed at `2ab9580`.
+- [mattpocock/skills](https://github.com/mattpocock/skills): workflow material from 25 formal Engineering and Productivity Skills, fixed at `8b36d4f`.
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): minimal implementation, complexity review, and lifecycle hooks, fixed at `16f2980`.
 
 MAGA's routing, project state, installer, and Project Lead contract are local adaptations. Sources, modifications, and licenses are recorded in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).

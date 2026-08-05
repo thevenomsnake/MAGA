@@ -15,7 +15,7 @@
   "interface": {
     "displayName": "MAGA",
     "shortDescription": "Make Apps Great Again through one product lead.",
-    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, delivery, or release tasks with responsibility-level model and reasoning defaults. MAGA registers fifteen focused Skills, keeps product workflow methods internal, and preserves Ponytail lifecycle behavior.",
+    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, delivery, or release tasks with responsibility-level model and reasoning defaults. MAGA registers sixteen focused Skills, keeps product workflow methods internal, and preserves Ponytail lifecycle behavior.",
     "developerName": "MAGA contributors",
     "category": "Productivity",
     "capabilities": ["Product discovery", "Responsibility model profiles", "On-demand task workspaces", "Task orchestration", "Engineering workflows", "Lifecycle hooks"],

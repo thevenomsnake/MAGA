@@ -1,6 +1,6 @@
 # Issue tracker: Local Markdown
 
-Issues and specs (you may know a spec as a PRD) for this repo live as markdown files in `.scratch/`.
+Issues and specs for this repo live as Markdown files in `.scratch/` only when the repository already uses this upstream layout. A MAGA project with `.ai-workflow/PROJECT.md` keeps that Project Memory Contract as its authority instead.
 
 ## Conventions
 

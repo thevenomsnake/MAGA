@@ -66,16 +66,16 @@ project already uses it or the user explicitly intends that external effect.
 | [ask-matt](../../../methods/ask-matt/METHOD.md) | A maintainer needs the upstream workflow map or no narrower method explains the engineering route |
 | [grill-me](../../../methods/grill-me/METHOD.md) | An idea needs conversational challenge without durable project documents |
 | [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) | Product language or decisions should survive in the repository |
-| [handoff](../../../methods/handoff/METHOD.md) | Context must cross into a clean task without making the transcript the source of truth |
+| [handoff](../../../methods/handoff/METHOD.md) | Context must travel across a harness, repository, directory, colleague, or isolated mid-phase fork |
 | [implement](../../../methods/implement/METHOD.md) | A bounded, authorized Ticket is ready for the smallest working slice |
 | [improve-codebase-architecture](../../../methods/improve-codebase-architecture/METHOD.md) | The user asks for an architecture audit, or diagnosis exposes a concrete missing seam |
 | [setup-matt-pocock-skills](../../../methods/setup-matt-pocock-skills/METHOD.md) | The user intends to configure an external issue tracker or the upstream document conventions |
 | [teach](../../../methods/teach/METHOD.md) | The user explicitly wants a durable, guided learning workspace |
+| [to-questionnaire](../../../methods/to-questionnaire/METHOD.md) | A decision depends on knowledge held by one external stakeholder |
 | [to-spec](../../../methods/to-spec/METHOD.md) | Known decisions need synthesis into an implementation-neutral specification |
 | [to-tickets](../../../methods/to-tickets/METHOD.md) | An accepted specification must become bounded, blocked, authorized work contracts |
 | [triage](../../../methods/triage/METHOD.md) | Raw incoming bug reports or feature requests need product and reproduction triage |
 | [wayfinder](../../../methods/wayfinder/METHOD.md) | A genuinely large effort is blocked by decision fog rather than implementation |
-| [writing-great-skills](../../../methods/writing-great-skills/METHOD.md) | The user asks to create or improve a Codex Skill |
 
 ## Route From Evidence
 
@@ -83,6 +83,7 @@ project already uses it or the user explicitly intends that external effect.
 | --- | --- | --- |
 | Product behavior, audience, or value is materially unclear | Apply registered `grilling`; load [grill-me](../../../methods/grill-me/METHOD.md) or [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) for the appropriate persistence mode | Current Project Lead |
 | A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh `research` task for an approved bounded Ticket |
+| A decision depends on another person's knowledge | Load [to-questionnaire](../../../methods/to-questionnaire/METHOD.md) and draft a role-based repository-local questionnaire; sending it remains a separate external action | Current Project Lead |
 | A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh `prototype` task for an approved bounded Ticket |
 | The destination is clear but the route is too large for one attention window | Load [wayfinder](../../../methods/wayfinder/METHOD.md) to resolve decision fog before delivery | Bounded decision tasks; do not create a generic planning room |
 | Decisions are sufficiently closed | Load [to-spec](../../../methods/to-spec/METHOD.md) to synthesize what is already known | Current Project Lead unless publication needs an independent boundary |
@@ -90,7 +91,12 @@ project already uses it or the user explicitly intends that external effect.
 | An approved implementation Ticket is ready | Load [implement](../../../methods/implement/METHOD.md) and apply any risk-justified registered capability | Fresh `delivery` task |
 | A concrete failure is observed | Apply diagnosis before proposing a fix | Fresh `diagnosis` task for an approved bounded Ticket |
 | A result is ready for independent acceptance | Apply the smallest review needed for the documented risk | Fresh `review` task when independent acceptance is material |
-| Context is polluted or a branch of work needs isolation | Load [handoff](../../../methods/handoff/METHOD.md), then recover from durable project state in a fresh task | Replacement or bounded worker, never a generic handoff room |
+| Context is polluted or same-project work needs isolation | Recover from durable state or use an approved bounded worker; load [handoff](../../../methods/handoff/METHOD.md) only when the context itself must travel across its portability boundary | Replacement or bounded worker, never a generic handoff room |
+| Work reaches an authenticated, secret, paid, migration, cutover, or irreversible human-only step | Read [manual-gates.md](manual-gates.md), guide one recoverable stage, and preserve the existing authorization boundary | Current Project Lead |
+
+If the user says the explanation did not land, apply Project Lead's communication
+recovery rule immediately. This is the absorbed `wait-what` behavior, not a
+separate method, task, command, or document.
 
 Registered specialist Skills may still be selected normally. Internal methods
 have no compatibility aliases: their original technical identities exist only

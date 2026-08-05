@@ -30,6 +30,26 @@ separate permission, write, or acceptance boundary. Leave workers unpinned and
 archive them after integration. A generic `Research` or `Prototype` task with no
 specific object is not authoritative and should not be created.
 
+## Choose At A Phase Boundary
+
+A phase boundary is the point where one coherent unit of discussion, research,
+delivery, or acceptance has finished. Decide there, not mid-phase:
+
+1. **Continue in the Project Lead** when the next product decision needs the
+   reasoning already present and attention remains coherent.
+2. **Reuse or open an approved bounded worker** when the next outcome is
+   independent, safely AFK, or needs a distinct evidence, permission, write, or
+   acceptance boundary.
+3. **Recover from durable project state** when the current attention workspace
+   is polluted and repository truth is cheaper than carrying the transcript.
+4. **Write a portable handoff** only when context must cross a harness,
+   repository, directory, colleague, or an isolated mid-phase fork.
+
+The host may compact conversation history automatically. Do not expose token
+thresholds, `/clear`, `/compact`, or other session mechanics to the Product
+Owner as workflow choices. Durable project state and the native task loop are
+the recovery authority.
+
 ## Reconcile Before Acting
 
 1. Read `AGENTS.md`, `.ai-workflow/PROJECT.md`, linked active roles, and active Tickets.

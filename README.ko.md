@@ -167,7 +167,7 @@ MAGA는 작업의 책임과 저장된 설정을 자동으로 판단하지만, Co
 
 ## 구성
 
-현재 릴리스는 **v0.10.0**입니다. 등록된 Skills 15개와 필요할 때만 로드하는 내부 방법 라이브러리를 포함합니다.
+현재 릴리스는 **v0.10.0**입니다. 등록된 Skills 16개와 필요할 때만 로드하는 내부 방법 라이브러리를 포함합니다.
 
 | 계층 | 책임 |
 | --- | --- |
@@ -219,7 +219,7 @@ Project Lead는 먼저 필요한 증거의 종류를 파악한 뒤 등록된 Ski
 
 MAGA는 고정된 리비전의 검증된 방법을 적용합니다.
 
-- [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 22개의 워크플로 자료. `2ab9580`에 고정.
+- [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 25개의 워크플로 자료. `8b36d4f`에 고정.
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): 최소 구현, 복잡성 리뷰, 라이프사이클 Hooks. `16f2980`에 고정.
 
 라우팅, 프로젝트 상태, 설치 프로그램, Project Lead 계약은 MAGA의 로컬 적용입니다. 출처, 변경 사항, 라이선스는 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)에 기록되어 있습니다.

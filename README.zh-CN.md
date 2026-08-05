@@ -171,7 +171,7 @@ Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区�
 
 ## 里面有什么
 
-当前版本是 **v0.10.0**，包含 15 个注册 Skills、一套只在需要时加载的内部方法库，以及职责级计算配置。
+当前版本是 **v0.10.0**，包含 16 个注册 Skills、一套只在需要时加载的内部方法库，以及职责级计算配置。
 
 | 层 | 职责 |
 | --- | --- |
@@ -223,7 +223,7 @@ Project Lead 先判断需要哪类证据，再选择注册 Skill 或内部方法
 
 MAGA 在固定版本上改编了成熟方法：
 
-- [mattpocock/skills](https://github.com/mattpocock/skills)：22 个正式 Engineering 与 Productivity Skills 的工作流材料，固定到 `2ab9580`。
+- [mattpocock/skills](https://github.com/mattpocock/skills)：25 个正式 Engineering 与 Productivity Skills 的工作流材料，固定到 `8b36d4f`。
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小实现、复杂度 review 和生命周期 Hooks，固定到 `16f2980`。
 
 MAGA 的路由、项目状态、安装器和 Project Lead 契约属于本地改编。来源、修改和许可证记录在 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。

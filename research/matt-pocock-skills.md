@@ -1,5 +1,43 @@
 # Matt Pocock Skills：把工程判断写成可组合的 Agent 工作流
 
+## 2026-08-06 / v1.2.2 更新与 MAGA 取舍
+
+> [!IMPORTANT]
+> 本节是 MAGA 对 Matt Pocock Skills `v1.2.2` 的当前权威记录。下方旧正文仍是基于 `2ab9580` 的历史研究基线；其中固定 SHA、22-skill 统计和指向旧 blob 的链接均有意保留，用于复核当时结论。不要把旧正文解释为当前上游状态，也不要机械地把全部旧链接替换成新 SHA。
+
+### 当前上游事实
+
+- **[可验证事实]** 本次核验的最新上游对象是 [`8b36d4fb2635b3c21998dcd8144439c9e5ba7302`](https://github.com/mattpocock/skills/commit/8b36d4fb2635b3c21998dcd8144439c9e5ba7302)，仓库版本为 `1.2.2`。
+- **[可验证事实]** promoted 集合现有 **25 个 skill = 18 个 engineering + 7 个 productivity**。
+- **[可验证事实]** 调用权分布为 **14 个 user-invoked + 11 个 model-invoked**。`agents/openai.yaml` 只承载显示信息与隐式调用策略，不声明模型或 reasoning effort。
+- **[可验证事实]** 相比下方研究使用的 `2ab9580`，promoted 集合从 22 增至 25；但 `v1.2.0` Changelog 还收录了部分在 `2ab9580` 中已经存在、当时尚未正式发版的行为。MAGA 的取舍以两个 Git 对象的实际文件差异为准，不以发行说明标题反推变化。
+
+### 关键行为变化
+
+| 上游变化 | `v1.2.2` 的实际含义 | 对 MAGA 的意义 |
+| --- | --- | --- |
+| [`ask-matt` phase boundaries](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/engineering/ask-matt/PHASE-BOUNDARIES.md) | 只在 phase boundary 判断 Continue、clear、handoff、subagent 或 compact；handoff 被收窄为需要可携带工件的跨 harness、跨目录、交给同事或 mid-phase 分支。 | 上下文边界应成为 Project Lead 的原生路由判断，而不是用户需要记住并手动调用的独立 skill。 |
+| [`prototype` logic branch](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/engineering/prototype/LOGIC.md) | 逻辑/状态原型从终端 TUI 改为单个可双击、可转发的 HTML/CSS/JS 文件，包含领域语言状态面板、自由操作和分场景 guided walkthroughs。 | 与 MAGA 让产品决策者直接检查行为的目标一致，可作为逻辑原型的默认交付形态。 |
+| [`grilling` design tree/frontier](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/productivity/grilling/SKILL.md) | Agent 维护设计树；已满足前置条件的问题组成 frontier；可查事实交给后台 Agent，人的决定留给人。上游改为一次提出整个 frontier。 | MAGA 吸收内部决策图、依赖 frontier 和事实并行查询，但不照搬一轮多问的交互表面。 |
+| [`writing-for-agents`](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/productivity/writing-for-agents/SKILL.md) | `writing-great-skills` breaking rename；范围扩展到 skill、`AGENTS.md`、`CLAUDE.md` 和 pointer 指向的文档；加入 context pointer、information hierarchy 与环境作为 source of truth、文档作为 cache 的判断；现为 model-invoked。 | 这套写作与信息架构原则可直接约束 MAGA 自身的 skill 和 agent 文档。 |
+| `wizard`、`to-questionnaire`、`wait-what` 晋级 | [`wizard`](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/engineering/wizard/SKILL.md) 成为 model-invoked；[`to-questionnaire`](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/productivity/to-questionnaire/SKILL.md) 与 [`wait-what`](https://github.com/mattpocock/skills/blob/8b36d4fb2635b3c21998dcd8144439c9e5ba7302/skills/productivity/wait-what/SKILL.md) 成为 promoted user-invoked skills。 | 三者的能力边界有价值，但不都值得成为 MAGA 对用户暴露的新概念。 |
+
+### MAGA 逐项决策
+
+| 能力 | 决策 | MAGA 落点与边界 |
+| --- | --- | --- |
+| `writing-for-agents` | **Registered** | 注册为 MAGA 可发现、可调用的方法，用于创建或修改 skill、Agent 指令及其 pointer 文档。它提供写作纪律，不接管 Project Lead 的产品流程。 |
+| `to-questionnaire` | **Internal** | 作为 Project Lead 在关键知识只存在于外部决策者处时采用的内部方法：先确认收件人和需要带回的决定，再生成问卷。用户不需要学习一个新的顶层 skill 名称。 |
+| `wait-what` | **Absorbed** | 吸收到 Project Lead 的 communication recovery：上一条解释没有落地时，用当前项目语言补足必要上下文并重讲。它不作为独立 internal 方法或公开入口存在。 |
+| `wizard` | **Absorb safety kernel** | 将“识别只有人能完成的步骤、先提出阶段清单、在不可逆动作前设 manual gate、明确非秘密完成证据”吸收到 Project Lead。MAGA 只生成可审阅的人工操作门，不 vendor 上游 Bash 模板，也不代管 secret 采集/写入、`gh` mutation 或浏览器点击流程。 |
+| `prototype` 单文件 HTML | **Adopt** | 逻辑/状态问题默认产出 self-contained HTML：无需构建或服务器，使用领域语言、完整可见状态、free-play actions 与 guided scenarios。纯逻辑与页面 shell 分离，验证后的决定进入正式产品，原型保留为可追溯证据。 |
+| `grilling` design tree/frontier | **Partial adopt** | Project Lead 在内部维护完整设计树与 frontier，并并行查找环境可回答的事实；对用户仍然**一次只提出一个最高杠杆问题**，附带推荐答案。这样保留依赖感知与事实/决定分离，同时避免让非工程用户面对整轮问题清单。 |
+| phase boundaries | **Native** | Project Lead 在每个 research、prototype、delivery、review 等阶段结束时原生判断：需要原始推理且上下文仍健康则 Continue；可独立 AFK 的工作交给 agent；同项目恢复依赖 durable state，宿主自行处理必要的上下文压缩；只有上下文必须跨 harness、仓库、目录、同事或独立的 mid-phase fork 时才生成 handoff。该判断不要求用户操作上游命令或理解 context-window 术语。 |
+
+**[分析判断]** 这套取舍遵循一个边界：吸收能够提高 Project Lead 判断质量的机制，隐藏要求产品用户亲自调度工程流程的命令和术语。MAGA 不 vendor Matt 的完整工作流，也不把每个有价值的上游 skill 都变成一个公开入口。
+
+**[可验证事实]** 完成本轮适配后，MAGA catalog 共记录 33 个方法：16 个 registered、13 个 internal、4 个 absorbed。上述分类描述的是 MAGA 的集成边界，不改写上游自身的 25-skill 调用分类。
+
 ## 研究对象与证据纪律
 
 - 官方仓库：[mattpocock/skills](https://github.com/mattpocock/skills)

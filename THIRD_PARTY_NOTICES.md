@@ -9,20 +9,27 @@ sponsor or endorse MAGA.
 
 Source: https://github.com/mattpocock/skills
 
-Reference commit: `2ab958093e83e0ec752e6c1c5932da465bf23e0c`
+Reference commit: `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`
 
-Bundled components: workflow material from all 22 formal Engineering and
-Productivity Skill folders. Nine upstream model-invoked Skills remain
-registered with their technical identities and implicit invocation behavior.
-The thirteen upstream user-invoked workflows are distributed as internal MAGA
-methods rather than separate registered commands. Category folders are
-flattened, and Claude-only invocation frontmatter is represented with Codex
-metadata where a workflow remains registered.
+MAGA accounts for all 25 formal Engineering and Productivity Skills in this
+snapshot. Ten upstream model-invoked Skills remain registered with their
+technical identities and implicit invocation behavior. Thirteen upstream
+user-invoked workflows are distributed as internal MAGA methods rather than
+separate registered commands. Category folders are flattened, and Claude-only
+invocation frontmatter is represented with Codex metadata where a workflow
+remains registered.
 
-MAGA's Project Lead routes internal methods from product intent. That routing
-and the consolidated fifteen-Skill product surface are MAGA adaptations, not
-upstream Matt invocation behavior. Original names and their mapping to the
-adapted surface remain recorded in the distributed catalog.
+The remaining two upstream capabilities are absorbed into Project Lead. The
+manual-only safety core of `wizard` becomes MAGA's manual-action gate; its Bash
+template, secret collection, GitHub mutation, and browser-driving behavior are
+not vendored. The communication-recovery intent of `wait-what` becomes an
+inline plain-language re-pitch rather than a separate method or command.
+
+MAGA's Project Lead routes these capabilities from product intent. That
+routing and the consolidated surface of sixteen registered product Skills are
+MAGA adaptations, not upstream Matt invocation behavior. Original names and
+their mapping to the adapted surface remain recorded in the distributed
+catalog.
 
 MIT License
 

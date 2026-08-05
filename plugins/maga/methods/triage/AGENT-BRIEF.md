@@ -29,7 +29,7 @@ Describe **what** the system should do, not **how** to implement it. The agent w
 
 The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.
 
-- **Good:** "Running `gh issue list --label needs-triage` returns issues that have been through initial classification"
+- **Good:** "The configured tracker query for `needs-triage` returns every issue that completed initial classification"
 - **Bad:** "Triage should work correctly"
 
 ### Explicit scope boundaries

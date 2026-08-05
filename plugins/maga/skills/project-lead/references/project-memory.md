@@ -12,6 +12,7 @@ Create only records the project currently needs:
 |-- roles/
 |   `-- <role-key>.md
 |-- specs/           # only when several closed decisions need one durable synthesis
+|-- questionnaires/  # only when an external knowledge holder blocks a decision
 |-- tickets/
 |   `-- T001-<outcome-key>.md
 |-- decisions/       # only for consequential decisions

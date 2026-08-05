@@ -167,7 +167,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.10.0**. Contiene 15 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
+La versión actual es **v0.10.0**. Contiene 16 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
 
 | Capa | Responsabilidad |
 | --- | --- |
@@ -219,7 +219,7 @@ Más información: [Enrutamiento de capacidades](./plugins/maga/skills/project-l
 
 MAGA adapta métodos maduros en revisiones fijas:
 
-- [mattpocock/skills](https://github.com/mattpocock/skills): material de 22 Skills formales de Engineering y Productivity, fijado en `2ab9580`.
+- [mattpocock/skills](https://github.com/mattpocock/skills): material de 25 Skills formales de Engineering y Productivity, fijado en `8b36d4f`.
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): implementación mínima, revisión de complejidad y lifecycle Hooks, fijado en `16f2980`.
 
 El enrutamiento, el estado de proyecto, el instalador y el contrato de Project Lead son adaptaciones de MAGA. Las fuentes, modificaciones y licencias se registran en [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).

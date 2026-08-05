@@ -21,21 +21,21 @@ A **flow** is a path through the skills. Most paths run along one **main flow**,
 The route most work travels. You have an idea and want it built.
 
 1. **`grill-with-docs`** — sharpen the idea by interview. Start here when you **have a codebase**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No codebase? Use `grill-me` — see Standalone. Both run the same `$grilling` primitive; `grill-with-docs` is the one that leaves a paper trail.)
-2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`handoff`** in both directions (see Crossing sessions):
-   - **`handoff`** out, then open a fresh session against that file,
-   - **`$prototype`** to answer the question with throwaway code,
-   - **`handoff`** back what you learned, and reference it from the original idea thread.
+2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, or a UI that must be experienced), use **`$prototype`**. Keep it in the Project Lead for a tiny artifact or open an explicitly approved prototype worker for an independent result. Integrate the answer through the current Ticket and durable state rather than manufacturing handoff files.
 3. **Branch — is this a multi-session build?**
-   - **Yes** → **`to-spec`** (turn the thread into a spec), then **`to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`implement`** per ticket, **clearing context between each one**.
+   - **Yes** → **`to-spec`** (synthesize the closed decisions), then **`to-tickets`** to create tracer-bullet Tickets with explicit blockers in MAGA Project Memory. Run `implement` only for approved Tickets, reusing or opening a specifically approved native worker for each independent outcome.
    - **No** → **`implement`** right here, in the same context window.
 
-   Either way, **`implement`** builds each issue by driving **`$tdd`** internally — one red-green slice at a time — then closes out by running **`$code-review`**, a two-axis review (Standards + Spec) of the diff, before committing. Reach for **`$tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`$code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   Either way, **`implement`** builds the smallest accepted slice and performs one risk-matched verification before committing. Use **`$tdd`** when the user explicitly requests test-first work or the documented risk requires it. Use independent **`$code-review`** when requested or when a material acceptance boundary justifies the two-axis review.
 
-### Context hygiene
+### Attention boundaries
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `to-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each `implement` then starts fresh, working from the ticket.
-
-The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: the window (~120k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before `to-tickets`, don't push on degraded — `handoff` and continue in a fresh thread.
+Keep coupled product reasoning in the Project Lead while it remains coherent.
+At a real phase boundary, follow the native Codex loop: continue, use an approved
+bounded worker, recover from durable project state, or write a portable handoff
+only when context must cross a harness, directory, repository, colleague, or an
+isolated mid-phase fork. Do not expose token thresholds or session commands as
+choices the Product Owner must manage.
 
 ## On-ramps
 
@@ -47,7 +47,7 @@ A starting situation that generates work, then merges onto the main flow.
 
 - **Something's broken** → **`$diagnosing-bugs`**. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a **tight feedback loop** — one command that already goes red on *this* bug — then fixes with a regression test. Its post-mortem hands off to **`improve-codebase-architecture`** when the real finding is that there's no good seam to lock the bug down.
 
-- **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Where **`grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
+- **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** in MAGA Project Memory and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Publish the map to an external tracker only when the project already uses it and the Product Owner authorizes that write. Where **`grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
 
   When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`to-spec`**, which collapses the map's linked decisions into a buildable plan, then `to-tickets` and `implement` as usual. Looping the map straight into `implement` skips that collapse and throws the linked detail away — go straight to `implement` only when the effort turned out genuinely small.
 
@@ -55,7 +55,7 @@ A starting situation that generates work, then merges onto the main flow.
 
 Not feature work — upkeep.
 
-- **`improve-codebase-architecture`** — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces **deepening opportunities**; picking one _generates an idea_ you can take into the main flow at `grill-with-docs`. It's the survey that finds the candidates; **`$codebase-design`** (below) is the bench you design the chosen one on.
+- **`improve-codebase-architecture`** — run when the user asks for an architecture audit or diagnosis identifies a concrete missing seam. It surfaces **deepening opportunities**; an accepted candidate becomes an idea for the main flow at `grill-with-docs`. It is not opportunistic cleanup.
 
 ## Vocabulary underneath
 
@@ -64,21 +64,37 @@ Two model-invoked references that run *beneath* the other skills — each the si
 - **`$domain-modeling`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `grill-with-docs` drives to keep `CONTEXT.md` a clean glossary.
 - **`$codebase-design`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `$tdd` and `improve-codebase-architecture` both speak it.
 
-## Crossing sessions
+## Crossing boundaries
 
-- **`handoff`** — when a thread is full or you need to branch off (e.g. into a `$prototype` session), this compacts the conversation into a markdown file. You don't continue in place — you **open a new session and reference that file** to carry the context across. It's the bridge between context windows, in either direction. Use it when you want a **fresh session** but need the **current conversation preserved**.
-- **`/compact`** (built-in) — stay in the **same conversation**, letting the earlier turns be summarized. Use it at **intentional breaks between phases**, when you don't mind losing the verbatim history. Don't compact mid-phase — the agent can lose its way. `handoff` forks; `/compact` continues.
+- **`handoff`** — narrow portability method for another harness, repository,
+  directory, colleague, or isolated mid-phase fork. Same-project Codex work
+  recovers from committed project memory and deterministic task titles.
+- **Native worker** — the default for an approved independent research,
+  prototype, delivery, diagnosis, review, or release outcome. The Product Owner
+  approves its concrete title; Project Lead integrates and archives it.
 
 ## Standalone
 
 Off the main flow entirely.
 
 - **`grill-me`** — the same relentless interview as `grill-with-docs`, but for when you have **no codebase**. Stateless: it saves nothing locally, builds no `CONTEXT.md`. Reach for it to sharpen any plan or design that doesn't live in a repo.
-- **`$prototype`** — a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway from day one — keep the answer, delete the code. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.
+- **`$prototype`** — a small, throwaway artifact that answers one design question: does this state model feel right, or what should this UI look like. Keep the answer in the Ticket; retain the runnable artifact only when it remains useful evidence. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.
 - **`$research`** — delegate reading legwork to a **background agent**: it investigates a question against **primary sources**, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take *into* the main flow at `grill-with-docs` — research feeds the thinking, it doesn't replace it.
+- **`to-questionnaire`** — when a decision depends on knowledge held by one
+  external stakeholder, draft a role-based repository-local questionnaire.
+  Sending it remains a separate authorized external action.
 - **`teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
-- **`writing-great-skills`** — reference for writing and editing skills well.
+- **`$writing-for-agents`** — reference for Skills, `AGENTS.md`, `CLAUDE.md`,
+  and documents reached through agent context pointers.
+
+Project Lead also absorbs two upstream ideas without exposing new commands:
+communication recovery re-pitches an explanation that did not land, while the
+human-only gate gives safe staged guidance for authenticated or irreversible
+steps without Bash or secret capture.
 
 ## Precondition
 
-**`setup-matt-pocock-skills`** — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.
+**`setup-matt-pocock-skills`** is an upstream precondition, not a MAGA one. Run
+it only when the Product Owner explicitly wants to configure an external tracker
+or adopt the upstream document layout. A project with `.ai-workflow/PROJECT.md`
+already has its native authority and does not need setup before engineering work.

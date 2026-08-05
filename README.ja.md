@@ -167,7 +167,7 @@ MAGA は作業の責務と保存済み設定を自動で選びますが、Codex 
 
 ## 構成
 
-現在のリリースは **v0.10.0** です。15 個の登録済み Skills と、必要なときだけ読み込む内部手法ライブラリを含みます。
+現在のリリースは **v0.10.0** です。16 個の登録済み Skills と、必要なときだけ読み込む内部手法ライブラリを含みます。
 
 | レイヤー | 責任 |
 | --- | --- |
@@ -219,7 +219,7 @@ Project Lead は最初に必要な証拠の種類を判断し、登録済み Ski
 
 MAGA は固定リビジョンの成熟した手法を適用しています。
 
-- [mattpocock/skills](https://github.com/mattpocock/skills)：22 個の正式な Engineering / Productivity Skills のワークフロー資料。`2ab9580` に固定。
+- [mattpocock/skills](https://github.com/mattpocock/skills)：25 個の正式な Engineering / Productivity Skills のワークフロー資料。`8b36d4f` に固定。
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小実装、複雑性レビュー、ライフサイクル Hooks。`16f2980` に固定。
 
 ルーティング、プロジェクト状態、インストーラー、Project Lead 契約は MAGA による適用です。出典、変更内容、ライセンスは [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) に記録しています。

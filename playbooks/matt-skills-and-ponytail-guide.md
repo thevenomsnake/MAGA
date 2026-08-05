@@ -2,13 +2,22 @@
 
 > 适用版本：MAGA `0.10.0`
 
+Matt Pocock Skills 固定到 `1.2.2`，commit
+`8b36d4fb2635b3c21998dcd8144439c9e5ba7302`。上游 25 个正式 Skills 在
+MAGA 中逐项映射为 10 个注册 Skills、13 个内部方法和 2 个吸收能力；没有未记录的
+上游入口。
+
 MAGA 基于 Matt Pocock Skills 与 Ponytail 的固定 MIT 快照进行 Codex 适配，
 但不再把上游的每一个文件夹都暴露成同级产品入口。当前分发形态是：
 
-- 15 个注册 Skills，供 Codex 宿主识别和按需加载；
+- 16 个注册 Skills，供 Codex 宿主识别和按需加载；
 - 13 个 Matt 原手动流程，作为 Project Lead 的内部方法；
-- Ponytail 的 help 与 gain 信息卡，作为主 Ponytail Skill 的 references；
+- 4 个吸收能力：Ponytail 的 help、gain 信息卡，`wait-what` 的重讲规则，以及
+  `wizard` 的人工门禁内核；
 - Ponytail 会话启动、恢复、清空、压缩、模式切换和子任务继承 hooks。
+
+维护 catalog 共记录 33 个能力：16 个 registered、13 个 internal method 和 4 个
+absorbed。
 
 完整来源、固定 commit、修改范围和 MIT 文本见
 [Third-Party Notices](../THIRD_PARTY_NOTICES.md)。上游作者没有赞助、认可或背书
@@ -29,7 +38,7 @@ MAGA。
 根据当前意图和项目状态选择内部方法；只有形成了具体、已授权的工作边界，才会
 创建新的 Codex 任务。
 
-## 15 个注册 Skills
+## 16 个注册 Skills
 
 ### MAGA 核心
 
@@ -40,7 +49,7 @@ MAGA。
 
 ### 保留独立自动触发的 Matt 方法
 
-这 9 个能力仍保留上游技术 ID 与隐式调用语义，因为它们拥有不同的输入、证据和
+这 10 个能力仍保留上游技术 ID 与隐式调用语义，因为它们拥有不同的输入、证据和
 完成边界：
 
 | Skill | 何时适用 |
@@ -54,6 +63,7 @@ MAGA。
 | `code-review` | 需要按规格和仓库标准独立验收变更 |
 | `resolving-merge-conflicts` | 正在处理 Git merge/rebase 冲突 |
 | `tdd` | 用户明确要求 test-first 或风险边界确实需要 |
+| `writing-for-agents` | 创建或修改 Skill、`AGENTS.md` 或其他供 agent 读取的指引 |
 
 普通 MAGA 交付不会因为 `tdd` 存在就默认采用完整 TDD。项目级 `AGENTS.md`、
 已批准 Ticket 和用户明确要求始终优先。
@@ -86,7 +96,7 @@ $ponytail gain
 | `ask-matt` | 路由知识被 Project Lead 的能力路由取代 |
 | `grill-me` | `grilling` 的无持久记录模式 |
 | `grill-with-docs` | `grilling` 与 `domain-modeling` 联合模式 |
-| `handoff` | 只在正式工件尚未承载上下文时生成交接 |
+| `handoff` | 只在上下文必须跨 harness、仓库、目录、同事或独立的 mid-phase fork 时生成可移植交接 |
 | `implement` | 在已批准 Ticket 内作为最小交付方法 |
 | `improve-codebase-architecture` | `codebase-design` 的全仓审计方法 |
 | `setup-matt-pocock-skills` | 由项目初始化和按需项目配置吸收 |
@@ -95,7 +105,7 @@ $ponytail gain
 | `wayfinder` | 只在目标清楚、路线超出一个注意力窗口时建立决策地图 |
 | `triage` | 用户明确要求处理外来 Issue/PR 时进入 |
 | `teach` | 用户明确要求建立持续学习工作区时进入 |
-| `writing-great-skills` | 维护者设计或修改 Skills 时的参考方法 |
+| `to-questionnaire` | 关键事实掌握在外部参与者手中时，形成不含私人身份的异步问卷 |
 
 融合指的是减少注册入口，不是把方法内容拼进一个巨大的 `SKILL.md`。每个方法仍
 保留独立文件和支持资源，Project Lead 只在当前工作需要时读取。
@@ -104,6 +114,38 @@ $ponytail gain
 不会因为上游方法提到 issue tracker 就额外要求用户初始化或选择平台。只有项目本来
 就在使用外部 tracker，或用户明确希望配置、发布到外部 tracker 时，才进入对应的
 setup 方法与外部副作用授权。
+
+## 4 个吸收能力
+
+吸收表示保留有用行为，但不再分发同名独立 Skill：
+
+| 上游能力 | MAGA 怎样吸收 |
+| --- | --- |
+| `ponytail-help` | 作为主 `ponytail` Skill 的帮助 reference，通过 `$ponytail help` 读取 |
+| `ponytail-gain` | 作为主 `ponytail` Skill 的 benchmark reference，通过 `$ponytail gain` 读取 |
+| `wait-what` | 用户表示上一段没有讲清时，Project Lead 用当前语言和产品词汇重新解释 |
+| `wizard` | Project Lead 识别只有人能完成的步骤，提供可恢复的人工门禁清单 |
+
+`wizard` 只吸收“判断 human-only 步骤并分阶段说明”的内核。MAGA 不分发上游 Bash
+模板，不接收或持久化 secret，不调用 `gh auth`、`gh secret` 或 `gh variable`，也不
+使用 `mktemp` 把项目临时内容写到仓库外。需要登录或操作认证网页时，只能在用户
+授权后使用 Chrome；外部写入、迁移、切换和不可逆动作仍各自受 Project Lead 的
+权限门禁约束。
+
+## 1.2.2 的核心适配取舍
+
+- **Prototype：采用单文件 HTML。** 逻辑或状态问题用一个可直接打开的
+  HTML/CSS/JavaScript 文件表达，包含领域语言状态面板、自由操作和引导场景。它仍是
+  回答一个问题的轻量原型，不增加框架、持久化或测试负担；所有文件和临时产物留在
+  项目仓库内。
+- **Grilling：采用 design tree 与 frontier。** Project Lead 用它们判断哪些决定已
+  解锁，并并行查找可自行取得的事实。普通 MAGA 对话仍一次只问一个真正阻塞交付的
+  产品问题；只有用户明确要求集中 stress-test 且问题彼此独立时，才使用小批量问题，
+  不以穷尽所有想象分支为完成标准。
+- **Phase boundary：改用 Codex 原生生命周期。** 先判断是否继续当前任务，再依据
+  durable project state 决定复用、建立具名 worker、替换任务或生成可移植 handoff。
+  不把 Claude 的 `/clear`、`/compact`、固定 token 阈值或跨 harness 命令暴露给用户，
+  也不让会话操作取代仓库中的角色和 Ticket 契约。
 
 ## 自动路由边界
 
@@ -147,18 +189,24 @@ help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品
 
 在只安装 MAGA 的隔离 Codex 环境中至少验证：
 
-1. 插件页面列出 15 个 Skills，展示名能够清楚识别 MAGA 或 Ponytail；
-2. `research`、`prototype`、`diagnosing-bugs` 各用一个自然语言正例触发；
-3. 为每个正例加入一个相邻但不应触发的负例；
-4. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
+1. 插件页面列出 16 个 Skills，展示名能够清楚识别 MAGA 或 Ponytail；
+2. catalog 精确包含 33 个能力：16 registered、13 internal method、4 absorbed；
+3. `research`、`prototype`、`diagnosing-bugs`、`writing-for-agents` 各用一个自然语言
+   正例触发；
+4. 为每个正例加入一个相邻但不应触发的负例；
+5. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
    用户输入原阶段命令或先配置外部 issue tracker；
-5. `$ponytail help` 与 `$ponytail gain` 不改变当前模式；
-6. 启动、恢复、清空、压缩与子任务事件继续恢复配置的 Ponytail 默认模式；
-7. 未信任 hooks 时插件仍可使用，且不会声称生命周期已经运行。
+6. logic prototype 生成可直接打开的单文件 HTML，普通 grilling 一次只提出一个关键
+   产品问题；
+7. `wizard` 没有注册目录或 Bash 模板，分发内容不包含 secret、`gh auth`、
+   `gh secret`、`gh variable` 或 `mktemp` 执行路径；
+8. `$ponytail help` 与 `$ponytail gain` 不改变当前模式；
+9. 启动、恢复、清空、压缩与子任务事件继续恢复配置的 Ponytail 默认模式；
+10. 未信任 hooks 时插件仍可使用，且不会声称生命周期已经运行。
 
 ## 从 0.8.0 更新
 
-`0.10.0` 不保留被收进内部方法库的旧技术入口别名。别名会重新制造列表重复、
+`0.10.0` 不保留被收进内部方法库或吸收层的旧技术入口别名。别名会重新制造列表重复、
 显式调用歧义和额外上下文成本。旧项目的 `.ai-workflow/` 状态不需要迁移；更新
 插件后应在新任务中验证 Skill 列表，并重新审阅 Ponytail hooks。
 
@@ -169,7 +217,8 @@ MAGA 不在安装时自动拉取上游最新版本。更新采用显式 vendor b
 1. 选择并记录新的固定 commit；
 2. 对比上游 Skill 与当前内部方法；
 3. 重放 MAGA 的 Codex metadata、产品授权和生命周期适配；
-4. 验证 15 个注册入口、内部方法映射、触发正反例与 Ponytail hooks；
+4. 验证 16 个注册入口、13 个内部方法、4 个吸收映射、33 项 catalog、触发正反例与
+   Ponytail hooks；
 5. 同步更新 catalog、Third-Party Notices 和发布说明。
 
 ## 延伸阅读

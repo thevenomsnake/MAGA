@@ -19,11 +19,11 @@ const MATT_INTERNAL_METHODS = [
   "improve-codebase-architecture",
   "setup-matt-pocock-skills",
   "teach",
+  "to-questionnaire",
   "to-spec",
   "to-tickets",
   "triage",
   "wayfinder",
-  "writing-great-skills",
 ];
 const MATT_MODEL_INVOKED = [
   "code-review",
@@ -35,6 +35,7 @@ const MATT_MODEL_INVOKED = [
   "research",
   "resolving-merge-conflicts",
   "tdd",
+  "writing-for-agents",
 ];
 const PONYTAIL_SKILLS = [
   "ponytail",
@@ -43,6 +44,11 @@ const PONYTAIL_SKILLS = [
   "ponytail-review",
 ];
 const ABSORBED_PONYTAIL_SKILLS = ["ponytail-gain", "ponytail-help"];
+const ABSORBED_MATT_CAPABILITIES = ["wait-what", "wizard"];
+const ABSORBED_UPSTREAM_CAPABILITIES = [
+  ...ABSORBED_MATT_CAPABILITIES,
+  ...ABSORBED_PONYTAIL_SKILLS,
+];
 const REGISTERED_SKILLS = [
   ...MAGA_SKILLS,
   ...MATT_MODEL_INVOKED,
@@ -108,7 +114,7 @@ test("hard-cuts the retired plugin identity", () => {
   }
 });
 
-test("exposes exactly 15 product Skills and keeps 13 methods internal", () => {
+test("exposes exactly 16 product Skills and keeps 13 methods internal", () => {
   assert.deepEqual(childDirectories(SKILLS_ROOT), [...REGISTERED_SKILLS].sort());
   assert.deepEqual(childDirectories(METHODS_ROOT), [...MATT_INTERNAL_METHODS].sort());
 
@@ -128,7 +134,7 @@ test("gives every registered Skill a product label and implicit routing contract
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const registeredCatalog = catalog.skills.filter((entry) => entry.status === "registered");
 
-  assert.equal(registeredCatalog.length, 15);
+  assert.equal(registeredCatalog.length, 16);
   for (const skill of REGISTERED_SKILLS) {
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     const metadata = read(SKILLS_ROOT, skill, "agents", "openai.yaml");
@@ -147,8 +153,14 @@ test("gives every registered Skill a product label and implicit routing contract
   }
 });
 
-test("preserves Matt's nine automatic capabilities without old command aliases", () => {
-  const removedCommand = new RegExp(`\\$(?:${MATT_INTERNAL_METHODS.join("|")})\\b`);
+test("preserves Matt's ten automatic capabilities without internal or retired command aliases", () => {
+  const removedCommand = new RegExp(
+    `\\$(?:${[
+      ...MATT_INTERNAL_METHODS,
+      ...ABSORBED_MATT_CAPABILITIES,
+      "writing-great-skills",
+    ].join("|")})\\b`,
+  );
   const routing = read(
     SKILLS_ROOT,
     "project-lead",
@@ -184,6 +196,7 @@ test("ships every Matt supporting file from both registered Skills and internal 
     "domain-modeling": ["ADR-FORMAT.md", "CONTEXT-FORMAT.md"],
     prototype: ["LOGIC.md", "UI.md"],
     tdd: ["mocking.md", "tests.md"],
+    "writing-for-agents": ["SKILL-MECHANICS.md"],
   };
   const methodSupport = {
     "improve-codebase-architecture": ["HTML-REPORT.md"],
@@ -201,7 +214,6 @@ test("ships every Matt supporting file from both registered Skills and internal 
       "RESOURCES-FORMAT.md",
     ],
     triage: ["AGENT-BRIEF.md", "OUT-OF-SCOPE.md"],
-    "writing-great-skills": ["GLOSSARY.md"],
   };
 
   for (const [skill, files] of Object.entries(registeredSupport)) {
@@ -248,6 +260,32 @@ test("adapts specification and delivery methods to MAGA's native project memory"
   assert.doesNotMatch(implementation, /Use \$tdd where possible/);
 });
 
+test("keeps tracker writes and portable handoffs behind MAGA boundaries", () => {
+  const setup = read(METHODS_ROOT, "setup-matt-pocock-skills", "METHOD.md");
+  const github = read(
+    METHODS_ROOT,
+    "setup-matt-pocock-skills",
+    "issue-tracker-github.md",
+  );
+  const wayfinder = read(METHODS_ROOT, "wayfinder", "METHOD.md");
+  const handoff = read(METHODS_ROOT, "handoff", "METHOD.md");
+  const routing = read(
+    SKILLS_ROOT,
+    "project-lead",
+    "references",
+    "capability-routing.md",
+  );
+
+  assert.doesNotMatch(setup, /gh issue create/);
+  assert.match(github, /connected\s+GitHub capability/);
+  assert.match(github, /local Git[\s\S]+fetch and push/);
+  assert.match(wayfinder, /Project Memory is the default authority/);
+  assert.match(wayfinder, /authorization: pending/);
+  assert.match(handoff, /\.ai-workflow\/handoffs\/<topic>\.md/);
+  assert.match(handoff, /another harness, repository,[\s\S]+colleague/);
+  assert.doesNotMatch(routing, /Context must cross into a clean task/);
+});
+
 test("absorbs Ponytail help and gain without changing its execution lifecycle", () => {
   assert.equal(fs.existsSync(path.join(SKILLS_ROOT, "ponytail", "references", "help.md")), true);
   assert.equal(fs.existsSync(path.join(SKILLS_ROOT, "ponytail", "references", "gain.md")), true);
@@ -260,6 +298,56 @@ test("absorbs Ponytail help and gain without changing its execution lifecycle", 
   assert.match(ponytail, /Do not switch the current mode/);
 });
 
+test("absorbs manual setup and communication recovery into Project Lead", () => {
+  const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
+  const absorbed = catalog.skills.filter((entry) => entry.status === "absorbed");
+  const projectLead = read(SKILLS_ROOT, "project-lead", "SKILL.md");
+  const routing = read(
+    SKILLS_ROOT,
+    "project-lead",
+    "references",
+    "capability-routing.md",
+  );
+  const manualGates = read(
+    SKILLS_ROOT,
+    "project-lead",
+    "references",
+    "manual-gates.md",
+  );
+
+  for (const capability of ABSORBED_MATT_CAPABILITIES) {
+    assert.equal(fs.existsSync(path.join(SKILLS_ROOT, capability)), false, capability);
+    assert.equal(fs.existsSync(path.join(METHODS_ROOT, capability)), false, capability);
+  }
+  assert.equal(
+    absorbed.find((entry) => entry.id === "wizard")?.mapping,
+    "project-lead-manual-gate",
+  );
+  assert.equal(
+    absorbed.find((entry) => entry.id === "wait-what")?.mapping,
+    "project-lead-communication-recovery",
+  );
+  assert.match(routing, /\[manual-gates\.md\]\(manual-gates\.md\)/);
+  assert.match(manualGates, /Keep temporary working material inside the\s+repository/);
+  assert.match(manualGates, /does not generate Bash, capture secrets/);
+  assert.match(projectLead, /communication recovery creates no Ticket or file/);
+});
+
+test("ships the shareable HTML logic prototype and removes the retired writing identity", () => {
+  const logicPrototype = read(SKILLS_ROOT, "prototype", "LOGIC.md");
+
+  assert.match(logicPrototype, /one self-contained HTML file/i);
+  assert.doesNotMatch(logicPrototype, /interactive terminal app/i);
+  assert.equal(
+    fs.existsSync(path.join(METHODS_ROOT, "writing-great-skills", "METHOD.md")),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(SKILLS_ROOT, "writing-great-skills", "SKILL.md")),
+    false,
+  );
+});
+
 test("publishes a complete upstream mapping and identical distributed notices", () => {
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const notices = read(PLUGIN_ROOT, "THIRD_PARTY_NOTICES.md");
@@ -269,26 +357,28 @@ test("publishes a complete upstream mapping and identical distributed notices", 
 
   assert.equal(catalog.schema_version, 1);
   assert.deepEqual(catalog.target_counts, {
-    registered: 15,
+    registered: 16,
     internal_method: 13,
-    absorbed: 2,
+    absorbed: 4,
   });
-  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 30);
-  assert.equal(registered.length, 15);
+  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 33);
+  assert.equal(registered.length, 16);
   assert.equal(internalMethods.length, 13);
-  assert.equal(absorbed.length, 2);
+  assert.equal(absorbed.length, 4);
   assert.deepEqual(
     internalMethods.map((entry) => entry.id).sort(),
     [...MATT_INTERNAL_METHODS].sort(),
   );
   assert.deepEqual(
     absorbed.map((entry) => entry.id).sort(),
-    [...ABSORBED_PONYTAIL_SKILLS].sort(),
+    [...ABSORBED_UPSTREAM_CAPABILITIES].sort(),
   );
-  assert.match(notices, /2ab958093e83e0ec752e6c1c5932da465bf23e0c/);
+  assert.match(notices, /8b36d4fb2635b3c21998dcd8144439c9e5ba7302/);
   assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
-  assert.match(notices, /Nine upstream model-invoked Skills remain\s+registered/);
-  assert.match(notices, /thirteen upstream user-invoked workflows are distributed as internal MAGA/);
+  assert.match(notices, /Ten upstream model-invoked Skills remain registered/);
+  assert.match(notices, /Thirteen upstream\s+user-invoked workflows are distributed as internal MAGA/);
+  assert.match(notices, /remaining two upstream capabilities are absorbed into Project Lead/);
+  assert.match(notices, /sixteen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
   assert.equal(notices, read(REPOSITORY_ROOT, "THIRD_PARTY_NOTICES.md"));
 });
