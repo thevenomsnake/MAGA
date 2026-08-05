@@ -143,21 +143,21 @@ MAGA can advance authorized work without turning one natural-language request in
 
 ## Models by responsibility
 
-MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. You do not need to know code or manage seven people yourself; these names are simply the internal labels MAGA uses to divide the work.
+MAGA keeps model choice out of ordinary product conversations without hiding the decision from you. You do not need to understand how an engineering team divides its work or assign tasks to seven people yourself; these names are simply the internal labels MAGA uses for different kinds of work.
 
-### A real-world example of the seven responsibilities
+### An internet product example of the seven responsibilities
 
-Imagine a neighborhood salon says, “I want customers to book online so we spend less time on the phone, but the same time slot must never be booked twice.” MAGA handles that goal like a complete product team:
+Imagine you are designing a classic timeline-based social product and want to add **Private saves**. A user finds a long post but cannot read it now. Liking it would express something publicly, while screenshots are difficult to organize. The user needs a private way to save the post, find it again after a refresh or device change, and keep the action invisible to everyone else.
 
-- **Project Lead (`project-lead`) — the project manager:** Turns that request into a clear first outcome—for example, customers can choose an available time, staff can see the booking, and double booking is blocked—then decides what comes first and coordinates the work.
-- **Research (`research`) — the field researcher:** Learns how customers and staff book today, compares similar services, and confirms real constraints such as cancellations and handling customer details.
-- **Prototype (`prototype`) — the dress rehearsal:** Creates a clickable booking flow that the owner can try before committing to the full build, so awkward steps are found early.
-- **Delivery (`delivery`) — the build team:** Turns the accepted trial flow into a working product that customers can book through and staff can use to manage time slots.
-- **Diagnosis (`diagnosis`) — the repair technician:** If a customer sees “booking confirmed” but never receives a confirmation, finds which part failed instead of blindly rebuilding everything.
-- **Review (`review`) — the inspector:** Checks that double booking is prevented, the owner’s requirements were not missed, and customer information is properly protected.
-- **Release (`release`) — the opening manager:** Confirms existing records are backed up, only the right people can access administration, and the launch steps are ready before opening the service to real customers.
+- **Project Lead (`project-lead`) — product coordination:** Turns the idea into a first outcome that can be accepted—for example, signed-in users can privately save and remove posts, the result remains consistent after a refresh or device change, and neither the author nor other users can see the save—then identifies open decisions, sets the sequence, and coordinates the work.
+- **Research (`research`) — gathering decision evidence:** Learns why users do not want to substitute likes or screenshots for saves, studies where they expect to save and recover a post, and compares how similar products handle privacy, unavailable content, and synchronization across devices.
+- **Prototype (`prototype`) — trying the experience early:** Creates an interactive save control, confirmation state, and My saves view so you can judge whether the control could be mistaken for a like, whether the privacy promise feels credible, and whether saved posts are easy to recover.
+- **Delivery (`delivery`) — making it a real feature:** Turns the accepted experience into a working product and reliably records the save against the current user’s account instead of merely changing an icon on the current page.
+- **Diagnosis (`diagnosis`) — finding the cause of failure:** If a saved post disappears after refresh, appears on a laptop but not a phone, or shows the wrong state, reproduces the behavior and determines whether saving, retrieval, account synchronization, or interface state failed.
+- **Review (`review`) — independently checking reliability:** Checks saving, removing, repeated actions, signing out and back in, and deleted posts against the agreed outcome, with special attention to ensuring that authors, followers, and other accounts cannot discover a save through timelines, notifications, or profiles.
+- **Release (`release`) — controlling the real launch:** Confirms that staged rollout, observable success measures, and a way to withdraw the change are ready, then opens it to an appropriate group of real users and verifies that saves persist without exposing private behavior.
 
-When you configure models, you are only deciding how much judgment and reasoning capacity each kind of work receives. MAGA handles the routing and coordination.
+When you configure models, you are only deciding how much judgment and reasoning capacity each kind of work receives. MAGA handles responsibility selection, task routing, and coordination.
 
 Its settings panel offers three starting profiles for the same seven responsibilities:
 

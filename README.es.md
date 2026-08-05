@@ -145,21 +145,21 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. Estos siete nombres no son puestos técnicos que tengas que aprender ni siete personas que debas contratar; son etiquetas internas que MAGA usa para repartir el trabajo.
+MAGA mantiene la elección del modelo fuera de las conversaciones habituales de producto sin ocultarte esa decisión. Estos siete nombres no son disciplinas técnicas que debas dominar ni siete trabajos que tengas que gestionar personalmente; son etiquetas internas que MAGA usa para convertir tus decisiones de producto en trabajo coordinado.
 
-### Un ejemplo real: una peluquería pone en marcha reservas en línea
+### Un ejemplo de producto: «Guardar en privado» en una red social
 
-Imagina que una peluquería de barrio quiere que sus clientes reserven sin llamar:
+Imagina una red social clásica con cronología. Una persona encuentra una publicación larga, pero no puede leerla en ese momento. Dar «Me gusta» haría pública su reacción y las capturas de pantalla son difíciles de organizar. El producto quiere ofrecer **Guardar en privado**: el contenido debe seguir guardado después de actualizar la página o cambiar de dispositivo, y nadie más debe poder verlo.
 
-- **Project Lead (`project-lead`) — quien lleva el proyecto:** Escucha «quiero que puedan reservar sin llamar», concreta qué debe incluir la primera versión y decide el siguiente paso.
-- **Investigación (`research`) — quien estudia el terreno:** Pregunta cómo reservan los clientes, compara otros negocios y aclara qué debe ocurrir con los horarios ocupados y las cancelaciones.
-- **Prototipo (`prototype`) — la prueba antes de construir:** Prepara un recorrido de reserva que se puede pulsar y probar, para que la dueña detecte problemas antes de invertir en la versión real.
-- **Entrega (`delivery`) — quien lo hace funcionar de verdad:** Convierte la idea aprobada en un servicio donde elegir una hora, reservar y recibir una confirmación funciona realmente.
-- **Diagnóstico (`diagnosis`) — el técnico de reparación:** Si la reserva aparece pero la confirmación no llega, localiza dónde se interrumpe el proceso y corrige la causa.
-- **Revisión (`review`) — quien hace la inspección:** Comprueba que no haya reservas dobles, que se respete la privacidad y que el resultado cumpla lo que pidió el negocio.
-- **Lanzamiento (`release`) — quien prepara la apertura:** Revisa permisos, copias de seguridad y la forma de volver atrás si algo falla antes de poner el servicio a disposición de los clientes.
+- **Project Lead (`project-lead`) — coordina el resultado:** Convierte la intención en una promesa comprobable: guardar con una acción clara, encontrar la publicación más tarde, conservarla entre dispositivos y mantenerla privada. También protege el alcance y decide qué pregunta debe resolverse a continuación.
+- **Investigación (`research`) — aclara necesidades y expectativas:** Estudia cuándo las personas prefieren guardar en lugar de dar «Me gusta» o hacer una captura, cómo esperan recuperar lo guardado y qué significa «privado» para ellas.
+- **Prototipo (`prototype`) — vuelve visible la experiencia:** Prepara un flujo que se puede inspeccionar y probar: la acción de guardar, la confirmación, la colección privada, quitar un elemento y los estados vacíos, antes de construir la función definitiva.
+- **Entrega (`delivery`) — construye la parte aceptada:** Convierte el flujo aprobado en una función real, vinculando cada publicación guardada con la cuenta correcta para que permanezca después de actualizar o abrir otro dispositivo sin hacerse visible para otras personas.
+- **Diagnóstico (`diagnosis`) — encuentra por qué algo falla:** Si una publicación aparece como guardada pero desaparece al actualizar, no llega al otro dispositivo o queda expuesta por error, localiza dónde se rompe la promesa y corrige la causa.
+- **Revisión (`review`) — comprueba la promesa del producto:** Verifica con evidencia que guardar, encontrar, quitar, evitar duplicados, sincronizar y proteger la privacidad funcionan como se acordó, incluida la accesibilidad de la experiencia.
+- **Lanzamiento (`release`) — decide si está listo para llegar a usuarios:** Confirma el alcance, los riesgos de privacidad, la observación del funcionamiento y la forma de volver atrás si aparece un problema antes de activar la función.
 
-La tabla siguiente no te pide que gestiones siete disciplinas. Indica qué configuración de IA se encargará de cada parte cuando MAGA la necesite.
+La tabla siguiente indica qué configuración de IA asume cada responsabilidad. MAGA coordina estas partes; tú sigues tomando las decisiones de producto y aceptando el resultado.
 
 | Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
 | --- | --- | --- | --- |
