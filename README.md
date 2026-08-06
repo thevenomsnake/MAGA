@@ -29,26 +29,32 @@
 
 MAGA is a product-building plugin and on-ramp to Codex in the ChatGPT desktop app. It gives a project one product-facing Project Lead that turns ordinary product language into the next useful piece of evidence: research, a prototype, a working slice, a diagnosis, or an independent review.
 
-You describe the user, problem, experience, constraints, and trade-offs. MAGA chooses the internal methods, keeps decisions in the project, coordinates bounded Codex tasks when needed, and returns working results for product acceptance. You do not need to choose Skills, manage engineering sessions, or review code.
+You describe the user, problem, experience, constraints, and trade-offs. MAGA chooses the internal methods, keeps decisions in the project, coordinates bounded Codex tasks when needed, and returns working results for product acceptance. You do not need to choose Skills, manage engineering tasks, or review code.
 
 > [!NOTE]
 > MAGA is not a visual no-code builder. The product still has code. Codex owns that implementation layer; you retain product intent, priorities, constraints, and acceptance.
 
-## Start in three steps
+## Start in two stages
 
 No terminal experience is required. If you have never used Codex before, follow the **[complete beginner guide](./docs/getting-started.md)** from installing the desktop app through accepting your first working result.
+
+### 1. Set up MAGA
 
 1. Open the [ChatGPT desktop app](https://learn.chatgpt.com/docs/quickstart?setup=app), sign in, and choose **Codex**.
 2. Create or open an empty local project folder.
 3. Paste this message into Codex:
 
-> Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize MAGA in this folder, verify that it works, and tell me when to start a new chat. Perform the technical steps yourself and ask me only for approvals that are actually required.
+> Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize or restore MAGA in this folder, create or restore its named Project Lead task, verify that it works, and tell me the exact Project Lead task to open when it is ready. Perform the technical steps yourself and ask me only for approvals that are actually required.
 
-Read each approval request and allow it only when it refers to this folder, GitHub, or a prerequisite Codex has just explained. You do not need to copy commands into a terminal.
+Read each approval request. Allow setup only for this folder, downloading the specified MAGA repository into this project or the Codex plugin area, or a prerequisite Codex has just explained. GitHub sign-in, account or repository settings, pushes, and Issue or Pull Request writes are not part of setup. You do not need to copy commands into a terminal.
 
-When Codex confirms the setup is complete, start a **new chat in the same project** and describe the product:
+### 2. Start the product
+
+When Codex confirms the setup is complete, open the named, pinned **Project Lead task** that MAGA created or restored for this project. Do not create an arbitrary task in its place. Describe the product there:
 
 > Use MAGA as my Project Lead. I want a tool that helps independent designers organize client feedback. Feedback should stay attached to a project, and I need to see which issues are blocking delivery. I do not know code, so keep questions in product language and give me working results I can inspect.
+
+That client-feedback tool is another product-description example; the small interest-community app later in this README is the canonical example used to explain MAGA's seven responsibilities.
 
 That is enough to begin. MAGA identifies the first useful outcome and asks only questions that can change the product direction or permission boundary.
 
@@ -59,7 +65,7 @@ That is enough to begin. MAGA identifies the first useful outcome and asks only 
 3. **Codex builds the smallest inspectable slice.** Engineering choices and risk-matched checks stay behind the product interface.
 4. **You accept the result.** Inspect the behavior and experience, then accept it, adjust it, or set the next direction.
 
-Product direction, active decisions, authority, Tickets, and evidence live in versionable project state. A fresh chat can recover from that state instead of treating a long transcript as the product record.
+Product direction, active decisions, authority, Tickets, and evidence live in versionable project state. A restored Project Lead task can recover from that state instead of treating one long task transcript as the product record.
 
 <p align="center">
   <img src="./assets/maga-operating-model.svg" alt="Behavior comparison between traditional Skills and MAGA across entry, orchestration, technical work, acceptance, and continuity" width="100%">
@@ -69,7 +75,7 @@ Product direction, active decisions, authority, Tickets, and evidence live in ve
 
 ### Why a plugin instead of a wrapper app?
 
-Codex already performs difficult engineering work. It can inspect repositories, write and modify code, run checks, review changes, work across project chats, and apply reusable Skills. OpenAI's own guidance describes the same progression: give Codex durable context, encode repeatable work as Skills, and package stable capabilities as plugins. See the official [Codex best practices](https://learn.chatgpt.com/guides/best-practices), [Skills documentation](https://learn.chatgpt.com/docs/build-skills), and [plugin documentation](https://developers.openai.com/plugins/).
+Codex already performs difficult engineering work. It can inspect repositories, write and modify code, run checks, review changes, work across project tasks, and apply reusable Skills. OpenAI's own guidance describes the same progression: give Codex durable context, encode repeatable work as Skills, and package stable capabilities as plugins. See the official [Codex best practices](https://learn.chatgpt.com/guides/best-practices), [Skills documentation](https://learn.chatgpt.com/docs/build-skills), and [plugin documentation](https://developers.openai.com/plugins/).
 
 Codex is strongest at the implementation layer. Product builders still need an operating model for deciding what matters, choosing the next evidence, preserving decisions, and accepting the result. MAGA adds that product layer without placing another application between you and Codex.
 
@@ -100,7 +106,7 @@ If you already lead a product line or a cross-functional team, MAGA is often eas
 | --- | --- |
 | Write, read, or review code | Which user and problem the product serves |
 | Choose internal Skills or engineering workflows | Which experience and business constraints cannot be traded away |
-| Split Tickets, name tasks, or manage sessions | Priority and acceptable trade-offs |
+| Split Tickets, name tasks, or manage engineering tasks | Priority and acceptable trade-offs |
 | Select test frameworks or implementation architecture | Whether the working result solves the product problem |
 
 Code review, testing, debugging, and technical validation still happen. They become engineering evidence managed by the Project Lead, rather than a second profession imposed on the Product Owner.
@@ -130,7 +136,7 @@ That feedback changes the information architecture and the next delivery step. Y
 4. **Authority:** which actions are approved and which require a new decision.
 5. **Evidence:** prototypes, working behavior, tests, diagnostics, and product acceptance.
 
-This information lives in the project. A new chat can recover from durable state instead of treating the transcript as the product record.
+This information lives in the project. The Project Lead task, or a restored replacement, can recover from durable state instead of treating one task transcript as the product record.
 
 ## Product and permission boundaries
 
@@ -143,13 +149,13 @@ MAGA can advance authorized work without turning one natural-language request in
 
 ## Models by responsibility
 
-MAGA works at the scale of a complete application, but that application does not need to be a huge platform. It coordinates the work required to take a focused product from intent to a working release. You do not need to learn the seven names below as job titles or manage seven separate teams; they are internal labels MAGA uses to divide the work.
+MAGA works at the scale of a complete application, but that application does not need to be a huge platform. It coordinates the work required to take a small but complete first release from intent to a working release. You do not need to learn the seven names below as job titles or manage seven separate teams; they are internal labels MAGA uses to divide the work.
 
-### Understanding the seven responsibilities through a small, complete product
+### Understanding the seven responsibilities through a small but complete first release
 
-Imagine you want to build and launch a small activity-sharing application for an interest community. People can sign up, add a name and short profile, publish brief updates, see the community’s latest posts on a home timeline, and reply. This is not a single feature added to an existing product, nor an attempt to build a huge social platform at once. It is a focused, complete product with a real core loop that can be placed in users’ hands.
+Imagine you want to build and launch a small activity-sharing application for an interest community. People can sign up, add a name and short profile, publish brief updates, see the community’s latest posts on a home timeline, and reply. This is not a single feature added to an existing product, nor an attempt to build a huge social platform at once. It is a small but complete first release with a real core loop that can be placed in users’ hands.
 
-- **Project Lead (`project-lead`) — moving the whole product forward:** Turns your product direction into a clear scope and acceptance criteria—for example, completing the loop of “sign up → complete a profile → publish → see the post at home → reply”—then coordinates research, prototyping, implementation, and validation. Decisions that change the audience or experience direction remain yours.
+- **Project Lead (`project-lead`) — moving the whole product forward:** Turns your product direction into a clear scope and acceptance criteria—for example, completing the loop of “sign up → profile → post → home timeline → reply”—then coordinates research, prototyping, implementation, and validation. Decisions that change the audience or experience direction remain yours.
 - **Research (`research`) — finding evidence for product decisions:** Learns how the interest community communicates today, where the current experience falls short, and what members actually expect from profiles, short posts, the home timeline, and replies, so the product is not designed from assumptions alone.
 - **Prototype (`prototype`) — making the product visible and usable before the full build:** Creates an interactive version of sign-up, profiles, publishing, the home timeline, and replies so you can inspect the information, try the sequence yourself, and decide whether the core loop works.
 - **Delivery (`delivery`) — turning the accepted experience into a real product:** Builds the prototype into a working application in small slices so accounts, profiles, posts, and replies are genuinely saved and correctly connected instead of existing only as screens or a demonstration.
@@ -179,7 +185,7 @@ Business, Enterprise, and Edu workspaces can start with the Plus profile, then u
 
 The profiles follow the work rather than ranking the models: **Sol** is for ambiguity, judgment, and polish; **Terra** is the everyday workhorse for scoped work that still needs reasoning and tools; **Luna** is only recommended at **max**, for clear and repeatable delivery. Higher reasoning can take longer and use more tokens, and every row stays editable after a profile is applied.
 
-Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA chat with an in-chat configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Choose a profile, adjust any row, and click **Save**. Until that first save, the Codex host defaults stay active. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
+Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA task with an in-task configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Choose a profile, adjust any row, and click **Save**. Until that first save, the Codex host defaults stay active. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
 
 Saved changes apply only to new tasks that you explicitly approve in product language; MAGA may propose and route a clearly named task, but it does not create one without your approval. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
 
@@ -193,7 +199,7 @@ The current release is **v0.10.0**. It contains 16 registered Skills, an interna
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
 | Diagnosis and simplification | Debugging, code review, and removal of unnecessary complexity |
-| Method library | Upstream workflows loaded on demand instead of occupying every conversation |
+| Method library | Upstream workflows loaded on demand instead of occupying every task |
 
 Explore the implementation: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
 
@@ -246,7 +252,7 @@ MAGA's routing, project state, installer, and Project Lead contract are local ad
 
 - [Research index](./research/README.md)
 - [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
-- [Multi-session collaboration](./playbooks/multi-session-collaboration.md)
+- [Multi-task collaboration](./playbooks/multi-session-collaboration.md)
 - [Native Codex Ticket orchestration](./playbooks/codex-ticket-orchestration.md)
 - [AI-slop research](./research/kill-ai-slop.md)
 

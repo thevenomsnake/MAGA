@@ -47,13 +47,14 @@ test("passes model and reasoning depth into the first turn", async () => {
   });
 });
 
-test("keeps an existing Project Lead unchanged when settings change", async () => {
+test("keeps an existing Project Lead compute unchanged and restores its pin", async () => {
   const calls = [];
   const bridge = {
     connect: async () => {},
     close: async () => {},
     listModels: async () => calls.push("list-models"),
     listThreads: async () => [{ id: "lead-1", name: "Product · Project Lead" }],
+    pinThread: async (threadId) => calls.push({ pin: threadId }),
   };
 
   const result = await launchProjectLead({
@@ -70,7 +71,33 @@ test("keeps an existing Project Lead unchanged when settings change", async () =
 
   assert.equal(result.reused, true);
   assert.equal(result.compute, null);
-  assert.deepEqual(calls, []);
+  assert.deepEqual(calls, [{ pin: "lead-1" }]);
+});
+
+test("starts a missing Project Lead from durable recovery context", async () => {
+  const sent = [];
+  const bridge = {
+    connect: async () => {},
+    close: async () => {},
+    listThreads: async () => [],
+    listModels: async () => [],
+    createThread: async () => ({ id: "lead-recovered" }),
+    sendMessage: async (_threadId, prompt) => sent.push(prompt),
+    archiveThread: async () => {},
+  };
+
+  await launchProjectLead({
+    targetDir: process.cwd(),
+    projectName: "Product",
+    entryMode: "recovery",
+    bridgeFactory: () => bridge,
+  });
+
+  assert.equal(sent.length, 1);
+  assert.match(sent[0], /\.ai-workflow\/PROJECT\.md/);
+  assert.match(sent[0], /recover the current product direction/);
+  assert.match(sent[0], /Do not modify files, dispatch tasks, or perform external actions/);
+  assert.doesNotMatch(sent[0], /just been initialized/);
 });
 
 test("archives an empty Project Lead when its onboarding turn fails", async () => {

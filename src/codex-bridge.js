@@ -152,6 +152,10 @@ export class CodexBridge {
     return { ...result.thread, id: threadId, name: title, isPinned: pinned };
   }
 
+  pinThread(threadId) {
+    return this.request("thread/metadata/update", { threadId, isPinned: true });
+  }
+
   async sendMessage(threadId, text, { model, effort } = {}) {
     const result = await this.request("turn/start", {
       threadId,
@@ -216,8 +220,19 @@ export class CodexBridge {
   }
 }
 
-function projectLeadPrompt() {
+function projectLeadPrompt(entryMode) {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+  if (entryMode === "recovery") {
+    return `This initialized MAGA project needs its single product-facing Project Lead restored.
+Read .ai-workflow/PROJECT.md and only the repository-relative durable pointers needed
+to recover the current product direction, accepted decisions, open questions, active
+work, and evidence. Do not modify files, dispatch tasks, or perform external actions
+in this first turn. In the Product Owner's system locale (${locale}), briefly summarize
+the recovered product state and propose the next product-level decision or outcome. If
+the durable state still says onboarding, say so and ask what they want to build and who
+should use it. Do not mention Skills, commands, Git, testing, models, or internal
+workflow unless one is itself an unresolved product risk.`;
+  }
   return `This project has just been initialized with MAGA. Act as its single
 product-facing Project Lead. The project is in onboarding state; do not inspect or
 modify files and do not run tools in this first turn. In the Product Owner's system
@@ -232,11 +247,15 @@ tickets, models, or internal workflow.`;
 export async function launchProjectLead({
   targetDir,
   projectName,
+  entryMode = "onboarding",
   timeoutMs,
   onReady,
   bridgeFactory,
   computeSettings,
 } = {}) {
+  if (!new Set(["onboarding", "recovery"]).has(entryMode)) {
+    throw new Error(`unknown Project Lead entry mode: ${entryMode}`);
+  }
   const cwd = path.resolve(targetDir || process.cwd());
   const title = `${projectName || path.basename(cwd)} · Project Lead`;
   const bridge = bridgeFactory
@@ -248,6 +267,7 @@ export async function launchProjectLead({
     const existing = (await bridge.listThreads({ cwd, title }))
       .find((thread) => thread.name === title);
     if (existing) {
+      await bridge.pinThread(existing.id);
       await onReady?.({ title, reused: true });
       return { threadId: existing.id, title, reused: true, compute: null };
     }
@@ -284,7 +304,7 @@ export async function launchProjectLead({
     try {
       await onReady?.({ title, reused: false });
       readyNotified = true;
-      await bridge.sendMessage(thread.id, projectLeadPrompt(), {
+      await bridge.sendMessage(thread.id, projectLeadPrompt(entryMode), {
         model: usingHostDefaults ? undefined : (compute.actual.model || undefined),
         effort: usingHostDefaults ? undefined : (compute.actual.effort || undefined),
       });
@@ -307,7 +327,7 @@ export async function launchProjectLead({
       thread = await bridge.createThread({ cwd, title, pinned: true });
       try {
         if (!readyNotified) await onReady?.({ title, reused: false });
-        await bridge.sendMessage(thread.id, projectLeadPrompt());
+        await bridge.sendMessage(thread.id, projectLeadPrompt(entryMode));
       } catch (retryError) {
         await bridge.archiveThread(thread.id).catch(() => {});
         throw retryError;

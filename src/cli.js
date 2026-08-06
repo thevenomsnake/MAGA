@@ -119,13 +119,14 @@ function openCodex(targetDir) {
   });
 }
 
-async function startProjectLead(options, projectName) {
+async function startProjectLead(options, projectName, entryMode) {
   const onReady = options.open
     ? () => openCodex(options.targetDir)
     : undefined;
   const result = await launchProjectLead({
     targetDir: options.targetDir,
     projectName,
+    entryMode,
     onReady,
   });
   return {
@@ -157,7 +158,7 @@ export async function runCli(argv, dependencies = {}) {
 
   if (options.command === "start") {
     const projectName = options.projectName?.trim() || readProjectName(options.targetDir);
-    const projectLead = await startProjectLead(options, projectName);
+    const projectLead = await startProjectLead(options, projectName, "recovery");
     if (options.json) {
       write(`${JSON.stringify({ targetDir: options.targetDir, projectLead })}\n`);
     } else {
@@ -175,7 +176,11 @@ export async function runCli(argv, dependencies = {}) {
   if (options.installPlugin) install();
   const result = initProject(options);
   const projectLead = options.launch
-    ? await startProjectLead(options, result.projectName)
+    ? await startProjectLead(
+      options,
+      result.projectName,
+      result.alreadyInitialized ? "recovery" : "onboarding",
+    )
     : null;
 
   if (options.json) {

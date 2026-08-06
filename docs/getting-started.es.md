@@ -30,9 +30,9 @@ En la aplicación, crea un proyecto local o abre esa carpeta como proyecto. Conf
 
 ## 3. Pedir a Codex que instale MAGA
 
-Pega este mensaje en el primer chat de Codex:
+Pega este mensaje en la tarea de Codex que abriste para preparar el proyecto:
 
-> Configura este proyecto con el plugin MAGA de https://github.com/thevenomsnake/MAGA. Comprueba e instala los requisitos que falten, inicializa MAGA en esta carpeta, verifica que funciona y dime cuándo debo iniciar un chat nuevo. Realiza tú los pasos técnicos y pídeme únicamente las autorizaciones realmente necesarias. No me pidas copiar comandos en una terminal salvo que estés realmente bloqueado.
+> Configura este proyecto con el plugin MAGA de https://github.com/thevenomsnake/MAGA. Comprueba e instala los requisitos que falten, inicializa o recupera MAGA en esta carpeta y verifica que funciona. Después crea o reutiliza una tarea Project Lead con un nombre claro para este producto y dime su nombre exacto cuando esté lista. Realiza tú los pasos técnicos y pídeme únicamente las autorizaciones realmente necesarias. No me pidas copiar comandos en una terminal salvo que estés realmente bloqueado.
 
 Deja que Codex elija los comandos; tu responsabilidad es juzgar las autorizaciones.
 
@@ -43,20 +43,22 @@ Deja que Codex elija los comandos; tu responsabilidad es juzgar las autorizacion
 | La carpeta del proyecto | Crear o modificar archivos del producto | Autoriza si la ruta es correcta |
 | GitHub o el repositorio de MAGA | Descargar el plugin | Autoriza si el destino es el proyecto o el área de plugins de Codex |
 | Node.js o Git | Instalar un requisito ausente | Lee la explicación antes de autorizar |
-| Inicio de sesión en el navegador | Autenticar una cuenta | Inicia sesión en el navegador; no pegues contraseñas ni tokens en el chat |
+| Inicio de sesión en el navegador | Autenticar una cuenta | Inicia sesión en el navegador; no pegues contraseñas ni tokens en la tarea |
 | Otra carpeta, pagos o borrado irreversible | Trabajo fuera de la instalación | Rechaza y pregunta por qué sería necesario |
+
+El inicio de sesión en GitHub, los ajustes de cuenta o repositorio, los pushes y la escritura en Issues o Pull Requests no forman parte de la autorización de configuración. La única operación de GitHub que presupone esta solicitud es descargar el repositorio MAGA indicado.
 
 Si no entiendes la solicitud, responde:
 
 > Explica con lenguaje de producto qué cambia esta autorización, dónde lo cambia y si se puede deshacer.
 
-## 4. Iniciar un chat nuevo
+## 4. Entrar en la tarea Project Lead
 
-Las capacidades instaladas se cargan en chats nuevos. Cuando termine la configuración, permanece en el mismo proyecto e inicia un **chat nuevo de Codex**. Conserva el chat de instalación por si necesitas consultar un error.
+Cuando termine la configuración, Codex debe indicarte el nombre exacto de la tarea Project Lead que creó o reutilizó. Permanece en el mismo proyecto y abre esa **tarea Project Lead**. No hace falta crear otra tarea genérica: ahí es donde describirás el producto y continuarás tomando decisiones.
 
 ### Opcional: elegir modelos por responsabilidad
 
-Abre la página de detalles del plugin MAGA, selecciona su starter prompt **Configure** y elige la configuración inicial que encaje con tu uso disponible. Codex iniciará un chat de MAGA y abrirá el panel dentro de la conversación.
+Abre la página de detalles del plugin MAGA, selecciona su starter prompt **Configure** y elige la configuración inicial que encaje con tu uso disponible. Codex iniciará una tarea de MAGA y abrirá el panel dentro de esa tarea.
 
 | Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
 | --- | --- | --- | --- |
@@ -76,7 +78,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## 5. Describir el primer producto
 
-Puedes comenzar con una sola frase:
+Dentro de la tarea Project Lead, puedes comenzar con una sola frase. Este es otro ejemplo de descripción de producto:
 
 > Usa MAGA como mi Project Lead. Quiero una herramienta que ayude a diseñadores independientes a organizar comentarios de clientes. No sé programar, así que pregunta con lenguaje de producto y dame resultados funcionales que pueda inspeccionar.
 
@@ -118,13 +120,13 @@ Cuando aceptes el resultado, dilo de forma explícita:
 
 > Acepto este alcance del producto. Registra lo aceptado, las preguntas abiertas y el siguiente resultado útil más pequeño. Muéstrame el límite y no empieces lo siguiente hasta que lo confirme.
 
-## 8. Continuar mañana o en otro chat
+## 8. Continuar mañana o más adelante
 
-Abre un chat nuevo en el mismo proyecto y escribe:
+Vuelve a abrir la misma tarea Project Lead en el mismo proyecto y escribe:
 
 > Continúa este proyecto MAGA desde su estado guardado. Resume primero las decisiones aceptadas, las preguntas abiertas, el comportamiento actual y el siguiente resultado propuesto. No cambies nada hasta que confirme el resumen.
 
-Usa el mismo proyecto mientras sean el mismo producto y los mismos archivos. Crea otro chat para un resultado distinto y concreto.
+Usa la misma tarea Project Lead mientras sean el mismo producto y los mismos archivos. MAGA puede proponerte tareas separadas para resultados concretos y pedirá tu aprobación antes de crearlas.
 
 ## 9. Problemas frecuentes
 
@@ -132,17 +134,17 @@ Usa el mismo proyecto mientras sean el mismo producto y los mismos archivos. Cre
 | --- | --- |
 | Codex pide ejecutar un comando | “Ejecuta tú ese paso y explica la autorización mínima si hace falta” |
 | Falta un requisito | Pide a Codex que lo instale, verifique la versión y reintente el paso interrumpido |
-| MAGA no se reconoce | Confirma que terminó la instalación e inicia un chat nuevo en el mismo proyecto |
+| MAGA no se reconoce | Vuelve a la tarea de configuración, pide que verifique la instalación y que identifique la tarea Project Lead |
 | GitHub no responde | Comprueba internet y acceso a GitHub; reintenta solo la descarga fallida |
 | La instalación falla | Entrega el error completo y pide diagnóstico, reparación y verificación |
 | Codex hace demasiadas preguntas | “Pregunta solo lo que cambie dirección, riesgo o permisos” |
 | Funciona técnicamente pero el producto está mal | Describe qué observaste, qué esperabas y qué resultado importa |
-| Un chat nuevo olvida el proyecto | Confirma que está en el mismo proyecto local y que lea primero el estado guardado |
+| La tarea Project Lead parece olvidar el proyecto | Confirma que está en el mismo proyecto local y pide que lea primero el estado guardado |
 
 ## 10. Vocabulario mínimo
 
-- **Proyecto:** carpeta, chats y contexto duradero de un producto.
-- **Chat:** conversación centrada en un resultado concreto dentro del proyecto.
+- **Proyecto:** carpeta, tareas y contexto duradero de un producto.
+- **Tarea:** unidad de trabajo visible de Codex dentro de un proyecto. MAGA mantiene una tarea Project Lead con nombre propio como entrada principal del producto.
 - **Plugin:** paquete instalable que añade flujos y herramientas reutilizables a Codex.
 - **Project Lead:** coordinador de MAGA orientado a producto.
 - **Autorización:** permiso para una acción concreta, como descargar o escribir archivos.
@@ -152,7 +154,7 @@ Usa el mismo proyecto mientras sean el mismo producto y los mismos archivos. Cre
 
 Cuando puedas explicar usuario, problema, resultado y restricciones; pedir la evidencia mínima; dar feedback sobre el comportamiento y juzgar permisos, estarás preparado para usar Codex directamente.
 
-Para quitar MAGA, abre **Plugins**, busca MAGA en **Installed**, elige **Uninstall plugin** e inicia un chat nuevo. Tus archivos de producto no se eliminan.
+Para quitar MAGA, abre **Plugins**, busca MAGA en **Installed**, elige **Uninstall plugin** e inicia una tarea nueva. Tus archivos de producto no se eliminan.
 
 Si también quieres limpiar las instrucciones específicas de MAGA:
 

@@ -32,24 +32,28 @@
 
 MAGA es un plugin de transición para que la gente de producto empiece a crear con Codex en la aplicación de escritorio de ChatGPT. Describe el usuario, el problema, la experiencia, las restricciones y las decisiones de producto con lenguaje natural. Un Project Lead persistente elige los métodos adecuados y coordina investigación, prototipos, implementación, validación y reparación mientras hace visibles las prácticas que hay detrás.
 
-No necesitas entender código, elegir Skills, gestionar sesiones de ingeniería ni revisar código. Aceptas el producto evaluando su comportamiento, su experiencia y su resultado de negocio.
+No necesitas entender código, elegir Skills, gestionar tareas de ingeniería ni revisar código. Aceptas el producto evaluando su comportamiento, su experiencia y su resultado de negocio.
 
 > [!NOTE]
 > MAGA no es un constructor visual no-code. El producto sigue teniendo código. Codex se encarga de esa capa de implementación; tú conservas la intención, las prioridades, las restricciones y la aceptación del producto.
 
-## Empieza aquí
+## Empieza en dos etapas
 
 No necesitas saber usar una terminal. Si nunca has usado Codex, sigue la **[guía completa para principiantes](./docs/getting-started.es.md)** desde la instalación de la aplicación hasta la aceptación del primer resultado.
+
+### 1. Configura MAGA
 
 1. Abre la [aplicación de escritorio de ChatGPT](https://learn.chatgpt.com/docs/quickstart?setup=app), inicia sesión y elige **Codex**.
 2. Crea o abre una carpeta local vacía para el proyecto.
 3. Pega este mensaje en Codex:
 
-> Configura este proyecto con el plugin MAGA de https://github.com/thevenomsnake/MAGA. Comprueba e instala los requisitos que falten, inicializa MAGA en esta carpeta, verifica que funciona y dime cuándo debo iniciar un chat nuevo. Realiza tú los pasos técnicos y pídeme únicamente las autorizaciones que sean realmente necesarias.
+> Configura este proyecto con el plugin MAGA de https://github.com/thevenomsnake/MAGA. Comprueba e instala los requisitos que falten, inicializa o recupera MAGA en esta carpeta, verifica que funciona y crea o reutiliza una tarea Project Lead con un nombre claro para este producto. Dime el nombre exacto de esa tarea cuando esté lista. Realiza tú los pasos técnicos y pídeme únicamente las autorizaciones que sean realmente necesarias.
 
-Lee cada solicitud de autorización y acéptala solo si se refiere a esta carpeta, a GitHub o a un requisito que Codex acaba de explicar. No necesitas copiar comandos en una terminal.
+Lee cada solicitud de autorización. Durante la configuración, autoriza solo cambios en esta carpeta, la descarga del repositorio MAGA indicado al proyecto o al área de plugins de Codex, y los requisitos que Codex acabe de explicar. El inicio de sesión en GitHub, los ajustes de cuenta o repositorio, los pushes y la escritura en Issues o Pull Requests no forman parte de la configuración. No necesitas copiar comandos en una terminal.
 
-Cuando Codex confirme que ha terminado, inicia un **chat nuevo en el mismo proyecto** y describe el producto:
+### 2. Empieza el producto
+
+Cuando Codex confirme que ha terminado, abre la **tarea Project Lead que acaba de nombrar** y describe allí el producto. Como otro ejemplo de descripción de producto, puedes escribir:
 
 > Usa MAGA como mi Project Lead. Quiero una herramienta que ayude a diseñadores independientes a organizar comentarios de clientes. Los comentarios deben quedar asociados a cada proyecto y necesito ver qué problemas bloquean la entrega. No sé programar, así que pregunta solo con lenguaje de producto y dame resultados funcionales que pueda inspeccionar.
 
@@ -59,7 +63,7 @@ Eso basta para empezar. MAGA identifica el primer resultado útil y pregunta sol
 
 ### ¿Por qué un plugin y no una aplicación envoltorio?
 
-Codex ya realiza trabajo de ingeniería complejo. Puede entender repositorios, escribir y modificar código, ejecutar comprobaciones, revisar cambios, trabajar entre conversaciones de un proyecto y aplicar Skills reutilizables. La guía oficial de OpenAI describe la misma evolución: proporcionar contexto duradero a Codex, convertir el trabajo repetible en Skills y distribuir capacidades estables como plugins. Consulta las [prácticas recomendadas de Codex](https://learn.chatgpt.com/guides/best-practices), la [documentación de Skills](https://learn.chatgpt.com/docs/build-skills) y la [documentación de plugins](https://developers.openai.com/plugins/).
+Codex ya realiza trabajo de ingeniería complejo. Puede entender repositorios, escribir y modificar código, ejecutar comprobaciones, revisar cambios, trabajar entre tareas de un proyecto y aplicar Skills reutilizables. La guía oficial de OpenAI describe la misma evolución: proporcionar contexto duradero a Codex, convertir el trabajo repetible en Skills y distribuir capacidades estables como plugins. Consulta las [prácticas recomendadas de Codex](https://learn.chatgpt.com/guides/best-practices), la [documentación de Skills](https://learn.chatgpt.com/docs/build-skills) y la [documentación de plugins](https://developers.openai.com/plugins/).
 
 El propio nombre Codex deja claro su centro de gravedad: el código. Su vocabulario y su modelo de extensión resultan más fáciles de manejar cuando alguien puede formular el trabajo como ingeniería e inspeccionar el resultado técnico.
 
@@ -102,7 +106,7 @@ Si ya diriges una línea de producto o un equipo multidisciplinar, MAGA suele re
 | --- | --- |
 | Escribir, leer o revisar código | A qué usuario y problema sirve el producto |
 | Elegir Skills internos o flujos de ingeniería | Qué restricciones de experiencia y negocio no se pueden sacrificar |
-| Dividir Tickets, nombrar tareas o gestionar sesiones | La prioridad y los compromisos aceptables |
+| Dividir Tickets, nombrar tareas o gestionar tareas de ingeniería | La prioridad y los compromisos aceptables |
 | Elegir frameworks de prueba o arquitectura de implementación | Si el resultado funcional resuelve el problema de producto |
 
 La revisión de código, las pruebas, la depuración y la validación técnica siguen ocurriendo. Se convierten en evidencia de ingeniería gestionada por el Project Lead, no en una segunda profesión impuesta al Product Owner.
@@ -132,7 +136,7 @@ Ese comentario cambia la arquitectura de información y el siguiente paso de ent
 4. **Autoridad:** qué acciones están aprobadas y cuáles requieren una decisión nueva.
 5. **Evidencia:** prototipos, comportamiento funcional, pruebas, diagnósticos y aceptación de producto.
 
-Esta información vive en el proyecto. Una conversación nueva puede recuperarla desde el estado duradero, sin convertir la transcripción en el registro del producto.
+Esta información vive en el proyecto. Una tarea Project Lead nueva o recuperada puede leerla desde el estado duradero, sin convertir el historial de una tarea en el registro del producto.
 
 ## Límites de producto y permisos
 
@@ -145,23 +149,21 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA no se limita a añadir una función aislada, pero tampoco exige imaginar una gran plataforma social. Puede ayudarte a crear desde cero un producto pequeño y completo.
+MAGA trabaja a la escala de una aplicación completa, pero esa aplicación no tiene por qué ser una plataforma enorme. Coordina todo lo necesario para llevar un producto enfocado desde la intención hasta una primera versión pequeña, completa y funcional. No necesitas aprender los siete nombres siguientes como profesiones ni dirigir siete equipos; son etiquetas internas con las que MAGA divide el trabajo.
 
-### Un ejemplo acotado pero completo: lanzar una aplicación para compartir una afición
+### Entender las siete responsabilidades con una primera versión pequeña pero completa
 
-Imagina una aplicación para una comunidad de aficionados. Las personas pueden registrarse, crear un perfil sencillo, publicar actualizaciones breves, leer la actividad de la comunidad en la página de inicio y responder. Ese recorrido forma una primera versión completa que puede publicarse y utilizarse de verdad.
+Imagina que quieres crear y lanzar una pequeña aplicación para que una comunidad de aficionados comparta su actividad. Las personas pueden registrarse, añadir un nombre y un perfil breve, publicar actualizaciones cortas, ver las publicaciones recientes de la comunidad en la cronología de inicio y responder. No es una sola función añadida a un producto existente ni un intento de construir de golpe una gran red social: es una primera versión pequeña pero completa, con un ciclo principal real que puede ponerse en manos de usuarios.
 
-Estos siete nombres no son puestos técnicos que debas aprender ni siete personas que tengas que dirigir. Son etiquetas internas con las que MAGA organiza el trabajo mientras tú defines el producto, tomas las decisiones importantes e inspeccionas el resultado.
+- **Project Lead (`project-lead`) — hace avanzar el producto completo:** Convierte tu dirección de producto en un alcance y unos criterios de aceptación claros; por ejemplo, completar el ciclo «registrarse → perfil → publicar → cronología de inicio → responder». Después coordina investigación, prototipo, implementación y validación. Las decisiones que cambian el público o la dirección de la experiencia siguen siendo tuyas.
+- **Investigación (`research`) — busca evidencia para las decisiones de producto:** Averigua cómo se comunica hoy la comunidad, dónde falla la experiencia actual y qué esperan realmente sus integrantes de los perfiles, las publicaciones cortas, la cronología de inicio y las respuestas, para no diseñar solo a partir de suposiciones.
+- **Prototipo (`prototype`) — permite ver y usar el producto antes de construirlo por completo:** Crea una versión interactiva del registro, el perfil, la publicación, la cronología de inicio y las respuestas para que puedas inspeccionar la información, probar tú mismo la secuencia y decidir si funciona el ciclo principal.
+- **Entrega (`delivery`) — convierte la experiencia aceptada en un producto real:** Transforma el prototipo en una aplicación funcional mediante partes pequeñas, de modo que las cuentas, los perfiles, las publicaciones y las respuestas se guarden de verdad y queden conectados correctamente, en lugar de existir solo como pantallas o demostración.
+- **Diagnóstico (`diagnosis`) — encuentra el origen de los fallos reales:** Si una publicación nueva no aparece en la cronología de inicio, el contenido desaparece al actualizar o una respuesta aparece en el lugar equivocado, reproduce el comportamiento y aísla la causa real en vez de reconstruir el producto a ciegas.
+- **Revisión (`review`) — comprueba de forma independiente la integridad y la fiabilidad:** Recorre todo el camino desde el registro hasta publicar, navegar y responder, contrasta el resultado con tus requisitos y confirma que la información de las cuentas y el contenido de la comunidad respetan límites esenciales de accesibilidad, privacidad y seguridad.
+- **Lanzamiento (`release`) — entrega el producto de forma fiable a usuarios reales:** Confirma que la configuración en vivo, las copias de seguridad, la visibilidad operativa y una vía de reversión están listas. Después de que apruebes el lanzamiento, abre el producto al público y verifica que una persona nueva pueda completar todo el recorrido principal.
 
-- **Project Lead (`project-lead`) — mantiene unido el producto:** Convierte la idea en un resultado claro, define para quién se construye, qué valor debe ofrecer y qué incluye la primera versión completa. También coordina qué debe investigarse, probarse, construirse o decidirse a continuación.
-- **Investigación (`research`) — reúne evidencia para las decisiones:** Estudia qué quiere compartir la comunidad, cómo espera descubrir nuevas publicaciones y qué hace que una respuesta resulte útil, para reducir suposiciones antes de construir.
-- **Prototipo (`prototype`) — vuelve visible la experiencia:** Prepara un recorrido que se puede inspeccionar desde el registro y el perfil hasta publicar, leer la página de inicio y responder, para comprobar la dirección antes de construir el producto definitivo.
-- **Entrega (`delivery`) — convierte la dirección aprobada en un producto real:** Construye la versión mínima completa para que las cuentas, los perfiles, las publicaciones, la actividad de inicio y las respuestas funcionen de extremo a extremo y conserven correctamente la información.
-- **Diagnóstico (`diagnosis`) — encuentra por qué algo falla:** Si una publicación desaparece, la página de inicio no se actualiza o una respuesta aparece en el lugar equivocado, localiza el punto de fallo y corrige la causa.
-- **Revisión (`review`) — comprueba la promesa del producto:** Verifica con evidencia que una persona puede completar el recorrido principal, que no faltan estados importantes y que la experiencia cumple unos límites básicos de accesibilidad, privacidad y seguridad.
-- **Lanzamiento (`release`) — lleva el producto a usuarios reales:** Confirma que la versión está completa y revisa los riesgos conocidos y la forma de detectar o revertir problemas. Con tu aprobación, publica la aplicación y verifica que la comunidad pueda completar el recorrido principal.
-
-MAGA coordina estas responsabilidades entre bastidores. Tú no gestionas siete puestos: trabajas con el producto en términos de usuarios, experiencia, prioridades, límites y resultados.
+Cuando configuras modelos, no estás contratando ni gestionando a siete personas. Estás decidiendo cuánta capacidad de juicio y razonamiento puede utilizar cada clase de trabajo entre bastidores. MAGA sigue ocupándose de elegir responsabilidades, dirigir tareas y coordinar el trabajo.
 
 | Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
 | --- | --- | --- | --- |
@@ -175,7 +177,7 @@ MAGA coordina estas responsabilidades entre bastidores. Tú no gestionas siete p
 
 Los espacios Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. **Sol** cubre ambigüedad, criterio y acabado; **Terra** es el modelo habitual para trabajo acotado que todavía requiere razonamiento y herramientas. **Luna** solo se recomienda en **max** para entregas con un criterio de finalización claro. Cada fila se puede modificar después de aplicar una configuración.
 
-Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige su starter prompt **Configure**. Se iniciará un chat de MAGA con un panel de configuración dentro de la conversación. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios. La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, fuera del repositorio del producto y de su historial de Git.
+Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige su starter prompt **Configure**. Se iniciará una tarea de MAGA con un panel de configuración dentro de la propia tarea. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios. La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, fuera del repositorio del producto y de su historial de Git.
 
 La configuración guardada solo se aplica a las tareas nuevas que se creen explícitamente después. Las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que un Project Lead existente continúe con la configuración nueva, debes pedir explícitamente «retoma el trabajo con la configuración nueva» y aprobar la creación de una tarea de sustitución.
 
@@ -191,7 +193,7 @@ La versión actual es **v0.10.0**. Contiene 16 Skills registrados y una bibliote
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
 | Diagnóstico y simplificación | Depuración, revisión de código y eliminación de complejidad innecesaria |
-| Biblioteca de métodos | Carga flujos externos bajo demanda para no ocupar todas las conversaciones |
+| Biblioteca de métodos | Carga flujos externos bajo demanda para no ocupar todas las tareas |
 
 Explora la implementación: [Catálogo de Skills](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Project Lead orientado a producto](./playbooks/product-oriented-project-lead.md)
 
@@ -244,7 +246,7 @@ El enrutamiento, el estado de proyecto, el instalador y el contrato de Project L
 
 - [Índice de investigación](./research/README.md)
 - [Project Lead orientado a producto](./playbooks/product-oriented-project-lead.md)
-- [Colaboración entre múltiples sesiones](./playbooks/multi-session-collaboration.md)
+- [Colaboración entre múltiples tareas](./playbooks/multi-session-collaboration.md)
 - [Orquestación nativa de Tickets en Codex](./playbooks/codex-ticket-orchestration.md)
 - [Investigación sobre AI slop](./research/kill-ai-slop.md)
 

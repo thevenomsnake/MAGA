@@ -128,6 +128,10 @@ test("ships localized product guides, beginner manuals, and one English comparis
   );
   const readme = readmes[0];
   const guide = guides[0];
+  const publicSurfaceContract = fs.readFileSync(
+    path.join(REPOSITORY_ROOT, "docs", "public-surface-contract.md"),
+    "utf8",
+  );
   const comparison = fs.readFileSync(
     path.join(REPOSITORY_ROOT, "assets", "maga-operating-model.svg"),
     "utf8",
@@ -148,14 +152,35 @@ test("ships localized product guides, beginner manuals, and one English comparis
     assert.match(localizedGuide, /github\.com\/thevenomsnake\/MAGA/);
     assert.match(localizedGuide, /Uninstall plugin/);
     assert.match(localizedGuide, /agent-approvals-security/);
+    assert.match(localizedGuide, /Project Lead/);
+    assert.doesNotMatch(
+      localizedGuide,
+      /new (?:Codex )?chat|chat nuevo|新しい[^\n]*チャット|새 [^\n]*채팅|新建[^\n]*聊天/i,
+    );
   }
+
+  const loopsByLocale = new Map(
+    [...publicSurfaceContract.matchAll(/^\| (English|简体中文|繁體中文|日本語|한국어|Español) \| `([^`]+)` \|$/gm)]
+      .map((match) => [match[1], match[2]]),
+  );
+  const readmeLocales = ["English", "简体中文", "日本語", "한국어", "Español"];
+  assert.equal(loopsByLocale.size, 6);
+  for (const [index, locale] of readmeLocales.entries()) {
+    assert.ok(readmes[index].includes(loopsByLocale.get(locale)));
+  }
+
+  const canonicalPrompt = publicSurfaceContract.match(
+    /The canonical English request is:\r?\n\r?\n> ([^\r\n]+)/,
+  )?.[1];
+  assert.ok(canonicalPrompt);
+  assert.ok(readme.includes(`> ${canonicalPrompt}`));
+  assert.ok(guide.includes(`> ${canonicalPrompt}`));
 
   assert.match(readme, /Build the software you have in mind/);
   assert.match(readme, /one product-facing Project Lead/);
   assert.match(readme, /You do not need to choose Skills[\s\S]+or review code/);
   assert.match(readme, /No terminal experience is required/);
   assert.match(readme, /Perform the technical steps yourself/);
-  assert.match(readme, /new chat in the same project/);
   assert.match(guide, /This guide assumes you have never used Codex/);
   assert.match(guide, /Inspect the product without reviewing code/);
   assert.match(guide, /Graduate from MAGA/);

@@ -30,9 +30,9 @@ In the desktop app, create a local project or open that folder as the project. C
 
 ## 3. Ask Codex to install MAGA
 
-Paste this into the first Codex chat:
+Paste this into the current Codex task:
 
-> Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize MAGA in this folder, verify that it works, and tell me when to start a new chat. Perform the technical steps yourself and ask me only for approvals that are actually required. Do not ask me to copy commands into a terminal unless you are genuinely blocked.
+> Set up this project with the MAGA plugin from https://github.com/thevenomsnake/MAGA. Check and install any missing prerequisites, initialize or restore MAGA in this folder, create or restore its named Project Lead task, verify that it works, and tell me the exact Project Lead task to open when it is ready. Perform the technical steps yourself and ask me only for approvals that are actually required. Do not ask me to copy commands into a terminal unless you are genuinely blocked.
 
 Codex should inspect the environment, obtain MAGA, initialize the project, and verify the result. You can let Codex choose the commands; your job is to judge the approval requests.
 
@@ -45,24 +45,28 @@ Approve only when the request clearly matches the step Codex just explained.
 | The project folder you selected | Create or update product files | Approve if the path is correct |
 | GitHub or the MAGA repository | Download the plugin | Approve if the destination is this project or the Codex plugin area |
 | Node.js or Git | Install a missing prerequisite | Approve after Codex explains why it is needed |
-| A browser sign-in | Authenticate an account | Sign in in the browser; never paste a password or access token into chat |
+| A browser sign-in | Authenticate an account | Sign in in the browser; never paste a password or access token into a task |
 | An unrelated folder, account, payment, or destructive deletion | Work outside setup | Stop and ask Codex why it is necessary |
+
+GitHub sign-in, account or repository settings, pushes, and Issue or Pull Request writes are not part of default setup authority. Downloading the specified MAGA repository is the only GitHub operation this setup request assumes.
 
 If the wording is unclear, reply:
 
 > Explain in product language what this approval changes, where it changes it, and whether it is reversible.
 
-## 4. Start a new chat
+## 4. Open the Project Lead task
 
-Installed plugin capabilities become available to new chats. When Codex says setup is complete:
+MAGA initialization creates or restores one named, pinned Project Lead task. When Codex says setup is complete:
 
 1. Stay inside the same project.
-2. Start a **new Codex chat**.
-3. Leave the installation chat available in case you need its error details later.
+2. Open the **Project Lead task** that setup identified, normally named `<project> · Project Lead`.
+3. Leave the setup task available in case you need its error details later.
+
+Do not create an arbitrary task in its place. If the Project Lead task is not visible, ask Codex to restore the Project Lead for this same project and identify the exact task to open.
 
 ### Optional: choose models by responsibility
 
-Open the MAGA plugin detail page and select its **Configure** starter prompt. Codex will start a MAGA chat and open an in-chat configuration panel. Choose the starting profile that best matches your current allowance, then adjust any row if needed:
+Open the MAGA plugin detail page and select its **Configure** starter prompt. Codex will start a MAGA task and open an in-task configuration panel. Choose the starting profile that best matches your current allowance, then adjust any row if needed:
 
 | Responsibility | Pro · quality first | Plus · regular use | Free / Go · quota saver |
 | --- | --- | --- | --- |
@@ -81,6 +85,8 @@ Until you click **Save**, the profile is only a recommendation and MAGA uses the
 ## 5. Describe the first product
 
 You can begin with one sentence:
+
+The client-feedback tool below is another product-description example. The small interest-community app used in MAGA's responsibility guide remains the canonical explanatory example.
 
 > Use MAGA as my Project Lead. I want to make a tool that helps independent designers organize client feedback. I do not know code, so keep questions in product language and give me working results I can inspect.
 
@@ -126,13 +132,13 @@ When the slice is good enough, say so explicitly:
 
 > I accept this product slice. Record what was accepted, what remains open, and the next smallest useful outcome. Do not start the next outcome until you show me the boundary.
 
-## 8. Continue tomorrow or in another chat
+## 8. Continue tomorrow
 
-Open the same project and start a new Codex chat. Say:
+Open the same project and return to its named, pinned Project Lead task. Say:
 
 > Continue this MAGA project from its saved state. First summarize the accepted decisions, open questions, current product behavior, and the next proposed outcome. Do not change anything until I confirm that summary.
 
-MAGA stores durable decisions in the project so you are not dependent on one long transcript. Use a separate chat for a distinct outcome; keep the same project when the product and its files are the same.
+MAGA stores durable decisions in the project so you are not dependent on one long task transcript. Keep product discussion in the Project Lead task. MAGA proposes a separate, specifically named task only when a concrete piece of work benefits from its own boundary and you approve it.
 
 ## 9. Common problems
 
@@ -140,18 +146,18 @@ MAGA stores durable decisions in the project so you are not dependent on one lon
 | --- | --- |
 | Codex asks you to run a terminal command | “Please run that step yourself. If you need permission, explain the narrowest approval required.” |
 | A prerequisite is missing | Ask Codex to install it, verify the version, and retry the interrupted step |
-| MAGA is not recognized | Confirm setup finished, then start a new chat; installed plugins are loaded into new chats |
+| MAGA is not recognized | Confirm setup finished, then ask Codex to restore the named Project Lead task; installed plugins are loaded into newly created tasks |
 | The download cannot reach GitHub | Check the internet connection and GitHub access, then ask Codex to retry only the failed download |
 | Installation fails | Paste the complete error back to Codex and ask it to diagnose, repair, and verify instead of giving you commands |
 | Codex asks too many questions | “Ask only questions whose answers can change the direction, risk, or permission boundary. Use a reversible default for the rest.” |
 | The result is technically impressive but product-wrong | Describe what you observed, what you expected, and which user outcome matters |
-| A new chat seems to forget the project | Confirm it is inside the same local project, then ask it to read the saved project state before acting |
+| The Project Lead task seems to forget the project | Confirm it is inside the same local project, then ask it to read the saved project state before acting |
 | An approval reaches outside the selected folder | Decline it and ask for a project-scoped alternative |
 
 ## 10. Small glossary
 
-- **Project:** the folder, chats, and durable context for one product.
-- **Chat:** one focused conversation inside a project.
+- **Project:** the folder, tasks, and durable context for one product.
+- **Task:** a visible Codex work unit inside a project. MAGA keeps one named Project Lead task as the main product entry.
 - **Plugin:** an installable bundle that gives Codex reusable workflows and tools.
 - **Project Lead:** MAGA's product-facing coordinator. It selects the next useful practice and keeps project state.
 - **Approval:** your permission for a concrete action, such as downloading a dependency or writing files.
@@ -166,9 +172,9 @@ MAGA is an on-ramp, not a permanent layer. You may be ready to use Codex directl
 - Separate product acceptance from engineering verification.
 - Give feedback through observed behavior instead of implementation instructions.
 - Understand which actions are reversible and which need explicit permission.
-- Resume work from durable project decisions instead of one chat transcript.
+- Resume work from durable project decisions instead of one task transcript.
 
-To remove MAGA, open **Plugins**, find MAGA under **Installed**, and choose **Uninstall plugin**. Then start a new chat. Uninstalling the plugin does not delete your product files.
+To remove MAGA, open **Plugins**, find MAGA under **Installed**, and choose **Uninstall plugin**. Then start a new Codex task. Uninstalling the plugin does not delete your product files.
 
 If you also want to remove MAGA-specific guidance from the project, ask Codex:
 
