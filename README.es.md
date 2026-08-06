@@ -145,21 +145,21 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA trabaja a escala de un producto completo: coordina el recorrido desde la intención inicial hasta una aplicación real en producción. Añadir una función aislada es solo una posible parte de ese recorrido.
+MAGA no se limita a añadir una función aislada, pero tampoco exige imaginar una gran plataforma social. Puede ayudarte a crear desde cero un producto pequeño y completo.
 
-Estos siete nombres no son puestos que debas estudiar ni siete personas que tengas que dirigir. Son la organización interna con la que MAGA reparte el trabajo mientras tú defines el producto, tomas las decisiones importantes e inspeccionas el resultado.
+### Un ejemplo acotado pero completo: lanzar una aplicación para compartir una afición
 
-### Un ejemplo completo: crear y lanzar una red social desde cero
+Imagina una aplicación para una comunidad de aficionados. Las personas pueden registrarse, crear un perfil sencillo, publicar actualizaciones breves, leer la actividad de la comunidad en la página de inicio y responder. Ese recorrido forma una primera versión completa que puede publicarse y utilizarse de verdad.
 
-Imagina que quieres crear desde cero una red social clásica con cronología para una comunidad concreta. Las personas deben poder registrarse, completar su perfil, seguir a otras cuentas, publicar, leer una cronología de inicio, responder y disponer de límites básicos de seguridad como bloquear o denunciar.
+Estos siete nombres no son puestos técnicos que debas aprender ni siete personas que tengas que dirigir. Son etiquetas internas con las que MAGA organiza el trabajo mientras tú defines el producto, tomas las decisiones importantes e inspeccionas el resultado.
 
-- **Project Lead (`project-lead`) — mantiene unido el producto:** Convierte la visión en un resultado concreto, define para quién se construye y qué valor ofrece, delimita la primera versión completa y coordina qué debe investigarse, probarse, construirse o decidirse a continuación.
-- **Investigación (`research`) — reúne evidencia para las decisiones:** Estudia a las personas destinatarias, sus alternativas actuales, cómo esperan seguir, publicar y conversar, y qué normas de privacidad, moderación o plataforma pueden condicionar el producto.
-- **Prototipo (`prototype`) — vuelve inspeccionable la experiencia completa:** Prepara un recorrido que se puede probar desde el registro hasta el perfil, seguir cuentas, publicar, leer la cronología, responder, bloquear o denunciar, para validar la dirección antes de construirla definitivamente.
-- **Entrega (`delivery`) — convierte la dirección aprobada en un producto real:** Construye la versión mínima completa para que cuentas, perfiles, relaciones, publicaciones, respuestas y cronología funcionen de extremo a extremo y conserven correctamente la información.
-- **Diagnóstico (`diagnosis`) — localiza fallos y sus causas:** Si una publicación desaparece, la cronología muestra contenido incorrecto, seguir una cuenta no funciona o un límite de seguridad se rompe, determina dónde falla el producto y corrige la causa.
-- **Revisión (`review`) — cuestiona y verifica el resultado:** Comprueba con evidencia que los recorridos principales cumplen la intención del producto, que no faltan estados importantes y que la accesibilidad, la privacidad y los límites básicos de seguridad son aceptables.
-- **Lanzamiento (`release`) — lleva el producto a usuarios reales:** Confirma que la versión está completa y revisa riesgos, configuración, migraciones, observación y recuperación ante problemas. Con tu aprobación, publica la aplicación y verifica que una persona nueva pueda completar el recorrido principal.
+- **Project Lead (`project-lead`) — mantiene unido el producto:** Convierte la idea en un resultado claro, define para quién se construye, qué valor debe ofrecer y qué incluye la primera versión completa. También coordina qué debe investigarse, probarse, construirse o decidirse a continuación.
+- **Investigación (`research`) — reúne evidencia para las decisiones:** Estudia qué quiere compartir la comunidad, cómo espera descubrir nuevas publicaciones y qué hace que una respuesta resulte útil, para reducir suposiciones antes de construir.
+- **Prototipo (`prototype`) — vuelve visible la experiencia:** Prepara un recorrido que se puede inspeccionar desde el registro y el perfil hasta publicar, leer la página de inicio y responder, para comprobar la dirección antes de construir el producto definitivo.
+- **Entrega (`delivery`) — convierte la dirección aprobada en un producto real:** Construye la versión mínima completa para que las cuentas, los perfiles, las publicaciones, la actividad de inicio y las respuestas funcionen de extremo a extremo y conserven correctamente la información.
+- **Diagnóstico (`diagnosis`) — encuentra por qué algo falla:** Si una publicación desaparece, la página de inicio no se actualiza o una respuesta aparece en el lugar equivocado, localiza el punto de fallo y corrige la causa.
+- **Revisión (`review`) — comprueba la promesa del producto:** Verifica con evidencia que una persona puede completar el recorrido principal, que no faltan estados importantes y que la experiencia cumple unos límites básicos de accesibilidad, privacidad y seguridad.
+- **Lanzamiento (`release`) — lleva el producto a usuarios reales:** Confirma que la versión está completa y revisa los riesgos conocidos y la forma de detectar o revertir problemas. Con tu aprobación, publica la aplicación y verifica que la comunidad pueda completar el recorrido principal.
 
 MAGA coordina estas responsabilidades entre bastidores. Tú no gestionas siete puestos: trabajas con el producto en términos de usuarios, experiencia, prioridades, límites y resultados.
 
