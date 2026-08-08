@@ -185,18 +185,18 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.12.0**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta y enrutamiento automático a Humanization cuando el entregable real es texto.
+La versión actual es **v0.12.1**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
 
 | Capa | Responsabilidad |
 | --- | --- |
 | Project Lead | Recibe lenguaje de producto, mantiene el estado, elige métodos y coordina tareas |
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
-| Humanización de contenido | Respuestas, artículos, explicaciones y textos de producto o GUI naturales en seis locales |
+| Humanización de contenido | Artículos, documentos, mensajes y textos de producto o GUI naturales en seis locales |
 | Diagnóstico y simplificación | Depuración, revisión de código y eliminación de complejidad innecesaria |
 | Biblioteca de métodos | Carga flujos externos bajo demanda para no ocupar todas las tareas |
 
-Humanization se activa según el tipo de entregable, no por el mero hecho de que una respuesta contenga palabras. Se aplica cuando el resultado real es texto —por ejemplo, un artículo, una respuesta o explicación sustancial, documentación, correo o copy visible del producto— y no interviene en confirmaciones breves, avances, resultados de herramientas, estado de Git ni cargas técnicas sin procesar.
+Humanization usa un límite determinista: el archivo local. Se ejecuta automáticamente solo cuando MAGA escribe o modifica texto legible en un archivo local, como Markdown u otro documento, un informe, artículo, borrador de comunicación guardado, notas de versión o copy visible del producto en archivos de código o recursos. El texto devuelto solo en el chat nunca lo activa automáticamente, sin importar su longitud, formato Markdown, facilidad de copia o posible uso posterior. La invocación explícita sigue disponible y la ejecución automática es silenciosa.
 
 Explora la implementación: [Catálogo de Skills](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Project Lead orientado a producto](./playbooks/product-oriented-project-lead.md)
 

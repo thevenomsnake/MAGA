@@ -191,18 +191,18 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.12.0**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, and automatic Humanization routing for actual text deliverables.
+The current release is **v0.12.1**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, and automatic Humanization routing for human-readable local-file content.
 
 | Layer | Responsibility |
 | --- | --- |
 | Project Lead | Receives product language, maintains state, selects methods, and coordinates tasks |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
-| Content humanization | Natural answers, articles, explanations, and product or GUI copy across six locales |
+| Content humanization | Natural articles, documents, messages, and product or GUI copy across six locales |
 | Diagnosis and simplification | Debugging, code review, and removal of unnecessary complexity |
 | Method library | Upstream workflows loaded on demand instead of occupying every task |
 
-Humanization routes by deliverable, not by whether a reply contains words. It runs when the requested result is actual text—such as an article, substantive answer or explanation, documentation, email, or visible product copy—and stays out of brief confirmations, progress updates, tool output, Git status, and raw technical payloads.
+Humanization uses a deterministic local-file boundary. It runs automatically only when MAGA writes or edits human-readable text in a local file—for example, Markdown or another document, a report, article, saved communication draft, release note, or visible product copy in source or resource files. Text returned only in chat never triggers it automatically, regardless of length, Markdown formatting, copy-readiness, or possible later sharing. Explicit invocation remains available, and automatic runs stay silent.
 
 Explore the implementation: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
 

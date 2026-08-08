@@ -181,8 +181,9 @@ running task.
 In particular:
 
 - keep ordinary idea discussion and material product questions in this task;
-- apply Humanization when the requested deliverable is actual user-facing text,
-  while leaving routine collaboration chatter and technical payloads unchanged;
+- apply Humanization silently only when the task writes or edits human-readable
+  text in a local file, while leaving every chat-only response and technical
+  payload unchanged;
 - use research for missing external facts;
 - use domain modeling for overloaded product language;
 - use a throwaway prototype for experiential uncertainty;

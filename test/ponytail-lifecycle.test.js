@@ -81,14 +81,18 @@ test("registers Ponytail's original Codex lifecycle events", () => {
   }
 });
 
-test("routes actual text production through Humanization in tasks and subagents", (t) => {
+test("routes local-file text through Humanization in tasks and subagents", (t) => {
   const env = codexEnvironment(workspace(t));
 
   let output = JSON.parse(runHook("humanization-context.js", env));
   assert.equal(output.systemMessage, "HUMANIZATION:TEXT-ROUTING");
   assert.equal(output.hookSpecificOutput.hookEventName, "SessionStart");
-  assert.match(output.hookSpecificOutput.additionalContext, /deliverable includes authored user-facing text/);
-  assert.match(output.hookSpecificOutput.additionalContext, /Do not invoke it for brief acknowledgements/);
+  assert.match(output.hookSpecificOutput.additionalContext, /write or edit human-readable natural language in a local file/);
+  assert.match(output.hookSpecificOutput.additionalContext, /will this work create or update a local file/);
+  assert.match(output.hookSpecificOutput.additionalContext, /Text returned only in chat stays outside automatic Humanization/);
+  assert.match(output.hookSpecificOutput.additionalContext, /length, Markdown formatting, copy-readiness, or possible later sharing/);
+  assert.match(output.hookSpecificOutput.additionalContext, /never announce, cite, or explain that MAGA, Humanization, routing, or an editorial pass was used/);
+  assert.match(output.hookSpecificOutput.additionalContext, /never ask a question just to configure this pass/);
   assert.match(output.hookSpecificOutput.additionalContext, /Keep code, commands, paths, URLs/);
 
   output = JSON.parse(runHook(
@@ -98,7 +102,7 @@ test("routes actual text production through Humanization in tasks and subagents"
     ["SubagentStart"],
   ));
   assert.equal(output.hookSpecificOutput.hookEventName, "SubagentStart");
-  assert.match(output.hookSpecificOutput.additionalContext, /substantive answers and explanations/);
+  assert.match(output.hookSpecificOutput.additionalContext, /local file/);
 });
 
 test("activates, switches, reinjects, and disables Ponytail in isolated Codex data", (t) => {

@@ -101,11 +101,12 @@ Reference version: `3.0.0`
 MAGA vendors the complete Humanization Skill, including its six locale
 profiles, prose and GUI-copy references, deterministic checkers, UI metadata,
 icons, version marker, and Skill-local license. MAGA changes the Codex card to
-the MAGA product namespace, expands implicit invocation to answers,
-explanations, articles, and visible product text, and adds SessionStart and
-SubagentStart context so tasks whose real deliverable is authored text route
-through Humanization without affecting routine collaboration chatter. These
-adaptations preserve Humanization's facts, source, privacy, CTA,
+the MAGA product namespace, limits implicit invocation to human-readable text
+written to or edited in local files, and adds SessionStart and SubagentStart
+context for the same boundary. Chat-only output remains outside automatic
+routing regardless of length, formatting, copy-readiness, or possible later
+sharing. Explicit invocation remains available. These adaptations
+preserve Humanization's facts, source, privacy, CTA,
 locale, and protected-structure boundaries.
 
 Humanization records that its initial `zh-CN` long-form foundation comes from

@@ -155,14 +155,20 @@ test("gives every registered Skill a product label and implicit routing contract
   }
 });
 
-test("routes text-production tasks through Humanization without touching technical payloads", () => {
+test("routes local-file text through Humanization without touching chat-only output", () => {
   const root = path.join(SKILLS_ROOT, "humanization");
   const instructions = read(root, "SKILL.md");
   const metadata = read(root, "agents", "openai.yaml");
 
   assert.equal(read(root, "VERSION").trim(), "3.0.0");
-  assert.match(instructions, /Use automatically when a task produces or revises substantive answers/);
+  assert.match(instructions, /Use automatically only when a task will create or update a local file containing prose or audience-facing copy/);
+  assert.match(instructions, /唯一的自动判据是：本次工作是否会产生本地文件变更/);
+  assert.match(instructions, /仅在聊天中返回的普通问答、解释、文章、邮件\s*草稿/);
+  assert.match(instructions, /可直接复制或以后可能被分享/);
+  assert.match(instructions, /不声明、引用或解释本 Skill 已运行/);
+  assert.match(instructions, /不为本 Skill 单独追问/);
   assert.match(instructions, /代码、命令、路径、URL/);
+  assert.doesNotMatch(metadata, /Humanize answers/);
   assert.match(metadata, /allow_implicit_invocation:\s*true/);
   assert.match(read(root, "LICENSE"), /Human Writing Skill contributors/);
   for (const relative of [
