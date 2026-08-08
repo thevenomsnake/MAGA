@@ -26,7 +26,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.10\.0/);
+  assert.match(project, /workflow_version: 0\.11\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
@@ -216,7 +216,7 @@ test("ships localized product guides, beginner manuals, and one English comparis
   );
 });
 
-test("keeps package, plugin, workflow, and bridge versions aligned", () => {
+test("keeps package, plugin, workflow, bridge, and MCP versions aligned", () => {
   const packageVersion = JSON.parse(
     fs.readFileSync(path.join(REPOSITORY_ROOT, "package.json"), "utf8"),
   ).version;
@@ -236,6 +236,13 @@ test("keeps package, plugin, workflow, and bridge versions aligned", () => {
   assert.match(
     fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "codex-bridge.js"), "utf8"),
     new RegExp(`BRIDGE_VERSION = "${escapedVersion}"`),
+  );
+  assert.match(
+    fs.readFileSync(
+      path.join(REPOSITORY_ROOT, "plugins", "maga", "mcp", "server.mjs"),
+      "utf8",
+    ),
+    new RegExp(`SERVER_VERSION = "${escapedVersion}"`),
   );
   assert.match(
     fs.readFileSync(path.join(REPOSITORY_ROOT, "src", "codex-bridge.js"), "utf8"),

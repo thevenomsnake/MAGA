@@ -185,7 +185,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.10.0**. Contiene 16 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
+La versión actual es **v0.11.0**. Contiene 16 Skills registrados y una biblioteca de métodos internos que se cargan solo cuando son necesarios.
 
 | Capa | Responsabilidad |
 | --- | --- |

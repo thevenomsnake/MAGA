@@ -191,7 +191,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.10.0**. It contains 16 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
+The current release is **v0.11.0**. It contains 16 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
 
 | Layer | Responsibility |
 | --- | --- |
