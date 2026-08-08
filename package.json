@@ -1,6 +1,6 @@
 {
   "name": "maga",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "description": "Make Apps Great Again through one product-facing Codex lead",
   "type": "module",
   "bin": {

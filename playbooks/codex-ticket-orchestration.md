@@ -1,6 +1,6 @@
 # Codex 原生 Ticket 编排
 
-> 状态：MAGA 0.12.1 内部编排流程。上游 `to-tickets` 与 `implement`
+> 状态：MAGA 0.12.2 内部编排流程。上游 `to-tickets` 与 `implement`
 > 的工作方法已保留在插件内部，不再作为需要用户选择的 Skill 入口。
 
 ## 改造目标
