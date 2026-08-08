@@ -1,0 +1,9 @@
+interface:
+  display_name: "MAGA · Humanize Content"
+  short_description: "Humanize answers and product copy across six locales"
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.svg"
+  brand_color: "#143D36"
+  default_prompt: "Use $humanization to improve this user-facing text while preserving its facts, intent, protected tokens, and technical structure."
+policy:
+  allow_implicit_invocation: true

@@ -1,7 +1,7 @@
 # Capability And Workspace Routing
 
-Use this reference when product language could map to discussion, research,
-prototype, specification, delivery, diagnosis, review, or a fresh Codex task.
+Use this reference when product language could map to discussion, text production,
+research, prototype, specification, delivery, diagnosis, review, or a fresh Codex task.
 Keep the routing invisible unless the Product Owner asks how the work is organized.
 
 ## Keep One Front Door
@@ -82,6 +82,7 @@ project already uses it or the user explicitly intends that external effect.
 | Signal in the request or durable state | Internal method | Default workspace |
 | --- | --- | --- |
 | Product behavior, audience, or value is materially unclear | Apply registered `grilling`; load [grill-me](../../../methods/grill-me/METHOD.md) or [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) for the appropriate persistence mode | Current Project Lead |
+| The requested deliverable is actual user-facing text: an article, substantive answer or explanation, documentation, email, product copy, or visible GUI copy | Apply registered `humanization` with the explicit locale, format, and surface; preserve code, commands, data, quotations, placeholders, markup, and machine structure | Current task; text production alone does not justify a fresh workspace |
 | A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh `research` task for an approved bounded Ticket |
 | A decision depends on another person's knowledge | Load [to-questionnaire](../../../methods/to-questionnaire/METHOD.md) and draft a role-based repository-local questionnaire; sending it remains a separate external action | Current Project Lead |
 | A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh `prototype` task for an approved bounded Ticket |

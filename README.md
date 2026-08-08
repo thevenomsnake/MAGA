@@ -191,15 +191,18 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.11.0**. It contains 16 registered Skills, an internal method library loaded only when needed, and responsibility-level compute settings.
+The current release is **v0.12.0**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, and automatic Humanization routing for actual text deliverables.
 
 | Layer | Responsibility |
 | --- | --- |
 | Project Lead | Receives product language, maintains state, selects methods, and coordinates tasks |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
+| Content humanization | Natural answers, articles, explanations, and product or GUI copy across six locales |
 | Diagnosis and simplification | Debugging, code review, and removal of unnecessary complexity |
 | Method library | Upstream workflows loaded on demand instead of occupying every task |
+
+Humanization routes by deliverable, not by whether a reply contains words. It runs when the requested result is actual text—such as an article, substantive answer or explanation, documentation, email, or visible product copy—and stays out of brief confirmations, progress updates, tool output, Git status, and raw technical payloads.
 
 Explore the implementation: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
 
@@ -245,6 +248,7 @@ MAGA adapts mature methods at fixed revisions:
 
 - [mattpocock/skills](https://github.com/mattpocock/skills): workflow material from 25 formal Engineering and Productivity Skills, fixed at `8b36d4f`.
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): minimal implementation, complexity review, and lifecycle hooks, fixed at `16f2980`.
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): natural prose and GUI copy across six locales, fixed at `d3b8f37` (Humanization `3.0.0`).
 
 MAGA's routing, project state, installer, and Project Lead contract are local adaptations. Sources, modifications, and licenses are recorded in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 

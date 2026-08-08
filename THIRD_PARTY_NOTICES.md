@@ -26,7 +26,7 @@ not vendored. The communication-recovery intent of `wait-what` becomes an
 inline plain-language re-pitch rather than a separate method or command.
 
 MAGA's Project Lead routes these capabilities from product intent. That
-routing and the consolidated surface of sixteen registered product Skills are
+routing and the consolidated surface of seventeen registered product Skills are
 MAGA adaptations, not upstream Matt invocation behavior. Original names and
 their mapping to the adapted surface remain recorded in the distributed
 catalog.
@@ -71,6 +71,51 @@ and isolated Codex installations.
 MIT License
 
 Copyright (c) 2026 DietrichGebert
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Humanization
+
+Source: https://github.com/thevenomsnake/humanization
+
+Reference commit: `d3b8f3791fee58c030aa52539296ad361654f1c7`
+
+Reference version: `3.0.0`
+
+MAGA vendors the complete Humanization Skill, including its six locale
+profiles, prose and GUI-copy references, deterministic checkers, UI metadata,
+icons, version marker, and Skill-local license. MAGA changes the Codex card to
+the MAGA product namespace, expands implicit invocation to answers,
+explanations, articles, and visible product text, and adds SessionStart and
+SubagentStart context so tasks whose real deliverable is authored text route
+through Humanization without affecting routine collaboration chatter. These
+adaptations preserve Humanization's facts, source, privacy, CTA,
+locale, and protected-structure boundaries.
+
+Humanization records that its initial `zh-CN` long-form foundation comes from
+KKKKhazix/human-writing v1.1.0 under MIT, and that its concrete, restrained
+text-review principles were informed by yetone/kill-ai-slop under
+Apache-2.0. Those attributions and source links remain in the bundled Skill.
+
+MIT License
+
+Copyright (c) 2026 Human Writing Skill contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

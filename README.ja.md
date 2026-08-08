@@ -185,15 +185,18 @@ MAGA は作業の責務と保存済み設定を自動で選びますが、Codex 
 
 ## 構成
 
-現在のリリースは **v0.11.0** です。16 個の登録済み Skills と、必要なときだけ読み込む内部手法ライブラリを含みます。
+現在のリリースは **v0.12.0** です。17 個の登録済み Skills、必要なときだけ読み込む内部手法ライブラリ、実際の成果物がテキストである場合の Humanization 自動ルーティングを含みます。
 
 | レイヤー | 責任 |
 | --- | --- |
 | Project Lead | プロダクト表現を受け取り、状態を維持し、手法を選び、タスクを調整する |
 | プロダクト発見 | 確認、調査、ドメイン言語、コンセプト、優先順位 |
 | 設計とデリバリー | 計画、プロトタイプ、実装、検証、完了 |
+| コンテンツの自然化 | 6 ロケールの回答、記事、説明、プロダクト／GUI コピーを自然に整える |
 | 診断と単純化 | デバッグ、コードレビュー、不要な複雑性の削減 |
 | 手法ライブラリ | 上流ワークフローを必要時のみ読み込み、毎回のタスクを圧迫しない |
+
+Humanization は返信に文字が含まれるかではなく、成果物の種類でルーティングされます。記事、実質的な回答や説明、ドキュメント、メール、プロダクト上に表示するコピーなど、実際の成果物がテキストである場合に適用し、短い確認、進捗報告、ツール出力、Git 状態、未加工の技術ペイロードには適用しません。
 
 実装を見る：[Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [プロダクト指向 Project Lead](./playbooks/product-oriented-project-lead.md)
 
@@ -239,6 +242,7 @@ MAGA は固定リビジョンの成熟した手法を適用しています。
 
 - [mattpocock/skills](https://github.com/mattpocock/skills)：25 個の正式な Engineering / Productivity Skills のワークフロー資料。`8b36d4f` に固定。
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小実装、複雑性レビュー、ライフサイクル Hooks。`16f2980` に固定。
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：6 ロケールの自然な文章と GUI コピー。`d3b8f37`（Humanization `3.0.0`）に固定。
 
 ルーティング、プロジェクト状態、インストーラー、Project Lead 契約は MAGA による適用です。出典、変更内容、ライセンスは [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) に記録しています。
 

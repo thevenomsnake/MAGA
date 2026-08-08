@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Humanization</title>
+  <desc id="desc">An H monogram with six colored language bars</desc>
+  <rect width="256" height="256" rx="44" fill="#143D36"/>
+  <rect x="58" y="48" width="34" height="160" fill="#F4F6F1"/>
+  <rect x="164" y="48" width="34" height="160" fill="#F4F6F1"/>
+  <g>
+    <rect x="82" y="111" width="16" height="34" fill="#D94B3D"/>
+    <rect x="98" y="111" width="16" height="34" fill="#E6B83F"/>
+    <rect x="114" y="111" width="16" height="34" fill="#2E63C7"/>
+    <rect x="130" y="111" width="16" height="34" fill="#D94B3D"/>
+    <rect x="146" y="111" width="16" height="34" fill="#E6B83F"/>
+    <rect x="162" y="111" width="16" height="34" fill="#2E63C7"/>
+  </g>
+</svg>

@@ -10,6 +10,7 @@ const SKILLS_ROOT = path.join(PLUGIN_ROOT, "skills");
 const METHODS_ROOT = path.join(PLUGIN_ROOT, "methods");
 
 const MAGA_SKILLS = ["orchestrate-tickets", "project-lead"];
+const HUMANIZATION_SKILLS = ["humanization"];
 const MATT_INTERNAL_METHODS = [
   "ask-matt",
   "grill-me",
@@ -51,6 +52,7 @@ const ABSORBED_UPSTREAM_CAPABILITIES = [
 ];
 const REGISTERED_SKILLS = [
   ...MAGA_SKILLS,
+  ...HUMANIZATION_SKILLS,
   ...MATT_MODEL_INVOKED,
   ...PONYTAIL_SKILLS,
 ];
@@ -114,7 +116,7 @@ test("hard-cuts the retired plugin identity", () => {
   }
 });
 
-test("exposes exactly 16 product Skills and keeps 13 methods internal", () => {
+test("exposes exactly 17 product Skills and keeps 13 methods internal", () => {
   assert.deepEqual(childDirectories(SKILLS_ROOT), [...REGISTERED_SKILLS].sort());
   assert.deepEqual(childDirectories(METHODS_ROOT), [...MATT_INTERNAL_METHODS].sort());
 
@@ -134,7 +136,7 @@ test("gives every registered Skill a product label and implicit routing contract
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const registeredCatalog = catalog.skills.filter((entry) => entry.status === "registered");
 
-  assert.equal(registeredCatalog.length, 16);
+  assert.equal(registeredCatalog.length, 17);
   for (const skill of REGISTERED_SKILLS) {
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     const metadata = read(SKILLS_ROOT, skill, "agents", "openai.yaml");
@@ -150,6 +152,30 @@ test("gives every registered Skill a product label and implicit routing contract
     assert.match(metadata, /policy:\s*\r?\n\s*allow_implicit_invocation:\s*true/, skill);
     assert.equal(catalogEntry?.display_name, displayName, skill);
     assert.equal(catalogEntry?.invocation, "implicit", skill);
+  }
+});
+
+test("routes text-production tasks through Humanization without touching technical payloads", () => {
+  const root = path.join(SKILLS_ROOT, "humanization");
+  const instructions = read(root, "SKILL.md");
+  const metadata = read(root, "agents", "openai.yaml");
+
+  assert.equal(read(root, "VERSION").trim(), "3.0.0");
+  assert.match(instructions, /Use automatically when a task produces or revises substantive answers/);
+  assert.match(instructions, /代码、命令、路径、URL/);
+  assert.match(metadata, /allow_implicit_invocation:\s*true/);
+  assert.match(read(root, "LICENSE"), /Human Writing Skill contributors/);
+  for (const relative of [
+    "references/core.md",
+    "references/formats/gui-microcopy.md",
+    "references/locales/zh-CN.md",
+    "references/locales/en.md",
+    "scripts/check_writing.py",
+    "scripts/check_writing_smoke.py",
+    "assets/icon-small.png",
+    "assets/icon-large.svg",
+  ]) {
+    assert.equal(fs.existsSync(path.join(root, relative)), true, relative);
   }
 });
 
@@ -357,12 +383,12 @@ test("publishes a complete upstream mapping and identical distributed notices", 
 
   assert.equal(catalog.schema_version, 1);
   assert.deepEqual(catalog.target_counts, {
-    registered: 16,
+    registered: 17,
     internal_method: 13,
     absorbed: 4,
   });
-  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 33);
-  assert.equal(registered.length, 16);
+  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 34);
+  assert.equal(registered.length, 17);
   assert.equal(internalMethods.length, 13);
   assert.equal(absorbed.length, 4);
   assert.deepEqual(
@@ -375,10 +401,13 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   );
   assert.match(notices, /8b36d4fb2635b3c21998dcd8144439c9e5ba7302/);
   assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
+  assert.match(notices, /d3b8f3791fee58c030aa52539296ad361654f1c7/);
   assert.match(notices, /Ten upstream model-invoked Skills remain registered/);
   assert.match(notices, /Thirteen upstream\s+user-invoked workflows are distributed as internal MAGA/);
   assert.match(notices, /remaining two upstream capabilities are absorbed into Project Lead/);
-  assert.match(notices, /sixteen registered product Skills/);
+  assert.match(notices, /seventeen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
+  assert.match(notices, /complete Humanization Skill/);
+  assert.match(notices, /Human Writing Skill contributors/);
   assert.equal(notices, read(REPOSITORY_ROOT, "THIRD_PARTY_NOTICES.md"));
 });

@@ -185,15 +185,18 @@ MAGA는 작업의 책임과 저장된 설정을 자동으로 판단하지만, Co
 
 ## 구성
 
-현재 릴리스는 **v0.11.0**입니다. 등록된 Skills 16개와 필요할 때만 로드하는 내부 방법 라이브러리를 포함합니다.
+현재 릴리스는 **v0.12.0**입니다. 등록된 Skills 17개, 필요할 때만 로드하는 내부 방법 라이브러리, 실제 산출물이 텍스트일 때 Humanization으로 보내는 자동 라우팅을 포함합니다.
 
 | 계층 | 책임 |
 | --- | --- |
 | Project Lead | 제품 언어 수신, 상태 유지, 방법 선택, 작업 조율 |
 | 제품 발견 | 확인, 조사, 도메인 언어, 개념, 우선순위 |
 | 설계와 전달 | 계획, 프로토타이핑, 구현, 검증, 완료 |
+| 콘텐츠 자연화 | 6개 로케일의 답변, 기사, 설명, 제품 및 GUI 문구를 자연스럽게 다듬음 |
 | 진단과 단순화 | 디버깅, 코드 리뷰, 불필요한 복잡성 제거 |
 | 방법 라이브러리 | 매 작업의 컨텍스트를 차지하지 않도록 상위 워크플로를 필요할 때만 로드 |
+
+Humanization은 답변에 글자가 있다는 이유가 아니라 산출물 유형에 따라 라우팅됩니다. 기사, 실질적인 답변이나 설명, 문서, 이메일, 제품에 표시되는 문구처럼 실제 산출물이 텍스트일 때 적용되며, 짧은 확인, 진행 상황, 도구 결과, Git 상태, 원시 기술 페이로드에는 적용되지 않습니다.
 
 구현 살펴보기: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [제품 중심 Project Lead](./playbooks/product-oriented-project-lead.md)
 
@@ -239,6 +242,7 @@ MAGA는 고정된 리비전의 검증된 방법을 적용합니다.
 
 - [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 25개의 워크플로 자료. `8b36d4f`에 고정.
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): 최소 구현, 복잡성 리뷰, 라이프사이클 Hooks. `16f2980`에 고정.
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): 6개 로케일의 자연스러운 산문 및 GUI 문구. `d3b8f37`(Humanization `3.0.0`)에 고정.
 
 라우팅, 프로젝트 상태, 설치 프로그램, Project Lead 계약은 MAGA의 로컬 적용입니다. 출처, 변경 사항, 라이선스는 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)에 기록되어 있습니다.
 

@@ -181,6 +181,8 @@ running task.
 In particular:
 
 - keep ordinary idea discussion and material product questions in this task;
+- apply Humanization when the requested deliverable is actual user-facing text,
+  while leaving routine collaboration chatter and technical payloads unchanged;
 - use research for missing external facts;
 - use domain modeling for overloaded product language;
 - use a throwaway prototype for experiential uncertainty;

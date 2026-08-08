@@ -193,15 +193,18 @@ Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区�
 
 ## 里面有什么
 
-当前版本是 **v0.11.0**，包含 16 个注册 Skills、一套只在需要时加载的内部方法库，以及职责级计算配置。
+当前版本是 **v0.12.0**，包含 17 个注册 Skills、一套只在需要时加载的内部方法库、职责级计算配置，以及面向实际文本产出的 Humanization 自动路由。
 
 | 层 | 职责 |
 | --- | --- |
 | Project Lead | 接收产品语言、维护状态、选择方法并协调任务 |
 | 产品发现 | 澄清、研究、领域语言、概念和优先级 |
 | 设计与交付 | 规划、原型、实现、验证和收尾 |
+| 内容自然化 | 处理六种 locale 的回答、文章、解释、产品文案和 GUI 文案 |
 | 诊断与简化 | 调试、代码 review 和削减不必要复杂度 |
 | 方法库 | 按需加载上游工作流，避免占满每次对话的上下文 |
+
+Humanization 按交付物类型路由，不是只要回复里出现文字就触发。文章、实质性问答或解释、文档、邮件和产品可见文案属于“实际文本产出”；简短确认、进度播报、工具结果、Git 状态和原始技术载荷不会触发。
 
 查看实现：[Skill 目录](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [面向产品的 Project Lead](./playbooks/product-oriented-project-lead.md)
 
@@ -247,6 +250,7 @@ MAGA 在固定版本上改编了成熟方法：
 
 - [mattpocock/skills](https://github.com/mattpocock/skills)：25 个正式 Engineering 与 Productivity Skills 的工作流材料，固定到 `8b36d4f`。
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小实现、复杂度 review 和生命周期 Hooks，固定到 `16f2980`。
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：覆盖六种 locale 的自然文章与 GUI 文案，固定到 `d3b8f37`（Humanization `3.0.0`）。
 
 MAGA 的路由、项目状态、安装器和 Project Lead 契约属于本地改编。来源、修改和许可证记录在 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 

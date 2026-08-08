@@ -41,8 +41,8 @@ function codexEnvironment(root, overrides = {}) {
   };
 }
 
-function runHook(script, env, input = "") {
-  const result = spawnSync(process.execPath, [path.join(HOOKS_ROOT, script)], {
+function runHook(script, env, input = "", args = []) {
+  const result = spawnSync(process.execPath, [path.join(HOOKS_ROOT, script), ...args], {
     env,
     input,
     encoding: "utf8",
@@ -64,6 +64,8 @@ test("registers Ponytail's original Codex lifecycle events", () => {
     "UserPromptSubmit",
   ]);
   assert.equal(config.hooks.SessionStart[0].matcher, "startup|resume|clear|compact");
+  assert.match(JSON.stringify(config.hooks.SessionStart), /humanization-context\.js/);
+  assert.match(JSON.stringify(config.hooks.SubagentStart), /humanization-context\.js/);
 
   for (const groups of Object.values(config.hooks)) {
     for (const group of groups) {
@@ -77,6 +79,26 @@ test("registers Ponytail's original Codex lifecycle events", () => {
       }
     }
   }
+});
+
+test("routes actual text production through Humanization in tasks and subagents", (t) => {
+  const env = codexEnvironment(workspace(t));
+
+  let output = JSON.parse(runHook("humanization-context.js", env));
+  assert.equal(output.systemMessage, "HUMANIZATION:TEXT-ROUTING");
+  assert.equal(output.hookSpecificOutput.hookEventName, "SessionStart");
+  assert.match(output.hookSpecificOutput.additionalContext, /deliverable includes authored user-facing text/);
+  assert.match(output.hookSpecificOutput.additionalContext, /Do not invoke it for brief acknowledgements/);
+  assert.match(output.hookSpecificOutput.additionalContext, /Keep code, commands, paths, URLs/);
+
+  output = JSON.parse(runHook(
+    "humanization-context.js",
+    env,
+    "",
+    ["SubagentStart"],
+  ));
+  assert.equal(output.hookSpecificOutput.hookEventName, "SubagentStart");
+  assert.match(output.hookSpecificOutput.additionalContext, /substantive answers and explanations/);
 });
 
 test("activates, switches, reinjects, and disables Ponytail in isolated Codex data", (t) => {

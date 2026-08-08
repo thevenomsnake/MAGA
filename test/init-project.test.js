@@ -26,7 +26,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.11\.0/);
+  assert.match(project, /workflow_version: 0\.12\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
@@ -273,6 +273,7 @@ test("ships MIT and upstream notices with the package and plugin", () => {
     assert.match(license, /^MIT License/);
     assert.match(notices, /Copyright \(c\) 2026 Matt Pocock/);
     assert.match(notices, /Copyright \(c\) 2026 DietrichGebert/);
+    assert.match(notices, /Copyright \(c\) 2026 Human Writing Skill contributors/);
   }
 });
 
