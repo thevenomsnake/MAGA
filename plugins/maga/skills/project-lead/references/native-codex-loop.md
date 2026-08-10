@@ -11,6 +11,7 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - Pin a role-management task only for a `managed queue` role.
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.
+- Preserve the session hook's branch, full `HEAD`, and dirty set as the Git baseline. Use explicit branches or permitted worktrees, serialize shared-checkout writers, and protect pre-existing dirty paths.
 - Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved MAGA values are recommendations; omit overrides and use the host default.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
@@ -53,17 +54,19 @@ the recovery authority.
 ## Reconcile Before Acting
 
 1. Read `AGENTS.md`, `.ai-workflow/PROJECT.md`, linked active roles, and active Tickets.
-2. List current Codex tasks for the saved project.
-3. Match deterministic titles to active Tickets and managed roles.
-4. Resume or message a matching task instead of creating a duplicate.
-5. Integrate completed results and archive workers before dispatching newly unblocked Tickets.
-6. Treat a task with no durable role or Ticket contract as non-authoritative.
+2. Read the recorded Git baseline and compare it with the current branch, `HEAD`, and dirty set before assigning a writer.
+3. List current Codex tasks for the saved project.
+4. Match deterministic titles to active Tickets and managed roles.
+5. Resume or message a matching task instead of creating a duplicate.
+6. Integrate completed results and archive workers before dispatching newly unblocked Tickets.
+7. Treat a task with no durable role or Ticket contract as non-authoritative.
 
 ## Run One Closure Cycle
 
 ```text
 approved Ticket + explicitly approved named task
   -> durable contract committed
+  -> explicit branch/worktree + protected Git baseline
   -> responsibility profile resolved against the destination host
   -> native task creating/running
   -> completed or needs-decision
@@ -73,7 +76,12 @@ approved Ticket + explicitly approved named task
   -> usable result returned through Project Lead
 ```
 
-Keep the coordinator read-only while a shared-checkout worker writes. A worker commit on the target branch is already integrated when its returned commit resolves to the current history; do not cherry-pick it again.
+Keep the coordinator read-only while a shared-checkout worker writes. A worker
+commit on the target branch is already integrated when its returned commit
+resolves to the current history; do not cherry-pick it again. Before branch
+switches, synchronization, cleanup, or replacement, preserve all current changes
+recoverably. Never use `reset --hard` or `checkout` to discard another task's
+work.
 
 When a worker returns `needs-decision`:
 
@@ -84,7 +92,7 @@ When a worker returns `needs-decision`:
 
 When a worker returns `completed`:
 
-1. Require a concrete behavior or artifact, one focused validation fact, and a resolvable commit or artifact identity.
+1. Require a concrete behavior or artifact, one focused validation fact, and a resolvable commit made from the worker's declared branch or worktree.
 2. Update the Ticket completion fields and set it to `integrated` only after the result is present in project history.
 3. Update `PROJECT.md` with what is usable now and remove the Ticket from active work.
 4. Move completed detail to archive only when that reduces the active working set; do not create empty archive structure.

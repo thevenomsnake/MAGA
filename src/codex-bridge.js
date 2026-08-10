@@ -7,7 +7,7 @@ import {
   resolveComputeProfile,
 } from "../plugins/maga/runtime/compute-profiles.mjs";
 
-const BRIDGE_VERSION = "0.12.2";
+const BRIDGE_VERSION = "0.13.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

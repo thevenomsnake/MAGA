@@ -2,7 +2,11 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.12.2";
+const WORKFLOW_VERSION = "0.13.0";
+
+function writeLf(file, content) {
+  fs.writeFileSync(file, String(content).replace(/\r\n?/g, "\n"), "utf8");
+}
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -98,6 +102,14 @@ For software changes, clarify the observable outcome, implement the shortest run
 
 Do not default to TDD, BDD, full regression suites, multi-viewport matrices, dual-axis review, or repeated validation unless the user explicitly requests them or a documented high-risk boundary requires them.
 
+## Git And Releases
+
+- Before writing, record the current branch, full HEAD, and dirty file set. Treat pre-existing dirty paths as protected work.
+- Work on an explicit branch or permitted isolated worktree. Serialize writers in a shared checkout, and commit each runnable vertical slice after its one focused smoke.
+- Preserve changes recoverably before switching, syncing, or cleaning. Never use reset --hard or checkout to discard work.
+- Use .gitattributes as the line-ending authority. Write generated text as LF, then calculate manifest or catalog byteLength and sha256 from the final bytes on disk.
+- Deploy only a full commit from a clean tree through git -c core.autocrlf=false archive. Record the deployed commit and previous known-good commit; roll back by redeploying the known-good commit, never by patching the server.
+
 ## Filesystem And Privacy
 
 - Keep all project files, generated artifacts, caches, and temporary files under this repository root.
@@ -110,6 +122,10 @@ const GITIGNORE = `.env
 !.env.example
 tmp/
 .ai-workflow/runtime.json
+`;
+
+const GITATTRIBUTES = `# Canonical text bytes for worktrees, Git blobs, generated artifacts, and release archives.
+* text=auto eol=lf
 `;
 
 function hasGitIdentity(targetDir) {
@@ -135,7 +151,14 @@ function initializeGit(targetDir) {
 function commitInitialState(targetDir) {
   if (!hasGitIdentity(targetDir)) return "skipped-no-identity";
 
-  const add = runGit(targetDir, ["add", "--", "AGENTS.md", ".gitignore", ".ai-workflow/PROJECT.md"]);
+  const add = runGit(targetDir, [
+    "add",
+    "--",
+    "AGENTS.md",
+    ".gitattributes",
+    ".gitignore",
+    ".ai-workflow/PROJECT.md",
+  ]);
   if (add.status !== 0) throw new Error(add.stderr.trim() || "git add failed");
 
   const commit = runGit(targetDir, ["commit", "-m", "chore: initialize maga"]);
@@ -168,9 +191,10 @@ export function initProject(options = {}) {
   if (!projectName) throw new Error("project name cannot be empty");
 
   fs.mkdirSync(path.join(targetDir, ".ai-workflow"), { recursive: true });
-  fs.writeFileSync(path.join(targetDir, "AGENTS.md"), agentsDocument(), "utf8");
-  fs.writeFileSync(path.join(targetDir, ".gitignore"), GITIGNORE, "utf8");
-  fs.writeFileSync(marker, projectDocument(projectName), "utf8");
+  writeLf(path.join(targetDir, "AGENTS.md"), agentsDocument());
+  writeLf(path.join(targetDir, ".gitattributes"), GITATTRIBUTES);
+  writeLf(path.join(targetDir, ".gitignore"), GITIGNORE);
+  writeLf(marker, projectDocument(projectName));
 
   const git = options.git === false ? "disabled" : initializeGit(targetDir);
   const commit = options.git === false || options.commit === false

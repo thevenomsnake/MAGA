@@ -185,7 +185,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.12.2**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
+La versión actual es **v0.13.0**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 | Capa | Responsabilidad |
 | --- | --- |

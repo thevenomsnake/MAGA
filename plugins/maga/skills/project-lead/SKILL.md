@@ -61,6 +61,12 @@ Read `AGENTS.md`, the current product direction, current state, active decisions
 
 When onboarding, forming a role, creating a Ticket, completing work, or recovering state, read [references/project-memory.md](references/project-memory.md) and follow its file contract. Do not load it for a self-contained response that does not change project memory.
 
+Before source changes, branch or worktree operations, portable handoff,
+frozen-artifact generation, deployment, or rollback, read
+[references/git-and-release.md](references/git-and-release.md). The session hook's
+recorded branch, `HEAD`, and dirty set are the starting boundary; do not replace
+that fact with a later clean-looking status.
+
 Maintain these logical records only when the project needs them:
 
 - **Product direction**: user, problem, desired behavior, and current success boundary.
@@ -129,15 +135,17 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 ## Deliver A Product Slice
 
 1. Restate the current product outcome and acceptance boundary in plain language.
-2. Resolve only blocking product decisions; use a prototype when behavior or visual quality must be experienced rather than discussed.
-3. Choose the smallest runnable or inspectable vertical slice.
-4. Decide which existing role owns it, or create the one new role justified by a real boundary.
-5. Persist the Ticket before cross-session execution.
-6. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes.
-7. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. Create it only when the Product Owner explicitly asked for a separate task or approves the concrete proposal: "Open <deterministic title> as a separate work task now?" One answer may approve a clearly listed batch. Record that permission against the exact title and attempt, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
-8. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact.
-9. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
-10. Release only under explicit or durable standing authorization and the release role's authority boundary.
+2. Reconcile the recorded Git baseline and protect pre-existing dirty paths before any write.
+3. Resolve only blocking product decisions; use a prototype when behavior or visual quality must be experienced rather than discussed.
+4. Choose the smallest runnable or inspectable vertical slice.
+5. Decide which existing role owns it, or create the one new role justified by a real boundary.
+6. Persist the Ticket before cross-session execution.
+7. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes.
+8. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. Create it only when the Product Owner explicitly asked for a separate task or approves the concrete proposal: "Open <deterministic title> as a separate work task now?" One answer may approve a clearly listed batch. Record that permission against the exact title and attempt, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
+9. After the slice works, run its one risk-matched smoke and commit it before integration, switching context, or starting another slice.
+10. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact and commit identity.
+11. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
+12. Release only an explicit commit from a clean tree under explicit or durable standing authorization and the release role's authority boundary. Record the deployment and previous known-good commit.
 
 ## Route Capabilities Internally
 

@@ -22,11 +22,12 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(result.alreadyInitialized, false);
   assert.equal(result.projectName, "Studio Scheduler");
   assert.equal(fs.existsSync(path.join(targetDir, "AGENTS.md")), true);
+  assert.equal(fs.existsSync(path.join(targetDir, ".gitattributes")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".gitignore")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.12\.2/);
+  assert.match(project, /workflow_version: 0\.13\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
@@ -34,6 +35,15 @@ test("initializes the minimum project kernel", (t) => {
   assert.match(agents, /Never ask the user to invoke a Skill/);
   assert.match(agents, /Do not pre-create generic discussion, research, prototype, or implementation tasks/);
   assert.match(agents, /create it only after the Product Owner explicitly approves that title/);
+  assert.match(agents, /record the current branch, full HEAD, and dirty file set/);
+  assert.match(agents, /git -c core\.autocrlf=false archive/);
+  assert.equal(
+    fs.readFileSync(path.join(targetDir, ".gitattributes"), "utf8"),
+    "# Canonical text bytes for worktrees, Git blobs, generated artifacts, and release archives.\n* text=auto eol=lf\n",
+  );
+  for (const file of ["AGENTS.md", ".gitattributes", ".gitignore", ".ai-workflow/PROJECT.md"]) {
+    assert.doesNotMatch(fs.readFileSync(path.join(targetDir, file), "utf8"), /\r\n/, file);
+  }
 });
 
 test("ships per-Ticket execution authorization", () => {

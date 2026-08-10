@@ -191,7 +191,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.12.2**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, and automatic Humanization routing for human-readable local-file content.
+The current release is **v0.13.0**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 | Layer | Responsibility |
 | --- | --- |
