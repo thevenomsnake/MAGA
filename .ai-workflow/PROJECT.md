@@ -17,7 +17,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA now separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. T001 is implemented and awaiting its integration record.
+MAGA now separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. The first integrated slice is ready for installation testing.
 
 ## Roles
 
@@ -25,7 +25,7 @@ MAGA now separates likely multi-turn product exploration from the long-lived Pro
 
 ## Active Tickets
 
-- [T001 Isolate open-ended product exploration](tickets/T001-isolate-product-exploration.md): completed, approved.
+None.
 
 ## Decisions
 

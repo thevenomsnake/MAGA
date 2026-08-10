@@ -1,6 +1,6 @@
 ---
 key: T001
-status: completed
+status: integrated
 authorization: approved
 role: project-lead
 ---
@@ -55,5 +55,5 @@ The focused initializer test proves that new projects receive the exploration bo
 - Behavior: Open-ended product exploration uses a clean, specifically named pre-Ticket task, returns one accepted decision packet to the canonical Project Lead, and leaves implementation on the existing Ticket worker lifecycle.
 - Validation: `node --test test/init-project.test.js` passed 9/9; Project Lead structural validation reported `Skill is valid!`.
 - Evidence: `plugins/maga/skills/project-lead/references/exploration-loop.md` and the generated project contract in `src/init-project.js`.
-- Commit or artifact: pending
+- Commit or artifact: `d5c19c67ddc8cd71c5661cfeb6797b29807d5de3`
 - Blocker: none
