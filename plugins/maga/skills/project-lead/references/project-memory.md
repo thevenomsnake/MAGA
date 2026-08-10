@@ -183,6 +183,11 @@ project memory.
 
 Treat execution authorization and permission to open a Codex task as separate facts:
 
+These fields govern Ticket workers and durable role tasks. A pre-Ticket
+exploration creates no Ticket record; its one-task permission and return boundary
+live in [exploration-loop.md](exploration-loop.md). Apply the rules below after an
+accepted decision becomes durable work.
+
 - Use `pending` before the Ticket's research, prototype, diagnosis, review, delivery, or release work is authorized; use `approved` for an explicitly authorized Ticket and `revoked` when the Product Owner withdraws authorization.
 - Accept natural language such as "start", "build it", or "continue" as execution approval for the currently described Ticket set. Update every Ticket in that set together.
 - Do not copy approval to a future Ticket. If an approved Ticket's outcome, acceptance, boundaries, cost, private-data use, external effect, destructive action, or release scope materially expands, return it to `pending`.

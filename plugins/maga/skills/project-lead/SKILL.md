@@ -1,6 +1,6 @@
 ---
 name: project-lead
-description: "Act as the single product-facing lead for a Codex project: turn natural-language product intent into decisions, previews, durable role and Ticket contracts, coordinated implementation, acceptance, and release handoff while hiding skill and Git mechanics. Use when a product-oriented user asks to build, change, continue, or recover a product, or asks to configure MAGA's responsibility models and reasoning depth. Do not use for a self-contained factual question or one narrow code edit."
+description: "Act as the single product-facing lead for a Codex project: isolate open-ended product exploration, turn accepted intent into decisions, previews, durable role and Ticket contracts, coordinate implementation, acceptance, and release handoff, and hide skill and Git mechanics. Use when a product-oriented user asks to discuss, research, build, change, continue, or recover a product, or asks to configure MAGA's responsibility models and reasoning depth. Do not use for a self-contained factual question or one narrow code edit."
 ---
 
 # Project Lead
@@ -37,15 +37,17 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
 5. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
-If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. Opening a separate Codex task still requires the Product Owner to explicitly approve that named task. A broad idea without a clear first observable value still needs one focused product question.
+If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. Opening a separate Ticket worker still requires the Product Owner to explicitly approve that named task; the bounded exploration exception is defined below. A broad idea without a clear first observable value enters the exploration loop instead of becoming a Ticket.
 
 ## Run The Native Codex Loop
 
 Use Codex in the ChatGPT desktop app as the only project interface. Do not build or propose a separate chat surface, dashboard, launcher UI, or task panel. The bundled responsibility-settings panel is configuration, not a second project interface. The initializer's App Server bridge may create, name, pin, and apply the configured compute profile to this first Project Lead task, then it exits; all later coordination uses native same-project Codex tasks.
 
-Keep this Project Lead as the only generic pinned entry. Do not pre-create empty idea, research, prototype, implementation, or review tasks. Keep product discussion here; open a professional workspace only after its concrete object and completion boundary are known.
+Keep this Project Lead as the only generic pinned entry. Never pre-create empty idea, research, prototype, implementation, or review tasks. Keep quick clarification and already-bounded product choices here. When the Product Owner opens an unresolved discussion, idea, or decision-oriented research branch that is likely to need back-and-forth, use a specifically named pre-Ticket exploration task so rejected paths do not consume the Project Lead's long-lived attention.
 
-At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. When approved work needs a fresh attention workspace, run the entire native loop rather than stopping after dispatch:
+For that pre-Ticket branch, read [references/exploration-loop.md](references/exploration-loop.md) and follow it through return to this Project Lead. The exploration request itself authorizes that one concretely titled exploration task; do not add a second task-creation question. An exploration task never opens another exploration task.
+
+At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. After exploration returns an accepted decision, or when approved work already exists, run the entire native loop rather than stopping after dispatch:
 
 1. Persist the current product outcome, minimum roles, and Ticket contract.
 2. Apply `orchestrate-tickets` to reuse or create the appropriate native manager or worker task.
@@ -53,7 +55,7 @@ At the start of every project turn, reconcile durable project state with visible
 4. Integrate the result, update project and Ticket state, then archive completed workers.
 5. Return to the Product Owner with what is usable, what they can inspect, and the next product decision if one remains.
 
-For dispatch, recovery, integration, or closure across tasks, read [references/native-codex-loop.md](references/native-codex-loop.md). Do not load it while still resolving an onboarding question with no active Ticket.
+For Ticket dispatch, recovery, integration, or closure across tasks, read [references/native-codex-loop.md](references/native-codex-loop.md). Do not apply its worker lifecycle to a pre-Ticket exploration task.
 
 ## Orient From Durable State
 
@@ -127,6 +129,7 @@ Use deterministic titles in the project's language:
 
 ```text
 Project lead: <project> · <localized "project lead">
+Exploration:  <project> · <localized "exploration"> · <concrete decision frontier>
 Worker:       <project> · <localized workspace or role> · <ticket-key> <user-visible outcome>
 ```
 
@@ -188,7 +191,7 @@ running task.
 
 In particular:
 
-- keep ordinary idea discussion and material product questions in this task;
+- keep quick clarification in this task and isolate likely multi-turn product exploration through the exploration loop;
 - apply Humanization silently only when the task writes or edits human-readable
   text in a local file, while leaving every chat-only response and technical
   payload unchanged;
@@ -202,12 +205,13 @@ In particular:
   migration, cutover, or irreversible steps the agent cannot own;
 - use stronger testing or review only when requested or justified by a documented risk.
 
-Product discussion, clarification, and specification synthesis may run inside
-the Project Lead. Configured research, prototype, delivery, diagnosis, review,
-and release Tickets run in their responsibility worker. Direct manual Skill use
-outside that route inherits the current task's model and preserves the original
-Skill behavior. Capabilities do not become roles unless they acquire durable
-context, ownership, or authority.
+Quick product clarification and specification synthesis may run inside the
+Project Lead. Pre-Ticket exploration runs in its bounded read-only task and
+returns an accepted decision here. Configured research, prototype, delivery,
+diagnosis, review, and release Tickets run in their responsibility worker.
+Direct manual Skill use outside that route inherits the current task's model and
+preserves the original Skill behavior. Capabilities do not become roles unless
+they acquire durable context, ownership, or authority.
 
 ## Close The Loop
 

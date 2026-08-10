@@ -33,8 +33,12 @@ test("initializes the minimum project kernel", (t) => {
   assert.doesNotMatch(project, /task_creation|Active Missions/);
   const agents = fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8");
   assert.match(agents, /Never ask the user to invoke a Skill/);
-  assert.match(agents, /Do not pre-create generic discussion, research, prototype, or implementation tasks/);
-  assert.match(agents, /create it only after the Product Owner explicitly approves that title/);
+  assert.match(agents, /request to discuss, explore, or research an unresolved product direction/);
+  assert.match(agents, /Do not ask a second task-creation question/);
+  assert.match(agents, /never recursively open another exploration task/);
+  assert.match(agents, /A Ticket worker returns a new product question to the Project Lead/);
+  assert.match(agents, /return its accepted decision to the Project Lead before creating Tickets or writing code/);
+  assert.match(agents, /For Ticket workers[\s\S]+explicitly approves that title/);
   assert.match(agents, /record the current branch, full HEAD, and dirty file set/);
   assert.match(agents, /git -c core\.autocrlf=false archive/);
   assert.equal(
@@ -80,6 +84,10 @@ test("routes specifically named professional workspaces on demand", () => {
     path.join(projectLeadRoot, "references", "native-codex-loop.md"),
     "utf8",
   );
+  const exploration = fs.readFileSync(
+    path.join(projectLeadRoot, "references", "exploration-loop.md"),
+    "utf8",
+  );
   const memory = fs.readFileSync(
     path.join(projectLeadRoot, "references", "project-memory.md"),
     "utf8",
@@ -94,6 +102,7 @@ test("routes specifically named professional workspaces on demand", () => {
 
   assert.match(projectLead, /only generic pinned entry/);
   assert.match(projectLead, /references\/capability-routing\.md/);
+  assert.match(projectLead, /references\/exploration-loop\.md/);
   assert.match(routing, /Never initialize empty tasks named only/);
   assert.match(routing, /Name The Work, Not The Capability/);
   assert.match(routing, /Leave bounded workers unpinned and archive them/);
@@ -103,6 +112,13 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(routing, /real managed queue/);
   assert.match(nativeLoop, /Never pre-create empty capability tasks/);
   assert.match(nativeLoop, /specific object is not authoritative/);
+  assert.match(exploration, /Route by meaning, not keywords/);
+  assert.match(exploration, /thin brief/);
+  assert.match(exploration, /Never create an[\s\S]+chain of exploration tasks/);
+  assert.match(exploration, /Do not edit local files, create Tickets,[\s\S]+create another task/);
+  assert.match(exploration, /Implementation authorization: approved \| pending/);
+  assert.match(exploration, /match the canonical Project Lead title[\s\S]+send the packet there/);
+  assert.match(exploration, /normal named-worker approval and orchestration rules/);
   assert.match(memory, /workspace: <optional research \| prototype \| delivery/);
   assert.match(memory, /## Execution[\s\S]+Task title: pending[\s\S]+Attempt: pending/);
   assert.match(memory, /Validation: pending/);

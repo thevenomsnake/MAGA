@@ -91,7 +91,8 @@ function agentsDocument() {
 
 - Treat the user as Product Owner and keep one Project Lead as the product-facing entry.
 - Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
-- Do not pre-create generic discussion, research, prototype, or implementation tasks. Keep product discussion in the Project Lead; propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
+- Treat a request to discuss, explore, or research an unresolved product direction as permission for the canonical Project Lead to open one specifically titled, read-only exploration task. Do not ask a second task-creation question. Give it only the decision frontier and durable constraints, never recursively open another exploration task, and return its accepted decision to the Project Lead before creating Tickets or writing code. A Ticket worker returns a new product question to the Project Lead instead of opening this workflow.
+- Keep quick clarification in the Project Lead and never pre-create generic empty discussion, research, prototype, or implementation tasks. For Ticket workers, propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.
 - Keep roles durable and Codex task instances replaceable. Do not store task IDs or machine paths in tracked files.
