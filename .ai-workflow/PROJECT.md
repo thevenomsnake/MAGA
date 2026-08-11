@@ -17,7 +17,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA now separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. The first integrated slice is ready for installation testing.
+MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. T002 restores `wait-what` as a visible, internationally triggered Skill while preserving automatic communication recovery; the slice is implemented and awaiting its integration record.
 
 ## Roles
 
@@ -25,7 +25,7 @@ MAGA now separates likely multi-turn product exploration from the long-lived Pro
 
 ## Active Tickets
 
-None.
+- [T002 Register automatic Wait What](tickets/T002-register-automatic-wait-what.md): completed, approved.
 
 ## Decisions
 

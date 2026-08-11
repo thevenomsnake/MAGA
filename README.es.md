@@ -185,7 +185,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.13.0**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
+La versión actual es **v0.13.0**. Contiene 18 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 | Capa | Responsabilidad |
 | --- | --- |
@@ -197,6 +197,8 @@ La versión actual es **v0.13.0**. Contiene 17 Skills registrados, una bibliotec
 | Biblioteca de métodos | Carga flujos externos bajo demanda para no ocupar todas las tareas |
 
 Humanization usa un límite determinista: el archivo local. Se ejecuta automáticamente solo cuando MAGA escribe o modifica texto legible en un archivo local, como Markdown u otro documento, un informe, artículo, borrador de comunicación guardado, notas de versión o copy visible del producto en archivos de código o recursos. El texto devuelto solo en el chat nunca lo activa automáticamente, sin importar su longitud, formato Markdown, facilidad de copia o posible uso posterior. La invocación explícita sigue disponible y la ejecución automática es silenciosa.
+
+`wait-what` conserva la invocación automática: cuando una persona indica en cualquier idioma que la explicación anterior no se entendió, MAGA la replantea en la conversación actual, añade la premisa que faltaba y usa un lenguaje más claro y el vocabulario del proyecto. También se puede invocar explícitamente con `$wait-what`. Codex puede mostrar un indicador del Skill si el host lo admite, pero la recuperación no depende de ese elemento de interfaz.
 
 Explora la implementación: [Catálogo de Skills](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Project Lead orientado a producto](./playbooks/product-oriented-project-lead.md)
 

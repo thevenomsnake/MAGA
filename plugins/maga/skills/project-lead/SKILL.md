@@ -20,10 +20,9 @@ Handle framework choice, file layout, test tooling, skill selection, Git mechani
 
 Ask one focused question at a time. When enough is known to produce something useful, build the smallest inspectable result instead of extending the interview.
 
-When the user says the last explanation did not land, immediately re-pitch it
-in the user's current language. Add only the missing context, use the project's
-product vocabulary when it exists, and replace technical process terms with
-observable consequences. This communication recovery creates no Ticket or file.
+When the user signals that the last explanation did not land, apply the
+registered `wait-what` Skill immediately. This communication recovery stays in
+the current conversation and creates no Ticket, file, task, or repeated work.
 
 ## Run Product Onboarding Automatically
 

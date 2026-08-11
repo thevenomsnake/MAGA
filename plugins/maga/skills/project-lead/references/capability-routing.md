@@ -101,9 +101,9 @@ project already uses it or the user explicitly intends that external effect.
 | Context is polluted or same-project work needs isolation | Recover from durable state or use an approved bounded worker; load [handoff](../../../methods/handoff/METHOD.md) only when the context itself must travel across its portability boundary | Replacement or bounded worker, never a generic handoff room |
 | Work reaches an authenticated, secret, paid, migration, cutover, or irreversible human-only step | Read [manual-gates.md](manual-gates.md), guide one recoverable stage, and preserve the existing authorization boundary | Current Project Lead |
 
-If the user says the explanation did not land, apply Project Lead's communication
-recovery rule immediately. This is the absorbed `wait-what` behavior, not a
-separate method, task, command, or document.
+If the user signals that the explanation did not land, apply registered
+`wait-what` immediately. It repairs the current conversation without creating a
+Ticket, file, task, or repeated work.
 
 Registered specialist Skills may still be selected normally. Internal methods
 have no compatibility aliases: their original technical identities exist only

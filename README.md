@@ -191,7 +191,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.13.0**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
+The current release is **v0.13.0**. It contains 18 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 | Layer | Responsibility |
 | --- | --- |
@@ -203,6 +203,8 @@ The current release is **v0.13.0**. It contains 17 registered Skills, an interna
 | Method library | Upstream workflows loaded on demand instead of occupying every task |
 
 Humanization uses a deterministic local-file boundary. It runs automatically only when MAGA writes or edits human-readable text in a local file—for example, Markdown or another document, a report, article, saved communication draft, release note, or visible product copy in source or resource files. Text returned only in chat never triggers it automatically, regardless of length, Markdown formatting, copy-readiness, or possible later sharing. Explicit invocation remains available, and automatic runs stay silent.
+
+`wait-what` remains automatic: when a user signals in any language that the previous explanation did not land, MAGA re-pitches it in the current conversation with the missing premise, clearer language, and project vocabulary. Explicit `$wait-what` invocation also remains available. Codex may show a Skill indicator when the host supports one; the recovery behavior does not depend on that UI.
 
 Explore the implementation: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
 
