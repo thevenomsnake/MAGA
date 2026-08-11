@@ -371,7 +371,7 @@ test("registers automatic communication recovery and absorbs only the manual gat
   assert.match(waitWhat, /listener's current language/);
   assert.match(waitWhat, /create no Ticket, file, task/);
   assert.doesNotMatch(waitWhat.split("---", 3)[1], /disable-model-invocation/);
-  assert.match(waitWhatMetadata, /display_name: "MAGA · Explain It Another Way"/);
+  assert.match(waitWhatMetadata, /display_name: "MAGA · Wait What"/);
   assert.match(waitWhatMetadata, /allow_implicit_invocation:\s*true/);
   assert.match(projectLead, /registered `wait-what` Skill immediately/);
   assert.match(projectLead, /creates no Ticket, file, task, or repeated work/);
