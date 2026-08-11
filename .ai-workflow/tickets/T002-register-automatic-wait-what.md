@@ -1,6 +1,6 @@
 ---
 key: T002
-status: completed
+status: integrated
 authorization: approved
 role: project-lead
 ---
@@ -54,5 +54,5 @@ The focused bundled-Skills test proves the registered count, implicit invocation
 - Behavior: `wait-what` is a visible registered Skill with language-independent implicit invocation, explicit `$wait-what` use, an international re-pitch contract, and the existing no-Ticket Project Lead recovery boundary.
 - Validation: `node --test test/bundled-skills.test.js` passed 12/12; structural validation reported `Skill is valid!`.
 - Evidence: `plugins/maga/skills/wait-what/SKILL.md`, its Codex metadata, the 18/13/3 catalog mapping, identical distributed notices, and localized usage documentation.
-- Commit or artifact: pending
+- Commit or artifact: `5291783045d26351d2a7ac2c7d6942fc74a6ef1f`
 - Blocker: none
