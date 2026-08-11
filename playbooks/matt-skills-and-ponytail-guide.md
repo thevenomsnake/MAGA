@@ -1,6 +1,6 @@
 # MAGA 内置方法、Humanization 与 Ponytail 使用手册
 
-> 适用版本：MAGA `0.13.0`
+> 适用版本：MAGA `0.13.1`
 
 Matt Pocock Skills 固定到 `1.2.2`，commit
 `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`。上游 25 个正式 Skills 在
@@ -216,7 +216,7 @@ help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品
 
 ## 从 0.8.0 更新
 
-`0.13.0` 不保留被收进内部方法库或吸收层的旧技术入口别名；`wait-what` 是明确重新
+`0.13.1` 不保留被收进内部方法库或吸收层的旧技术入口别名；`wait-what` 是明确重新
 注册的自动沟通恢复能力，不是兼容别名。旧项目的 `.ai-workflow/` 状态不需要迁移；更新
 插件后应在新任务中验证 Skill 列表，并重新审阅 Ponytail hooks。
 
