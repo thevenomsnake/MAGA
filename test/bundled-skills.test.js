@@ -26,7 +26,7 @@ const MATT_INTERNAL_METHODS = [
   "triage",
   "wayfinder",
 ];
-const MATT_MODEL_INVOKED = [
+const MATT_REGISTERED_SKILLS = [
   "code-review",
   "codebase-design",
   "diagnosing-bugs",
@@ -36,6 +36,7 @@ const MATT_MODEL_INVOKED = [
   "research",
   "resolving-merge-conflicts",
   "tdd",
+  "wait-what",
   "writing-for-agents",
 ];
 const PONYTAIL_SKILLS = [
@@ -45,7 +46,7 @@ const PONYTAIL_SKILLS = [
   "ponytail-review",
 ];
 const ABSORBED_PONYTAIL_SKILLS = ["ponytail-gain", "ponytail-help"];
-const ABSORBED_MATT_CAPABILITIES = ["wait-what", "wizard"];
+const ABSORBED_MATT_CAPABILITIES = ["wizard"];
 const ABSORBED_UPSTREAM_CAPABILITIES = [
   ...ABSORBED_MATT_CAPABILITIES,
   ...ABSORBED_PONYTAIL_SKILLS,
@@ -53,7 +54,7 @@ const ABSORBED_UPSTREAM_CAPABILITIES = [
 const REGISTERED_SKILLS = [
   ...MAGA_SKILLS,
   ...HUMANIZATION_SKILLS,
-  ...MATT_MODEL_INVOKED,
+  ...MATT_REGISTERED_SKILLS,
   ...PONYTAIL_SKILLS,
 ];
 
@@ -116,7 +117,7 @@ test("hard-cuts the retired plugin identity", () => {
   }
 });
 
-test("exposes exactly 18 product Skills and keeps 13 methods internal", () => {
+test("exposes exactly 19 product Skills and keeps 13 methods internal", () => {
   assert.deepEqual(childDirectories(SKILLS_ROOT), [...REGISTERED_SKILLS].sort());
   assert.deepEqual(childDirectories(METHODS_ROOT), [...MATT_INTERNAL_METHODS].sort());
 
@@ -136,7 +137,7 @@ test("gives every registered Skill a product label and implicit routing contract
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const registeredCatalog = catalog.skills.filter((entry) => entry.status === "registered");
 
-  assert.equal(registeredCatalog.length, 18);
+  assert.equal(registeredCatalog.length, 19);
   for (const skill of REGISTERED_SKILLS) {
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     const metadata = read(SKILLS_ROOT, skill, "agents", "openai.yaml");
@@ -146,7 +147,7 @@ test("gives every registered Skill a product label and implicit routing contract
     const catalogEntry = registeredCatalog.find((entry) => entry.id === skill);
 
     assert.match(instructions, new RegExp(`^---[\\s\\S]*?^name:\\s*${skill}\\s*$`, "m"), skill);
-    assert.match(displayName, /^MAGA · /, skill);
+    assert.match(displayName, /^MAGA [A-Z]/, skill);
     assert.ok(shortDescription.length >= 25 && shortDescription.length <= 64, skill);
     assert.match(defaultPrompt, new RegExp(`\\$${skill}(?:\\s|$)`), skill);
     assert.match(metadata, /policy:\s*\r?\n\s*allow_implicit_invocation:\s*true/, skill);
@@ -185,7 +186,7 @@ test("routes local-file text through Humanization without touching chat-only out
   }
 });
 
-test("preserves Matt's ten automatic capabilities without internal or retired command aliases", () => {
+test("registers Matt's eleven automatic capabilities without internal or retired command aliases", () => {
   const removedCommand = new RegExp(
     `\\$(?:${[
       ...MATT_INTERNAL_METHODS,
@@ -200,7 +201,7 @@ test("preserves Matt's ten automatic capabilities without internal or retired co
     "capability-routing.md",
   );
 
-  for (const skill of MATT_MODEL_INVOKED) {
+  for (const skill of MATT_REGISTERED_SKILLS) {
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     assert.doesNotMatch(instructions.split("---", 3)[1], /disable-model-invocation/, skill);
   }
@@ -366,7 +367,7 @@ test("absorbs Ponytail help and gain without changing its execution lifecycle", 
   assert.match(ponytail, /Do not switch the current mode/);
 });
 
-test("absorbs manual setup and communication recovery into Project Lead", () => {
+test("registers automatic communication recovery and absorbs only the manual gate", () => {
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const absorbed = catalog.skills.filter((entry) => entry.status === "absorbed");
   const projectLead = read(SKILLS_ROOT, "project-lead", "SKILL.md");
@@ -382,6 +383,8 @@ test("absorbs manual setup and communication recovery into Project Lead", () => 
     "references",
     "manual-gates.md",
   );
+  const waitWhat = read(SKILLS_ROOT, "wait-what", "SKILL.md");
+  const waitWhatMetadata = read(SKILLS_ROOT, "wait-what", "agents", "openai.yaml");
 
   for (const capability of ABSORBED_MATT_CAPABILITIES) {
     assert.equal(fs.existsSync(path.join(SKILLS_ROOT, capability)), false, capability);
@@ -392,13 +395,22 @@ test("absorbs manual setup and communication recovery into Project Lead", () => 
     "project-lead-manual-gate",
   );
   assert.equal(
-    absorbed.find((entry) => entry.id === "wait-what")?.mapping,
-    "project-lead-communication-recovery",
+    catalog.skills.find((entry) => entry.id === "wait-what")?.mapping,
+    "registered-entry-adapted-implicit",
   );
+  assert.equal(absorbed.find((entry) => entry.id === "wait-what"), undefined);
   assert.match(routing, /\[manual-gates\.md\]\(manual-gates\.md\)/);
   assert.match(manualGates, /Keep temporary working material inside the\s+repository/);
   assert.match(manualGates, /does not generate Bash, capture secrets/);
-  assert.match(projectLead, /communication recovery creates no Ticket or file/);
+  assert.match(waitWhat, /user signals that they did not understand the previous explanation/);
+  assert.match(waitWhat, /ordinary follow-up that asks for new information/);
+  assert.match(waitWhat, /listener's current language/);
+  assert.match(waitWhat, /create no Ticket, file, task/);
+  assert.doesNotMatch(waitWhat.split("---", 3)[1], /disable-model-invocation/);
+  assert.match(waitWhatMetadata, /display_name: "MAGA Wait What"/);
+  assert.match(waitWhatMetadata, /allow_implicit_invocation:\s*true/);
+  assert.match(projectLead, /registered `wait-what` Skill immediately/);
+  assert.match(projectLead, /creates no Ticket, file, task, or repeated work/);
 });
 
 test("ships the shareable HTML logic prototype and removes the retired writing identity", () => {
@@ -425,14 +437,14 @@ test("publishes a complete upstream mapping and identical distributed notices", 
 
   assert.equal(catalog.schema_version, 1);
   assert.deepEqual(catalog.target_counts, {
-    registered: 18,
+    registered: 19,
     internal_method: 13,
-    absorbed: 4,
+    absorbed: 3,
   });
   assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 35);
-  assert.equal(registered.length, 18);
+  assert.equal(registered.length, 19);
   assert.equal(internalMethods.length, 13);
-  assert.equal(absorbed.length, 4);
+  assert.equal(absorbed.length, 3);
   assert.deepEqual(
     internalMethods.map((entry) => entry.id).sort(),
     [...MATT_INTERNAL_METHODS].sort(),
@@ -444,10 +456,12 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   assert.match(notices, /8b36d4fb2635b3c21998dcd8144439c9e5ba7302/);
   assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
   assert.match(notices, /d3b8f3791fee58c030aa52539296ad361654f1c7/);
-  assert.match(notices, /Ten upstream model-invoked Skills remain registered/);
-  assert.match(notices, /Thirteen upstream\s+user-invoked workflows are distributed as internal MAGA/);
-  assert.match(notices, /remaining two upstream capabilities are absorbed into Project Lead/);
-  assert.match(notices, /eighteen registered product Skills/);
+  assert.match(notices, /Eleven are registered with their technical identities/);
+  assert.match(notices, /ten upstream\s+model-invoked Skills retain implicit invocation/);
+  assert.match(notices, /wait-what[\s\S]+adapted from user-only invocation\s+to implicit Codex routing/);
+  assert.match(notices, /Thirteen upstream\s+user-invoked workflows are\s+distributed as internal MAGA/);
+  assert.match(notices, /remaining upstream capability is absorbed into Project Lead/);
+  assert.match(notices, /nineteen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
   assert.match(notices, /complete Humanization Skill/);
   assert.match(notices, /Human Writing Skill contributors/);

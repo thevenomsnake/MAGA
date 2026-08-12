@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Write for Agents"
+  display_name: "MAGA Writing for Agents"
   short_description: "Write clear Skills and agent-facing instructions"
   default_prompt: "Use $writing-for-agents to improve this agent-facing document."
 policy:

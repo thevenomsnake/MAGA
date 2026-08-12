@@ -191,7 +191,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.13.0**. It contains 18 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, and automatic Humanization routing for human-readable local-file content.
+The current release is **v0.14.0**. It contains 19 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 Before the first software Ticket, Bar Tester recommends a profile for how the product is used today—who it is for, where it is exposed, how it ships, and how large it is—and asks the Product Owner to confirm it in one reply. A personal prototype may need only one direct check at its real entry point; verification grows only when its audience, exposure, delivery boundary, or a concrete risk grows.
 
@@ -206,6 +206,8 @@ Before the first software Ticket, Bar Tester recommends a profile for how the pr
 | Method library | Upstream workflows loaded on demand instead of occupying every task |
 
 Humanization uses a deterministic local-file boundary. It runs automatically only when MAGA writes or edits human-readable text in a local file—for example, Markdown or another document, a report, article, saved communication draft, release note, or visible product copy in source or resource files. Text returned only in chat never triggers it automatically, regardless of length, Markdown formatting, copy-readiness, or possible later sharing. Explicit invocation remains available, and automatic runs stay silent.
+
+`wait-what` remains automatic: when a user signals in any language that the previous explanation did not land, MAGA re-pitches it in the current conversation with the missing premise, clearer language, and project vocabulary. Explicit `$wait-what` invocation also remains available. Codex may show a Skill indicator when the host supports one; the recovery behavior does not depend on that UI.
 
 Explore the implementation: [Skill catalog](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [Product-oriented Project Lead](./playbooks/product-oriented-project-lead.md)
 

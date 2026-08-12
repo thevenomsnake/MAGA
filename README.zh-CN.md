@@ -193,7 +193,7 @@ Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区�
 
 ## 里面有什么
 
-当前版本是 **v0.13.0**，包含 18 个注册 Skills、一套只在需要时加载的内部方法库、职责级计算配置、由产品负责人确认的 Bar Tester 项目画像，以及面向本地文件文字的 Humanization 自动路由。
+当前版本是 **v0.14.0**，包含 19 个注册 Skills、一套只在需要时加载的内部方法库、职责级计算配置、由产品负责人确认的 Bar Tester 项目画像、面向本地文件文字的 Humanization 自动路由，以及基于明确提交的 Git 交付保护。
 
 在首个软件 Ticket 前，Bar Tester 会根据产品今天的用途、暴露面、交付方式和系统规模给出项目画像建议，产品负责人一次确认即可。个人原型通常只需从真实入口直接验证一次；只有受众、暴露面、交付边界或具体风险变大时，验证才随之增加。
 
@@ -208,6 +208,8 @@ Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区�
 | 方法库 | 按需加载上游工作流，避免占满每次对话的上下文 |
 
 Humanization 使用确定的本地文件边界。只有 MAGA 将面向人阅读的文字写入或修改到本地文件时才自动触发，例如 Markdown 或其他文档、报告、文章、保存为文件的沟通草稿、发布说明，以及源码或资源文件中的产品可见文案。仅在聊天中返回的文字永不自动触发，无论长短、是否使用 Markdown、能否直接复制或以后是否可能分享。用户仍可显式调用，自动执行时完全静默。
+
+`wait-what` 保持自动调用：只要用户以任何语言表示上一段解释没有讲明白，MAGA 就会在当前对话中补足缺失前提，换用更清楚的表达和项目词汇重新说明；用户也可以显式调用 `$wait-what`。Codex 宿主支持时可能显示 Skill 标记，但自动恢复行为不依赖这个界面标记。
 
 查看实现：[Skill 目录](./plugins/maga/skill-catalog.json) · [Project Lead](./plugins/maga/skills/project-lead/SKILL.md) · [面向产品的 Project Lead](./playbooks/product-oriented-project-lead.md)
 

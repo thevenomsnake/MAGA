@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · External Research"
+  display_name: "MAGA Research"
   short_description: "Research product decisions from trusted sources"
   default_prompt: "Use $research to investigate this product question using trusted primary sources."
 policy:

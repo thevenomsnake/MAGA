@@ -12,21 +12,21 @@ Source: https://github.com/mattpocock/skills
 Reference commit: `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`
 
 MAGA accounts for all 25 formal Engineering and Productivity Skills in this
-snapshot. Ten upstream model-invoked Skills remain registered with their
-technical identities and implicit invocation behavior. Thirteen upstream
-user-invoked workflows are distributed as internal MAGA methods rather than
-separate registered commands. Category folders are flattened, and Claude-only
-invocation frontmatter is represented with Codex metadata where a workflow
-remains registered.
+snapshot. Eleven are registered with their technical identities: ten upstream
+model-invoked Skills retain implicit invocation, while `wait-what` keeps its
+compact communication-recovery core but is adapted from user-only invocation
+to implicit Codex routing. Thirteen upstream user-invoked workflows are
+distributed as internal MAGA methods rather than separate registered commands.
+Category folders are flattened, and Claude-only invocation frontmatter is
+represented with Codex metadata where a workflow remains registered.
 
-The remaining two upstream capabilities are absorbed into Project Lead. The
+The remaining upstream capability is absorbed into Project Lead. The
 manual-only safety core of `wizard` becomes MAGA's manual-action gate; its Bash
 template, secret collection, GitHub mutation, and browser-driving behavior are
-not vendored. The communication-recovery intent of `wait-what` becomes an
-inline plain-language re-pitch rather than a separate method or command.
+not vendored.
 
 MAGA's Project Lead routes these capabilities from product intent. That
-routing and the consolidated surface of eighteen registered product Skills are
+routing and the consolidated surface of nineteen registered product Skills are
 MAGA adaptations, not upstream Matt invocation behavior. Original names and
 their mapping to the adapted surface remain recorded in the distributed
 catalog.

@@ -80,6 +80,9 @@ Status: ready | creating | running | needs-decision | completed | integrated | f
 Task opening: pending | approved | not-needed
 Task title: <deterministic title>
 Attempt: <positive integer>
+Git branch: <explicit branch>
+Start commit: <full commit>
+Starting dirty files: <repository-relative set or none>
 Result commit: <set on completion>
 Validation: <set on completion>
 Blocker: <set only while blocked or failed>
@@ -164,7 +167,7 @@ Do not wrap or rewrite those Skills to simulate responsibility routing.
 3. Confirm `Task opening: approved` records the Product Owner's explicit permission for this exact title and attempt. If not, return the named proposal to the Project Lead; do not call task creation tools.
 4. Resolve the Ticket's responsibility profile as above.
 5. Set the ticket to `creating`, record its task title and attempt, then call `codex_app__create_thread` with that title, the resolved model and thinking, and the initial prompt below.
-6. For a Git repository, use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer.
+6. For a Git repository, preserve the session baseline, use an explicit branch, and use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer. Record the branch, start commit, and starting dirty set before the worker writes.
 7. If creation returns a real `threadId`, retain it only at runtime. Set the ticket to `running` when the tracker can be updated without touching the worker's checkout. With a file-backed tracker in the shared checkout, leave it at `creating` and keep the coordinator read-only until the worker stops.
 8. If creation returns only `clientThreadId`, leave the ticket at `creating`. Never pass a client ID to read, send, wait, archive, or other tools that require `threadId`. Resolve the real task later by its deterministic title through `codex_app__list_threads`.
 9. If creation fails, set the ticket to `failed` with the concrete reason.
@@ -188,13 +191,15 @@ scope.
 Use the Ticket's workspace and completion check to select installed capabilities
 internally; never ask the Product Owner to name a Skill. Produce the shortest runnable
 or inspectable result, perform the one risk-matched validation required by the contract,
-and commit the result. Do not introduce TDD, a full regression run, or additional review
+and commit the result before switching context. Protect every path that was already dirty
+at session start. Do not introduce TDD, a full regression run, or additional review
 stages unless the contract or repository rules require them.
 
 Return exactly these fields:
 Status: completed | needs-decision | failed
 Behavior: <user-visible result or none>
 Validation: <command and observed fact or none>
+Branch: <explicit branch or none>
 Commit: <hash or none>
 Blocker: <decision, dependency, permission, or failure reason or none>
 ```
@@ -214,9 +219,9 @@ The prompt is a pointer plus execution policy, not a second source of requiremen
 
 When a worker reports `completed`:
 
-1. Require a resolvable commit and a concrete validation fact. Otherwise continue the same task for correction.
+1. Require a resolvable commit, its explicit branch, a concrete validation fact, and no uncommitted Ticket changes left in the worker checkout. Otherwise continue the same task for correction.
 2. Set the ticket to `completed` and record the worker commit and validation.
-3. Integrate the commit in dependency order using the repository's established Git workflow. A worker using the target checkout may already have committed directly to the target branch; verify that identity instead of cherry-picking it again.
+3. Integrate the commit in dependency order using the repository's established Git workflow. Preserve unrelated dirty paths before any switch or synchronization. A worker using the target checkout may already have committed directly to the target branch; verify that identity instead of cherry-picking it again.
 4. Set the ticket to `integrated` only after integration succeeds. Release newly unblocked tickets at that point.
 5. Archive the worker with `codex_app__set_thread_archived` after the durable record is complete.
 

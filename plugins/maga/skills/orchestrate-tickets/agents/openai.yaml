@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Coordinate Delivery"
+  display_name: "MAGA Orchestrate Tickets"
   short_description: "Coordinate approved work across focused Codex tasks"
   default_prompt: "Use $orchestrate-tickets to run the approved Ticket contracts in fresh Codex tasks."
 policy:

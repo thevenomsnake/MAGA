@@ -6,10 +6,24 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/git-discipline.js\" SessionStart",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\git-discipline.js\" SessionStart }",
+            "timeout": 5,
+            "statusMessage": "Protecting project state..."
+          },
+          {
+            "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/humanization-context.js\" SessionStart",
             "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\humanization-context.js\" SessionStart }",
             "timeout": 5,
             "statusMessage": "Loading Humanization..."
+          },
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/skill-labels.js\" SessionStart",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\skill-labels.js\" SessionStart }",
+            "timeout": 5,
+            "statusMessage": "Loading MAGA labels..."
           },
           {
             "type": "command",
@@ -26,10 +40,24 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/git-discipline.js\" SubagentStart",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\git-discipline.js\" SubagentStart }",
+            "timeout": 5,
+            "statusMessage": "Protecting project state..."
+          },
+          {
+            "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/humanization-context.js\" SubagentStart",
             "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\humanization-context.js\" SubagentStart }",
             "timeout": 5,
             "statusMessage": "Loading Humanization..."
+          },
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/skill-labels.js\" SubagentStart",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PLUGIN_ROOT\\hooks\\skill-labels.js\" SubagentStart }",
+            "timeout": 5,
+            "statusMessage": "Loading MAGA labels..."
           },
           {
             "type": "command",

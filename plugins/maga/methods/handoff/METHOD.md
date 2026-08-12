@@ -16,6 +16,26 @@ When a portable document is genuinely required, write a sanitized file under
 Keep it inside the repository. Do not use an operating-system temporary
 directory or another workspace.
 
+Before writing the handoff, preserve current work in a commit or another
+recoverable Git form. Read
+`../../skills/project-lead/references/git-and-release.md`, compare current state
+with the session baseline, and include this compact block:
+
+```text
+Branch: <explicit branch>
+HEAD: <full commit>
+Starting dirty files: <repository-relative set or none>
+Current dirty files: <repository-relative set or none>
+Result commits: <full commits or none>
+Deployment status: not-started | succeeded | failed | rolled-back
+Deployed commit: <full commit or none>
+Previous known-good: <full commit or none>
+Rollback pending: yes | no
+```
+
+Do not describe work as clean merely because another session committed or moved
+the original dirty files. Carry both the starting and current sets.
+
 Include a "suggested next capabilities" section in product language. Let the
 next Project Lead resolve registered Skills and internal method paths from the
 current routing reference; do not invent commands for internal methods.

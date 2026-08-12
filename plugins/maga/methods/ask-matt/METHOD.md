@@ -86,11 +86,12 @@ Off the main flow entirely.
 - **`teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
 - **`$writing-for-agents`** — reference for Skills, `AGENTS.md`, `CLAUDE.md`,
   and documents reached through agent context pointers.
+- **`$wait-what`** — automatically re-pitch an explanation that did not land;
+  it may also be invoked explicitly at any point in another flow.
 
-Project Lead also absorbs two upstream ideas without exposing new commands:
-communication recovery re-pitches an explanation that did not land, while the
-human-only gate gives safe staged guidance for authenticated or irreversible
-steps without Bash or secret capture.
+Project Lead applies registered `$wait-what` for communication recovery and
+absorbs the remaining human-only gate as safe staged guidance for authenticated
+or irreversible steps without Bash or secret capture.
 
 ## Precondition
 

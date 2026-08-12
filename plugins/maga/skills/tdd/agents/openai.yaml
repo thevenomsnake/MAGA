@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Build with Tests"
+  display_name: "MAGA TDD"
   short_description: "Build behavior through focused red-green cycles"
   default_prompt: "Use $tdd to build this behavior through focused red-green cycles."
 policy:

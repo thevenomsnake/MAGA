@@ -16,6 +16,7 @@ Create only records the project currently needs:
 |-- tickets/
 |   `-- T001-<outcome-key>.md
 |-- decisions/       # only for consequential decisions
+|-- RELEASES.md      # only after the first deployment attempt
 `-- archive/         # only after something completes
 ```
 
@@ -156,6 +157,9 @@ command, or observable fact.>
 - Task opening: pending | approved | not-needed
 - Task title: pending
 - Attempt: pending
+- Git branch: pending
+- Start commit: pending
+- Starting dirty files: pending
 
 ## Completion
 
@@ -193,6 +197,12 @@ attempt number, and the Product Owner's explicit approval for that exact task.
 Record the observed validation
 fact and commit or artifact identity before marking the worker completed.
 
+Before the first write, fill `Git branch`, `Start commit`, and
+`Starting dirty files` from the session baseline. Use repository-relative dirty
+paths or `none`; never store a worktree's absolute path. These values describe
+the worker's protected starting boundary and do not change when another session
+later commits, moves, or cleans those files.
+
 Omit `workspace` only when the Ticket stays as Project Lead work in the current
 focused task. Set `workspace` to the smallest stable responsibility label for
 research, prototype, delivery, diagnosis, review, or release work. A specialist
@@ -214,6 +224,11 @@ current profile merely because the product may grow later.
 
 Treat execution authorization and permission to open a Codex task as separate facts:
 
+These fields govern Ticket workers and durable role tasks. A pre-Ticket
+exploration creates no Ticket record; its one-task permission and return boundary
+live in [exploration-loop.md](exploration-loop.md). Apply the rules below after an
+accepted decision becomes durable work.
+
 - Use `pending` before the Ticket's research, prototype, diagnosis, review, delivery, or release work is authorized; use `approved` for an explicitly authorized Ticket and `revoked` when the Product Owner withdraws authorization.
 - Accept natural language such as "start", "build it", or "continue" as execution approval for the currently described Ticket set. Update every Ticket in that set together.
 - Do not copy approval to a future Ticket. If an approved Ticket's outcome, acceptance, boundaries, cost, private-data use, external effect, destructive action, or release scope materially expands, return it to `pending`.
@@ -223,3 +238,24 @@ Treat execution authorization and permission to open a Codex task as separate fa
 - Treat approval as authority only for the Ticket's written scope. It does not implicitly allow accounts, costs, sensitive data, external publication, destructive actions, migration, production changes, or release.
 
 Treat legacy `task_creation` fields as migration input only; they never authorize execution. When a legacy `missions/` record becomes active again, migrate it to a `tickets/T###-*.md` Ticket, preserve its result and evidence, remove the old active pointer, and require current Ticket authorization before new work. Do not rewrite archived history merely to rename it.
+
+## Release State
+
+Create `.ai-workflow/RELEASES.md` only after the first real deployment attempt.
+Keep one current block and a short append-only history:
+
+```markdown
+# Release State
+
+- Status: succeeded | failed | rolled-back
+- Attempted commit: <full commit>
+- Deployed commit: <full commit or none>
+- Previous known-good: <full commit or none>
+- Rollback commit: <full commit or none>
+- Evidence: <one focused production fact>
+```
+
+Update this file from the provider's observed result, then commit the state
+update. A failed attempt does not become the deployed commit. Roll back by
+redeploying `Rollback commit` through the same pipeline; do not rewrite the
+branch or patch server files.

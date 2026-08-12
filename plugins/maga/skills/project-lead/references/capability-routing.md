@@ -7,7 +7,10 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 ## Keep One Front Door
 
 - Keep the named, pinned Project Lead as the only generic product entry.
-- Keep ordinary product discussion in the Project Lead.
+- Keep quick clarification and already-bounded product choices in the Project Lead.
+- Route likely multi-turn product exploration through
+  [the pre-Ticket exploration loop](exploration-loop.md), using one concrete
+  decision frontier and returning the accepted decision here.
 - Never initialize empty tasks named only `Idea discussion`, `Research`,
   `Prototype`, `Implementation`, or similar capability labels.
 - Treat a Codex task as an attention workspace for one concrete object, not as a
@@ -81,25 +84,27 @@ project already uses it or the user explicitly intends that external effect.
 
 | Signal in the request or durable state | Internal method | Default workspace |
 | --- | --- | --- |
-| Product behavior, audience, or value is materially unclear | Apply registered `grilling`; load [grill-me](../../../methods/grill-me/METHOD.md) or [grill-with-docs](../../../methods/grill-with-docs/METHOD.md) for the appropriate persistence mode | Current Project Lead |
+| Product behavior, audience, or value is materially unclear and likely to need repeated discussion | Read [exploration-loop.md](exploration-loop.md); apply registered `grilling` and load [grill-me](../../../methods/grill-me/METHOD.md) inside that boundary | Fresh pre-Ticket `project-lead` exploration task |
 | The first software Ticket needs a test boundary, the Project Profile is missing or drifting, or the user asks how much testing a change needs | Apply registered `bar-tester`; recommend and confirm current use, exposure, delivery, and system size before forming the proof | Current Project Lead |
 | The task will create or update a local file containing human-readable prose or copy: Markdown or another document, report, article, saved communication draft, release note, or visible GUI text in source or resource files | Apply registered `humanization` silently to the file content with an inferred locale, format, and surface; never announce the route or ask a configuration question; preserve code, commands, data, quotations, placeholders, markup, and machine structure | Current task; local-file text alone does not justify a fresh workspace |
 | The generated text remains only in chat, including an answer, explanation, article, email draft, diagnosis, status summary, recommendation, or next step, even when detailed, Markdown-formatted, copy-ready, or potentially shareable | Continue ordinary Project Lead communication without automatic Humanization | Current Project Lead |
-| A missing external fact could change a product decision | Apply the bundled research method against primary or authoritative sources | Fresh `research` task for an approved bounded Ticket |
+| Missing external facts are part of an unresolved product direction | Read [exploration-loop.md](exploration-loop.md) and investigate primary or authoritative sources without writing project files | Fresh pre-Ticket `research` exploration task |
+| A bounded research result is already accepted as a deliverable | Apply the bundled research method against primary or authoritative sources | Fresh `research` task for an approved bounded Ticket |
 | A decision depends on another person's knowledge | Load [to-questionnaire](../../../methods/to-questionnaire/METHOD.md) and draft a role-based repository-local questionnaire; sending it remains a separate external action | Current Project Lead |
 | A behavior, interaction, or state must be experienced to decide | Apply the bundled prototype method to answer one named question | Fresh `prototype` task for an approved bounded Ticket |
 | The destination is clear but the route is too large for one attention window | Load [wayfinder](../../../methods/wayfinder/METHOD.md) to resolve decision fog before delivery | Bounded decision tasks; do not create a generic planning room |
 | Decisions are sufficiently closed | Load [to-spec](../../../methods/to-spec/METHOD.md) to synthesize what is already known | Current Project Lead unless publication needs an independent boundary |
 | An accepted result must survive the current conversation or cross responsibilities | Load [to-tickets](../../../methods/to-tickets/METHOD.md) and form product Tickets with explicit blockers and authorization | Durable project state first; tasks only for approved Tickets |
 | An approved implementation Ticket is ready | Load [implement](../../../methods/implement/METHOD.md) and apply any risk-justified registered capability | Fresh `delivery` task |
+| Work changes source, generates integrity metadata, creates a frozen artifact, deploys, rolls back, or crosses sessions with uncommitted state | Read [git-and-release.md](git-and-release.md); preserve the recorded baseline, commit the runnable slice, and deploy only an explicit commit | Current writer or fresh `release` task when production authority is separate |
 | A concrete failure is observed | Apply diagnosis before proposing a fix | Fresh `diagnosis` task for an approved bounded Ticket |
 | A result is ready for independent acceptance | Apply the smallest review needed for the documented risk | Fresh `review` task when independent acceptance is material |
 | Context is polluted or same-project work needs isolation | Recover from durable state or use an approved bounded worker; load [handoff](../../../methods/handoff/METHOD.md) only when the context itself must travel across its portability boundary | Replacement or bounded worker, never a generic handoff room |
 | Work reaches an authenticated, secret, paid, migration, cutover, or irreversible human-only step | Read [manual-gates.md](manual-gates.md), guide one recoverable stage, and preserve the existing authorization boundary | Current Project Lead |
 
-If the user says the explanation did not land, apply Project Lead's communication
-recovery rule immediately. This is the absorbed `wait-what` behavior, not a
-separate method, task, command, or document.
+If the user signals that the explanation did not land, apply registered
+`wait-what` immediately. It repairs the current conversation without creating a
+Ticket, file, task, or repeated work.
 
 Registered specialist Skills may still be selected normally. Internal methods
 have no compatibility aliases: their original technical identities exist only
@@ -114,9 +119,11 @@ Ticket.
 
 ## Open A Fresh Workspace Only When It Pays
 
-Propose a same-project task only after its work object and completion boundary are
-concrete and at least one condition holds. Create it only after the Product Owner
-explicitly requests or approves that deterministic task title:
+For a pre-Ticket exploration, use the semantic gate and standing task permission
+in [exploration-loop.md](exploration-loop.md). For Ticket work, propose a
+same-project task only after its work object and completion boundary are concrete
+and at least one condition holds. Create that worker only after the Product Owner
+explicitly requests or approves its deterministic task title:
 
 - it produces an independent artifact or finding;
 - it needs a substantially different source set or professional context;
@@ -133,12 +140,14 @@ serialized unless isolated worktrees and non-overlapping write scopes are proven
 Use the project's language and include the concrete object:
 
 ```text
+<project> · <localized exploration> · <concrete decision frontier>
 <project> · <localized workspace> · <ticket-key> <specific outcome>
 ```
 
 Examples:
 
 ```text
+Atlas · Product exploration · Whether first-run setup should be guided
 Atlas · External research · T002 Why teams abandon first-run setup
 Atlas · Prototype · T003 Mobile editing flow
 Atlas · Delivery · T004 Save a reusable view

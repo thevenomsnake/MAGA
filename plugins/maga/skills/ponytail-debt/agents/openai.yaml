@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Ponytail: Debt Ledger"
+  display_name: "MAGA Ponytail Debt"
   short_description: "Collect deliberate shortcuts and their upgrade triggers"
   default_prompt: "Use $ponytail-debt to collect this repository's marked shortcuts into a ledger."
 policy:

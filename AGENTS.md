@@ -21,6 +21,7 @@ For software changes, use this default sequence:
 2. Implement the shortest runnable vertical slice.
 3. Run one risk-matched focused verification.
 4. Commit the result.
+5. Integrate the completed commit into `main`, push `main`, then delete the merged local and remote working branches. GitHub delivery is complete only when `main` is the sole remote branch.
 
 Do not introduce TDD, BDD, ATDD, red-green-refactor, full regression suites, multi-viewport matrices, dual-axis review, repeated quality gates, or redundant validation unless the user explicitly requests them or the change has a documented high-risk boundary.
 

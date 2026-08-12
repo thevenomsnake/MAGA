@@ -2,7 +2,11 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.13.0";
+const WORKFLOW_VERSION = "0.14.0";
+
+function writeLf(file, content) {
+  fs.writeFileSync(file, String(content).replace(/\r\n?/g, "\n"), "utf8");
+}
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -102,7 +106,8 @@ function agentsDocument() {
 
 - Treat the user as Product Owner and keep one Project Lead as the product-facing entry.
 - Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
-- Do not pre-create generic discussion, research, prototype, or implementation tasks. Keep product discussion in the Project Lead; propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
+- Treat a request to discuss, explore, or research an unresolved product direction as permission for the canonical Project Lead to open one specifically titled, read-only exploration task. Do not ask a second task-creation question. Give it only the decision frontier and durable constraints, never recursively open another exploration task, and return its accepted decision to the Project Lead before creating Tickets or writing code. A Ticket worker returns a new product question to the Project Lead instead of opening this workflow.
+- Keep quick clarification in the Project Lead and never pre-create generic empty discussion, research, prototype, or implementation tasks. For Ticket workers, propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
 - Before the first software Ticket, recommend current use, exposure, delivery, and system size from current evidence, then ask the Product Owner to confirm or correct the profile. Remind them to report a later change.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.
@@ -113,6 +118,14 @@ function agentsDocument() {
 For software changes, clarify the observable outcome, implement the shortest runnable vertical slice, run one risk-matched focused verification, and commit.
 
 Do not default to TDD, BDD, full regression suites, multi-viewport matrices, dual-axis review, or repeated validation unless the user explicitly requests them or a documented high-risk boundary requires them.
+
+## Git And Releases
+
+- Before writing, record the current branch, full HEAD, and dirty file set. Treat pre-existing dirty paths as protected work.
+- Work on an explicit branch or permitted isolated worktree. Serialize writers in a shared checkout, and commit each runnable vertical slice after its one focused smoke.
+- Preserve changes recoverably before switching, syncing, or cleaning. Never use reset --hard or checkout to discard work.
+- Use .gitattributes as the line-ending authority. Write generated text as LF, then calculate manifest or catalog byteLength and sha256 from the final bytes on disk.
+- Deploy only a full commit from a clean tree through git -c core.autocrlf=false archive. Record the deployed commit and previous known-good commit; roll back by redeploying the known-good commit, never by patching the server.
 
 ## Filesystem And Privacy
 
@@ -126,6 +139,10 @@ const GITIGNORE = `.env
 !.env.example
 tmp/
 .ai-workflow/runtime.json
+`;
+
+const GITATTRIBUTES = `# Canonical text bytes for worktrees, Git blobs, generated artifacts, and release archives.
+* text=auto eol=lf
 `;
 
 function hasGitIdentity(targetDir) {
@@ -151,7 +168,14 @@ function initializeGit(targetDir) {
 function commitInitialState(targetDir) {
   if (!hasGitIdentity(targetDir)) return "skipped-no-identity";
 
-  const add = runGit(targetDir, ["add", "--", "AGENTS.md", ".gitignore", ".ai-workflow/PROJECT.md"]);
+  const add = runGit(targetDir, [
+    "add",
+    "--",
+    "AGENTS.md",
+    ".gitattributes",
+    ".gitignore",
+    ".ai-workflow/PROJECT.md",
+  ]);
   if (add.status !== 0) throw new Error(add.stderr.trim() || "git add failed");
 
   const commit = runGit(targetDir, ["commit", "-m", "chore: initialize maga"]);
@@ -184,9 +208,10 @@ export function initProject(options = {}) {
   if (!projectName) throw new Error("project name cannot be empty");
 
   fs.mkdirSync(path.join(targetDir, ".ai-workflow"), { recursive: true });
-  fs.writeFileSync(path.join(targetDir, "AGENTS.md"), agentsDocument(), "utf8");
-  fs.writeFileSync(path.join(targetDir, ".gitignore"), GITIGNORE, "utf8");
-  fs.writeFileSync(marker, projectDocument(projectName), "utf8");
+  writeLf(path.join(targetDir, "AGENTS.md"), agentsDocument());
+  writeLf(path.join(targetDir, ".gitattributes"), GITATTRIBUTES);
+  writeLf(path.join(targetDir, ".gitignore"), GITIGNORE);
+  writeLf(marker, projectDocument(projectName));
 
   const git = options.git === false ? "disabled" : initializeGit(targetDir);
   const commit = options.git === false || options.commit === false
