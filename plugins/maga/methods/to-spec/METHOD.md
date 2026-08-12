@@ -35,9 +35,11 @@ moving.
 3. Describe observable behavior before implementation. Record a technical
    constraint only when an existing contract requires it or its consequence is
    itself a product decision.
-4. Choose a risk-matched verification boundary internally. Prefer the highest
-   existing seam and external behavior; do not make the Product Owner design the
-   test strategy.
+4. For software work, apply registered `validation-design`. Require the
+   Product Owner-confirmed Project Profile before choosing verification; return
+   a missing or drifting profile to the Project Lead instead of inferring it.
+   Prefer the highest existing seam and external behavior selected by that
+   profile; do not make the Product Owner design test mechanics.
 5. Write the smallest specification that can guide Ticket formation. A long
    backlog of speculative user stories is not completeness.
 
@@ -69,7 +71,7 @@ Use this shape, omitting empty sections:
 
 ## Verification Boundary
 
-<One preview, behavior check, or risk-matched test surface.>
+<One profile-matched preview, behavior check, artifact, or target surface.>
 
 ## Open Product Questions
 

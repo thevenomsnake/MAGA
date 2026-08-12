@@ -32,7 +32,9 @@ the project or the user explicitly authorized that external effect.
   are `integrated`, not merely implemented.
 - Keep implementation choices with the responsible role. File lists, framework
   choices, and speculative test seams do not belong in product acceptance.
-- Give every Ticket one risk-matched completion check.
+- Apply registered `validation-design` and give every Ticket either its one-line
+  Completion Check or the smallest structured Proof selected by the current
+  Project Profile. Never write both.
 
 For a wide mechanical refactor that cannot land as a green vertical slice, use
 the minimum expand–migrate–contract sequence: add the compatible new form,
@@ -46,22 +48,26 @@ the old form after every migration blocker integrates.
 2. Draft the minimum tracer-bullet set and its dependency graph. Do not create
    separate frontend, backend, database, testing, and review Tickets for one
    behavior.
-3. Resolve Ticket mechanics internally. Ask the Product Owner only if the split
+3. For software work, confirm that `PROJECT.md` contains the Product Owner's
+   current use, exposure, delivery, and system-size selection. If it is missing
+   or the requested outcome crosses it, return to the Project Lead for the
+   compact selection question before writing Tickets.
+4. Resolve Ticket mechanics internally. Ask the Product Owner only if the split
    exposes a material product trade-off, changes what will be delivered, or
    changes cost, permissions, privacy, irreversible action, or release risk.
    Prior natural-language authorization for the clearly described outcome is
    sufficient; do not add a ceremonial breakdown approval.
-4. Allocate the next `T###` keys and write one Project Memory Ticket file per
+5. Allocate the next `T###` keys and write one Project Memory Ticket file per
    slice. Link the source specification and durable decisions under `Reads
    First`; list blocker keys under `Blocked By`.
-5. Set `authorization: approved` only for Tickets clearly covered by current
+6. Set `authorization: approved` only for Tickets clearly covered by current
    user authorization. New, expanded, derived, future, or deferred work starts
    as `pending`.
-6. Update `PROJECT.md` with the active Ticket set. If an external tracker is
+7. Update `PROJECT.md` with the active Ticket set. If an external tracker is
    authorized, mirror the same outcome and dependencies there and retain its
    URL as a pointer; never replace the local authorization record with a remote
    label.
-7. Expose the frontier to orchestration: approved, `ready`, unclaimed Tickets
+8. Expose the frontier to orchestration: approved, `ready`, unclaimed Tickets
    whose blockers are all `integrated`. Do not start pending or blocked work.
 
 Use the Ticket shape from the Project Memory Contract without inventing a

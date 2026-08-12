@@ -191,11 +191,12 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.12.2**. It contains 17 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, and automatic Humanization routing for human-readable local-file content.
+The current release is **v0.13.0**. It contains 18 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, Product Owner-confirmed validation profiles, and automatic Humanization routing for human-readable local-file content.
 
 | Layer | Responsibility |
 | --- | --- |
 | Project Lead | Receives product language, maintains state, selects methods, and coordinates tasks |
+| Adaptive validation | Recommends a test profile from current use, exposure, delivery, and system size, then asks the Product Owner to confirm it and report later changes |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
 | Content humanization | Natural articles, documents, messages, and product or GUI copy across six locales |

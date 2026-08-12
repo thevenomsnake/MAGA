@@ -185,11 +185,12 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.12.2**. Contiene 17 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
+La versión actual es **v0.13.0**. Contiene 18 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, perfiles de validación adaptativos confirmados por la persona responsable del producto y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
 
 | Capa | Responsabilidad |
 | --- | --- |
 | Project Lead | Recibe lenguaje de producto, mantiene el estado, elige métodos y coordina tareas |
+| Validación adaptativa | Recomienda un perfil de pruebas según el uso, la exposición, la entrega y el tamaño actuales; después pide confirmación y que se comuniquen cambios futuros |
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
 | Humanización de contenido | Artículos, documentos, mensajes y textos de producto o GUI naturales en seis locales |

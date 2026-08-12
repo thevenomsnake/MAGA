@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.12.2";
+const WORKFLOW_VERSION = "0.13.0";
 
 function runGit(targetDir, args) {
   return spawnSync("git", args, {
@@ -60,10 +60,25 @@ project_name: ${JSON.stringify(projectName)}
 Pending the Product Owner's first description. Establish the intended user, problem,
 first observable value, delivery form, and material risk boundaries before dispatching work.
 
+## Project Profile
+
+Selection pending. Before the first software Ticket, interpret the current product
+and repository, recommend a profile, and ask the Product Owner to confirm or correct:
+
+- Current use: Personal / Controlled group / Public
+- Exposure: Local or offline / Internal network / Internet
+- Delivery: Run from source / Shared artifact / Public release
+- System size: Small / Medium / Large
+
+After confirmation, replace this pending block with the confirmed values and
+relevant risk modifiers. Remind the Product Owner to report any later profile
+change before the next implementation or release.
+
 ## Current State
 
 - MAGA initialized.
 - Product onboarding has not started.
+- Validation profile has not been confirmed.
 
 ## Roles
 
@@ -89,6 +104,7 @@ function agentsDocument() {
 - Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
 - Do not pre-create generic discussion, research, prototype, or implementation tasks. Keep product discussion in the Project Lead; propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
+- Before the first software Ticket, recommend current use, exposure, delivery, and system size from current evidence, then ask the Product Owner to confirm or correct the profile. Remind them to report a later change.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.
 - Keep roles durable and Codex task instances replaceable. Do not store task IDs or machine paths in tracked files.
 

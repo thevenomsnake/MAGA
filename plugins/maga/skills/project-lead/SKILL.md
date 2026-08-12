@@ -33,11 +33,20 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 
 1. Infer what the user already supplied; do not turn known facts into a questionnaire.
 2. Establish the intended user, problem, first observable value, delivery form, and any material account, cost, privacy, permission, destructive, or release boundary.
-3. Ask one product question only when its answer blocks a useful first slice. Recommend a default when a reasonable reversible choice exists.
-4. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
-5. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
+3. Before the first software Ticket, establish the user-selected validation profile described below. This selection is required even when the first product slice is otherwise clear.
+4. Ask any other product question only when its answer blocks a useful first slice. Recommend a default when a reasonable reversible choice exists.
+5. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
+6. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
 If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. Opening a separate Codex task still requires the Product Owner to explicitly approve that named task. A broad idea without a clear first observable value still needs one focused product question.
+
+## Establish The Validation Profile
+
+Before forming or implementing the first software Ticket, apply registered `validation-design`. If `.ai-workflow/PROJECT.md` has no Product Owner-confirmed Project Profile, interpret the user's description and repository, recommend current use, exposure, delivery form, and system size, then ask its single compact confirmation question in the user's language. Vague input requires a reasoned recommendation plus confirmation; clear input still requires one summary confirmation. Do not begin from inference alone.
+
+Record the result in project memory and tell the Product Owner to report any later change in audience, network exposure, delivery form, or system size before the next implementation or release. Do not interrupt pure discussion, research, or a non-software artifact for this setup; ask at the point the first software Ticket would otherwise be formed.
+
+For an existing project with no profile, collect it before the next software Ticket rather than rewriting completed history. When requested work appears to cross the stored boundary, ask the Product Owner to confirm the new selection, update the profile, and validate only the boundary delta.
 
 ## Run The Native Codex Loop
 
@@ -67,6 +76,7 @@ Maintain these logical records only when the project needs them:
 - **Current state**: what is usable now, what is being built, and what is blocked.
 - **Role registry**: durable responsibilities, ownership, authority, and context entrypoints.
 - **Ticket contracts**: bounded outcomes assigned to roles, with authorization, acceptance, and completion evidence.
+- **Project profile**: the Product Owner's current use, exposure, delivery, and system-size selection that governs validation depth.
 - **Decision records**: only consequential product choices and hard-to-reverse trade-offs.
 - **Archive**: completed history kept out of the active working set.
 
@@ -108,7 +118,7 @@ Create a Ticket only when work must survive the current conversation or move to 
 - non-goals and product boundaries;
 - the responsible role and blockers;
 - durable context pointers;
-- one risk-matched validation or preview requirement;
+- one validation requirement shaped by the Product Owner-confirmed Project Profile;
 - completion fields for result, evidence, and commit or artifact identity.
 
 Do not require the Product Owner to provide API shapes, file lists, architecture, or test seams. Record those only when an existing contract constrains them or the technical consequence is itself a product decision. Let the responsible engineering role choose local implementation details.

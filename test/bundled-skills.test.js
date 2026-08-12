@@ -9,7 +9,7 @@ const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "maga");
 const SKILLS_ROOT = path.join(PLUGIN_ROOT, "skills");
 const METHODS_ROOT = path.join(PLUGIN_ROOT, "methods");
 
-const MAGA_SKILLS = ["orchestrate-tickets", "project-lead"];
+const MAGA_SKILLS = ["orchestrate-tickets", "project-lead", "validation-design"];
 const HUMANIZATION_SKILLS = ["humanization"];
 const MATT_INTERNAL_METHODS = [
   "ask-matt",
@@ -116,7 +116,7 @@ test("hard-cuts the retired plugin identity", () => {
   }
 });
 
-test("exposes exactly 17 product Skills and keeps 13 methods internal", () => {
+test("exposes exactly 18 product Skills and keeps 13 methods internal", () => {
   assert.deepEqual(childDirectories(SKILLS_ROOT), [...REGISTERED_SKILLS].sort());
   assert.deepEqual(childDirectories(METHODS_ROOT), [...MATT_INTERNAL_METHODS].sort());
 
@@ -136,7 +136,7 @@ test("gives every registered Skill a product label and implicit routing contract
   const catalog = JSON.parse(read(PLUGIN_ROOT, "skill-catalog.json"));
   const registeredCatalog = catalog.skills.filter((entry) => entry.status === "registered");
 
-  assert.equal(registeredCatalog.length, 17);
+  assert.equal(registeredCatalog.length, 18);
   for (const skill of REGISTERED_SKILLS) {
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     const metadata = read(SKILLS_ROOT, skill, "agents", "openai.yaml");
@@ -292,6 +292,39 @@ test("adapts specification and delivery methods to MAGA's native project memory"
   assert.doesNotMatch(implementation, /Use \$tdd where possible/);
 });
 
+test("asks the Product Owner to confirm a right-sized validation profile", () => {
+  const validation = read(SKILLS_ROOT, "validation-design", "SKILL.md");
+  const projectLead = read(SKILLS_ROOT, "project-lead", "SKILL.md");
+  const memory = read(
+    SKILLS_ROOT,
+    "project-lead",
+    "references",
+    "project-memory.md",
+  );
+  const specification = read(METHODS_ROOT, "to-spec", "METHOD.md");
+  const tickets = read(METHODS_ROOT, "to-tickets", "METHOD.md");
+  const implementation = read(METHODS_ROOT, "implement", "METHOD.md");
+
+  assert.match(validation, /recommended profile instead of handing classification work back to the user/);
+  assert.match(validation, /My current recommendation: <Use> \/ <Exposure> \/ <Delivery> \/ <Size>/);
+  assert.match(validation, /Confirm this recommendation or correct any item/);
+  assert.match(validation, /Personal \/ Controlled group \/ Public/);
+  assert.match(validation, /Local or offline \/ Internal network \/ Internet/);
+  assert.match(validation, /Run from source \/ Shared artifact \/ Public release/);
+  assert.match(validation, /Size: Small \/ Medium \/ Large/);
+  assert.match(validation, /still summarize the mapping once and obtain confirmation/);
+  assert.match(validation, /If any of these changes later/);
+  assert.match(validation, /Personal \+ Local \+ Source/);
+  assert.match(validation, /For Controlled, Public, artifact delivery, Internet exposure/);
+  assert.match(validation, /system size only to select work economically/i);
+  assert.match(projectLead, /Vague input requires a reasoned recommendation plus confirmation/);
+  assert.match(memory, /## Project Profile[\s\S]+Selection: Product Owner confirmed/);
+  assert.match(memory, /replace `## Completion Check` with:[\s\S]+## Proof/);
+  assert.match(specification, /registered `validation-design`/);
+  assert.match(tickets, /registered `validation-design`/);
+  assert.match(implementation, /registered `validation-design`/);
+});
+
 test("keeps tracker writes and portable handoffs behind MAGA boundaries", () => {
   const setup = read(METHODS_ROOT, "setup-matt-pocock-skills", "METHOD.md");
   const github = read(
@@ -389,12 +422,12 @@ test("publishes a complete upstream mapping and identical distributed notices", 
 
   assert.equal(catalog.schema_version, 1);
   assert.deepEqual(catalog.target_counts, {
-    registered: 17,
+    registered: 18,
     internal_method: 13,
     absorbed: 4,
   });
-  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 34);
-  assert.equal(registered.length, 17);
+  assert.equal(new Set(catalog.skills.map((entry) => entry.id)).size, 35);
+  assert.equal(registered.length, 18);
   assert.equal(internalMethods.length, 13);
   assert.equal(absorbed.length, 4);
   assert.deepEqual(
@@ -411,7 +444,7 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   assert.match(notices, /Ten upstream model-invoked Skills remain registered/);
   assert.match(notices, /Thirteen upstream\s+user-invoked workflows are distributed as internal MAGA/);
   assert.match(notices, /remaining two upstream capabilities are absorbed into Project Lead/);
-  assert.match(notices, /seventeen registered product Skills/);
+  assert.match(notices, /eighteen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
   assert.match(notices, /complete Humanization Skill/);
   assert.match(notices, /Human Writing Skill contributors/);

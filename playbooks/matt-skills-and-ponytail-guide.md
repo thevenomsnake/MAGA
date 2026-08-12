@@ -1,6 +1,6 @@
 # MAGA 内置方法、Humanization 与 Ponytail 使用手册
 
-> 适用版本：MAGA `0.12.2`
+> 适用版本：MAGA `0.13.0`
 
 Matt Pocock Skills 固定到 `1.2.2`，commit
 `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`。上游 25 个正式 Skills 在
@@ -10,14 +10,15 @@ MAGA 中逐项映射为 10 个注册 Skills、13 个内部方法和 2 个吸收�
 MAGA 基于 Matt Pocock Skills、Humanization 与 Ponytail 的固定 MIT 快照进行 Codex 适配，
 但不再把上游的每一个文件夹都暴露成同级产品入口。当前分发形态是：
 
-- 17 个注册 Skills，供 Codex 宿主识别和按需加载；
+- 18 个注册 Skills，供 Codex 宿主识别和按需加载；其中 MAGA 原生
+  `validation-design` 会先判断并推荐项目画像，再请用户确认当前用途、暴露面、交付形式和规模；
 - 13 个 Matt 原手动流程，作为 Project Lead 的内部方法；
 - 4 个吸收能力：Ponytail 的 help、gain 信息卡，`wait-what` 的重讲规则，以及
   `wizard` 的人工门禁内核；
 - Humanization 实际文本产出自动路由，以及 Ponytail 会话启动、恢复、清空、压缩、模式切换
   和子任务继承 hooks。
 
-维护 catalog 共记录 34 个能力：17 个 registered、13 个 internal method 和 4 个
+维护 catalog 共记录 35 个能力：18 个 registered、13 个 internal method 和 4 个
 absorbed。
 
 完整来源、固定 commit、修改范围和 MIT 文本见
@@ -39,7 +40,7 @@ MAGA。
 根据当前意图和项目状态选择内部方法；只有形成了具体、已授权的工作边界，才会
 创建新的 Codex 任务。
 
-## 17 个注册 Skills
+## 18 个注册 Skills
 
 ### MAGA 核心
 
@@ -47,6 +48,7 @@ MAGA。
 | --- | --- | --- |
 | `project-lead` | 唯一产品入口、能力路由、验收与恢复 | 自然语言自动匹配 |
 | `orchestrate-tickets` | 协调已批准 Ticket、fresh task、等待、整合和归档 | 内部窄触发 |
+| `validation-design` | 判断并推荐项目测试画像，由用户确认后选择刚好足够的验证 | 软件 Ticket 前自动匹配 |
 
 ### Humanization 实际文本产出路由
 
@@ -198,25 +200,27 @@ help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品
 
 在只安装 MAGA 的隔离 Codex 环境中至少验证：
 
-1. 插件页面列出 17 个 Skills，展示名能够清楚识别 MAGA、Humanization 或 Ponytail；
-2. catalog 精确包含 34 个能力：17 registered、13 internal method、4 absorbed；
+1. 插件页面列出 18 个 Skills，展示名能够清楚识别 MAGA、Humanization 或 Ponytail；
+2. catalog 精确包含 35 个能力：18 registered、13 internal method、4 absorbed；
 3. `humanization`、`research`、`prototype`、`diagnosing-bugs`、`writing-for-agents` 各用一个自然语言
    正例触发；
 4. 为每个正例加入一个相邻但不应触发的负例；
-5. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
+5. `validation-design` 能把模糊描述判断为推荐画像，再让用户二次确认；个人本地源码小项目只留
+   一次直接检查，共享、公开、互联网或高风险项目才增加相应证据；
+6. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
    用户输入原阶段命令或先配置外部 issue tracker；
-6. logic prototype 生成可直接打开的单文件 HTML，普通 grilling 一次只提出一个关键
+7. logic prototype 生成可直接打开的单文件 HTML，普通 grilling 一次只提出一个关键
    产品问题；
-7. `wizard` 没有注册目录或 Bash 模板，分发内容不包含 secret、`gh auth`、
+8. `wizard` 没有注册目录或 Bash 模板，分发内容不包含 secret、`gh auth`、
    `gh secret`、`gh variable` 或 `mktemp` 执行路径；
-8. `$ponytail help` 与 `$ponytail gain` 不改变当前模式；
-9. 启动、恢复、清空、压缩与子任务事件继续恢复配置的 Ponytail 默认模式；
-10. 回答、解释、文章和网页文案经过 Humanization，代码、命令、数据和结构 token 不被改写；
-11. 未信任 hooks 时插件仍可使用，且不会声称生命周期已经运行。
+9. `$ponytail help` 与 `$ponytail gain` 不改变当前模式；
+10. 启动、恢复、清空、压缩与子任务事件继续恢复配置的 Ponytail 默认模式；
+11. 回答、解释、文章和网页文案经过 Humanization，代码、命令、数据和结构 token 不被改写；
+12. 未信任 hooks 时插件仍可使用，且不会声称生命周期已经运行。
 
 ## 从 0.8.0 更新
 
-`0.12.2` 不保留被收进内部方法库或吸收层的旧技术入口别名。别名会重新制造列表重复、
+`0.13.0` 不保留被收进内部方法库或吸收层的旧技术入口别名。别名会重新制造列表重复、
 显式调用歧义和额外上下文成本。旧项目的 `.ai-workflow/` 状态不需要迁移；更新
 插件后应在新任务中验证 Skill 列表，并重新审阅 Ponytail hooks。
 
@@ -227,7 +231,7 @@ MAGA 不在安装时自动拉取上游最新版本。更新采用显式 vendor b
 1. 选择并记录新的固定 commit；
 2. 对比上游 Skill 与当前内部方法；
 3. 重放 MAGA 的 Codex metadata、产品授权和生命周期适配；
-4. 验证 17 个注册入口、13 个内部方法、4 个吸收映射、34 项 catalog、触发正反例与
+4. 验证 18 个注册入口、13 个内部方法、4 个吸收映射、35 项 catalog、触发正反例与
    Humanization/Ponytail hooks；
 5. 同步更新 catalog、Third-Party Notices 和发布说明。
 

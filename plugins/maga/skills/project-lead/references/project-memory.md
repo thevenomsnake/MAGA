@@ -35,6 +35,7 @@ Leave `status: onboarding` until these facts are clear enough for one inspectabl
 - first observable value;
 - delivery or inspection form;
 - material cost, account, privacy, permission, destructive, or release boundaries.
+- For software work, the Product Owner's current use, exposure, delivery, and system-size selection.
 
 Update `PROJECT.md` to `status: active` when the first Ticket is ready or running. Create a Ticket with `authorization: pending` unless the Product Owner has already authorized that clearly described result.
 
@@ -57,6 +58,16 @@ project_name: "<product name>"
 - First value: <observable behavior>
 - Delivery: <how the result is used or inspected>
 - Boundaries: <material constraints or none known>
+
+## Project Profile
+
+- Current use: personal | controlled | public
+- Exposure: local | internal | internet
+- Delivery: source | shared-artifact | public-release
+- System size: small | medium | large
+- Risk modifiers: none | auth | sensitive-data | money | migration | concurrency | irreversible | untrusted-input | other
+- Selection: Product Owner confirmed
+- Change rule: Product Owner will report a material profile change before implementation or release.
 
 ## Current State
 
@@ -99,8 +110,10 @@ Use `managed queue` only for multiple approved Tickets, independent long-lived p
 
 Scan existing Ticket keys and allocate the next `T###` key. Use a short outcome
 slug. A Ticket is ready only when its product result and one completion check
-are concrete and every listed blocker is already `integrated` (or it has no
-blockers).
+or structured proof is concrete and every listed blocker is already `integrated`
+(or it has no blockers). Apply registered `validation-design` before forming a
+software Ticket. If the Project Profile is missing, return to the Project Lead
+for the Product Owner's selection rather than choosing a profile internally.
 
 ```markdown
 ---
@@ -135,7 +148,8 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 
 ## Completion Check
 
-<One risk-matched preview, command, or inspectable fact.>
+<For Personal + Local + Source without a risk modifier: one direct preview,
+command, or observable fact.>
 
 ## Execution
 
@@ -151,6 +165,24 @@ workspace: <optional research | prototype | delivery | diagnosis | review | rele
 - Commit or artifact: pending
 - Blocker: none
 ```
+
+For Controlled, Public, artifact delivery, Internet exposure, or a concrete
+risk modifier, replace `## Completion Check` with:
+
+```markdown
+## Proof
+
+- Break to catch: <one relevant failure>
+- Evidence: <exact smoke, command, inspection, artifact, or target environment>
+- Persistent regression: no | yes — <why>
+- Risk delta: none | <risk → minimum added evidence>
+- Stop when: <observable pass condition>
+```
+
+Do not add both forms. System size selects the cheapest relevant scope: exact
+for Small, affected component plus a touched boundary for Medium, and existing
+affected/related graph selection for Large. It does not independently raise the
+assurance level.
 
 Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integrated`, `failed`, or `deferred`. Move Ticket detail out of the active working set only after it is `integrated` or explicitly `deferred`. Archive a worker task only after its result is durably recorded as integrated, deferred, or superseded; keep `PROJECT.md` focused on current work.
 
@@ -168,6 +200,15 @@ workspace requires a configured fresh task so its model and reasoning depth can
 take effect. The label describes attention and compute routing, not a permanent
 role. Keep the actual model, depth, availability, and fallback out of tracked
 project memory.
+
+## Project Profile Changes
+
+Treat Personal to Controlled/Public, Local to Internal/Internet, source to an
+artifact/release, or a material system-size change as profile drift. The Product
+Owner must select the new value before the next implementation or release.
+Update `PROJECT.md`, preserve still-valid Ticket evidence, and add only the proof
+needed for the new boundary. Do not retrofit completed Tickets or promote a
+current profile merely because the product may grow later.
 
 ## Authorization
 

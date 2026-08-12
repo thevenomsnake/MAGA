@@ -1,0 +1,6 @@
+interface:
+  display_name: "MAGA · Right-Size Testing"
+  short_description: "Match testing to audience, exposure, and scale"
+  default_prompt: "Use $validation-design to choose the smallest sufficient verification for this project."
+policy:
+  allow_implicit_invocation: true

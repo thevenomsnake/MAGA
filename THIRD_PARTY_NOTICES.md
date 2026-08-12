@@ -26,7 +26,7 @@ not vendored. The communication-recovery intent of `wait-what` becomes an
 inline plain-language re-pitch rather than a separate method or command.
 
 MAGA's Project Lead routes these capabilities from product intent. That
-routing and the consolidated surface of seventeen registered product Skills are
+routing and the consolidated surface of eighteen registered product Skills are
 MAGA adaptations, not upstream Matt invocation behavior. Original names and
 their mapping to the adapted surface remain recorded in the distributed
 catalog.

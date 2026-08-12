@@ -6,12 +6,13 @@
     "skills/*/agents/openai.yaml"
   ],
   "target_counts": {
-    "registered": 17,
+    "registered": 18,
     "internal_method": 13,
     "absorbed": 4
   },
   "skills": [
     {"id":"project-lead","origin":"maga","upstream_name":null,"upstream_commit":null,"audience":"product-builder","invocation":"implicit","lifecycle_locked":false,"display_name":"MAGA · Product Lead","mapping":"registered-entry","status":"registered"},
+    {"id":"validation-design","origin":"maga","upstream_name":null,"upstream_commit":null,"audience":"product-builder","invocation":"implicit","lifecycle_locked":false,"display_name":"MAGA · Right-Size Testing","mapping":"registered-entry","status":"registered"},
     {"id":"humanization","origin":"humanization","upstream_name":"humanization","upstream_commit":"d3b8f3791fee58c030aa52539296ad361654f1c7","audience":"product-builder","invocation":"implicit","lifecycle_locked":false,"display_name":"MAGA · Humanize Content","mapping":"registered-local-file-text","status":"registered"},
     {"id":"orchestrate-tickets","origin":"maga","upstream_name":null,"upstream_commit":null,"audience":"project-lead","invocation":"implicit","lifecycle_locked":false,"display_name":"MAGA · Coordinate Delivery","mapping":"registered-entry","status":"registered"},
     {"id":"code-review","origin":"matt-pocock-skills","upstream_name":"code-review","upstream_commit":"8b36d4fb2635b3c21998dcd8144439c9e5ba7302","audience":"product-builder","invocation":"implicit","lifecycle_locked":false,"display_name":"MAGA · Review the Build","mapping":"registered-entry","status":"registered"},

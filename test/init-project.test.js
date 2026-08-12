@@ -26,14 +26,19 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.12\.2/);
+  assert.match(project, /workflow_version: 0\.13\.0/);
   assert.match(project, /status: onboarding/);
+  assert.match(project, /## Project Profile/);
+  assert.match(project, /recommend a profile, and ask the Product Owner to confirm or correct/);
+  assert.match(project, /Validation profile has not been confirmed/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
   const agents = fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8");
   assert.match(agents, /Never ask the user to invoke a Skill/);
   assert.match(agents, /Do not pre-create generic discussion, research, prototype, or implementation tasks/);
   assert.match(agents, /create it only after the Product Owner explicitly approves that title/);
+  assert.match(agents, /recommend current use, exposure, delivery, and system size/);
+  assert.match(agents, /ask the Product Owner to confirm or correct the profile/);
 });
 
 test("ships per-Ticket execution authorization", () => {
