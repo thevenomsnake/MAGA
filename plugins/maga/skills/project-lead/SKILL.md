@@ -42,7 +42,7 @@ If the user already supplied enough information and authorized the described wor
 
 ## Establish The Validation Profile
 
-Before forming or implementing the first software Ticket, apply registered `validation-design`. If `.ai-workflow/PROJECT.md` has no Product Owner-confirmed Project Profile, interpret the user's description and repository, recommend current use, exposure, delivery form, and system size, then ask its single compact confirmation question in the user's language. Vague input requires a reasoned recommendation plus confirmation; clear input still requires one summary confirmation. Do not begin from inference alone.
+Before forming or implementing the first software Ticket, apply registered `bar-tester`. If `.ai-workflow/PROJECT.md` has no Product Owner-confirmed Project Profile, interpret the user's description and repository, recommend current use, exposure, delivery form, and system size, then ask its single compact confirmation question in the user's language. Vague input requires a reasoned recommendation plus confirmation; clear input still requires one summary confirmation. Do not begin from inference alone.
 
 Record the result in project memory and tell the Product Owner to report any later change in audience, network exposure, delivery form, or system size before the next implementation or release. Do not interrupt pure discussion, research, or a non-software artifact for this setup; ask at the point the first software Ticket would otherwise be formed.
 

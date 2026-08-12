@@ -9,7 +9,7 @@ const PLUGIN_ROOT = path.join(REPOSITORY_ROOT, "plugins", "maga");
 const SKILLS_ROOT = path.join(PLUGIN_ROOT, "skills");
 const METHODS_ROOT = path.join(PLUGIN_ROOT, "methods");
 
-const MAGA_SKILLS = ["orchestrate-tickets", "project-lead", "validation-design"];
+const MAGA_SKILLS = ["bar-tester", "orchestrate-tickets", "project-lead"];
 const HUMANIZATION_SKILLS = ["humanization"];
 const MATT_INTERNAL_METHODS = [
   "ask-matt",
@@ -292,8 +292,8 @@ test("adapts specification and delivery methods to MAGA's native project memory"
   assert.doesNotMatch(implementation, /Use \$tdd where possible/);
 });
 
-test("asks the Product Owner to confirm a right-sized validation profile", () => {
-  const validation = read(SKILLS_ROOT, "validation-design", "SKILL.md");
+test("uses Bar Tester to recommend and confirm the testing bar", () => {
+  const validation = read(SKILLS_ROOT, "bar-tester", "SKILL.md");
   const projectLead = read(SKILLS_ROOT, "project-lead", "SKILL.md");
   const memory = read(
     SKILLS_ROOT,
@@ -320,9 +320,11 @@ test("asks the Product Owner to confirm a right-sized validation profile", () =>
   assert.match(projectLead, /Vague input requires a reasoned recommendation plus confirmation/);
   assert.match(memory, /## Project Profile[\s\S]+Selection: Product Owner confirmed/);
   assert.match(memory, /replace `## Completion Check` with:[\s\S]+## Proof/);
-  assert.match(specification, /registered `validation-design`/);
-  assert.match(tickets, /registered `validation-design`/);
-  assert.match(implementation, /registered `validation-design`/);
+  assert.match(validation, /^name: bar-tester$/m);
+  assert.match(validation, /^# Bar Tester$/m);
+  assert.match(specification, /registered `bar-tester`/);
+  assert.match(tickets, /registered `bar-tester`/);
+  assert.match(implementation, /registered `bar-tester`/);
 });
 
 test("keeps tracker writes and portable handoffs behind MAGA boundaries", () => {

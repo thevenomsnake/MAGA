@@ -11,7 +11,7 @@ MAGA 基于 Matt Pocock Skills、Humanization 与 Ponytail 的固定 MIT 快照�
 但不再把上游的每一个文件夹都暴露成同级产品入口。当前分发形态是：
 
 - 18 个注册 Skills，供 Codex 宿主识别和按需加载；其中 MAGA 原生
-  `validation-design` 会先判断并推荐项目画像，再请用户确认当前用途、暴露面、交付形式和规模；
+  `bar-tester` 会先判断并推荐项目画像，再请用户确认当前用途、暴露面、交付形式和规模；
 - 13 个 Matt 原手动流程，作为 Project Lead 的内部方法；
 - 4 个吸收能力：Ponytail 的 help、gain 信息卡，`wait-what` 的重讲规则，以及
   `wizard` 的人工门禁内核；
@@ -48,7 +48,7 @@ MAGA。
 | --- | --- | --- |
 | `project-lead` | 唯一产品入口、能力路由、验收与恢复 | 自然语言自动匹配 |
 | `orchestrate-tickets` | 协调已批准 Ticket、fresh task、等待、整合和归档 | 内部窄触发 |
-| `validation-design` | 判断并推荐项目测试画像，由用户确认后选择刚好足够的验证 | 软件 Ticket 前自动匹配 |
+| `bar-tester` | 像酒吧按场合调配饮品一样设置合适的 testing bar；先推荐项目画像，再由用户确认 | 软件 Ticket 前自动匹配 |
 
 ### Humanization 实际文本产出路由
 
@@ -205,7 +205,7 @@ help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品
 3. `humanization`、`research`、`prototype`、`diagnosing-bugs`、`writing-for-agents` 各用一个自然语言
    正例触发；
 4. 为每个正例加入一个相邻但不应触发的负例；
-5. `validation-design` 能把模糊描述判断为推荐画像，再让用户二次确认；个人本地源码小项目只留
+5. `bar-tester` 能把模糊描述判断为推荐画像，再让用户二次确认；个人本地源码小项目只留
    一次直接检查，共享、公开、互联网或高风险项目才增加相应证据；
 6. Project Lead 能从普通产品请求采用 spec、tickets、delivery 等内部方法，而不要求
    用户输入原阶段命令或先配置外部 issue tracker；

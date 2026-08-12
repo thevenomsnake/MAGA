@@ -1,11 +1,11 @@
 ---
-name: validation-design
-description: "Choose the smallest sufficient software verification from the Product Owner's current use scope, exposure, delivery form, system size, and concrete risks. Use automatically before MAGA forms or implements the first software Ticket, when a project has no selected validation profile, when that profile changes, or when the user asks how to test a code change, bug fix, build, or release. This designs validation; it does not default to TDD or a new test framework."
+name: bar-tester
+description: "Set the testing bar at the smallest sufficient level for the Product Owner's current use scope, exposure, delivery form, system size, and concrete risks. Use automatically before MAGA forms or implements the first software Ticket, when a project has no confirmed validation profile, when that profile changes, or when the user asks how to test a code change, bug fix, build, or release. This designs validation; it does not default to TDD or a new test framework."
 ---
 
-# Right-Size Software Validation
+# Bar Tester
 
-Match proof to the project's current use. Treat future ambitions as planning notes until the project actually crosses that boundary.
+Set the testing bar for how the project is actually used. Treat future ambitions as planning notes until the project crosses that boundary.
 
 ## Get The Product Owner's Selection
 

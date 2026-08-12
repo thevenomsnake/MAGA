@@ -35,7 +35,7 @@ moving.
 3. Describe observable behavior before implementation. Record a technical
    constraint only when an existing contract requires it or its consequence is
    itself a product decision.
-4. For software work, apply registered `validation-design`. Require the
+4. For software work, apply registered `bar-tester`. Require the
    Product Owner-confirmed Project Profile before choosing verification; return
    a missing or drifting profile to the Project Lead instead of inferring it.
    Prefer the highest existing seam and external behavior selected by that

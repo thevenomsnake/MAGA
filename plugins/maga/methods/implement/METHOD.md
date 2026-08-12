@@ -15,7 +15,7 @@ the outcome because the code makes that tempting.
 
 1. Restate the observable outcome and acceptance boundary internally.
 2. Confirm that the Ticket contains the Completion Check or Proof produced by
-   registered `validation-design` from a Product Owner-confirmed Project
+   registered `bar-tester` from a Product Owner-confirmed Project
    Profile. If the profile is missing or requested work crosses it, return to
    the Project Lead for user selection before implementation.
 3. Inspect the existing path end to end and choose the smallest coherent change

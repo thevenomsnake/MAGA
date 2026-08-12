@@ -1,0 +1,6 @@
+interface:
+  display_name: "MAGA · Bar Tester"
+  short_description: "Set the testing bar for this project"
+  default_prompt: "Use $bar-tester to set the testing bar for this project's current audience, exposure, delivery, and scale."
+policy:
+  allow_implicit_invocation: true

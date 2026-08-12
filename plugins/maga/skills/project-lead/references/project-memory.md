@@ -111,7 +111,7 @@ Use `managed queue` only for multiple approved Tickets, independent long-lived p
 Scan existing Ticket keys and allocate the next `T###` key. Use a short outcome
 slug. A Ticket is ready only when its product result and one completion check
 or structured proof is concrete and every listed blocker is already `integrated`
-(or it has no blockers). Apply registered `validation-design` before forming a
+(or it has no blockers). Apply registered `bar-tester` before forming a
 software Ticket. If the Project Profile is missing, return to the Project Lead
 for the Product Owner's selection rather than choosing a profile internally.
 

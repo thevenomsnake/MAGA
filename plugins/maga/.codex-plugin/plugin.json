@@ -15,10 +15,10 @@
   "interface": {
     "displayName": "MAGA",
     "shortDescription": "Make Apps Great Again through one product lead.",
-    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, delivery, or release tasks with responsibility-level model and reasoning defaults. MAGA registers eighteen focused Skills, asks the Product Owner to select a right-sized validation profile, routes human-readable local-file text through Humanization, keeps product workflow methods internal, and preserves Ponytail lifecycle behavior.",
+    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, delivery, or release tasks with responsibility-level model and reasoning defaults. MAGA registers eighteen focused Skills, uses Bar Tester to recommend and confirm the project's testing bar, routes human-readable local-file text through Humanization, keeps product workflow methods internal, and preserves Ponytail lifecycle behavior.",
     "developerName": "MAGA contributors",
     "category": "Productivity",
-    "capabilities": ["Product discovery", "Responsibility model profiles", "Adaptive validation", "On-demand task workspaces", "Task orchestration", "Humanized multilingual content", "Engineering workflows", "Lifecycle hooks"],
+    "capabilities": ["Product discovery", "Responsibility model profiles", "Bar Tester validation", "On-demand task workspaces", "Task orchestration", "Humanized multilingual content", "Engineering workflows", "Lifecycle hooks"],
     "defaultPrompt": [
       "Help me turn this product idea into a working first version.",
       "Configure the model and reasoning depth for each MAGA responsibility.",

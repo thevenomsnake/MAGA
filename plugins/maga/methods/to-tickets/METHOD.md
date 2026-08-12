@@ -32,7 +32,7 @@ the project or the user explicitly authorized that external effect.
   are `integrated`, not merely implemented.
 - Keep implementation choices with the responsible role. File lists, framework
   choices, and speculative test seams do not belong in product acceptance.
-- Apply registered `validation-design` and give every Ticket either its one-line
+- Apply registered `bar-tester` and give every Ticket either its one-line
   Completion Check or the smallest structured Proof selected by the current
   Project Profile. Never write both.
 
