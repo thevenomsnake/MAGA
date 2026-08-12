@@ -185,12 +185,14 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.13.0**. Contiene 18 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, perfiles de Bar Tester confirmados por la persona responsable del producto y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
+La versión actual es **v0.13.0**. Contiene 18 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto y enrutamiento automático a Humanization para texto legible guardado en archivos locales.
+
+Antes del primer Ticket de software, Bar Tester propone un perfil según el uso actual, la exposición, la forma de entrega y el tamaño del sistema, y la persona responsable del producto lo confirma de una sola vez. Para un prototipo personal, parte de una sola comprobación en la entrada real; solo añade pruebas cuando crecen el público, la exposición, el límite de entrega o un riesgo concreto.
 
 | Capa | Responsabilidad |
 | --- | --- |
 | Project Lead | Recibe lenguaje de producto, mantiene el estado, elige métodos y coordina tareas |
-| Bar Tester | Parte del uso real para que probar todas las cantidades de bebida no olvide al cliente que pide arroz frito; después adapta la verificación al público, la exposición, la entrega y el tamaño |
+| Bar Tester | Confirma cómo se usa el producto hoy y elige la prueba mínima suficiente, incluido el límite que una lista de pedidos esperados puede ignorar cuando alguien pide arroz frito |
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
 | Humanización de contenido | Artículos, documentos, mensajes y textos de producto o GUI naturales en seis locales |

@@ -191,12 +191,14 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.13.0**. It contains 18 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, Product Owner-confirmed Bar Tester profiles, and automatic Humanization routing for human-readable local-file content.
+The current release is **v0.13.0**. It contains 18 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, and automatic Humanization routing for human-readable local-file content.
+
+Before the first software Ticket, Bar Tester recommends a profile for how the product is used today—who it is for, where it is exposed, how it ships, and how large it is—and asks the Product Owner to confirm it in one reply. A personal prototype may need only one direct check at its real entry point; verification grows only when its audience, exposure, delivery boundary, or a concrete risk grows.
 
 | Layer | Responsibility |
 | --- | --- |
 | Project Lead | Receives product language, maintains state, selects methods, and coordinates tasks |
-| Bar Tester | Starts from real use so exhaustive drink-order checks do not miss the customer who orders fried rice; then sizes verification to audience, exposure, delivery, and scale |
+| Bar Tester | Confirms how the product is actually used today, then chooses the smallest sufficient proof—including the fried-rice boundary an expected-input checklist can miss |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
 | Content humanization | Natural articles, documents, messages, and product or GUI copy across six locales |
