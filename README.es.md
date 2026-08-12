@@ -190,7 +190,7 @@ La versión actual es **v0.13.0**. Contiene 18 Skills registrados, una bibliotec
 | Capa | Responsabilidad |
 | --- | --- |
 | Project Lead | Recibe lenguaje de producto, mantiene el estado, elige métodos y coordina tareas |
-| Bar Tester | Fija el nivel de pruebas según el uso, la exposición, la entrega y el tamaño actuales; después pide confirmación y que se comuniquen cambios futuros |
+| Bar Tester | Parte del uso real para que probar todas las cantidades de bebida no olvide al cliente que pide arroz frito; después adapta la verificación al público, la exposición, la entrega y el tamaño |
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
 | Humanización de contenido | Artículos, documentos, mensajes y textos de producto o GUI naturales en seis locales |

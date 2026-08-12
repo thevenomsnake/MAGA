@@ -1,6 +1,6 @@
 interface:
   display_name: "MAGA · Bar Tester"
-  short_description: "Set the testing bar for this project"
-  default_prompt: "Use $bar-tester to set the testing bar for this project's current audience, exposure, delivery, and scale."
+  short_description: "Test real use, not only expected inputs"
+  default_prompt: "Use $bar-tester to test how this product will actually be used, including the boundary an expected-input checklist could miss."
 policy:
   allow_implicit_invocation: true

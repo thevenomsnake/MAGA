@@ -1,11 +1,11 @@
 ---
 name: bar-tester
-description: "Set the testing bar at the smallest sufficient level for the Product Owner's current use scope, exposure, delivery form, system size, and concrete risks. Use automatically before MAGA forms or implements the first software Ticket, when a project has no confirmed validation profile, when that profile changes, or when the user asks how to test a code change, bug fix, build, or release. This designs validation; it does not default to TDD or a new test framework."
+description: "Design the smallest sufficient software verification around how people will actually use the product, including the 'fried rice' boundary that expected-input tests miss. Use automatically before MAGA forms or implements the first software Ticket, when a project has no confirmed validation profile, when that profile changes, or when the user asks how to test a code change, bug fix, build, or release. Calibrate from current audience, exposure, delivery, system size, and concrete risks; do not default to TDD or a new test framework."
 ---
 
 # Bar Tester
 
-Set the testing bar for how the project is actually used. Treat future ambitions as planning notes until the project crosses that boundary.
+A tester can exhaust every valid and invalid drink order and still miss the first real customer who orders fried rice. Start from real use, then choose the smallest proof that fits it. Treat future ambitions as planning notes until the project crosses that boundary.
 
 ## Get The Product Owner's Selection
 

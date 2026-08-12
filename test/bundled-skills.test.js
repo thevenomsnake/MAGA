@@ -292,7 +292,7 @@ test("adapts specification and delivery methods to MAGA's native project memory"
   assert.doesNotMatch(implementation, /Use \$tdd where possible/);
 });
 
-test("uses Bar Tester to recommend and confirm the testing bar", () => {
+test("uses Bar Tester to catch the fried-rice boundary and confirm the profile", () => {
   const validation = read(SKILLS_ROOT, "bar-tester", "SKILL.md");
   const projectLead = read(SKILLS_ROOT, "project-lead", "SKILL.md");
   const memory = read(
@@ -322,6 +322,7 @@ test("uses Bar Tester to recommend and confirm the testing bar", () => {
   assert.match(memory, /replace `## Completion Check` with:[\s\S]+## Proof/);
   assert.match(validation, /^name: bar-tester$/m);
   assert.match(validation, /^# Bar Tester$/m);
+  assert.match(validation, /real customer who orders fried rice/);
   assert.match(specification, /registered `bar-tester`/);
   assert.match(tickets, /registered `bar-tester`/);
   assert.match(implementation, /registered `bar-tester`/);

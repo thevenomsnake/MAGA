@@ -196,7 +196,7 @@ The current release is **v0.13.0**. It contains 18 registered Skills, an interna
 | Layer | Responsibility |
 | --- | --- |
 | Project Lead | Receives product language, maintains state, selects methods, and coordinates tasks |
-| Bar Tester | Sets the testing bar from current use, exposure, delivery, and system size, then asks the Product Owner to confirm it and report later changes |
+| Bar Tester | Starts from real use so exhaustive drink-order checks do not miss the customer who orders fried rice; then sizes verification to audience, exposure, delivery, and scale |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
 | Content humanization | Natural articles, documents, messages, and product or GUI copy across six locales |

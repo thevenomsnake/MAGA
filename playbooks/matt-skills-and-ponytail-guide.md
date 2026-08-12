@@ -48,7 +48,7 @@ MAGA。
 | --- | --- | --- |
 | `project-lead` | 唯一产品入口、能力路由、验收与恢复 | 自然语言自动匹配 |
 | `orchestrate-tickets` | 协调已批准 Ticket、fresh task、等待、整合和归档 | 内部窄触发 |
-| `bar-tester` | 像酒吧按场合调配饮品一样设置合适的 testing bar；先推荐项目画像，再由用户确认 | 软件 Ticket 前自动匹配 |
+| `bar-tester` | 来自经典 QA 酒吧梗：不能只穷举“点几杯酒”，还要理解真实用户可能“点炒饭”；先推荐项目画像，再由用户确认 | 软件 Ticket 前自动匹配 |
 
 ### Humanization 实际文本产出路由
 
