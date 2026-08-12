@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Clarify Product Language"
+  display_name: "MAGA Domain Modeling"
   short_description: "Clarify product language and durable decisions"
   default_prompt: "Use $domain-modeling to clarify the product language and record any durable decision."
 policy:

@@ -66,6 +66,8 @@ test("registers Ponytail's original Codex lifecycle events", () => {
   assert.equal(config.hooks.SessionStart[0].matcher, "startup|resume|clear|compact");
   assert.match(JSON.stringify(config.hooks.SessionStart), /humanization-context\.js/);
   assert.match(JSON.stringify(config.hooks.SubagentStart), /humanization-context\.js/);
+  assert.match(JSON.stringify(config.hooks.SessionStart), /skill-labels\.js/);
+  assert.match(JSON.stringify(config.hooks.SubagentStart), /skill-labels\.js/);
 
   for (const groups of Object.values(config.hooks)) {
     for (const group of groups) {
@@ -103,6 +105,22 @@ test("routes local-file text through Humanization in tasks and subagents", (t) =
   ));
   assert.equal(output.hookSpecificOutput.hookEventName, "SubagentStart");
   assert.match(output.hookSpecificOutput.additionalContext, /local file/);
+});
+
+test("uses branded labels when MAGA Skills are named to users", (t) => {
+  const env = codexEnvironment(workspace(t));
+
+  let output = JSON.parse(runHook("skill-labels.js", env));
+  assert.equal(output.systemMessage, "MAGA:SKILL-LABELS");
+  assert.equal(output.hookSpecificOutput.hookEventName, "SessionStart");
+  assert.match(output.hookSpecificOutput.additionalContext, /project-lead -> MAGA Project Lead/);
+  assert.match(output.hookSpecificOutput.additionalContext, /orchestrate-tickets -> MAGA Orchestrate Tickets/);
+  assert.match(output.hookSpecificOutput.additionalContext, /ponytail -> MAGA Ponytail/);
+  assert.match(output.hookSpecificOutput.additionalContext, /instead of a bare technical ID/);
+
+  output = JSON.parse(runHook("skill-labels.js", env, "", ["SubagentStart"]));
+  assert.equal(output.hookSpecificOutput.hookEventName, "SubagentStart");
+  assert.match(output.hookSpecificOutput.additionalContext, /wait-what -> MAGA Wait What/);
 });
 
 test("activates, switches, reinjects, and disables Ponytail in isolated Codex data", (t) => {

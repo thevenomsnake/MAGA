@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Ponytail: Repository Audit"
+  display_name: "MAGA Ponytail Audit"
   short_description: "Rank repository-wide opportunities to delete and simplify"
   default_prompt: "Use $ponytail-audit to rank what this repository can delete or simplify."
 policy:

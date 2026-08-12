@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Wait What"
+  display_name: "MAGA Wait What"
   short_description: "Re-pitch an explanation that did not land"
   default_prompt: "Use $wait-what to re-pitch the last explanation with the missing context."
 policy:

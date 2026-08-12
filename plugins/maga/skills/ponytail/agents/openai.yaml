@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Ponytail: Minimal Build"
+  display_name: "MAGA Ponytail"
   short_description: "Build the smallest solution that genuinely works"
   default_prompt: "Use $ponytail to solve this coding task with the smallest working change."
 policy:

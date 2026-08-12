@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Ponytail: Complexity Review"
+  display_name: "MAGA Ponytail Review"
   short_description: "Find removable complexity in the current code diff"
   default_prompt: "Use $ponytail-review to identify what this code diff can delete or simplify."
 policy:

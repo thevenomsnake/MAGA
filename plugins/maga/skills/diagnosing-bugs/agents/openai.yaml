@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Diagnose a Problem"
+  display_name: "MAGA Diagnosing Bugs"
   short_description: "Find root causes and lock fixes with evidence"
   default_prompt: "Use $diagnosing-bugs to reproduce this failure, find its root cause, and verify the fix."
 policy:

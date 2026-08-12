@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Design Code Structure"
+  display_name: "MAGA Codebase Design"
   short_description: "Shape deep modules behind small, stable interfaces"
   default_prompt: "Use $codebase-design to shape this module behind a small, stable interface."
 policy:

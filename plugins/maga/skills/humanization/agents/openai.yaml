@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Humanize Content"
+  display_name: "MAGA Humanization"
   short_description: "Humanize local-file content across six locales"
   icon_small: "./assets/icon-small.png"
   icon_large: "./assets/icon-large.svg"

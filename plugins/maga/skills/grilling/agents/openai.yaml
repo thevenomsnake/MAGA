@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Challenge the Plan"
+  display_name: "MAGA Grilling"
   short_description: "Stress-test product decisions one question at a time"
   default_prompt: "Use $grilling to challenge this plan one decision at a time."
 policy:

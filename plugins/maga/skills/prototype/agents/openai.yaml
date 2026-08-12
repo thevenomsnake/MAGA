@@ -1,5 +1,5 @@
 interface:
-  display_name: "MAGA · Make a Prototype"
+  display_name: "MAGA Prototype"
   short_description: "Build a throwaway artifact to answer one question"
   default_prompt: "Use $prototype to build a throwaway artifact that answers this product question."
 policy:
