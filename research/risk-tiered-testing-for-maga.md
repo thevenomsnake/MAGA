@@ -39,7 +39,7 @@ MAGA 不应建立“个人 / 小范围 / 公开 × 本地 / 内网 / 互联网�
 | [Bazel Test Encyclopedia](https://bazel.build/reference/test-encyclopedia) | Bazel 仓库 Apache-2.0 | test size 表达时间、资源和环境成本 | small/medium/large 不是风险或保证等级 |
 | [GitHub Spec Kit 0.16.2](https://github.com/github/spec-kit/releases/tag/v0.16.2)（`4871b48`） | MIT | 用户故事可独立实现和验证 | 完整 constitution/spec/plan/tasks/analyze 流程对 MAGA 过重 |
 | [Superpowers 6.2.0](https://github.com/obra/superpowers/releases/tag/v6.2.0)（`3dcbd5c`） | MIT | 完成声明必须有修改后的新鲜证据 | 默认 TDD、工作树、评审、全套测试生命周期不能整体移植 |
-| [Matt Pocock Skills 1.2.3](https://github.com/mattpocock/skills/releases/tag/v1.2.3)（`6acc160`；MAGA 当前快照 1.2.2 / `8b36d4f`） | MIT | 验证公共 seam、可观察行为和独立预期 | 不继承默认 TDD、频繁检查、全套验证与 review |
+| [Matt Pocock Skills 1.2.3](https://github.com/mattpocock/skills/releases/tag/v1.2.3)（`6acc160`；MAGA 当前 vendor reference `5b15a47`） | MIT | 验证公共 seam、可观察行为和独立预期 | 不继承默认 TDD、频繁检查、全套验证与 review |
 | [Nx affected](https://nx.dev/docs/features/ci-features/affected)、[Jest related tests](https://jestjs.io/docs/cli#--findrelatedtests-spaceseparatedlistofsourcefiles)、[pytest-testmon 2.2.0](https://github.com/tarpas/pytest-testmon/releases/tag/2.2.0) | MIT | 由 diff、依赖图或覆盖关系选择受影响测试 | 只优化执行成本，不能判断权限、资金或发布风险；项目没有时不自动安装 |
 
 ASVS/SAMM 为 CC BY-SA。MAGA 可引用其版本和抽象决策思想，但不应把条款复制进 MIT 插件。

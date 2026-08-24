@@ -27,7 +27,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.14\.0/);
+  assert.match(project, /workflow_version: 0\.14\.1/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Project Profile/);
   assert.match(project, /recommend a profile, and ask the Product Owner to confirm or correct/);

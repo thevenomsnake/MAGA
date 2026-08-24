@@ -1,5 +1,17 @@
 # Matt Pocock Skills：把工程判断写成可组合的 Agent 工作流
 
+## 2026-08-24 / main 更新审计
+
+本次复核将 MAGA 原先锁定的 `8b36d4fb2635b3c21998dcd8144439c9e5ba7302` 与上游
+`main` 的 `5b15a47f2d7150f545fbcacbfe381787fc0230dc` 比较。47 个提交中，MAGA
+实际同步了 `diagnosing-bugs` 的 secret redaction、`domain-modeling` 的直接文件
+触发描述和 `wait-what` 的 `CONTEXT-MAP.md` 指针；保留 MAGA 的一问一答 grilling、
+内部方法和原生 Ticket 授权，不引入仍在 beta bucket 的 `implement-spec`。
+
+完整的三方 compare、Ponytail/Humanization 取舍和当前文件证据见
+[upstream-vendor-audit.md](upstream-vendor-audit.md)。下方 `v1.2.2` 章节保留为
+历史适配记录，不代表当前上游锁定版本。
+
 ## 2026-08-06 / v1.2.2 更新与 MAGA 取舍
 
 > [!IMPORTANT]

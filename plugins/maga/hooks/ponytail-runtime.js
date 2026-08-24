@@ -4,13 +4,24 @@ const os = require('os');
 const { getClaudeDir, getConfigDir } = require('./ponytail-config');
 
 const STATE_FILE = '.ponytail-active';
-const isCopilot = Boolean(process.env.COPILOT_PLUGIN_DATA);
+
+// VS Code Copilot exposes CLAUDE_PLUGIN_ROOT under .vscode/agent-plugins but
+// does not set COPILOT_PLUGIN_DATA. Detect that install shape so hooks emit
+// Copilot context instead of Claude statusline output.
+function isVsCodeCopilotRoot(pluginRoot) {
+  if (!pluginRoot) return false;
+  return pluginRoot.split(/[\\/]+/).includes('agent-plugins') &&
+    pluginRoot.toLowerCase().includes('.vscode');
+}
+
+const isCopilot = Boolean(process.env.COPILOT_PLUGIN_DATA) ||
+  isVsCodeCopilotRoot(process.env.CLAUDE_PLUGIN_ROOT);
 const isCodex = !isCopilot && Boolean(process.env.PLUGIN_DATA);
 const isQoder = !isCopilot && !isCodex && Boolean(process.env.QODER_SESSION_ID);
 
 let stateDir = getClaudeDir();
 if (isCodex) stateDir = process.env.PLUGIN_DATA;
-if (isCopilot) stateDir = process.env.COPILOT_PLUGIN_DATA;
+if (isCopilot) stateDir = process.env.COPILOT_PLUGIN_DATA || getClaudeDir();
 if (isQoder) stateDir = path.join(os.homedir(), '.qoder');
 
 const statePath = path.join(stateDir, STATE_FILE);

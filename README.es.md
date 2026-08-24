@@ -185,7 +185,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden,
 
 ## Qué incluye
 
-La versión actual es **v0.14.0**. Contiene 19 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
+La versión actual es **v0.14.1**. Contiene 19 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 Antes del primer Ticket de software, Bar Tester propone un perfil según el uso actual, la exposición, la forma de entrega y el tamaño del sistema, y la persona responsable del producto lo confirma de una sola vez. Para un prototipo personal, parte de una sola comprobación en la entrada real; solo añade pruebas cuando crecen el público, la exposición, el límite de entrega o un riesgo concreto.
 
@@ -245,9 +245,9 @@ Más información: [Enrutamiento de capacidades](./plugins/maga/skills/project-l
 
 MAGA adapta métodos maduros en revisiones fijas:
 
-- [mattpocock/skills](https://github.com/mattpocock/skills): material de 25 Skills formales de Engineering y Productivity, fijado en `8b36d4f`.
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): implementación mínima, revisión de complejidad y lifecycle Hooks, fijado en `16f2980`.
-- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): prosa y textos de GUI naturales en seis locales, fijado en `d3b8f37` (Humanization `3.0.0`).
+- [mattpocock/skills](https://github.com/mattpocock/skills): material de 25 Skills formales de Engineering y Productivity, fijado en `5b15a47`.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): implementación mínima, revisión de complejidad y lifecycle Hooks, fijado en `2ed6c52`.
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): prosa y textos de GUI naturales en seis locales, fijado en `c38b5b6` (Humanization `3.0.0`).
 
 El enrutamiento, el estado de proyecto, el instalador y el contrato de Project Lead son adaptaciones de MAGA. Las fuentes, modificaciones y licencias se registran en [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 

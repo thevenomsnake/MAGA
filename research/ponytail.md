@@ -7,6 +7,9 @@
 >
 > 历史边界：文中的“当前本地安装”特指 2026-08-01 的核对环境，当时只有六个独立 Skills。MAGA 0.6.0 后的产品状态与用法见[使用手册](../playbooks/matt-skills-and-ponytail-guide.md)，不要把下面的历史安装结论当成现状。
 
+最新上游 compare 与 MAGA 的同步/不同步边界记录在
+[上游 Vendor 审计](upstream-vendor-audit.md)；本文保留为 `16f2980` 的历史研究基线。
+
 ## 证据标记
 
 本文严格区分三类内容：

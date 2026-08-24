@@ -11,7 +11,7 @@ import {
 } from "../runtime/compute-profiles.mjs";
 
 const SERVER_NAME = "MAGA Responsibility Settings";
-const SERVER_VERSION = "0.14.0";
+const SERVER_VERSION = "0.14.1";
 const TEMPLATE_URI = "ui://maga/compute-settings-v1.html";
 const JsonRpcError = {
   METHOD_NOT_FOUND: -32601,

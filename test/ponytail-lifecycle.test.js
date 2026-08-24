@@ -83,6 +83,26 @@ test("registers Ponytail's original Codex lifecycle events", () => {
   }
 });
 
+test("recognizes the VS Code Copilot plugin root fallback", (t) => {
+  const root = workspace(t);
+  const home = path.join(root, "home");
+  const env = codexEnvironment(root, {
+    CLAUDE_CONFIG_DIR: path.join(home, ".claude"),
+    CLAUDE_PLUGIN_ROOT: path.join(root, ".vscode", "agent-plugins", "maga"),
+    PLUGIN_DATA: "",
+    CLAUDE_PLUGIN_DATA: "",
+    COPILOT_PLUGIN_DATA: "",
+  });
+
+  const output = JSON.parse(runHook("ponytail-activate.js", env));
+  assert.equal(output.systemMessage, undefined);
+  assert.match(output.additionalContext, /PONYTAIL/);
+  assert.equal(
+    fs.existsSync(path.join(home, ".claude", ".ponytail-active")),
+    true,
+  );
+});
+
 test("routes local-file text through Humanization in tasks and subagents", (t) => {
   const env = codexEnvironment(workspace(t));
 
@@ -96,6 +116,7 @@ test("routes local-file text through Humanization in tasks and subagents", (t) =
   assert.match(output.hookSpecificOutput.additionalContext, /never announce, cite, or explain that MAGA, Humanization, routing, or an editorial pass was used/);
   assert.match(output.hookSpecificOutput.additionalContext, /never ask a question just to configure this pass/);
   assert.match(output.hookSpecificOutput.additionalContext, /Keep code, commands, paths, URLs/);
+  assert.match(output.hookSpecificOutput.additionalContext, /author sample when the user explicitly designates it/);
 
   output = JSON.parse(runHook(
     "humanization-context.js",

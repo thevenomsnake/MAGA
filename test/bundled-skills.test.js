@@ -169,6 +169,9 @@ test("routes local-file text through Humanization without touching chat-only out
   assert.match(instructions, /不声明、引用或解释本 Skill 已运行/);
   assert.match(instructions, /不为本 Skill 单独追问/);
   assert.match(instructions, /代码、命令、路径、URL/);
+  assert.match(instructions, /author_sample/);
+  assert.match(read(root, "references", "core.md"), /任务内作者样本校准/);
+  assert.match(read(root, "references", "core.md"), /不要保存或跨任务复用校准记录/);
   assert.doesNotMatch(metadata, /Humanize answers/);
   assert.match(metadata, /allow_implicit_invocation:\s*true/);
   assert.match(read(root, "LICENSE"), /Human Writing Skill contributors/);
@@ -205,6 +208,9 @@ test("registers Matt's eleven automatic capabilities without internal or retired
     const instructions = read(SKILLS_ROOT, skill, "SKILL.md");
     assert.doesNotMatch(instructions.split("---", 3)[1], /disable-model-invocation/, skill);
   }
+
+  assert.match(read(SKILLS_ROOT, "diagnosing-bugs", "SKILL.md"), /## Redact/);
+  assert.match(read(SKILLS_ROOT, "diagnosing-bugs", "SKILL.md"), /redacted captured artifact/);
 
   for (const skill of REGISTERED_SKILLS) {
     assert.doesNotMatch(read(SKILLS_ROOT, skill, "SKILL.md"), removedCommand, skill);
@@ -405,6 +411,7 @@ test("registers automatic communication recovery and absorbs only the manual gat
   assert.match(waitWhat, /user signals that they did not understand the previous explanation/);
   assert.match(waitWhat, /ordinary follow-up that asks for new information/);
   assert.match(waitWhat, /listener's current language/);
+  assert.match(waitWhat, /CONTEXT-MAP\.md/);
   assert.match(waitWhat, /create no Ticket, file, task/);
   assert.doesNotMatch(waitWhat.split("---", 3)[1], /disable-model-invocation/);
   assert.match(waitWhatMetadata, /display_name: "MAGA Wait What"/);
@@ -453,9 +460,9 @@ test("publishes a complete upstream mapping and identical distributed notices", 
     absorbed.map((entry) => entry.id).sort(),
     [...ABSORBED_UPSTREAM_CAPABILITIES].sort(),
   );
-  assert.match(notices, /8b36d4fb2635b3c21998dcd8144439c9e5ba7302/);
-  assert.match(notices, /16f29800fd2681bdf24f3eb4ccffe38be3baec6b/);
-  assert.match(notices, /d3b8f3791fee58c030aa52539296ad361654f1c7/);
+  assert.match(notices, /5b15a47f2d7150f545fbcacbfe381787fc0230dc/);
+  assert.match(notices, /2ed6c52c9d7e5e56942508591085fd45dea277d3/);
+  assert.match(notices, /c38b5b6d0878ee06b899213d4003e694cece5e0c/);
   assert.match(notices, /Eleven are registered with their technical identities/);
   assert.match(notices, /ten upstream\s+model-invoked Skills retain implicit invocation/);
   assert.match(notices, /wait-what[\s\S]+adapted from user-only invocation\s+to implicit Codex routing/);
@@ -464,6 +471,7 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   assert.match(notices, /nineteen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
   assert.match(notices, /complete Humanization Skill/);
+  assert.match(notices, /task-scoped author-sample calibration/);
   assert.match(notices, /Human Writing Skill contributors/);
   assert.equal(notices, read(REPOSITORY_ROOT, "THIRD_PARTY_NOTICES.md"));
 });

@@ -1,6 +1,6 @@
 ---
 schema_version: 2
-workflow_version: 0.13.0
+workflow_version: 0.14.1
 status: active
 project_name: "MAGA"
 ---

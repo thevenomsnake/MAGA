@@ -193,7 +193,7 @@ Business、Enterprise 和 Edu 工作区可先使用 Plus 方案；当工作区�
 
 ## 里面有什么
 
-当前版本是 **v0.14.0**，包含 19 个注册 Skills、一套只在需要时加载的内部方法库、职责级计算配置、由产品负责人确认的 Bar Tester 项目画像、面向本地文件文字的 Humanization 自动路由，以及基于明确提交的 Git 交付保护。
+当前版本是 **v0.14.1**，包含 19 个注册 Skills、一套只在需要时加载的内部方法库、职责级计算配置、由产品负责人确认的 Bar Tester 项目画像、面向本地文件文字的 Humanization 自动路由，以及基于明确提交的 Git 交付保护。
 
 在首个软件 Ticket 前，Bar Tester 会根据产品今天的用途、暴露面、交付方式和系统规模给出项目画像建议，产品负责人一次确认即可。个人原型通常只需从真实入口直接验证一次；只有受众、暴露面、交付边界或具体风险变大时，验证才随之增加。
 
@@ -253,9 +253,9 @@ Project Lead 先判断需要哪类证据，再选择注册 Skill 或内部方法
 
 MAGA 在固定版本上改编了成熟方法：
 
-- [mattpocock/skills](https://github.com/mattpocock/skills)：25 个正式 Engineering 与 Productivity Skills 的工作流材料，固定到 `8b36d4f`。
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小实现、复杂度 review 和生命周期 Hooks，固定到 `16f2980`。
-- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：覆盖六种 locale 的自然文章与 GUI 文案，固定到 `d3b8f37`（Humanization `3.0.0`）。
+- [mattpocock/skills](https://github.com/mattpocock/skills)：25 个正式 Engineering 与 Productivity Skills 的工作流材料，固定到 `5b15a47`。
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小实现、复杂度 review 和生命周期 Hooks，固定到 `2ed6c52`。
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：覆盖六种 locale 的自然文章与 GUI 文案，固定到 `c38b5b6`（Humanization `3.0.0`）。
 
 MAGA 的路由、项目状态、安装器和 Project Lead 契约属于本地改编。来源、修改和许可证记录在 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
 

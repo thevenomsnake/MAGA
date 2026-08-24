@@ -50,7 +50,7 @@ Testing Library、Pact 和 MSW 进一步证明了正确的测试 seam：越接�
 - **膨胀风险**：中高。测试怎么写很好，但原版实现节奏会把一次验证扩成多次验证。
 - **可吸收点**：public seam、行为命名、独立 expected、一个测试只覆盖一个失败原因。这些 MAGA 已部分融合，应由新的 `validation-design` 调度，而不是改回默认 TDD。
 - **拒绝点**：频繁验证、末尾全量回归、默认 code review，以及把 TDD 当成普通实现的默认入口。
-- **许可/版本**：MIT；当前研究基线 [v1.2.3 / `6acc160`](https://github.com/mattpocock/skills/releases/tag/v1.2.3)。MAGA 当前融合的是较早的 1.2.2 固定提交 `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`，升级必须单独比较差异，不能把本研究变成静默更新。
+- **许可/版本**：MIT；研究基线为 [v1.2.3 / `6acc160`](https://github.com/mattpocock/skills/releases/tag/v1.2.3)。MAGA 已完成一次显式 compare，并将当前 vendor reference 更新到 `5b15a47`；具体吸收边界见 [上游审计](upstream-vendor-audit.md)。
 - **MAGA 适配度**：方法 `8/10`；原版节奏 `3/10`。
 
 ### 3. GitHub Spec Kit v0.16.2：吸收“独立验证”，拒绝完整文档流水线

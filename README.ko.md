@@ -185,7 +185,7 @@ MAGA는 작업의 책임과 저장된 설정을 자동으로 판단하지만, Co
 
 ## 구성
 
-현재 릴리스는 **v0.14.0**입니다. 등록된 Skills 19개, 필요할 때만 로드하는 내부 방법 라이브러리, 제품 책임자가 확인하는 Bar Tester 프로필, 로컬 파일의 사람이 읽는 텍스트에 대한 Humanization 자동 라우팅, 명시적 커밋 기반 Git 전달 보호를 포함합니다.
+현재 릴리스는 **v0.14.1**입니다. 등록된 Skills 19개, 필요할 때만 로드하는 내부 방법 라이브러리, 제품 책임자가 확인하는 Bar Tester 프로필, 로컬 파일의 사람이 읽는 텍스트에 대한 Humanization 자동 라우팅, 명시적 커밋 기반 Git 전달 보호를 포함합니다.
 
 첫 소프트웨어 Ticket을 만들기 전에 Bar Tester는 현재 용도, 노출 범위, 전달 방식, 시스템 규모를 바탕으로 프로필을 제안하고 제품 책임자에게 한 번에 확인받습니다. 개인용 프로토타입은 실제 진입점에서 한 번 확인하는 것으로 시작하며, 사용자 범위, 노출, 전달 경계나 구체적인 위험이 커질 때만 검증을 더합니다.
 
@@ -245,9 +245,9 @@ Project Lead는 먼저 필요한 증거의 종류를 파악한 뒤 등록된 Ski
 
 MAGA는 고정된 리비전의 검증된 방법을 적용합니다.
 
-- [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 25개의 워크플로 자료. `8b36d4f`에 고정.
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): 최소 구현, 복잡성 리뷰, 라이프사이클 Hooks. `16f2980`에 고정.
-- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): 6개 로케일의 자연스러운 산문 및 GUI 문구. `d3b8f37`(Humanization `3.0.0`)에 고정.
+- [mattpocock/skills](https://github.com/mattpocock/skills): 공식 Engineering 및 Productivity Skills 25개의 워크플로 자료. `5b15a47`에 고정.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): 최소 구현, 복잡성 리뷰, 라이프사이클 Hooks. `2ed6c52`에 고정.
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization): 6개 로케일의 자연스러운 산문 및 GUI 문구. `c38b5b6`(Humanization `3.0.0`)에 고정.
 
 라우팅, 프로젝트 상태, 설치 프로그램, Project Lead 계약은 MAGA의 로컬 적용입니다. 출처, 변경 사항, 라이선스는 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)에 기록되어 있습니다.
 

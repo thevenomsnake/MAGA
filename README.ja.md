@@ -185,7 +185,7 @@ MAGA は作業の責務と保存済み設定を自動で選びますが、Codex 
 
 ## 構成
 
-現在のリリースは **v0.14.0** です。19 個の登録済み Skills、必要なときだけ読み込む内部手法ライブラリ、プロダクト責任者が確認する Bar Tester プロファイル、ローカルファイル内の人向けテキストへの Humanization 自動ルーティング、明示的なコミットに基づく Git 配信保護を含みます。
+現在のリリースは **v0.14.1** です。19 個の登録済み Skills、必要なときだけ読み込む内部手法ライブラリ、プロダクト責任者が確認する Bar Tester プロファイル、ローカルファイル内の人向けテキストへの Humanization 自動ルーティング、明示的なコミットに基づく Git 配信保護を含みます。
 
 最初のソフトウェア Ticket を作る前に、Bar Tester は現在の利用者、公開範囲、提供形態、システム規模からプロファイルを提案し、プロダクト責任者に一度だけ確認を求めます。個人用プロトタイプなら実際の入口で一度確認するところから始め、利用者、公開範囲、提供上の境界、具体的なリスクが増えたときだけ検証を追加します。
 
@@ -245,9 +245,9 @@ Project Lead は最初に必要な証拠の種類を判断し、登録済み Ski
 
 MAGA は固定リビジョンの成熟した手法を適用しています。
 
-- [mattpocock/skills](https://github.com/mattpocock/skills)：25 個の正式な Engineering / Productivity Skills のワークフロー資料。`8b36d4f` に固定。
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小実装、複雑性レビュー、ライフサイクル Hooks。`16f2980` に固定。
-- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：6 ロケールの自然な文章と GUI コピー。`d3b8f37`（Humanization `3.0.0`）に固定。
+- [mattpocock/skills](https://github.com/mattpocock/skills)：25 個の正式な Engineering / Productivity Skills のワークフロー資料。`5b15a47` に固定。
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：最小実装、複雑性レビュー、ライフサイクル Hooks。`2ed6c52` に固定。
+- [thevenomsnake/humanization](https://github.com/thevenomsnake/humanization)：6 ロケールの自然な文章と GUI コピー。`c38b5b6`（Humanization `3.0.0`）に固定。
 
 ルーティング、プロジェクト状態、インストーラー、Project Lead 契約は MAGA による適用です。出典、変更内容、ライセンスは [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) に記録しています。
 
