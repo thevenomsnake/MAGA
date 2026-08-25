@@ -71,5 +71,5 @@ Newly initialized projects receive the same policy and routing contract.
 - Behavior: Project Lead and initialized projects now distinguish bounded read-only native subagents from named workers, with separate Delegate and Dispatch authority.
 - Validation: `node --test test/native-subagent-routing.test.js test/init-project.test.js test/bundled-skills.test.js` passed 24/24.
 - Evidence: `.ai-workflow/specs/native-subagent-delegation.md`, D002, Project Memory, native execution-shape routing, orchestration boundary, initializer templates, and `test/native-subagent-routing.test.js`.
-- Commit or artifact: 90fcd76
+- Commit or artifact: 17d631c463d904312851a122021fba3d65796ff0
 - Blocker: none
