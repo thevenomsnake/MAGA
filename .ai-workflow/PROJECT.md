@@ -35,7 +35,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA 0.15.0 combines bounded proactive task coordination, durable context packets, accepted design records, and optional thread Goal continuation. T003, T004, and T005 are integrated; T006 synchronizes the public documentation and GitHub release.
+MAGA 0.15.0 combines bounded proactive task coordination, durable context packets, accepted design records, and optional thread Goal continuation. The public documentation and GitHub release are synchronized; T003 through T006 are integrated.
 
 ## Roles
 
@@ -47,7 +47,7 @@ MAGA 0.15.0 combines bounded proactive task coordination, durable context packet
 
 ## Active Tickets
 
-- [T006](tickets/T006-release-0150.md): ready, authorization approved
+None.
 
 ## Decisions
 

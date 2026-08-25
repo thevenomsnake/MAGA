@@ -1,6 +1,6 @@
 ---
 key: T006
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 workspace: release
@@ -66,8 +66,8 @@ the new bounded coordination and project-memory capabilities before installation
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: MAGA 0.15.0 is synchronized across package/plugin/runtime versions, five localized README and guide pairs, the canonical public contract, maintainer playbooks, and the GitHub release.
+- Validation: `node --test test/init-project.test.js` passed 9/9; Humanization README checks passed for en, zh-CN, ja, ko, and es; release JSON parsed successfully.
+- Evidence: GitHub release `v0.15.0`, provider metadata for commit `120eb269cbd2a30b2c8ba8b2dc4f4140daf63aa4`, and archive SHA-256 `daa8ab3d8150dc7adaab114c1c46fa16883ad0d890d348c38a8ef5d06b5ed929`.
+- Commit or artifact: 120eb269cbd2a30b2c8ba8b2dc4f4140daf63aa4; `maga-0.15.0.tar`
 - Blocker: none
