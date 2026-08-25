@@ -1,6 +1,6 @@
 ---
 key: T008
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -70,8 +70,8 @@ recover its native child threads without introducing a second agent runtime.
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: CodexBridge now negotiates native multi-agent capability, starts bounded read-only collaboration turns, enforces a two-agent admission limit, and reconciles child thread lineage with safe fallbacks.
+- Validation: `node --test test/native-subagent-adapter.test.js test/codex-bridge.test.js test/native-subagent-routing.test.js test/init-project.test.js test/bundled-skills.test.js` passed 48/48; live 0.148.0 protocol smoke accepted the experimental collaboration turn and interrupted it without persistent side effects.
+- Evidence: `.ai-workflow/specs/native-subagent-runtime-adapter.md`, D003, `src/codex-bridge.js`, and `test/native-subagent-adapter.test.js`.
+- Commit or artifact: 044a287a7d5425b55b4e60e6b3b28d379359ce84
 - Blocker: none
