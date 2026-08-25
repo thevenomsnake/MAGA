@@ -16,6 +16,23 @@ Keep the routing invisible unless the Product Owner asks how the work is organiz
 - Treat a Codex task as an attention workspace for one concrete object, not as a
   menu item or permanent department.
 
+## Choose The Native Execution Shape
+
+Use the smallest shape that meets the boundary:
+
+| Shape | Use when | Authority |
+| --- | --- | --- |
+| Continue | Coupled reasoning or a quick in-scope clarification | Current task and Ticket |
+| Native subagent | Short, read-only investigation inside an approved Ticket | `Delegate` only; no writes or task creation |
+| Named worker task | Durable artifact, source change, commit, independent acceptance, or distinct permission | `Dispatch` plus Ticket authorization |
+| Fork | The Product Owner explicitly wants parent history preserved | Explicit request only |
+| Worktree | Parallel writers have proven non-overlapping scopes | Existing Git and Ticket boundaries |
+| Handoff | Context must cross a harness, repository, directory, or colleague | Repository-relative handoff only |
+
+Do not use a named worker for a disposable read-only question merely because a
+specialist profile exists. Do not use a subagent to bypass a worker's write,
+acceptance, or authorization boundary.
+
 ## Use Stable Responsibility Profiles
 
 MAGA exposes seven settings slots. They are stable routing keys, not an org chart

@@ -9,6 +9,8 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - A new Ticket worker requires either explicit Product Owner approval for its deterministic title and attempt or a confirmed project Autonomy Policy whose `Dispatch` scope covers the already approved Ticket. The pre-Ticket exploration loop carries its own one-task permission. MAGA chooses the useful responsibility automatically; work authorization alone is not Ticket-worker creation permission.
 - Keep durable roles in `.ai-workflow/roles/`; never use a task transcript as role memory.
 - Read the project's Autonomy Policy before dispatching; enforce its active-worker limit and side-effect gates.
+- Use the project's `Delegate` policy for ephemeral read-only subagents and its
+  `Dispatch` policy for named workers; never treat one as the other.
 - Start each worker with a context packet containing repository-relative pointers to the project index, role, Ticket, design records, acceptance, and proof; do not copy the parent transcript.
 - During recovery, read `.ai-workflow/design/INDEX.md` when it exists, then open only accepted records relevant to the current Ticket or product question.
 - A persisted Codex Goal may mirror the current Ticket's short objective and budget; Goal state controls continuation only, while Ticket status and project memory control authorization and completion.
@@ -19,6 +21,31 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved MAGA values are recommendations; omit overrides and use the host default.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
+
+## Choose The Smallest Native Shape
+
+At a phase boundary, choose the first shape that satisfies the outcome:
+
+1. **Continue** in the current task for coupled product reasoning or a quick
+   in-scope clarification.
+2. **Delegate** to a native subagent for a short, read-only question inside the
+   current approved Ticket. Return its finding to the parent and discard the
+   attention workspace after the result is used.
+3. **Dispatch** a named worker task when the outcome needs code, a durable
+   artifact, a commit, independent acceptance, a distinct permission boundary,
+   or user-visible follow-up. Apply the existing reconciliation and integration
+   lifecycle.
+4. **Fork** only when the Product Owner explicitly wants the parent transcript
+   preserved in an alternative branch.
+5. **Use a worktree** only for proven non-overlapping parallel writers; otherwise
+   serialize writes in the project checkout.
+6. **Write a handoff** only when context must cross a harness, repository,
+   directory, colleague, or isolated mid-phase fork.
+
+Subagents never edit, commit, create tasks, approve requests, publish, or broaden
+the Ticket. A native Goal may keep the current approved objective visible across
+turns with a finite budget; Goal state remains continuation state, not project
+authorization.
 
 ## Create Professional Workspaces On Demand
 

@@ -28,14 +28,19 @@ project_name: "MAGA"
 ## Autonomy Policy
 
 - Continue: approved within the current Ticket or Goal boundary.
-- Dispatch: approved for up to two named workers inside an already approved Ticket.
+- Delegate: approved
+- Max active subagents: 2
+- Dispatch: approved
+- Max active workers: 2
+- Scope: approved Tickets in this repository only
 - Context: pass repository-relative pointers and bounded summaries; do not copy transcripts.
+- Subagent side effects: read-only; no writes, commits, task creation, external actions, or scope expansion.
 - Release: proposal-only; external, irreversible, account, payment, migration, and release actions require a fresh decision.
 - Change rule: Product Owner approval is required before widening scope, worker limit, or side-effect authority.
 
 ## Current State
 
-MAGA 0.15.0 combines bounded proactive task coordination, durable context packets, accepted design records, and optional thread Goal continuation. The public documentation and GitHub release are synchronized; T003 through T006 are integrated.
+MAGA 0.15.0 combines bounded proactive task coordination, native read-only subagent delegation, durable context packets, accepted design records, and optional thread Goal continuation. The public documentation and GitHub release remain synchronized; T003 through T007 are integrated. The public release version remains 0.15.0 until a separate release decision is made.
 
 ## Roles
 
@@ -51,4 +56,4 @@ None.
 
 ## Decisions
 
-None.
+- [D002 Native subagent delegation topology](design/records/D002-native-subagent-delegation.md): accepted.

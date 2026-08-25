@@ -126,6 +126,8 @@ The policy is project-scoped and does not replace Ticket authorization:
 ## Autonomy Policy
 
 - Continue: approved | pending
+- Delegate: approved | pending
+- Max active subagents: <positive integer or none>
 - Dispatch: approved | pending
 - Max active workers: <positive integer or none>
 - Scope: approved Tickets in this repository only
@@ -133,6 +135,11 @@ The policy is project-scoped and does not replace Ticket authorization:
 - Release: proposal-only | approved for named scope
 - Change rule: Product Owner approval is required before widening scope, worker limit, or side-effect authority.
 ```
+
+`Delegate: approved` permits at most `Max active subagents` ephemeral,
+read-only native subagents inside an already approved Ticket. A subagent may
+inspect and reason, then return a result to its parent; it may not edit, commit,
+create a task, approve a request, publish, or expand scope.
 
 `Dispatch: approved` permits a fresh named worker only for an already approved
 Ticket, within `Max active workers`. It does not create a new Ticket, authorize an
@@ -242,9 +249,10 @@ Omit `workspace` only when the Ticket stays as Project Lead work in the current
 focused task. Set `workspace` to the smallest stable responsibility label for
 research, prototype, delivery, diagnosis, review, or release work. A specialist
 workspace requires a configured fresh task so its model and reasoning depth can
-take effect. The label describes attention and compute routing, not a permanent
-role. Keep the actual model, depth, availability, and fallback out of tracked
-project memory.
+take effect. A short-lived read-only question may use a native subagent instead
+when `Delegate` is approved and capacity exists. The label describes attention
+and compute routing, not a permanent role. Keep the actual model, depth,
+availability, and fallback out of tracked project memory.
 
 ## Project Profile Changes
 
@@ -273,6 +281,9 @@ accepted decision becomes durable work.
   that permission as `Task opening: approved` or `Task opening: standing-policy`
   for the exact title and attempt; it does not carry to replacements, future
   Tickets, or expanded outcomes.
+- Use `Delegate` only for bounded read-only subagent work inside the approved
+  Ticket. A subagent does not inherit `Dispatch` authority and cannot create a
+  worker or another subagent.
 - Keep `approved` for a same-scope retry. Return a deferred Ticket to `pending` before resuming it later.
 - Do not dispatch or continue new side effects for a `pending` or `revoked` Ticket. When authorization is revoked during execution, stop at a safe boundary and return control to the Product Owner.
 - Treat approval as authority only for the Ticket's written scope. It does not implicitly allow accounts, costs, sensitive data, external publication, destructive actions, migration, production changes, or release.

@@ -27,6 +27,9 @@ Proceed only when:
 - Codex task coordination tools are available.
 - The project's Autonomy Policy has been read; it does not authorize new Tickets,
   expanded outcomes, or external/irreversible side effects.
+- Short-lived read-only investigation may use a native subagent only when the
+  project's `Delegate` policy has capacity. A subagent cannot write, commit,
+  create another task, approve a request, or expand the Ticket.
 - A thread Goal, when available, is only a bounded continuation aid. It never
   authorizes a Ticket, permission, release, or expanded outcome.
 
@@ -129,10 +132,30 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 
 ## Choose The Smallest Execution Shape
 
-1. Keep a small, self-contained Ticket in the current task only when it has no specialist `workspace` and remains Project Lead work.
-2. Propose a fresh project task for every Ticket whose workspace is `research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`. Create it when the project's confirmed Autonomy Policy covers the approved Ticket and has capacity, or after explicit approval; the fresh task is required for its responsibility model and reasoning depth to take effect.
-3. Run tickets sequentially by default.
-4. Run tickets in parallel only when their blockers are complete, their write scopes do not conflict, and each task has an isolated worktree.
+1. Keep a small, self-contained Ticket in the current task when it has no
+   specialist `workspace` and remains Project Lead work.
+2. Use a native subagent before opening a worker when the question is short,
+   read-only, inside the approved Ticket, and its result can return to the
+   parent without durable integration. Check `Delegate` capacity first.
+3. Propose a fresh project task for a Ticket whose workspace is `research`,
+   `prototype`, `delivery`, `diagnosis`, `review`, or `release` when the outcome
+   needs a durable artifact, source change, commit, independent acceptance,
+   distinct permission boundary, or user-visible follow-up. Create it when the
+   project's confirmed `Dispatch` policy covers the approved Ticket and has
+   capacity, or after explicit approval; the fresh task is required for its
+   responsibility model and reasoning depth to take effect.
+4. Run Tickets sequentially by default.
+5. Run Tickets in parallel only when their blockers are complete, their write
+   scopes do not conflict, and each task has an isolated worktree.
+
+### Native subagent boundary
+
+Give a subagent the smallest repository-relative pointers and one question. It
+returns a finding, uncertainty, or blocker to its parent. Do not give it a
+commit requirement, a task-creation instruction, an external connector, or a
+permission escalation. If the question grows into a durable artifact, source
+change, or independent acceptance result, stop the subagent and dispatch a
+named worker through the normal Ticket lifecycle.
 
 Do not create tasks merely because the plan contains several bullets. Split on attention and ownership boundaries. Do not dispatch more live tasks than can be tracked in one `codex_app__wait_threads` batch.
 

@@ -55,10 +55,10 @@ Keep this Project Lead as the only generic pinned entry. Never pre-create empty 
 
 For that pre-Ticket branch, read [references/exploration-loop.md](references/exploration-loop.md) and follow it through return to this Project Lead. The exploration request itself authorizes that one concretely titled exploration task; do not add a second task-creation question. An exploration task never opens another exploration task.
 
-At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. Read the confirmed Autonomy Policy and enforce its worker limit. After exploration returns an accepted decision, or when approved work already exists, run the entire native loop rather than stopping after dispatch:
+At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. Read the confirmed Autonomy Policy and enforce both its subagent and worker limits. After exploration returns an accepted decision, or when approved work already exists, run the entire native loop rather than stopping after delegation or dispatch:
 
 1. Persist the current product outcome, minimum roles, and Ticket contract.
-2. Apply `orchestrate-tickets` to reuse or create the appropriate native manager or worker task.
+2. Choose `continue`, a bounded native subagent, or `orchestrate-tickets` for an appropriate named manager or worker task according to [the native execution shape](references/native-codex-loop.md).
 3. Wait for the result; continue the same task for in-scope clarification and route only irreducible product judgment to the user.
 4. Integrate the result, update project and Ticket state, then archive completed workers.
 5. Return to the Product Owner with what is usable, what they can inspect, and the next product decision if one remains.
@@ -153,7 +153,7 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 5. Decide which existing role owns it, or create the one new role justified by a real boundary.
 6. Persist the Ticket before cross-session execution.
 7. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes.
-8. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. If the confirmed Autonomy Policy covers the Ticket and its worker limit has capacity, create the task directly; otherwise ask once for the exact deterministic title. Record `Task opening: standing-policy` or `Task opening: approved`, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
+8. Keep Project Lead work with no specialist `workspace` in this task. For a short read-only question inside an approved Ticket, use a native subagent when the confirmed `Delegate` policy has capacity. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, use a named worker when the outcome needs a durable artifact, source change, commit, independent acceptance, distinct permission, or user-visible follow-up. If the confirmed `Dispatch` policy covers the Ticket and its worker limit has capacity, create the task directly; otherwise ask once for the exact deterministic title. Record `Task opening: standing-policy` or `Task opening: approved`, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
 9. After the slice works, run its one risk-matched smoke and commit it before integration, switching context, or starting another slice.
 10. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact and commit identity.
 11. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
