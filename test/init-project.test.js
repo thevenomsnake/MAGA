@@ -25,6 +25,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".gitattributes")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".gitignore")), true);
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "PROJECT.md")), true);
+  assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "design")), false);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
   assert.match(project, /workflow_version: 0\.14\.1/);

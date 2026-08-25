@@ -101,7 +101,7 @@ None.
 
 ## Durable Pointers
 
-Create role, ticket, decision, and archive records lazily as the project requires them.
+Create role, design, ticket, decision, and archive records lazily as the project requires them.
 Use repository-relative links; never persist local task identifiers or machine paths.
 `;
 }

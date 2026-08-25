@@ -67,7 +67,7 @@ For Ticket dispatch, recovery, integration, or closure across tasks, read [refer
 
 ## Orient From Durable State
 
-Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, and open Tickets. Reuse existing project documents and naming; do not create a parallel management system.
+Read `AGENTS.md`, the current product direction, current state, active decisions, role registry, open Tickets, and `.ai-workflow/design/INDEX.md` when it exists. Reuse existing project documents and naming; do not create a parallel management system.
 
 When onboarding, forming a role, creating a Ticket, completing work, or recovering state, read [references/project-memory.md](references/project-memory.md) and follow its file contract. Do not load it for a self-contained response that does not change project memory.
 

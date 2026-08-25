@@ -234,6 +234,7 @@ test("ships every Matt supporting file from both registered Skills and internal 
     "diagnosing-bugs": ["scripts/hitl-loop.template.sh"],
     "domain-modeling": ["ADR-FORMAT.md", "CONTEXT-FORMAT.md"],
     prototype: ["LOGIC.md", "UI.md"],
+    "project-lead": ["references/design-record.md"],
     tdd: ["mocking.md", "tests.md"],
     "writing-for-agents": ["SKILL-MECHANICS.md"],
   };
@@ -287,6 +288,7 @@ test("adapts specification and delivery methods to MAGA's native project memory"
   assert.match(routing, /\.ai-workflow\/PROJECT\.md[\s\S]+default authority/);
   assert.match(routing, /Do not run the setup\s+method or ask the Product Owner to choose a tracker/);
   assert.match(memory, /specs\/\s+# only when several closed decisions/);
+  assert.match(memory, /design\/\s+# only after the first accepted or reviewable design record/);
   assert.match(memory, /## Blocked By/);
   assert.match(specification, /\.ai-workflow\/specs\/<outcome-key>\.md/);
   assert.doesNotMatch(specification, /setup-matt-pocock-skills/);

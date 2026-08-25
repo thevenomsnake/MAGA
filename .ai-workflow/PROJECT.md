@@ -35,15 +35,19 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. `wait-what` is now a visible, internationally triggered Skill with automatic communication recovery. The Product Owner has confirmed bounded automatic dispatch for up to two workers within approved Tickets; T003 is integrated and the next slice is design-record persistence.
+MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. `wait-what` is now a visible, internationally triggered Skill with automatic communication recovery. The Product Owner has confirmed bounded automatic dispatch for up to two workers within approved Tickets; T003 is integrated and T004 adds lazy design-record persistence.
 
 ## Roles
 
 - [Project Lead](roles/project-lead.md): Owns product decisions, Ticket formation, integration, and the exploration boundary.
 
+## Design
+
+- [Design Index](design/INDEX.md): accepted product and system shape records used during recovery.
+
 ## Active Tickets
 
-None.
+- [T004](tickets/T004-design-record-persistence.md): ready, authorization approved
 
 ## Decisions
 

@@ -353,8 +353,8 @@ function projectLeadPrompt(entryMode) {
   if (entryMode === "recovery") {
     return `This initialized MAGA project needs its single product-facing Project Lead restored.
 Read .ai-workflow/PROJECT.md and only the repository-relative durable pointers needed
-to recover the current product direction, accepted decisions, open questions, active
-work, and evidence. Do not modify files, dispatch tasks, or perform external actions
+to recover the current product direction, accepted design shape, decisions, open
+questions, active work, and evidence. Do not modify files, dispatch tasks, or perform external actions
 in this first turn. In the Product Owner's system locale (${locale}), briefly summarize
 the recovered product state and propose the next product-level decision or outcome. If
 the durable state still says onboarding, say so and ask what they want to build and who

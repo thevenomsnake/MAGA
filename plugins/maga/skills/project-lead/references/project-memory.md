@@ -13,6 +13,9 @@ Create only records the project currently needs:
 |   `-- <role-key>.md
 |-- specs/           # only when several closed decisions need one durable synthesis
 |-- questionnaires/  # only when an external knowledge holder blocks a decision
+|-- design/          # only after the first accepted or reviewable design record
+|   |-- INDEX.md
+|   `-- records/D###-<design-key>.md
 |-- tickets/
 |   `-- T001-<outcome-key>.md
 |-- decisions/       # only for consequential decisions
@@ -21,6 +24,13 @@ Create only records the project currently needs:
 ```
 
 `PROJECT.md` is the small current-state index. Role files hold durable responsibility. Ticket files hold bounded work and their execution authorization. Do not use chat transcripts, task IDs, host IDs, usernames, absolute paths, or worktree locations as project memory.
+
+The design index is a pointer map, not a second current-state document. Design
+records hold the product or system shape being decided; accepted records may be
+used during recovery, while draft, rejected, and superseded records remain
+historical context only. Create the design directory lazily. When writing one,
+read [design-record.md](design-record.md) and preserve its status and evidence
+relationships.
 
 When a specification is useful, write one focused file under
 `.ai-workflow/specs/` (or reuse an established repository specification

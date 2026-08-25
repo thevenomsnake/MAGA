@@ -200,8 +200,8 @@ decision or permission is missing, stop and return needs-decision instead of inv
 scope.
 
 Use the context packet pointers from the Project Lead. Read the project index, role,
-Ticket, linked design records, acceptance, and proof before acting; do not copy or
-reconstruct the parent transcript.
+Ticket, `.ai-workflow/design/INDEX.md` when present, linked accepted design records,
+acceptance, and proof before acting; do not copy or reconstruct the parent transcript.
 
 Use the Ticket's workspace and completion check to select installed capabilities
 internally; never ask the Product Owner to name a Skill. Produce the shortest runnable
