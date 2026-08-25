@@ -1,6 +1,6 @@
 ---
 key: T005
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 ---
@@ -68,8 +68,8 @@ does not support the Goal API. Project memory remains authoritative.
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: CodexBridge can set, read, clear, and optionally apply a bounded thread Goal; unsupported hosts return a repository-memory fallback without blocking recovery.
+- Validation: `node --test test/codex-bridge.test.js` passed 16/16.
+- Evidence: Goal adapter methods and launch option in `src/codex-bridge.js`, orchestration guidance, and focused bridge tests.
+- Commit or artifact: b0ebb24
 - Blocker: none
