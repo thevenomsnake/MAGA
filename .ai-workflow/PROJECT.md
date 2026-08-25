@@ -35,7 +35,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. `wait-what` is now a visible, internationally triggered Skill with automatic communication recovery. The Product Owner has confirmed bounded automatic dispatch for up to two workers within approved Tickets; T003 is the first implementation slice.
+MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. `wait-what` is now a visible, internationally triggered Skill with automatic communication recovery. The Product Owner has confirmed bounded automatic dispatch for up to two workers within approved Tickets; T003 is integrated and the next slice is design-record persistence.
 
 ## Roles
 
@@ -43,7 +43,7 @@ MAGA separates likely multi-turn product exploration from the long-lived Project
 
 ## Active Tickets
 
-- [T003](tickets/T003-proactive-task-dispatch.md): ready, authorization approved
+None.
 
 ## Decisions
 

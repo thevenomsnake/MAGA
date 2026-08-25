@@ -1,6 +1,6 @@
 ---
 key: T003
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 ---
@@ -70,8 +70,8 @@ context packet, and reconcile existing tasks before creating or retrying one.
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: Project Lead and orchestration instructions now honor the confirmed bounded dispatch policy; CodexBridge reconciles paginated/archived candidates and active timeout state; worker prompts can receive repository-relative context packets without runtime IDs.
+- Validation: `node --test test/codex-bridge.test.js test/init-project.test.js` passed 22/22.
+- Evidence: `src/codex-bridge.js`, `src/context-packet.js`, generated project autonomy policy, and focused bridge/initializer tests.
+- Commit or artifact: c2aad67
 - Blocker: none
