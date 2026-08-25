@@ -67,6 +67,20 @@ That is enough to begin. MAGA identifies the first useful outcome and asks only 
 
 Product direction, active decisions, authority, Tickets, and evidence live in versionable project state. A restored Project Lead task can recover from that state instead of treating one long task transcript as the product record.
 
+### Read the system at two levels
+
+The product view explains the user-facing loop. The maintainer view shows how project memory, the Codex-native runtime, decision boundaries, and bounded execution fit together.
+
+<p align="center">
+  <img src="./assets/maga-product-loop.drawio.png" alt="Product-facing MAGA loop from intent to an inspectable result and product judgment" width="100%">
+</p>
+
+<p align="center">
+  <img src="./assets/maga-execution-topology.drawio.png" alt="Maintainer view of MAGA project memory, Codex runtime, decision boundaries, and execution paths" width="100%">
+</p>
+
+The editable [product loop source](./assets/maga-product-loop.drawio) and [maintainer topology source](./assets/maga-execution-topology.drawio) are the canonical files; the PNGs are generated README renderings.
+
 <p align="center">
   <img src="./assets/maga-operating-model.svg" alt="Behavior comparison between traditional Skills and MAGA across entry, orchestration, technical work, acceptance, and continuity" width="100%">
 </p>
