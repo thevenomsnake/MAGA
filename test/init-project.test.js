@@ -28,7 +28,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, ".ai-workflow", "design")), false);
   const project = fs.readFileSync(path.join(targetDir, ".ai-workflow", "PROJECT.md"), "utf8");
   assert.match(project, /schema_version: 2/);
-  assert.match(project, /workflow_version: 0\.15\.0/);
+  assert.match(project, /workflow_version: 0\.16\.0/);
   assert.match(project, /status: onboarding/);
   assert.match(project, /## Project Profile/);
   assert.match(project, /recommend a profile, and ask the Product Owner to confirm or correct/);
@@ -234,7 +234,7 @@ test("ships localized product guides, beginner manuals, and one English comparis
   assert.match(readme, /confirmed project Autonomy Policy/);
   assert.match(publicSurfaceContract, /## Bounded continuity/);
   assert.match(publicSurfaceContract, /Design record/);
-  for (const localizedReadme of readmes) assert.match(localizedReadme, /v0\.15\.0/);
+  for (const localizedReadme of readmes) assert.match(localizedReadme, /v0\.16\.0/);
   assert.match(readme, /Pro · quality first[\s\S]+Plus · regular use[\s\S]+Free \/ Go · quota saver/);
   assert.match(readme, /\*\*Luna\*\* is only recommended at \*\*max\*\*/);
   assert.doesNotMatch(readme, /The wrapper is the installed working contract/);

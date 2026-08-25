@@ -70,6 +70,13 @@ before creating or retrying one. Without that policy, MAGA asks for the specific
 title. New Tickets, expanded outcomes, external writes, accounts, payments, releases,
 migrations, deletion, and other irreversible actions remain explicit decisions.
 
+For a short read-only question inside an approved Ticket, MAGA may use up to two
+native subagents through its CodexBridge runtime adapter. The adapter negotiates
+the native capability, applies a read-only sandbox and no-approval policy, and
+recovers child lineage. Subagents cannot write, commit, create tasks, publish, or
+expand the Ticket; unsupported hosts and models fall back to the current task or a
+named worker.
+
 An optional Codex thread Goal can continue the current approved objective with a bounded
 budget. Goal state is thread-scoped and does not replace project memory or authorization.
 Accepted design records live under `.ai-workflow/design/` and are read during Project

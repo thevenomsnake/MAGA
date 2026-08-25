@@ -1,7 +1,7 @@
 {
   "name": "maga",
-  "version": "0.15.0",
-  "description": "Make Apps Great Again with one proactive, product-facing Codex lead",
+  "version": "0.16.0",
+  "description": "Make Apps Great Again with a proactive Codex lead and native subagent runtime",
   "type": "module",
   "bin": {
     "maga": "./bin/maga.js"

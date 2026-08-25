@@ -1,7 +1,7 @@
 {
   "name": "maga",
-  "version": "0.15.0",
-  "description": "Make Apps Great Again with one proactive, product-facing Codex lead and durable project memory.",
+  "version": "0.16.0",
+  "description": "Make Apps Great Again with a proactive Codex lead, durable project memory, and native subagent runtime.",
   "author": {
     "name": "MAGA contributors",
     "url": "https://github.com/thevenomsnake/MAGA"
@@ -15,10 +15,10 @@
   "interface": {
     "displayName": "MAGA",
     "shortDescription": "Make Apps Great Again with a proactive Codex lead.",
-    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then coordinate bounded, clearly named research, prototype, diagnosis, review, delivery, or release workers for approved Tickets. MAGA passes repository-relative context, recovers task state, persists accepted design records, and can use bounded thread Goals when the host supports them. It also registers nineteen focused Skills, applies Bar Tester, Humanization, Git-safe delivery, internal product methods, and Ponytail lifecycle behavior.",
+    "longDescription": "Make Apps Great Again. Start with one pinned product lead, use bounded native read-only subagents for short questions, and coordinate clearly named workers for durable approved Ticket outcomes. MAGA passes repository-relative context, recovers task state, persists accepted design records, and can use bounded thread Goals when the host supports them. It also registers nineteen focused Skills, applies Bar Tester, Humanization, Git-safe delivery, internal product methods, and Ponytail lifecycle behavior.",
     "developerName": "MAGA contributors",
     "category": "Productivity",
-    "capabilities": ["Product discovery", "Responsibility model profiles", "Bar Tester validation", "Bounded proactive task coordination", "Durable context packets", "Project design memory", "Optional thread Goals", "Humanized multilingual content", "Commit-safe Git delivery", "Engineering workflows", "Lifecycle hooks"],
+    "capabilities": ["Product discovery", "Responsibility model profiles", "Bar Tester validation", "Bounded proactive task coordination", "Native subagent runtime", "Durable context packets", "Project design memory", "Optional thread Goals", "Humanized multilingual content", "Commit-safe Git delivery", "Engineering workflows", "Lifecycle hooks"],
     "defaultPrompt": [
       "Help me turn this product idea into a working first version.",
       "Configure the model and reasoning depth for each MAGA responsibility.",

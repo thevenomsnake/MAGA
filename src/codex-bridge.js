@@ -8,7 +8,7 @@ import {
 } from "../plugins/maga/runtime/compute-profiles.mjs";
 import { buildContextPacket } from "./context-packet.js";
 
-const BRIDGE_VERSION = "0.15.0";
+const BRIDGE_VERSION = "0.16.0";
 const NATIVE_SUBAGENT_MAX = 2;
 const NATIVE_SUBAGENT_SOURCE_KINDS = [
   "subAgent",

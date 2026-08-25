@@ -136,7 +136,7 @@ Ese comentario cambia la arquitectura de información y el siguiente paso de ent
 4. **Autoridad:** qué acciones están aprobadas y cuáles requieren una decisión nueva.
 5. **Evidencia:** prototipos, comportamiento funcional, pruebas, diagnósticos y aceptación de producto.
 6. **Diseño:** design records aceptados del producto y del sistema que sobreviven al reemplazo de una tarea.
-7. **Continuidad:** task dispatch acotado y thread Goals opcionales con condiciones de parada explícitas.
+7. **Continuidad:** subagentes nativos de solo lectura, task dispatch acotado y thread Goals opcionales con condiciones de parada explícitas.
 
 Esta información vive en el proyecto. Una tarea Project Lead nueva o recuperada puede leerla desde el estado duradero, sin convertir el historial de una tarea en el registro del producto.
 
@@ -146,6 +146,7 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 - El trabajo reversible dentro del proyecto indicado y las comprobaciones proporcionales al riesgo forman parte de la ejecución normal.
 - Publicar, pagar, operar cuentas, enviar mensajes externos y borrar de forma irreversible requiere autorización explícita.
+- Para una pregunta breve y de solo lectura dentro de un Ticket aprobado, MAGA puede usar hasta dos subagentes nativos. No pueden escribir, hacer commit, crear tareas, publicar ni ampliar el alcance; si el host no los admite, MAGA continúa en la tarea actual o usa un worker con nombre.
 - Con una Autonomy Policy confirmada, MAGA puede crear workers con nombre dentro de un Ticket aprobado hasta el worker limit del proyecto y entregarles un context packet acotado. No crea Tickets nuevos ni amplía su alcance automáticamente.
 - Un thread Goal solo continúa el objetivo aprobado actual; no autoriza permisos, lanzamientos ni trabajo nuevo.
 - Las decisiones de producto que no se pueden deducir de decisiones anteriores vuelven al Product Owner.
@@ -189,7 +190,7 @@ MAGA decide automáticamente qué responsabilidad y configuración corresponden.
 
 ## Qué incluye
 
-La versión actual es **v0.15.0**. Contiene 19 Skills registrados, coordinación proactiva acotada de tareas, design records del proyecto, continuación opcional mediante thread Goal, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
+La versión actual es **v0.16.0**. Contiene 19 Skills registrados, coordinación proactiva acotada de tareas, subagentes nativos de solo lectura con recuperación de sus tareas hijas, design records del proyecto, continuación opcional mediante thread Goal, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 Antes del primer Ticket de software, Bar Tester propone un perfil según el uso actual, la exposición, la forma de entrega y el tamaño del sistema, y la persona responsable del producto lo confirma de una sola vez. Para un prototipo personal, parte de una sola comprobación en la entrada real; solo añade pruebas cuando crecen el público, la exposición, el límite de entrega o un riesgo concreto.
 

@@ -1,6 +1,6 @@
 # MAGA 内置方法、Humanization 与 Ponytail 使用手册
 
-> 适用版本：MAGA `0.15.0`
+> 适用版本：MAGA `0.16.0`
 
 当前 vendor 审计基线为 Matt Pocock Skills `5b15a47`、Ponytail `2ed6c52` 和
 Humanization `c38b5b6`。本次只同步与 MAGA 宿主和产品边界兼容的行为，完整证据见
@@ -164,8 +164,9 @@ setup 方法与外部副作用授权。
 
 ## 自动路由边界
 
-`0.15.0` 增加有边界的连续推进能力：项目确认 Autonomy Policy 后，Project Lead
-可以在已批准 Ticket 内创建最多两个具名 worker，并通过 repository-relative
+`0.15.0` 先增加了有边界的连续推进能力；`0.16.0` 在此基础上加入原生只读
+subagent runtime adapter。项目确认 Autonomy Policy 后，Project Lead
+可以在已批准 Ticket 内使用最多两个只读 subagent，或创建最多两个具名 worker，并通过 repository-relative
 context packet 传递项目索引、角色、Ticket、accepted design records、验收和 proof。
 它会先 reconcile 已有、archived 或仍在运行的 task，再决定创建或重试。新 Ticket、
 扩大的 outcome、外部写入、账号、费用、release、migration 和不可逆动作仍需要新的

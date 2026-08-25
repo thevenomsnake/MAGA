@@ -136,7 +136,7 @@ MAGA는 그 위에 다음 운영 모델을 추가합니다.
 4. **권한:** 승인된 행동과 새로운 결정이 필요한 행동.
 5. **증거:** 프로토타입, 실제 동작, 테스트, 진단, 제품 승인.
 6. **설계:** 작업이 교체되어도 복구할 수 있는 승인된 제품 및 시스템 design records.
-7. **연속성:** 경계가 있는 task dispatch와 명확한 중지 조건을 둔 선택적 thread Goal.
+7. **연속성:** 경계가 있는 read-only subagent, task dispatch, 명확한 중지 조건을 둔 선택적 thread Goal.
 
 이 정보는 프로젝트에 저장됩니다. 새로 만들거나 복구한 Project Lead 작업은 하나의 작업 기록을 제품 기록으로 취급하지 않고 지속 상태에서 이 정보를 읽을 수 있습니다.
 
@@ -146,6 +146,7 @@ MAGA는 승인된 작업을 자율적으로 진행하지만 하나의 자연어 
 
 - 지정된 프로젝트 안의 되돌릴 수 있는 작업과 위험 수준에 맞는 검사는 일반 실행에 해당합니다.
 - 배포, 결제, 계정 작업, 외부 메시지, 되돌릴 수 없는 삭제에는 명시적 권한이 필요합니다.
+- 승인된 Ticket 안의 짧은 질문에는 최대 두 개의 네이티브 read-only subagent를 사용할 수 있습니다. 파일을 수정하거나 commit, task 생성, 게시, 범위 확대를 하지 않으며, 호스트가 지원하지 않으면 현재 작업을 계속하거나 이름 있는 worker로 전환합니다.
 - 확인된 Autonomy Policy가 있으면 MAGA는 승인된 Ticket 안에서 프로젝트의 worker limit까지 이름 있는 worker를 만들고 제한된 context packet을 전달할 수 있습니다. 새 Ticket이나 범위 확대는 자동으로 하지 않습니다.
 - thread Goal은 현재 승인된 목표를 계속하는 데만 쓰이며 권한, 릴리스, 새 작업을 승인하지 않습니다.
 - 기존 결정에서 추론할 수 없는 제품 트레이드오프는 Product Owner에게 돌아갑니다.
@@ -189,7 +190,7 @@ MAGA는 작업의 책임과 저장된 설정을 자동으로 판단합니다. �
 
 ## 구성
 
-현재 릴리스는 **v0.15.0**입니다. 등록된 Skills 19개, 제한된 proactive task coordination, 프로젝트 design records, 선택 가능한 thread Goal continuation, 필요할 때만 로드하는 내부 방법 라이브러리, 제품 책임자가 확인하는 Bar Tester 프로필, 로컬 파일의 사람이 읽는 텍스트에 대한 Humanization 자동 라우팅, 명시적 커밋 기반 Git 전달 보호를 포함합니다.
+현재 릴리스는 **v0.16.0**입니다. 등록된 Skills 19개, 제한된 proactive task coordination, 네이티브 read-only subagent 협업과 하위 task 복구, 프로젝트 design records, 선택 가능한 thread Goal continuation, 필요할 때만 로드하는 내부 방법 라이브러리, 제품 책임자가 확인하는 Bar Tester 프로필, 로컬 파일의 사람이 읽는 텍스트에 대한 Humanization 자동 라우팅, 명시적 커밋 기반 Git 전달 보호를 포함합니다.
 
 첫 소프트웨어 Ticket을 만들기 전에 Bar Tester는 현재 용도, 노출 범위, 전달 방식, 시스템 규모를 바탕으로 프로필을 제안하고 제품 책임자에게 한 번에 확인받습니다. 개인용 프로토타입은 실제 진입점에서 한 번 확인하는 것으로 시작하며, 사용자 범위, 노출, 전달 경계나 구체적인 위험이 커질 때만 검증을 더합니다.
 

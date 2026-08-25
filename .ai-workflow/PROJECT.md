@@ -1,6 +1,6 @@
 ---
 schema_version: 2
-workflow_version: 0.15.0
+workflow_version: 0.16.0
 status: active
 project_name: "MAGA"
 ---
@@ -40,7 +40,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA 0.15.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T008 are integrated; the public documentation and GitHub release remain synchronized. The public release version remains 0.15.0 until a separate release decision is made.
+MAGA 0.16.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T008 are integrated; T009 is the code-and-GitHub release slice. Website, npm, and Cloudflare delivery are outside this release.
 
 ## Roles
 
@@ -52,7 +52,7 @@ MAGA 0.15.0 combines bounded proactive task coordination, native read-only subag
 
 ## Active Tickets
 
-None.
+- [T009 Release MAGA 0.16.0 for code and GitHub](tickets/T009-release-0160.md): ready, approved.
 
 ## Decisions
 

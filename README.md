@@ -136,7 +136,7 @@ That feedback changes the information architecture and the next delivery step. Y
 4. **Authority:** which actions are approved and which require a new decision.
 5. **Evidence:** prototypes, working behavior, tests, diagnostics, and product acceptance.
 6. **Design:** accepted product and system shape records that survive task replacement.
-7. **Continuity:** bounded task dispatch and optional thread Goals with explicit stop conditions.
+7. **Continuity:** bounded read-only subagents, task dispatch, and optional thread Goals with explicit stop conditions.
 
 This information lives in the project. The Project Lead task, or a restored replacement, can recover from durable state instead of treating one task transcript as the product record. Codex tasks remain replaceable attention workspaces.
 
@@ -146,6 +146,7 @@ MAGA can advance authorized work without turning one natural-language request in
 
 - Reversible work inside the named project and risk-matched checks are normal execution.
 - Publishing, payment, account actions, external messages, and irreversible deletion require explicit authority.
+- For a short read-only question inside an approved Ticket, MAGA may use up to two native subagents. They cannot write, commit, create tasks, publish, or expand the scope; unsupported hosts fall back to the current task or a named worker.
 - With a confirmed project Autonomy Policy, MAGA may create named workers inside an already approved Ticket, up to that project's confirmed limit, and pass them a bounded context packet. The recommended starting limit is two. It does not create new Tickets or expand their scope automatically.
 - A thread Goal may continue the current approved objective with a bounded budget; it does not authorize permissions, releases, or new work.
 - Product trade-offs that cannot be inferred from existing decisions return to the Product Owner.
@@ -195,7 +196,7 @@ Saved changes apply only to new tasks that you explicitly approve in product lan
 
 ## What is inside
 
-The current release is **v0.15.0**. It contains 19 registered Skills, bounded proactive task coordination, repository-local design records, optional thread Goal continuation, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
+The current release is **v0.16.0**. It contains 19 registered Skills, bounded proactive task coordination, native read-only subagents with child-task recovery, repository-local design records, optional thread Goal continuation, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 Before the first software Ticket, Bar Tester recommends a profile for how the product is used today—who it is for, where it is exposed, how it ships, and how large it is—and asks the Product Owner to confirm it in one reply. A personal prototype may need only one direct check at its real entry point; verification grows only when its audience, exposure, delivery boundary, or a concrete risk grows.
 

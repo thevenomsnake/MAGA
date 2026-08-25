@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
-const WORKFLOW_VERSION = "0.15.0";
+const WORKFLOW_VERSION = "0.16.0";
 
 function writeLf(file, content) {
   fs.writeFileSync(file, String(content).replace(/\r\n?/g, "\n"), "utf8");
