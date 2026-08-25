@@ -11,6 +11,7 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - Read the project's Autonomy Policy before dispatching; enforce its active-worker limit and side-effect gates.
 - Start each worker with a context packet containing repository-relative pointers to the project index, role, Ticket, design records, acceptance, and proof; do not copy the parent transcript.
 - During recovery, read `.ai-workflow/design/INDEX.md` when it exists, then open only accepted records relevant to the current Ticket or product question.
+- A persisted Codex Goal may mirror the current Ticket's short objective and budget; Goal state controls continuation only, while Ticket status and project memory control authorization and completion.
 - Pin a role-management task only for a `managed queue` role.
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.

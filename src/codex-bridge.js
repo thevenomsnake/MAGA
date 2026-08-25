@@ -20,6 +20,20 @@ function isComputeSelectionError(error) {
     && /\b(invalid|unsupported|unavailable|unknown|not allowed|does not support|reject)/i.test(message);
 }
 
+const THREAD_GOAL_STATUSES = new Set([
+  "active",
+  "paused",
+  "blocked",
+  "budgetLimited",
+  "usageLimited",
+  "complete",
+]);
+
+function isUnsupportedGoalError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return /method not found|unknown method|unsupported|experimentalApi|not available/i.test(message);
+}
+
 function withHostComputeFallback(compute) {
   return {
     ...compute,
@@ -263,6 +277,47 @@ export class CodexBridge {
     return result.thread || result;
   }
 
+  setThreadGoal(threadId, { objective, status, tokenBudget } = {}) {
+    if (typeof objective !== "string" || !objective.trim()) {
+      throw new Error("thread Goal objective must be non-empty");
+    }
+    if (objective.length > 4_000) {
+      throw new Error("thread Goal objective must be 4000 characters or shorter");
+    }
+    if (status !== undefined && !THREAD_GOAL_STATUSES.has(status)) {
+      throw new Error(`unsupported thread Goal status: ${status}`);
+    }
+    if (tokenBudget !== undefined && tokenBudget !== null
+      && (!Number.isInteger(tokenBudget) || tokenBudget <= 0)) {
+      throw new Error("thread Goal token budget must be a positive integer");
+    }
+    const params = { threadId, objective: objective.trim() };
+    if (status !== undefined) params.status = status;
+    if (tokenBudget !== undefined) params.tokenBudget = tokenBudget;
+    return this.request("thread/goal/set", params);
+  }
+
+  getThreadGoal(threadId) {
+    return this.request("thread/goal/get", { threadId });
+  }
+
+  clearThreadGoal(threadId) {
+    return this.request("thread/goal/clear", { threadId });
+  }
+
+  async trySetThreadGoal(threadId, options = {}) {
+    try {
+      const result = await this.setThreadGoal(threadId, options);
+      return { supported: true, ...result };
+    } catch (error) {
+      if (!isUnsupportedGoalError(error)) throw error;
+      return {
+        supported: false,
+        fallback: "The Codex host does not support persisted thread Goals; repository project memory remains authoritative.",
+      };
+    }
+  }
+
   async sendMessage(threadId, text, { model, effort, contextPacket } = {}) {
     const prompt = contextPacket ? `${contextPacket}\n\n${text}` : text;
     const result = await this.request("turn/start", {
@@ -372,6 +427,14 @@ to build and who should use it. Do not mention Skills, commands, Git, testing, r
 tickets, models, or internal workflow.`;
 }
 
+async function applyLaunchGoal(bridge, threadId, goal, goalTokenBudget) {
+  if (!goal || typeof bridge.trySetThreadGoal !== "function") return null;
+  return bridge.trySetThreadGoal(threadId, {
+    objective: goal,
+    tokenBudget: goalTokenBudget,
+  });
+}
+
 export async function launchProjectLead({
   targetDir,
   projectName,
@@ -380,6 +443,8 @@ export async function launchProjectLead({
   onReady,
   bridgeFactory,
   computeSettings,
+  goal,
+  goalTokenBudget,
 } = {}) {
   if (!new Set(["onboarding", "recovery"]).has(entryMode)) {
     throw new Error(`unknown Project Lead entry mode: ${entryMode}`);
@@ -398,8 +463,9 @@ export async function launchProjectLead({
     );
     if (existing) {
       await bridge.pinThread(existing.id);
+      const goalResult = await applyLaunchGoal(bridge, existing.id, goal, goalTokenBudget);
       await onReady?.({ title, reused: true });
-      return { threadId: existing.id, title, reused: true, compute: null };
+      return { threadId: existing.id, title, reused: true, compute: null, goal: goalResult };
     }
 
     const archived = findCanonicalThread(
@@ -410,8 +476,9 @@ export async function launchProjectLead({
       const restored = await bridge.unarchiveThread(archived.id);
       const restoredId = restored.id || archived.id;
       await bridge.pinThread(restoredId);
+      const goalResult = await applyLaunchGoal(bridge, restoredId, goal, goalTokenBudget);
       await onReady?.({ title, reused: true });
-      return { threadId: restoredId, title, reused: true, compute: null };
+      return { threadId: restoredId, title, reused: true, compute: null, goal: goalResult };
     }
 
     let models = [];
@@ -443,7 +510,9 @@ export async function launchProjectLead({
     }
 
     let readyNotified = false;
+    let goalResult = null;
     try {
+      goalResult = await applyLaunchGoal(bridge, thread.id, goal, goalTokenBudget);
       await onReady?.({ title, reused: false });
       readyNotified = true;
       await bridge.sendMessage(thread.id, projectLeadPrompt(entryMode), {
@@ -469,6 +538,7 @@ export async function launchProjectLead({
       usingHostDefaults = true;
       thread = await bridge.createThread({ cwd, title, pinned: true });
       try {
+        goalResult = await applyLaunchGoal(bridge, thread.id, goal, goalTokenBudget);
         if (!readyNotified) await onReady?.({ title, reused: false });
         await bridge.sendMessage(thread.id, projectLeadPrompt(entryMode));
       } catch (retryError) {
@@ -476,7 +546,7 @@ export async function launchProjectLead({
         throw retryError;
       }
     }
-    return { threadId: thread.id, title, reused: false, compute };
+    return { threadId: thread.id, title, reused: false, compute, goal: goalResult };
   } finally {
     await bridge.close();
   }

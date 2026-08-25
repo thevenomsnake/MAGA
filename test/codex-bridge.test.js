@@ -166,6 +166,85 @@ test("prepends a context packet to a worker turn without changing model settings
   assert.equal(calls[0].params.model, undefined);
 });
 
+test("sets, reads, and clears a bounded thread Goal", async () => {
+  const calls = [];
+  const bridge = new CodexBridge({ cwd: process.cwd() });
+  bridge.request = async (method, params) => {
+    calls.push({ method, params });
+    return { goal: { objective: params.objective, status: "active" } };
+  };
+
+  await bridge.setThreadGoal("thread-1", {
+    objective: "Finish the approved Ticket with focused evidence.",
+    status: "active",
+    tokenBudget: 1200,
+  });
+  await bridge.getThreadGoal("thread-1");
+  await bridge.clearThreadGoal("thread-1");
+
+  assert.deepEqual(calls, [
+    {
+      method: "thread/goal/set",
+      params: {
+        threadId: "thread-1",
+        objective: "Finish the approved Ticket with focused evidence.",
+        status: "active",
+        tokenBudget: 1200,
+      },
+    },
+    { method: "thread/goal/get", params: { threadId: "thread-1" } },
+    { method: "thread/goal/clear", params: { threadId: "thread-1" } },
+  ]);
+  assert.throws(
+    () => bridge.setThreadGoal("thread-1", { objective: "" }),
+    /non-empty/,
+  );
+  assert.throws(
+    () => bridge.setThreadGoal("thread-1", { objective: "x", tokenBudget: 0 }),
+    /positive integer/,
+  );
+});
+
+test("falls back when the host does not expose thread Goals", async () => {
+  const bridge = new CodexBridge({ cwd: process.cwd() });
+  bridge.request = async () => { throw new Error("method not found: thread/goal/set"); };
+
+  const result = await bridge.trySetThreadGoal("thread-1", { objective: "Keep going" });
+  assert.equal(result.supported, false);
+  assert.match(result.fallback, /repository project memory remains authoritative/);
+});
+
+test("applies an optional Goal when restoring the Project Lead", async () => {
+  const goals = [];
+  const bridge = {
+    connect: async () => {},
+    close: async () => {},
+    listThreads: async () => [{ id: "lead-1", name: "Product · Project Lead" }],
+    pinThread: async () => {},
+    trySetThreadGoal: async (threadId, options) => {
+      goals.push({ threadId, options });
+      return { supported: true, goal: { status: "active" } };
+    },
+  };
+
+  const result = await launchProjectLead({
+    targetDir: process.cwd(),
+    projectName: "Product",
+    goal: "Continue the approved Ticket until its proof is recorded.",
+    goalTokenBudget: 900,
+    bridgeFactory: () => bridge,
+  });
+
+  assert.deepEqual(goals, [{
+    threadId: "lead-1",
+    options: {
+      objective: "Continue the approved Ticket until its proof is recorded.",
+      tokenBudget: 900,
+    },
+  }]);
+  assert.equal(result.goal.supported, true);
+});
+
 test("keeps an existing Project Lead compute unchanged and restores its pin", async () => {
   const calls = [];
   const bridge = {

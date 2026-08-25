@@ -27,6 +27,8 @@ Proceed only when:
 - Codex task coordination tools are available.
 - The project's Autonomy Policy has been read; it does not authorize new Tickets,
   expanded outcomes, or external/irreversible side effects.
+- A thread Goal, when available, is only a bounded continuation aid. It never
+  authorizes a Ticket, permission, release, or expanded outcome.
 
 If task tools are unavailable, say automatic dispatch is unavailable and provide the next ticket pointer. Do not pretend a task was created.
 
