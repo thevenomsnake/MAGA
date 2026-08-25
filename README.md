@@ -135,8 +135,10 @@ That feedback changes the information architecture and the next delivery step. Y
 3. **State:** accepted decisions, open questions, active work, and the next useful result.
 4. **Authority:** which actions are approved and which require a new decision.
 5. **Evidence:** prototypes, working behavior, tests, diagnostics, and product acceptance.
+6. **Design:** accepted product and system shape records that survive task replacement.
+7. **Continuity:** bounded task dispatch and optional thread Goals with explicit stop conditions.
 
-This information lives in the project. The Project Lead task, or a restored replacement, can recover from durable state instead of treating one task transcript as the product record.
+This information lives in the project. The Project Lead task, or a restored replacement, can recover from durable state instead of treating one task transcript as the product record. Codex tasks remain replaceable attention workspaces.
 
 ## Product and permission boundaries
 
@@ -144,6 +146,8 @@ MAGA can advance authorized work without turning one natural-language request in
 
 - Reversible work inside the named project and risk-matched checks are normal execution.
 - Publishing, payment, account actions, external messages, and irreversible deletion require explicit authority.
+- With a confirmed project Autonomy Policy, MAGA may create named workers inside an already approved Ticket, up to that project's confirmed limit, and pass them a bounded context packet. The recommended starting limit is two. It does not create new Tickets or expand their scope automatically.
+- A thread Goal may continue the current approved objective with a bounded budget; it does not authorize permissions, releases, or new work.
 - Product trade-offs that cannot be inferred from existing decisions return to the Product Owner.
 - Codex in the ChatGPT desktop app remains the user interface; MAGA does not create a parallel dashboard.
 
@@ -187,11 +191,11 @@ The profiles follow the work rather than ranking the models: **Sol** is for ambi
 
 Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA task with an in-task configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Choose a profile, adjust any row, and click **Save**. Until that first save, the Codex host defaults stay active. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
 
-Saved changes apply only to new tasks that you explicitly approve in product language; MAGA may propose and route a clearly named task, but it does not create one without your approval. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
+Saved changes apply only to new tasks that you explicitly approve in product language; a confirmed project Autonomy Policy may also authorize named workers inside approved Tickets, up to that project's worker limit. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
 
 ## What is inside
 
-The current release is **v0.14.1**. It contains 19 registered Skills, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
+The current release is **v0.15.0**. It contains 19 registered Skills, bounded proactive task coordination, repository-local design records, optional thread Goal continuation, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 Before the first software Ticket, Bar Tester recommends a profile for how the product is used today—who it is for, where it is exposed, how it ships, and how large it is—and asks the Product Owner to confirm it in one reply. A personal prototype may need only one direct check at its real entry point; verification grows only when its audience, exposure, delivery boundary, or a concrete risk grows.
 
@@ -201,6 +205,7 @@ Before the first software Ticket, Bar Tester recommends a profile for how the pr
 | Bar Tester | Confirms how the product is actually used today, then chooses the smallest sufficient proof—including the fried-rice boundary an expected-input checklist can miss |
 | Product discovery | Clarification, research, domain language, concepts, and prioritization |
 | Design and delivery | Planning, prototyping, implementation, validation, and completion |
+| Project memory | Durable product state, accepted design records, Ticket authorization, and recovery pointers |
 | Content humanization | Natural articles, documents, messages, and product or GUI copy across six locales |
 | Diagnosis and simplification | Debugging, code review, and removal of unnecessary complexity |
 | Method library | Upstream workflows loaded on demand instead of occupying every task |
@@ -220,11 +225,11 @@ The Project Lead first identifies the type of evidence needed, then selects a re
 
 ### Task boundaries
 
-Work stays in the current task by default. MAGA proposes a separate task only for a concrete object that benefits from parallel work, isolated context, a distinct permission boundary, or independent acceptance, then asks for your approval using its specific title. One answer can approve a clearly listed batch. It does not pre-create empty research, prototype, implementation, or review rooms.
+Work stays in the current task by default. With a confirmed project Autonomy Policy, MAGA may create named workers within that project's limit for concrete approved Tickets that benefit from parallel work, isolated context, a distinct permission boundary, or independent acceptance. Without that policy it asks for the specific title. It never pre-creates empty research, prototype, implementation, or review rooms.
 
 ### Authorization
 
-Natural-language approval applies to the clearly described product slice. It does not automatically authorize later Tickets or materially expanded outcomes.
+Natural-language approval applies to the clearly described product slice. A standing Autonomy Policy can cover task creation inside that approved Ticket, but it does not authorize later Tickets, materially expanded outcomes, or external and irreversible actions.
 
 Read more: [Capability routing](./plugins/maga/skills/project-lead/references/capability-routing.md) · [Native Codex loop](./plugins/maga/skills/project-lead/references/native-codex-loop.md) · [Project memory](./plugins/maga/skills/project-lead/references/project-memory.md)
 
@@ -242,6 +247,8 @@ Read more: [Capability routing](./plugins/maga/skills/project-lead/references/ca
 3. Initializes Git and creates an initial commit when an identity is configured.
 4. Creates or reuses one clearly named Project Lead task.
 5. Opens the project in the ChatGPT desktop app with Codex.
+
+The initialized project asks the Product Owner to confirm its current Project Profile and Autonomy Policy. Design records are created lazily under `.ai-workflow/design/`; no empty design tree is scaffolded.
 
 `start` reads existing project state and restores the Project Lead without rewriting project files. These details are for maintainers; normal users can ask Codex to perform setup, recovery, or removal.
 

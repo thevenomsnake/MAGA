@@ -8,7 +8,7 @@ import {
 } from "../plugins/maga/runtime/compute-profiles.mjs";
 import { buildContextPacket } from "./context-packet.js";
 
-const BRIDGE_VERSION = "0.14.1";
+const BRIDGE_VERSION = "0.15.0";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

@@ -50,9 +50,31 @@ must not replace the canonical sequence labels.
 - **Project Lead task / Project Lead 任务** is the named, pinned task that `maga init`
   creates or reuses and `maga start` restores or creates. Internal documentation may
   distinguish the session instance carrying that task; beginner-facing copy must not.
+- **Autonomy Policy** is the Product Owner's project-scoped permission for bounded
+  continuation and task dispatch inside already approved Tickets. It does not authorize
+  new scope, external effects, or irreversible actions.
+- **Design record** is a repository-local record of an accepted or provisional product
+  or system shape. Its status and evidence remain visible during recovery; it is not a
+  transcript or a substitute for Ticket acceptance.
 
 The domain definitions remain in [`CONTEXT.md`](../CONTEXT.md). This file controls
 only their public presentation.
+
+## Bounded continuity
+
+MAGA may create clearly named worker tasks inside an already approved Ticket, up to
+the project's confirmed worker limit, when the project has a confirmed Autonomy Policy.
+The recommended starting limit is two. The worker receives durable,
+repository-relative context pointers, and the Project Lead reconciles existing tasks
+before creating or retrying one. Without that policy, MAGA asks for the specific task
+title. New Tickets, expanded outcomes, external writes, accounts, payments, releases,
+migrations, deletion, and other irreversible actions remain explicit decisions.
+
+An optional Codex thread Goal can continue the current approved objective with a bounded
+budget. Goal state is thread-scoped and does not replace project memory or authorization.
+Accepted design records live under `.ai-workflow/design/` and are read during Project
+Lead recovery; draft, rejected, and superseded records are not treated as accepted
+requirements.
 
 ## Two-stage onboarding
 

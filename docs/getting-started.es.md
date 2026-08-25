@@ -72,9 +72,9 @@ Abre la página de detalles del plugin MAGA, selecciona su starter prompt **Conf
 
 Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. Sol cubre ambigüedad y control de calidad, Terra es el modelo habitual y Luna solo se recomienda en **max** para entregas con criterios claros.
 
-La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, no en esta carpeta de producto ni en su historial de Git. Solo se aplica a tareas nuevas cuya creación apruebes explícitamente después; las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que el Project Lead actual use la configuración nueva, pide «retoma el trabajo con la configuración nueva» y aprueba la creación de una tarea de sustitución.
+La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, no en esta carpeta de producto ni en su historial de Git. Solo se aplica a tareas nuevas cubiertas por una aprobación explícita o por la Autonomy Policy confirmada del proyecto; las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que el Project Lead actual use la configuración nueva, pide «retoma el trabajo con la configuración nueva» y aprueba la creación de una tarea de sustitución.
 
-MAGA decide automáticamente qué responsabilidad y configuración corresponden, pero antes de crear una tarea nueva de Codex solicita tu consentimiento con lenguaje de producto. Puedes aprobar de una vez un grupo de tareas que ya tengan nombre. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` guardados al host de destino de la tarea nueva para su validación final. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco eleva la configuración porque una petición parezca difícil.
+MAGA decide automáticamente qué responsabilidad y configuración corresponden. Si una Autonomy Policy confirmada cubre el Ticket aprobado, puede crear tareas con nombre dentro del worker limit del proyecto. En los demás casos solicita tu consentimiento para el nombre concreto. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` guardados al host de destino de la tarea nueva para su validación final. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco eleva la configuración porque una petición parezca difícil.
 
 ## 5. Describir el primer producto
 
@@ -98,6 +98,7 @@ No pasa nada si no conoces todos los campos. MAGA debe ayudarte a descubrirlos.
 | Restricción | Qué no se puede sacrificar | Entender la pantalla sin formación |
 | Compromiso | Qué puede esperar | Los permisos de equipo pueden esperar; la organización por proyecto no |
 | Autorización | Qué puede hacer Codex ahora | Prototipo local sí; publicar o contactar personas no |
+| Coordinación de tareas | Si MAGA puede abrir workers con nombre dentro del trabajo aprobado | Sí, con un límite inicial de dos; el alcance nuevo y las acciones externas se vuelven a confirmar |
 
 Siempre puedes decir: “Todavía no lo sé. Muéstrame el ejemplo más pequeño que me ayude a decidir”.
 

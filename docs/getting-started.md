@@ -80,7 +80,7 @@ Open the MAGA plugin detail page and select its **Configure** starter prompt. Co
 
 Business, Enterprise, and Edu workspaces can start with Plus and move to Pro when their allowance and workspace policy support it. API-key users should choose by token budget. Sol handles ambiguity and assurance, Terra is the everyday workhorse, and Luna is recommended only at **max** for clear, repeatable delivery. Higher reasoning can take longer and use more tokens.
 
-Until you click **Save**, the profile is only a recommendation and MAGA uses the Codex host defaults. The first save confirms all seven rows in the current Codex Home, not this product folder or its Git history; later saves merge only the rows you changed. Saved choices apply only to new tasks you explicitly approve. Existing tasks stay unchanged, and Project Lead adopts them only when newly created or explicitly replaced at your request. The panel's `model/list` is only a reference catalog. The destination host performs final validation when MAGA creates an approved task; if it rejects the saved choice, MAGA retries once without overrides and tells you that the host default was used.
+Until you click **Save**, the profile is only a recommendation and MAGA uses the Codex host defaults. The first save confirms all seven rows in the current Codex Home, not this product folder or its Git history; later saves merge only the rows you changed. Saved choices apply only to new tasks covered by explicit approval or the project's confirmed Autonomy Policy. Existing tasks stay unchanged, and Project Lead adopts them only when newly created or explicitly replaced at your request. The panel's `model/list` is only a reference catalog. The destination host performs final validation when MAGA creates an approved task; if it rejects the saved choice, MAGA retries once without overrides and tells you that the host default was used.
 
 ## 5. Describe the first product
 
@@ -108,6 +108,7 @@ MAGA may ask a small number of questions before building. Answer with what you k
 | Constraint | What cannot be traded away | A designer must understand the screen without training |
 | Trade-off | What can wait | Team permissions can wait; project-level organization cannot |
 | Permission | What Codex may do now | Build the local prototype, but do not publish or contact anyone |
+| Task coordination | Whether MAGA may open named workers inside approved work | Yes, with a confirmed limit of two; new scope and external actions still require approval |
 
 You can always say, “I do not know yet. Show me the smallest example that would help me decide.”
 

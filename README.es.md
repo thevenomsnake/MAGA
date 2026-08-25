@@ -135,6 +135,8 @@ Ese comentario cambia la arquitectura de información y el siguiente paso de ent
 3. **Estado:** decisiones aceptadas, preguntas abiertas, trabajo activo y siguiente resultado útil.
 4. **Autoridad:** qué acciones están aprobadas y cuáles requieren una decisión nueva.
 5. **Evidencia:** prototipos, comportamiento funcional, pruebas, diagnósticos y aceptación de producto.
+6. **Diseño:** design records aceptados del producto y del sistema que sobreviven al reemplazo de una tarea.
+7. **Continuidad:** task dispatch acotado y thread Goals opcionales con condiciones de parada explícitas.
 
 Esta información vive en el proyecto. Una tarea Project Lead nueva o recuperada puede leerla desde el estado duradero, sin convertir el historial de una tarea en el registro del producto.
 
@@ -144,6 +146,8 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 - El trabajo reversible dentro del proyecto indicado y las comprobaciones proporcionales al riesgo forman parte de la ejecución normal.
 - Publicar, pagar, operar cuentas, enviar mensajes externos y borrar de forma irreversible requiere autorización explícita.
+- Con una Autonomy Policy confirmada, MAGA puede crear workers con nombre dentro de un Ticket aprobado hasta el worker limit del proyecto y entregarles un context packet acotado. No crea Tickets nuevos ni amplía su alcance automáticamente.
+- Un thread Goal solo continúa el objetivo aprobado actual; no autoriza permisos, lanzamientos ni trabajo nuevo.
 - Las decisiones de producto que no se pueden deducir de decisiones anteriores vuelven al Product Owner.
 - Codex en la aplicación de escritorio de ChatGPT sigue siendo la interfaz; MAGA no crea un panel paralelo.
 
@@ -181,11 +185,11 @@ Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige
 
 La configuración guardada solo se aplica a las tareas nuevas que se creen explícitamente después. Las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que un Project Lead existente continúe con la configuración nueva, debes pedir explícitamente «retoma el trabajo con la configuración nueva» y aprobar la creación de una tarea de sustitución.
 
-MAGA decide automáticamente qué responsabilidad y configuración corresponden, pero antes de crear una tarea nueva de Codex solicita tu consentimiento explícito con lenguaje de producto. Puedes aprobar de una vez un grupo de tareas que ya tengan nombre. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` que guardaste explícitamente al host de destino de la tarea nueva para que allí se validen. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco sube silenciosamente de modelo porque una tarea parezca difícil.
+MAGA decide automáticamente qué responsabilidad y configuración corresponden. Si el proyecto tiene una Autonomy Policy confirmada, puede crear workers con nombre dentro de un Ticket aprobado hasta el límite confirmado para ese proyecto y entregarles un context packet acotado. El límite inicial recomendado es dos. Si no existe esa policy, confirma el nombre concreto de la tarea. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` que guardaste explícitamente al host de destino de la tarea nueva para que allí se validen. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco sube silenciosamente de modelo porque una tarea parezca difícil.
 
 ## Qué incluye
 
-La versión actual es **v0.14.1**. Contiene 19 Skills registrados, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
+La versión actual es **v0.15.0**. Contiene 19 Skills registrados, coordinación proactiva acotada de tareas, design records del proyecto, continuación opcional mediante thread Goal, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 Antes del primer Ticket de software, Bar Tester propone un perfil según el uso actual, la exposición, la forma de entrega y el tamaño del sistema, y la persona responsable del producto lo confirma de una sola vez. Para un prototipo personal, parte de una sola comprobación en la entrada real; solo añade pruebas cuando crecen el público, la exposición, el límite de entrega o un riesgo concreto.
 
@@ -195,6 +199,7 @@ Antes del primer Ticket de software, Bar Tester propone un perfil según el uso 
 | Bar Tester | Confirma cómo se usa el producto hoy y elige la prueba mínima suficiente, incluido el límite que una lista de pedidos esperados puede ignorar cuando alguien pide arroz frito |
 | Descubrimiento de producto | Aclaración, investigación, lenguaje del dominio, conceptos y priorización |
 | Diseño y entrega | Planificación, prototipado, implementación, validación y cierre |
+| Project memory | Estado duradero del producto, design records aceptados, autorización de Tickets y punteros de recuperación |
 | Humanización de contenido | Artículos, documentos, mensajes y textos de producto o GUI naturales en seis locales |
 | Diagnóstico y simplificación | Depuración, revisión de código y eliminación de complejidad innecesaria |
 | Biblioteca de métodos | Carga flujos externos bajo demanda para no ocupar todas las tareas |
@@ -214,11 +219,11 @@ El Project Lead identifica primero el tipo de evidencia necesaria y después sel
 
 ### Límites de tareas
 
-El trabajo permanece en la tarea actual por defecto. MAGA crea otra tarea únicamente para un objeto concreto que se beneficie de ejecución paralela, contexto aislado, permisos distintos o aceptación independiente. No crea previamente salas vacías de investigación, prototipo, implementación o revisión.
+El trabajo permanece en la tarea actual por defecto. Con una Autonomy Policy confirmada, MAGA puede crear workers con nombre dentro del worker limit del proyecto para Tickets aprobados que necesiten ejecución paralela, contexto aislado, permisos distintos o aceptación independiente. Sin esa policy, confirma el nombre concreto. No crea previamente salas vacías de investigación, prototipo, implementación o revisión.
 
 ### Autorización
 
-La aprobación en lenguaje natural se aplica a la unidad de producto descrita con claridad. No autoriza automáticamente Tickets posteriores ni resultados con un alcance materialmente ampliado.
+La aprobación en lenguaje natural se aplica a la unidad de producto descrita con claridad. La Autonomy Policy solo puede cubrir la creación de tareas dentro de ese Ticket; no autoriza Tickets posteriores, resultados ampliados ni acciones externas o irreversibles.
 
 Más información: [Enrutamiento de capacidades](./plugins/maga/skills/project-lead/references/capability-routing.md) · [Bucle nativo de Codex](./plugins/maga/skills/project-lead/references/native-codex-loop.md) · [Memoria del proyecto](./plugins/maga/skills/project-lead/references/project-memory.md)
 

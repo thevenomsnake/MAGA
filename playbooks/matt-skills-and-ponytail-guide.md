@@ -1,12 +1,12 @@
 # MAGA 内置方法、Humanization 与 Ponytail 使用手册
 
-> 适用版本：MAGA `0.14.1`
+> 适用版本：MAGA `0.15.0`
 
 当前 vendor 审计基线为 Matt Pocock Skills `5b15a47`、Ponytail `2ed6c52` 和
 Humanization `c38b5b6`。本次只同步与 MAGA 宿主和产品边界兼容的行为，完整证据见
 [上游审计](../research/upstream-vendor-audit.md)。
 
-Matt Pocock Skills 固定到 `1.2.2`，commit
+Matt Pocock Skills 当前 reference 为 `5b15a47`；此前的 `1.2.2` 适配基线是
 `8b36d4fb2635b3c21998dcd8144439c9e5ba7302`。上游 25 个正式 Skills 在
 MAGA 中逐项映射为 11 个注册 Skills、13 个内部方法和 1 个吸收能力；没有未记录的
 上游入口。
@@ -164,6 +164,18 @@ setup 方法与外部副作用授权。
 
 ## 自动路由边界
 
+`0.15.0` 增加有边界的连续推进能力：项目确认 Autonomy Policy 后，Project Lead
+可以在已批准 Ticket 内创建最多两个具名 worker，并通过 repository-relative
+context packet 传递项目索引、角色、Ticket、accepted design records、验收和 proof。
+它会先 reconcile 已有、archived 或仍在运行的 task，再决定创建或重试。新 Ticket、
+扩大的 outcome、外部写入、账号、费用、release、migration 和不可逆动作仍需要新的
+Product Owner 决定。
+
+Project memory 现在可以惰性创建 `.ai-workflow/design/INDEX.md` 与 `D###` records。
+只有 accepted record 在恢复时作为当前设计；draft、rejected 和 superseded 仍可追溯，
+但不会授权实现。可选的 thread Goal 只在当前已批准目标内提供带 budget 的
+continuation；Codex host 不支持时回退到 repository memory，不改变产品真源。
+
 Codex 先根据注册 Skill 的 `name` 与 `description` 判断候选；只有触发后才读取完整
 `SKILL.md`。Project Lead 进入后再从项目状态选择内部方法。两层路由都不是关键词
 状态机，也不会扩大用户授权。
@@ -224,7 +236,7 @@ help/gain 两张信息卡并入主入口，没有把 Ponytail 改造成新的品
 
 ## 从 0.8.0 更新
 
-`0.14.1` 不保留被收进内部方法库或吸收层的旧技术入口别名；`wait-what` 是明确重新
+`0.15.0` 不保留被收进内部方法库或吸收层的旧技术入口别名；`wait-what` 是明确重新
 注册的自动沟通恢复能力，不是兼容别名。旧项目的 `.ai-workflow/` 状态不需要迁移；更新
 插件后应在新任务中验证 Skill 列表，并重新审阅 Ponytail hooks。
 

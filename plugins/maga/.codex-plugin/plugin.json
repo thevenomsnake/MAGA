@@ -1,7 +1,7 @@
 {
   "name": "maga",
-  "version": "0.14.1",
-  "description": "Make Apps Great Again through one product-facing Codex lead with on-demand professional workspaces.",
+  "version": "0.15.0",
+  "description": "Make Apps Great Again with one proactive, product-facing Codex lead and durable project memory.",
   "author": {
     "name": "MAGA contributors",
     "url": "https://github.com/thevenomsnake/MAGA"
@@ -14,11 +14,11 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "MAGA",
-    "shortDescription": "Make Apps Great Again through one product lead.",
-    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then open specifically named research, prototype, diagnosis, review, delivery, or release tasks with responsibility-level model and reasoning defaults. MAGA registers nineteen focused Skills, uses Bar Tester to design verification from real use, automatically re-pitches explanations that did not land, routes human-readable local-file text through Humanization, protects Git history and commit-based releases, keeps product workflow methods internal, and preserves Ponytail lifecycle behavior.",
+    "shortDescription": "Make Apps Great Again with a proactive Codex lead.",
+    "longDescription": "Make Apps Great Again. Start with one pinned product lead, then coordinate bounded, clearly named research, prototype, diagnosis, review, delivery, or release workers for approved Tickets. MAGA passes repository-relative context, recovers task state, persists accepted design records, and can use bounded thread Goals when the host supports them. It also registers nineteen focused Skills, applies Bar Tester, Humanization, Git-safe delivery, internal product methods, and Ponytail lifecycle behavior.",
     "developerName": "MAGA contributors",
     "category": "Productivity",
-    "capabilities": ["Product discovery", "Responsibility model profiles", "Bar Tester validation", "On-demand task workspaces", "Task orchestration", "Humanized multilingual content", "Commit-safe Git delivery", "Engineering workflows", "Lifecycle hooks"],
+    "capabilities": ["Product discovery", "Responsibility model profiles", "Bar Tester validation", "Bounded proactive task coordination", "Durable context packets", "Project design memory", "Optional thread Goals", "Humanized multilingual content", "Commit-safe Git delivery", "Engineering workflows", "Lifecycle hooks"],
     "defaultPrompt": [
       "Help me turn this product idea into a working first version.",
       "Configure the model and reasoning depth for each MAGA responsibility.",

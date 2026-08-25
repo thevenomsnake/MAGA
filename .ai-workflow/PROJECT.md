@@ -1,6 +1,6 @@
 ---
 schema_version: 2
-workflow_version: 0.14.1
+workflow_version: 0.15.0
 status: active
 project_name: "MAGA"
 ---
@@ -35,7 +35,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA separates likely multi-turn product exploration from the long-lived Project Lead and keeps the existing Ticket delivery lifecycle unchanged. `wait-what` is now a visible, internationally triggered Skill with automatic communication recovery. The Product Owner has confirmed bounded automatic dispatch for up to two workers within approved Tickets; T003, T004, and T005 are integrated. The current project shape is recorded in accepted design record D001, and thread Goals are optional bounded continuation aids.
+MAGA 0.15.0 combines bounded proactive task coordination, durable context packets, accepted design records, and optional thread Goal continuation. T003, T004, and T005 are integrated; T006 synchronizes the public documentation and GitHub release.
 
 ## Roles
 
@@ -47,7 +47,7 @@ MAGA separates likely multi-turn product exploration from the long-lived Project
 
 ## Active Tickets
 
-None.
+- [T006](tickets/T006-release-0150.md): ready, authorization approved
 
 ## Decisions
 
