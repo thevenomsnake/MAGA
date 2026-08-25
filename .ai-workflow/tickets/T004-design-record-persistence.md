@@ -1,6 +1,6 @@
 ---
 key: T004
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 ---
@@ -70,8 +70,8 @@ decisions without replaying the source task transcript.
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: Projects now create design storage lazily through a typed `D###` writer; `INDEX.md` points to records, accepted status is recoverable, and same-key rewrites remain deterministic.
+- Validation: `node --test test/design-memory.test.js test/init-project.test.js test/bundled-skills.test.js test/codex-bridge.test.js` passed 38/38.
+- Evidence: `src/design-memory.js`, `plugins/maga/skills/project-lead/references/design-record.md`, `.ai-workflow/design/INDEX.md`, and accepted record D001.
+- Commit or artifact: d962c60
 - Blocker: none
