@@ -1,6 +1,105 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { CodexBridge, launchProjectLead } from "../src/codex-bridge.js";
+import {
+  CodexBridge,
+  CodexTurnStillRunningError,
+  findCanonicalThread,
+  launchProjectLead,
+} from "../src/codex-bridge.js";
+import { buildContextPacket } from "../src/context-packet.js";
+
+test("reconciles paginated thread listings with bounded retry", async () => {
+  const calls = [];
+  const bridge = new CodexBridge({ cwd: process.cwd() });
+  let page = 0;
+  bridge.requestWithRetry = async (method, params) => {
+    calls.push({ method, params });
+    page += 1;
+    return page === 1
+      ? { data: [{ id: "thread-1", name: "Product · Project Lead" }], nextCursor: "next" }
+      : { data: [{ id: "thread-2", name: "Product · Delivery · T003" }] };
+  };
+
+  const threads = await bridge.listThreads({
+    cwd: process.cwd(),
+    title: "Product",
+    all: true,
+  });
+
+  assert.deepEqual(threads.map(({ id }) => id), ["thread-1", "thread-2"]);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1].params.cursor, "next");
+});
+
+test("chooses a pinned, current-directory candidate before stale duplicates", () => {
+  const cwd = process.cwd();
+  const selected = findCanonicalThread([
+    { id: "old", name: "Product · Project Lead", cwd, updatedAt: 99 },
+    { id: "pinned", name: "Product · Project Lead", cwd, isPinned: true, updatedAt: 1 },
+    { id: "other", name: "Product · Project Lead", cwd: "D:/other", isPinned: true, updatedAt: 999 },
+  ], { cwd, title: "Product · Project Lead" });
+
+  assert.equal(selected.id, "pinned");
+});
+
+test("builds a context packet from repository-relative pointers", () => {
+  const packet = buildContextPacket({
+    outcome: "Reconcile approved Ticket T003",
+    rolePath: ".ai-workflow/roles/project-lead.md",
+    ticketPath: ".ai-workflow/tickets/T003-proactive-task-dispatch.md",
+    designPaths: [".ai-workflow/design/INDEX.md"],
+  });
+
+  assert.match(packet, /Reconcile approved Ticket T003/);
+  assert.match(packet, /repository-relative sources/);
+  assert.match(packet, /T003-proactive-task-dispatch\.md/);
+  assert.doesNotMatch(packet, /threadId|hostId|clientThreadId|turnId/);
+  assert.throws(
+    () => buildContextPacket({ ticketPath: "C:\\outside\\ticket.md" }),
+    /repository-relative/,
+  );
+});
+
+test("reconciles a local timeout before declaring a remote turn failed", async () => {
+  const bridge = new CodexBridge({ cwd: process.cwd(), timeoutMs: 5 });
+  bridge.readThread = async () => ({
+    thread: { turns: [{ id: "turn-1", status: "inProgress" }] },
+  });
+
+  await assert.rejects(
+    bridge.waitForTurn("thread-1", "turn-1"),
+    (error) => error instanceof CodexTurnStillRunningError
+      && error.remoteStatus === "active",
+  );
+});
+
+test("unarchives an archived canonical Project Lead before creating a duplicate", async () => {
+  const calls = [];
+  const bridge = {
+    connect: async () => {},
+    close: async () => {},
+    listThreads: async ({ archived }) => archived
+      ? [{ id: "archived-lead", name: "Product · Project Lead", isPinned: true }]
+      : [],
+    unarchiveThread: async (threadId) => {
+      calls.push({ unarchive: threadId });
+      return { id: threadId };
+    },
+    pinThread: async (threadId) => calls.push({ pin: threadId }),
+  };
+
+  const result = await launchProjectLead({
+    targetDir: process.cwd(),
+    projectName: "Product",
+    bridgeFactory: () => bridge,
+  });
+
+  assert.equal(result.reused, true);
+  assert.deepEqual(calls, [
+    { unarchive: "archived-lead" },
+    { pin: "archived-lead" },
+  ]);
+});
 
 test("passes a responsibility model into thread creation", async () => {
   const calls = [];
@@ -45,6 +144,26 @@ test("passes model and reasoning depth into the first turn", async () => {
       effort: "medium",
     },
   });
+});
+
+test("prepends a context packet to a worker turn without changing model settings", async () => {
+  const calls = [];
+  const bridge = new CodexBridge({ cwd: process.cwd() });
+  bridge.request = async (method, params) => {
+    calls.push({ method, params });
+    return { turn: { id: "turn-1" } };
+  };
+  bridge.waitForTurn = async () => ({ params: { turn: { status: "completed" } } });
+  bridge.readThread = async () => ({ thread: { id: "thread-1" } });
+
+  await bridge.sendMessage("thread-1", "Start the approved work.", {
+    contextPacket: "MAGA context packet\n- .ai-workflow/PROJECT.md",
+  });
+
+  assert.equal(calls[0].method, "turn/start");
+  assert.match(calls[0].params.input[0].text, /^MAGA context packet/);
+  assert.match(calls[0].params.input[0].text, /Start the approved work/);
+  assert.equal(calls[0].params.model, undefined);
 });
 
 test("keeps an existing Project Lead compute unchanged and restores its pin", async () => {

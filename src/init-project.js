@@ -78,6 +78,13 @@ After confirmation, replace this pending block with the confirmed values and
 relevant risk modifiers. Remind the Product Owner to report any later profile
 change before the next implementation or release.
 
+## Autonomy Policy
+
+Selection pending. After the Product Owner confirms the Project Profile, ask
+whether MAGA may continue the current Ticket and dispatch up to a bounded number
+of named workers inside already approved Tickets. New Tickets, expanded outcomes,
+external effects, and irreversible actions always require a fresh decision.
+
 ## Current State
 
 - MAGA initialized.
@@ -107,7 +114,7 @@ function agentsDocument() {
 - Treat the user as Product Owner and keep one Project Lead as the product-facing entry.
 - Treat natural-language requests to build, change, continue, or recover the product as Project Lead work. Never ask the user to invoke a Skill or workflow command.
 - Treat a request to discuss, explore, or research an unresolved product direction as permission for the canonical Project Lead to open one specifically titled, read-only exploration task. Do not ask a second task-creation question. Give it only the decision frontier and durable constraints, never recursively open another exploration task, and return its accepted decision to the Project Lead before creating Tickets or writing code. A Ticket worker returns a new product question to the Project Lead instead of opening this workflow.
-- Keep quick clarification in the Project Lead and never pre-create generic empty discussion, research, prototype, or implementation tasks. For Ticket workers, propose a specifically named task only after its work object and boundary are concrete, and create it only after the Product Owner explicitly approves that title.
+- Keep quick clarification in the Project Lead and never pre-create generic empty discussion, research, prototype, or implementation tasks. For Ticket workers, propose a specifically named task only after its work object and boundary are concrete. A confirmed project Autonomy Policy may authorize creation within an already approved Ticket and its worker limit; otherwise require approval for the exact title.
 - Read \`.ai-workflow/PROJECT.md\` before planning or dispatching work.
 - Before the first software Ticket, recommend current use, exposure, delivery, and system size from current evidence, then ask the Product Owner to confirm or correct the profile. Remind them to report a later change.
 - Ask only product decisions that materially change behavior, experience, cost, permissions, privacy, irreversible actions, or release risk.

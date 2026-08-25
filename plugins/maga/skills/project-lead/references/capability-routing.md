@@ -122,8 +122,9 @@ Ticket.
 For a pre-Ticket exploration, use the semantic gate and standing task permission
 in [exploration-loop.md](exploration-loop.md). For Ticket work, propose a
 same-project task only after its work object and completion boundary are concrete
-and at least one condition holds. Create that worker only after the Product Owner
-explicitly requests or approves its deterministic task title:
+and at least one condition holds. Create that worker when the confirmed project
+Autonomy Policy covers the approved Ticket and has capacity, or after the Product
+Owner explicitly requests or approves its deterministic task title:
 
 - it produces an independent artifact or finding;
 - it needs a substantially different source set or professional context;

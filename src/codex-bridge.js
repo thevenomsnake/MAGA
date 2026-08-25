@@ -6,6 +6,7 @@ import {
   loadComputeSettings,
   resolveComputeProfile,
 } from "../plugins/maga/runtime/compute-profiles.mjs";
+import { buildContextPacket } from "./context-packet.js";
 
 const BRIDGE_VERSION = "0.14.1";
 
@@ -30,8 +31,53 @@ function withHostComputeFallback(compute) {
   };
 }
 
+function threadStatus(thread) {
+  const status = thread?.status;
+  if (typeof status === "string") return status.toLowerCase();
+  return String(status?.type || status?.status || "").toLowerCase();
+}
+
+function statusRank(thread) {
+  return {
+    active: 5,
+    running: 5,
+    idle: 4,
+    waiting: 3,
+    notloaded: 2,
+    completed: 1,
+    failed: 0,
+  }[threadStatus(thread)] ?? 2;
+}
+
+export function findCanonicalThread(threads, { cwd, title } = {}) {
+  const resolvedCwd = cwd ? path.resolve(cwd) : null;
+  const matches = (threads || []).filter((thread) => {
+    if (thread?.name !== title) return false;
+    if (!resolvedCwd || !thread?.cwd) return true;
+    return path.resolve(thread.cwd) === resolvedCwd;
+  });
+  return [...matches].sort((left, right) => {
+    const pinDelta = Number(Boolean(right.isPinned)) - Number(Boolean(left.isPinned));
+    if (pinDelta !== 0) return pinDelta;
+    const statusDelta = statusRank(right) - statusRank(left);
+    if (statusDelta !== 0) return statusDelta;
+    return Number(right.updatedAt || right.recencyAt || 0)
+      - Number(left.updatedAt || left.recencyAt || 0);
+  })[0] || null;
+}
+
+export class CodexTurnStillRunningError extends Error {
+  constructor(threadId, turnId) {
+    super(`Codex turn ${turnId} is still active after the local timeout`);
+    this.name = "CodexTurnStillRunningError";
+    this.threadId = threadId;
+    this.turnId = turnId;
+    this.remoteStatus = "active";
+  }
+}
+
 export class CodexBridge {
-  constructor({ cwd, command = "codex", timeoutMs = 120_000 } = {}) {
+  constructor({ cwd, command = "codex", timeoutMs = 120_000, serverRequestHandler } = {}) {
     this.cwd = path.resolve(cwd || process.cwd());
     this.command = command;
     this.timeoutMs = timeoutMs;
@@ -40,6 +86,7 @@ export class CodexBridge {
     this.notifications = [];
     this.events = new EventEmitter();
     this.stderr = "";
+    this.serverRequestHandler = serverRequestHandler;
   }
 
   async connect() {
@@ -68,13 +115,32 @@ export class CodexBridge {
         return;
       }
 
+      if (message.id !== undefined && message.method) {
+        this.events.emit("server-request", message);
+        const handler = this.serverRequestHandler;
+        if (!handler) {
+          this.respondError(message.id, -32000, "MAGA bridge cannot approve or answer this server request");
+        } else {
+          Promise.resolve(handler(message))
+            .then((result) => this.respond(message.id, result))
+            .catch((error) => this.respondError(
+              message.id,
+              -32000,
+              error instanceof Error ? error.message : String(error),
+            ));
+        }
+        return;
+      }
+
       if (message.id !== undefined && !message.method) {
         const pending = this.pending.get(message.id);
         if (!pending) return;
         this.pending.delete(message.id);
         clearTimeout(pending.timer);
         if (message.error) {
-          pending.reject(new Error(message.error.message || JSON.stringify(message.error)));
+          const error = new Error(message.error.message || JSON.stringify(message.error));
+          error.code = message.error.code;
+          pending.reject(error);
         } else {
           pending.resolve(message.result);
         }
@@ -122,16 +188,48 @@ export class CodexBridge {
     this.process.stdin.write(`${JSON.stringify({ method, params })}\n`);
   }
 
-  async listThreads({ cwd = this.cwd, title, archived = false } = {}) {
-    const result = await this.request("thread/list", {
-      // Desktop-hosted app-server processes can inherit the host's interactive source.
-      sourceKinds: ["appServer", "vscode", "cli"],
-      cwd: path.resolve(cwd),
-      archived,
-      searchTerm: title,
-      limit: 50,
-    });
-    return result.data || [];
+  respond(id, result) {
+    this.process.stdin.write(`${JSON.stringify({ id, result })}\n`);
+  }
+
+  respondError(id, code, message) {
+    this.process.stdin.write(`${JSON.stringify({ id, error: { code, message } })}\n`);
+  }
+
+  async requestWithRetry(method, params = {}, { attempts = 2, baseDelayMs = 50 } = {}) {
+    for (let attempt = 0; attempt < attempts; attempt += 1) {
+      try {
+        return await this.request(method, params);
+      } catch (error) {
+        if (error?.code !== -32001 || attempt === attempts - 1) throw error;
+        await delay(baseDelayMs * (2 ** attempt));
+      }
+    }
+    throw new Error(`${method} failed without a response`);
+  }
+
+  async listThreads({ cwd = this.cwd, title, archived = false, all = false, maxPages = 20 } = {}) {
+    const threads = [];
+    let cursor;
+    for (let page = 0; page < (all ? maxPages : 1); page += 1) {
+      const params = {
+        // Desktop-hosted app-server processes can inherit the host's interactive source.
+        sourceKinds: ["appServer", "vscode", "cli"],
+        cwd: path.resolve(cwd),
+        archived,
+        searchTerm: title,
+        limit: 50,
+      };
+      if (cursor) params.cursor = cursor;
+      const result = await this.requestWithRetry("thread/list", params);
+      const pageData = Array.isArray(result.data) ? result.data : result.data?.data || [];
+      threads.push(...pageData);
+      if (!all) break;
+      const nextCursor = result.nextCursor || result.next_cursor || null;
+      if (!nextCursor || nextCursor === cursor) break;
+      cursor = nextCursor;
+    }
+    return threads;
   }
 
   async listModels({ includeHidden = false } = {}) {
@@ -156,10 +254,20 @@ export class CodexBridge {
     return this.request("thread/metadata/update", { threadId, isPinned: true });
   }
 
-  async sendMessage(threadId, text, { model, effort } = {}) {
+  resumeThread(threadId, options = {}) {
+    return this.request("thread/resume", { threadId, ...options });
+  }
+
+  async unarchiveThread(threadId) {
+    const result = await this.request("thread/unarchive", { threadId });
+    return result.thread || result;
+  }
+
+  async sendMessage(threadId, text, { model, effort, contextPacket } = {}) {
+    const prompt = contextPacket ? `${contextPacket}\n\n${text}` : text;
     const result = await this.request("turn/start", {
       threadId,
-      input: [{ type: "text", text }],
+      input: [{ type: "text", text: prompt }],
       model,
       effort,
     });
@@ -175,6 +283,10 @@ export class CodexBridge {
 
   readThread(threadId) {
     return this.request("thread/read", { threadId, includeTurns: true });
+  }
+
+  buildContextPacket(options = {}) {
+    return buildContextPacket(options);
   }
 
   archiveThread(threadId) {
@@ -195,8 +307,24 @@ export class CodexBridge {
         this.events.off("notification", onNotification);
         resolve(message);
       };
-      const timer = setTimeout(() => {
+      const timer = setTimeout(async () => {
         this.events.off("notification", onNotification);
+        try {
+          const snapshot = await this.readThread(threadId);
+          const turns = snapshot?.thread?.turns || snapshot?.turns || [];
+          const remoteTurn = turns.find((turn) => turn.id === turnId);
+          const status = threadStatus(remoteTurn);
+          if (status === "completed") {
+            resolve({ params: { threadId, turn: remoteTurn } });
+            return;
+          }
+          if (["active", "running", "inprogress", "started", "waiting"].includes(status)) {
+            reject(new CodexTurnStillRunningError(threadId, turnId));
+            return;
+          }
+        } catch {
+          // Preserve the local timeout when the reconciliation read also fails.
+        }
         reject(new Error("Codex turn timed out"));
       }, this.timeoutMs);
       this.events.on("notification", onNotification);
@@ -264,12 +392,26 @@ export async function launchProjectLead({
 
   try {
     await bridge.connect();
-    const existing = (await bridge.listThreads({ cwd, title }))
-      .find((thread) => thread.name === title);
+    const existing = findCanonicalThread(
+      await bridge.listThreads({ cwd, title, all: true }),
+      { cwd, title },
+    );
     if (existing) {
       await bridge.pinThread(existing.id);
       await onReady?.({ title, reused: true });
       return { threadId: existing.id, title, reused: true, compute: null };
+    }
+
+    const archived = findCanonicalThread(
+      await bridge.listThreads({ cwd, title, archived: true, all: true }),
+      { cwd, title },
+    );
+    if (archived && bridge.unarchiveThread) {
+      const restored = await bridge.unarchiveThread(archived.id);
+      const restoredId = restored.id || archived.id;
+      await bridge.pinThread(restoredId);
+      await onReady?.({ title, reused: true });
+      return { threadId: restoredId, title, reused: true, compute: null };
     }
 
     let models = [];
@@ -314,6 +456,7 @@ export async function launchProjectLead({
       const canRetry = !usingHostDefaults
         && (compute.actual.model || compute.actual.effort)
         && isComputeSelectionError(error);
+      if (error instanceof CodexTurnStillRunningError) throw error;
       if (!canRetry) {
         await bridge.archiveThread(thread.id).catch(() => {});
         throw error;

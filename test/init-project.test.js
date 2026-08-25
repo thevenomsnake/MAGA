@@ -32,6 +32,8 @@ test("initializes the minimum project kernel", (t) => {
   assert.match(project, /## Project Profile/);
   assert.match(project, /recommend a profile, and ask the Product Owner to confirm or correct/);
   assert.match(project, /Validation profile has not been confirmed/);
+  assert.match(project, /## Autonomy Policy/);
+  assert.match(project, /bounded number\s+of named workers inside already approved Tickets/);
   assert.match(project, /## Active Tickets/);
   assert.doesNotMatch(project, /task_creation|Active Missions/);
   const agents = fs.readFileSync(path.join(targetDir, "AGENTS.md"), "utf8");
@@ -41,7 +43,7 @@ test("initializes the minimum project kernel", (t) => {
   assert.match(agents, /never recursively open another exploration task/);
   assert.match(agents, /A Ticket worker returns a new product question to the Project Lead/);
   assert.match(agents, /return its accepted decision to the Project Lead before creating Tickets or writing code/);
-  assert.match(agents, /For Ticket workers[\s\S]+explicitly approves that title/);
+  assert.match(agents, /For Ticket workers[\s\S]+Autonomy Policy/);
   assert.match(agents, /recommend current use, exposure, delivery, and system size/);
   assert.match(agents, /ask the Product Owner to confirm or correct the profile/);
   assert.match(agents, /record the current branch, full HEAD, and dirty file set/);
@@ -70,6 +72,8 @@ test("ships per-Ticket execution authorization", () => {
   );
 
   assert.match(memory, /key: T001[\s\S]+authorization: pending/);
+  assert.match(memory, /## Autonomy Policy[\s\S]+Dispatch: approved \| pending/);
+  assert.match(memory, /Task opening: standing-policy/);
   assert.match(memory, /future Ticket/);
   assert.match(projectLead, /Set `authorization: approved` on exactly those Tickets/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);

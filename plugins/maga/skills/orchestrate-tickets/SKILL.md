@@ -17,10 +17,16 @@ unless the user asks.
 Proceed only when:
 
 - The Product Owner approved the currently described Ticket set and every selected Ticket records `authorization: approved`.
-- For every task that does not already exist, the Product Owner explicitly asked for that separate task or approved its deterministic title. A clearly listed batch may be approved together. Record `Task opening: approved` for the exact title and attempt before dispatch.
+- For every task that does not already exist, either the Product Owner explicitly
+  approved its deterministic title or the project Autonomy Policy authorizes
+  dispatch inside this already approved Ticket and its active-worker limit. Record
+  `Task opening: approved` or `Task opening: standing-policy` for the exact title
+  and attempt before dispatch.
 - Each Ticket is a durable work contract with a user-visible outcome, acceptance criteria, blockers, authorization, and status.
 - The contract is reachable from the worker's starting repository state or issue tracker.
 - Codex task coordination tools are available.
+- The project's Autonomy Policy has been read; it does not authorize new Tickets,
+  expanded outcomes, or external/irreversible side effects.
 
 If task tools are unavailable, say automatic dispatch is unavailable and provide the next ticket pointer. Do not pretend a task was created.
 
@@ -51,7 +57,10 @@ For example: `Inventory · Prototype · T002 Mobile stock adjustment flow`.
 For a role whose contract says `Session shape: managed queue`:
 
 1. Reuse an active same-project task with the deterministic manager title.
-2. If none exists, propose its deterministic manager title and create it only after explicit Product Owner approval; then pin it with `codex_app__set_thread_pinned` and give it the role contract plus current project index as its only durable entrypoints.
+2. If none exists, propose its deterministic manager title and create it only when
+   the project's Autonomy Policy covers that role queue or the Product Owner has
+   approved the exact title; then pin it with `codex_app__set_thread_pinned` and
+   give it the role contract plus current project index as its only durable entrypoints.
 3. Send newly approved Ticket pointers to that manager instead of creating another manager.
 4. Let the manager apply this worker lifecycle within its role boundary; it must return product decisions and cross-role conflicts to the Project Lead.
 5. Keep the role in repository state. Archive its manager task only when the role is retired or replaced, and record that durable fact first.
@@ -77,7 +86,7 @@ Keep the ticket or tracker as the durable source of truth:
 ```text
 Authorization: pending | approved | revoked
 Status: ready | creating | running | needs-decision | completed | integrated | failed | deferred
-Task opening: pending | approved | not-needed
+Task opening: pending | approved | standing-policy | not-needed
 Task title: <deterministic title>
 Attempt: <positive integer>
 Git branch: <explicit branch>
@@ -119,7 +128,7 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 ## Choose The Smallest Execution Shape
 
 1. Keep a small, self-contained Ticket in the current task only when it has no specialist `workspace` and remains Project Lead work.
-2. Propose a fresh project task for every Ticket whose workspace is `research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`. Create it only after explicit approval; the fresh task is required for its responsibility model and reasoning depth to take effect.
+2. Propose a fresh project task for every Ticket whose workspace is `research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`. Create it when the project's confirmed Autonomy Policy covers the approved Ticket and has capacity, or after explicit approval; the fresh task is required for its responsibility model and reasoning depth to take effect.
 3. Run tickets sequentially by default.
 4. Run tickets in parallel only when their blockers are complete, their write scopes do not conflict, and each task has an isolated worktree.
 
@@ -164,7 +173,9 @@ Do not wrap or rewrite those Skills to simulate responsibility routing.
 
 1. Resolve the current saved project with `codex_app__list_projects`. Stop rather than selecting an ambiguous or different project.
 2. Confirm no active task already has the deterministic title.
-3. Confirm `Task opening: approved` records the Product Owner's explicit permission for this exact title and attempt. If not, return the named proposal to the Project Lead; do not call task creation tools.
+3. Confirm `Task opening: approved` or `Task opening: standing-policy` records
+   permission for this exact title and attempt. If neither applies, return the
+   named proposal to the Project Lead; do not call task creation tools.
 4. Resolve the Ticket's responsibility profile as above.
 5. Set the ticket to `creating`, record its task title and attempt, then call `codex_app__create_thread` with that title, the resolved model and thinking, and the initial prompt below.
 6. For a Git repository, preserve the session baseline, use an explicit branch, and use an isolated worktree only when repository rules permit its location. If project files must remain in the saved project directory, use that checkout and serialize every writer. Record the branch, start commit, and starting dirty set before the worker writes.
@@ -187,6 +198,10 @@ unless this contract links them. Do not create more tasks or update orchestratio
 state. Stay inside the approved product behavior and write boundary. If a product
 decision or permission is missing, stop and return needs-decision instead of inventing
 scope.
+
+Use the context packet pointers from the Project Lead. Read the project index, role,
+Ticket, linked design records, acceptance, and proof before acting; do not copy or
+reconstruct the parent transcript.
 
 Use the Ticket's workspace and completion check to select installed capabilities
 internally; never ask the Product Owner to name a Skill. Produce the shortest runnable

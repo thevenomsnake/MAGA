@@ -107,6 +107,29 @@ Always materialize the Project Lead during onboarding. Add another role only whe
 
 Use `managed queue` only for multiple approved Tickets, independent long-lived professional context, or distinct permissions. Otherwise use `direct execution`. `Primary workspace` selects a stable MAGA responsibility profile; it never stores a model name or reasoning depth in Git.
 
+## Autonomy Policy
+
+Record the Product Owner's standing dispatch authority only after they confirm it.
+The policy is project-scoped and does not replace Ticket authorization:
+
+```markdown
+## Autonomy Policy
+
+- Continue: approved | pending
+- Dispatch: approved | pending
+- Max active workers: <positive integer or none>
+- Scope: approved Tickets in this repository only
+- Context: repository-relative pointers and bounded summaries
+- Release: proposal-only | approved for named scope
+- Change rule: Product Owner approval is required before widening scope, worker limit, or side-effect authority.
+```
+
+`Dispatch: approved` permits a fresh named worker only for an already approved
+Ticket, within `Max active workers`. It does not create a new Ticket, authorize an
+expanded outcome, or approve external, account, paid, sensitive-data, migration,
+release, destructive, or irreversible actions. Runtime thread IDs, host IDs and
+cursors remain outside tracked project memory.
+
 ## Ticket Contract
 
 Scan existing Ticket keys and allocate the next `T###` key. Use a short outcome
@@ -154,7 +177,7 @@ command, or observable fact.>
 
 ## Execution
 
-- Task opening: pending | approved | not-needed
+- Task opening: pending | approved | standing-policy | not-needed
 - Task title: pending
 - Attempt: pending
 - Git branch: pending
@@ -193,7 +216,9 @@ Use status `ready`, `creating`, `running`, `needs-decision`, `completed`, `integ
 Leave `Task opening`, `Task title`, and `Attempt` as `pending` while the Ticket is
 unclaimed. Use `Task opening: not-needed` when work stays in the current focused
 task. Before creating a fresh task, persist its deterministic title, a positive
-attempt number, and the Product Owner's explicit approval for that exact task.
+attempt number, and either the Product Owner's explicit approval for that exact
+task or a confirmed project `Autonomy Policy` whose `Dispatch` scope covers the
+already approved Ticket.
 Record the observed validation
 fact and commit or artifact identity before marking the worker completed.
 
@@ -232,7 +257,12 @@ accepted decision becomes durable work.
 - Use `pending` before the Ticket's research, prototype, diagnosis, review, delivery, or release work is authorized; use `approved` for an explicitly authorized Ticket and `revoked` when the Product Owner withdraws authorization.
 - Accept natural language such as "start", "build it", or "continue" as execution approval for the currently described Ticket set. Update every Ticket in that set together.
 - Do not copy approval to a future Ticket. If an approved Ticket's outcome, acceptance, boundaries, cost, private-data use, external effect, destructive action, or release scope materially expands, return it to `pending`.
-- Decide internally whether fresh attention is useful, but do not create a new Codex task unless the Product Owner explicitly requested one or approves the proposed deterministic title. Ask once for a clearly listed batch rather than once per worker. Record that permission as `Task opening: approved` for the exact title and attempt; it does not carry to replacements or future Tickets.
+- Decide internally whether fresh attention is useful. If the confirmed project
+  `Autonomy Policy` covers the already approved Ticket, create the deterministic
+  task within its active-worker limit; otherwise ask for the exact title. Record
+  that permission as `Task opening: approved` or `Task opening: standing-policy`
+  for the exact title and attempt; it does not carry to replacements, future
+  Tickets, or expanded outcomes.
 - Keep `approved` for a same-scope retry. Return a deferred Ticket to `pending` before resuming it later.
 - Do not dispatch or continue new side effects for a `pending` or `revoked` Ticket. When authorization is revoked during execution, stop at a safe boundary and return control to the Product Owner.
 - Treat approval as authority only for the Ticket's written scope. It does not implicitly allow accounts, costs, sensitive data, external publication, destructive actions, migration, production changes, or release.

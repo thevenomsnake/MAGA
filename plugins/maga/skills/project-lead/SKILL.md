@@ -37,7 +37,7 @@ When `.ai-workflow/PROJECT.md` is in `onboarding` state:
 5. Once the first success boundary is clear, update durable project state, form the minimum roles, and create the first Ticket before implementation.
 6. Summarize the product slice and any remaining human decision in product language. Do not present internal role or Ticket machinery as setup work for the user.
 
-If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. Opening a separate Ticket worker still requires the Product Owner to explicitly approve that named task; the bounded exploration exception is defined below. A broad idea without a clear first observable value enters the exploration loop instead of becoming a Ticket.
+If the user already supplied enough information and authorized the described work, materialize the first slice and start work that stays in this task without adding a ceremonial confirmation step. For an approved Ticket, a confirmed project Autonomy Policy may authorize a bounded named worker without another title question; otherwise the Product Owner must approve that exact task. The bounded exploration exception is defined below. A broad idea without a clear first observable value enters the exploration loop instead of becoming a Ticket.
 
 ## Establish The Validation Profile
 
@@ -55,7 +55,7 @@ Keep this Project Lead as the only generic pinned entry. Never pre-create empty 
 
 For that pre-Ticket branch, read [references/exploration-loop.md](references/exploration-loop.md) and follow it through return to this Project Lead. The exploration request itself authorizes that one concretely titled exploration task; do not add a second task-creation question. An exploration task never opens another exploration task.
 
-At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. After exploration returns an accepted decision, or when approved work already exists, run the entire native loop rather than stopping after dispatch:
+At the start of every project turn, reconcile durable project state with visible Codex tasks before creating anything. Read the confirmed Autonomy Policy and enforce its worker limit. After exploration returns an accepted decision, or when approved work already exists, run the entire native loop rather than stopping after dispatch:
 
 1. Persist the current product outcome, minimum roles, and Ticket contract.
 2. Apply `orchestrate-tickets` to reuse or create the appropriate native manager or worker task.
@@ -153,7 +153,7 @@ Do not persist task IDs, host IDs, machine paths, or worktree locations in track
 5. Decide which existing role owns it, or create the one new role justified by a real boundary.
 6. Persist the Ticket before cross-session execution.
 7. Obtain one product-level authorization to execute the work. Natural language such as "research this", "prototype it", "start", "build it", or "continue" is sufficient for the currently described Ticket set. Set `authorization: approved` on exactly those Tickets; do not extend approval to future Tickets or materially expanded outcomes.
-8. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. Create it only when the Product Owner explicitly asked for a separate task or approves the concrete proposal: "Open <deterministic title> as a separate work task now?" One answer may approve a clearly listed batch. Record that permission against the exact title and attempt, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
+8. Keep Project Lead work with no specialist `workspace` in this task. For an approved Ticket with `workspace: research`, `prototype`, `delivery`, `diagnosis`, `review`, or `release`, decide the smallest useful named worker automatically. If the confirmed Autonomy Policy covers the Ticket and its worker limit has capacity, create the task directly; otherwise ask once for the exact deterministic title. Record `Task opening: standing-policy` or `Task opening: approved`, then apply `orchestrate-tickets`. Do not ask the user to choose a Skill, model, or technical role.
 9. After the slice works, run its one risk-matched smoke and commit it before integration, switching context, or starting another slice.
 10. Present a runnable preview, inspectable artifact, or concrete behavior plus the focused validation fact and commit identity.
 11. Update current state and archive completed Ticket detail. Ask the user for acceptance only where product judgment remains necessary.
