@@ -7,3 +7,4 @@ and superseded records remain discoverable but are not authoritative.
 
 - [D001: Bounded proactive coordination](records/D001-bounded-proactive-coordination.md) - accepted - system
 - [D002: Native subagent delegation topology](records/D002-native-subagent-delegation.md) - accepted - system
+- [D003: Native subagent runtime adapter](records/D003-native-subagent-runtime-adapter.md) - accepted - system

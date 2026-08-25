@@ -30,7 +30,9 @@ At a phase boundary, choose the first shape that satisfies the outcome:
    in-scope clarification.
 2. **Delegate** to a native subagent for a short, read-only question inside the
    current approved Ticket. Return its finding to the parent and discard the
-   attention workspace after the result is used.
+   attention workspace after the result is used. Use the `CodexBridge` native
+   runtime adapter when MAGA is driving app-server directly; it negotiates the
+   experimental capability, read-only sandbox, model support, and child lineage.
 3. **Dispatch** a named worker task when the outcome needs code, a durable
    artifact, a commit, independent acceptance, a distinct permission boundary,
    or user-visible follow-up. Apply the existing reconciliation and integration
@@ -45,7 +47,8 @@ At a phase boundary, choose the first shape that satisfies the outcome:
 Subagents never edit, commit, create tasks, approve requests, publish, or broaden
 the Ticket. A native Goal may keep the current approved objective visible across
 turns with a finite budget; Goal state remains continuation state, not project
-authorization.
+authorization. The adapter returns an explicit unsupported fallback when the host
+or selected model cannot provide native multi-agent support.
 
 ## Create Professional Workspaces On Demand
 

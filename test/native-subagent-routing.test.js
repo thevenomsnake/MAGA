@@ -52,7 +52,7 @@ test("keeps native execution shapes and authority separate", () => {
   assert.match(nativeLoop, /Subagents never edit, commit, create tasks/);
   assert.match(routing, /\| Native subagent \|/);
   assert.match(routing, /Do not use a subagent to bypass/);
-  assert.match(orchestration, /native subagent before opening a worker/);
+  assert.match(orchestration, /native `CodexBridge` subagent adapter before opening a worker/);
   assert.match(orchestration, /A subagent cannot write, commit/);
   assert.doesNotMatch(orchestration, /fresh project task for every Ticket/);
 });

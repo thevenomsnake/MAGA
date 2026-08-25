@@ -23,7 +23,7 @@ Use the smallest shape that meets the boundary:
 | Shape | Use when | Authority |
 | --- | --- | --- |
 | Continue | Coupled reasoning or a quick in-scope clarification | Current task and Ticket |
-| Native subagent | Short, read-only investigation inside an approved Ticket | `Delegate` only; no writes or task creation |
+| Native subagent | Short, read-only investigation inside an approved Ticket | `Delegate` only; bridge adapter, no writes or task creation |
 | Named worker task | Durable artifact, source change, commit, independent acceptance, or distinct permission | `Dispatch` plus Ticket authorization |
 | Fork | The Product Owner explicitly wants parent history preserved | Explicit request only |
 | Worktree | Parallel writers have proven non-overlapping scopes | Existing Git and Ticket boundaries |

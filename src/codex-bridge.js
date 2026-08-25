@@ -9,6 +9,15 @@ import {
 import { buildContextPacket } from "./context-packet.js";
 
 const BRIDGE_VERSION = "0.15.0";
+const NATIVE_SUBAGENT_MAX = 2;
+const NATIVE_SUBAGENT_SOURCE_KINDS = [
+  "subAgent",
+  "subAgentReview",
+  "subAgentCompact",
+  "subAgentThreadSpawn",
+  "subAgentOther",
+];
+const NATIVE_MULTI_AGENT_VERSIONS = new Set(["v1", "v2"]);
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -32,6 +41,28 @@ const THREAD_GOAL_STATUSES = new Set([
 function isUnsupportedGoalError(error) {
   const message = error instanceof Error ? error.message : String(error);
   return /method not found|unknown method|unsupported|experimentalApi|not available/i.test(message);
+}
+
+function isUnsupportedSubagentError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return /experimentalApi|method not found|unknown method|unsupported native multi.?agent|does not expose the native multi.?agent|not available/i.test(message);
+}
+
+function threadModel(snapshot) {
+  return snapshot?.model
+    || snapshot?.thread?.model
+    || snapshot?.thread?.settings?.model
+    || null;
+}
+
+function validateSubagentLimit(maxAgents) {
+  if (!Number.isInteger(maxAgents) || maxAgents < 1 || maxAgents > NATIVE_SUBAGENT_MAX) {
+    throw new Error(`native subagent limit must be an integer from 1 to ${NATIVE_SUBAGENT_MAX}`);
+  }
+}
+
+function readOnlyDelegationInstructions(maxAgents) {
+  return `This is a bounded MAGA read-only delegation. Use native multi-agent tools only when they materially help, and use at most ${maxAgents} child agents. Inspect and reason only. Do not edit files, commit, create tasks or subagents, approve requests, publish, access accounts, or expand the approved question. Return a concise finding, uncertainty, or blocker to the parent.`;
 }
 
 function withHostComputeFallback(compute) {
@@ -90,8 +121,21 @@ export class CodexTurnStillRunningError extends Error {
   }
 }
 
+export class CodexNativeSubagentUnsupportedError extends Error {
+  constructor(reason) {
+    super(reason);
+    this.name = "CodexNativeSubagentUnsupportedError";
+  }
+}
+
 export class CodexBridge {
-  constructor({ cwd, command = "codex", timeoutMs = 120_000, serverRequestHandler } = {}) {
+  constructor({
+    cwd,
+    command = "codex",
+    timeoutMs = 120_000,
+    serverRequestHandler,
+    experimentalApi = true,
+  } = {}) {
     this.cwd = path.resolve(cwd || process.cwd());
     this.command = command;
     this.timeoutMs = timeoutMs;
@@ -101,6 +145,8 @@ export class CodexBridge {
     this.events = new EventEmitter();
     this.stderr = "";
     this.serverRequestHandler = serverRequestHandler;
+    this.experimentalApi = experimentalApi;
+    this.initializeResult = null;
   }
 
   async connect() {
@@ -172,13 +218,15 @@ export class CodexBridge {
       this.stderr = `${this.stderr}${chunk}`.slice(-8_000).trim();
     });
 
-    await this.request("initialize", {
+    const initializeParams = {
       clientInfo: {
         name: "maga",
         title: "MAGA",
         version: BRIDGE_VERSION,
       },
-    });
+    };
+    if (this.experimentalApi) initializeParams.capabilities = { experimentalApi: true };
+    this.initializeResult = await this.request("initialize", initializeParams);
     this.notify("initialized", {});
   }
 
@@ -222,13 +270,21 @@ export class CodexBridge {
     throw new Error(`${method} failed without a response`);
   }
 
-  async listThreads({ cwd = this.cwd, title, archived = false, all = false, maxPages = 20 } = {}) {
+  async listThreads({
+    cwd = this.cwd,
+    title,
+    archived = false,
+    all = false,
+    maxPages = 20,
+    sourceKinds = ["appServer", "vscode", "cli"],
+    parentThreadId,
+  } = {}) {
     const threads = [];
     let cursor;
     for (let page = 0; page < (all ? maxPages : 1); page += 1) {
       const params = {
         // Desktop-hosted app-server processes can inherit the host's interactive source.
-        sourceKinds: ["appServer", "vscode", "cli"],
+        sourceKinds,
         cwd: path.resolve(cwd),
         archived,
         searchTerm: title,
@@ -237,7 +293,8 @@ export class CodexBridge {
       if (cursor) params.cursor = cursor;
       const result = await this.requestWithRetry("thread/list", params);
       const pageData = Array.isArray(result.data) ? result.data : result.data?.data || [];
-      threads.push(...pageData);
+      threads.push(...pageData.filter((thread) => !parentThreadId
+        || thread.parentThreadId === parentThreadId));
       if (!all) break;
       const nextCursor = result.nextCursor || result.next_cursor || null;
       if (!nextCursor || nextCursor === cursor) break;
@@ -251,11 +308,111 @@ export class CodexBridge {
     return result.data || [];
   }
 
-  async createThread({ cwd = this.cwd, title, pinned = true, model } = {}) {
-    const result = await this.request("thread/start", {
+  async listSubagentThreads(parentThreadId, { cwd = this.cwd, archived = false } = {}) {
+    if (typeof parentThreadId !== "string" || !parentThreadId.trim()) {
+      throw new Error("parent thread id must be non-empty");
+    }
+    const threads = await this.listThreads({
+      cwd,
+      archived,
+      all: true,
+      sourceKinds: NATIVE_SUBAGENT_SOURCE_KINDS,
+    });
+    const byParent = new Map();
+    for (const thread of threads) {
+      const parent = thread?.parentThreadId;
+      if (!parent) continue;
+      const children = byParent.get(parent) || [];
+      children.push(thread);
+      byParent.set(parent, children);
+    }
+    const descendants = [];
+    const queue = [parentThreadId];
+    const seen = new Set(queue);
+    while (queue.length) {
+      const parent = queue.shift();
+      for (const child of byParent.get(parent) || []) {
+        if (seen.has(child.id)) continue;
+        seen.add(child.id);
+        descendants.push(child);
+        queue.push(child.id);
+      }
+    }
+    return descendants;
+  }
+
+  async nativeSubagentCapabilities({ model, maxAgents = NATIVE_SUBAGENT_MAX } = {}) {
+    validateSubagentLimit(maxAgents);
+    if (!this.experimentalApi) {
+      return {
+        supported: false,
+        experimentalApi: false,
+        model: model || null,
+        multiAgentVersion: null,
+        maxAgents,
+        fallback: "The Codex host was opened without experimental API capability; repository project memory remains authoritative.",
+      };
+    }
+
+    let models;
+    try {
+      models = await this.listModels();
+    } catch (error) {
+      return {
+        supported: false,
+        experimentalApi: true,
+        model: model || null,
+        multiAgentVersion: null,
+        maxAgents,
+        fallback: `The Codex host could not expose its model catalog: ${error.message}`,
+      };
+    }
+    const selected = (model && models.find((entry) => entry.id === model))
+      || (!model && (models.find((entry) => entry.isDefault) || models[0]))
+      || null;
+    const selectedModel = model || selected?.id || null;
+    const multiAgentVersion = selected?.multiAgentVersion || null;
+    if (!selected || !NATIVE_MULTI_AGENT_VERSIONS.has(multiAgentVersion)) {
+      return {
+        supported: false,
+        experimentalApi: true,
+        model: selectedModel,
+        multiAgentVersion,
+        maxAgents,
+        fallback: "The selected Codex model does not expose the native multi-agent runtime; use a named worker or repository project memory.",
+      };
+    }
+    return {
+      supported: true,
+      experimentalApi: true,
+      model: selectedModel,
+      multiAgentVersion,
+      maxAgents,
+    };
+  }
+
+  async createThread({
+    cwd = this.cwd,
+    title,
+    pinned = true,
+    model,
+    subagentLimit,
+  } = {}) {
+    if (subagentLimit !== undefined) validateSubagentLimit(subagentLimit);
+    const params = {
       cwd: path.resolve(cwd),
       model,
-    });
+    };
+    if (subagentLimit !== undefined) {
+      params.config = {
+        features: { multi_agent: true },
+        agents: {
+          enabled: true,
+          max_concurrent_threads_per_session: subagentLimit,
+        },
+      };
+    }
+    const result = await this.request("thread/start", params);
     const threadId = result.thread?.id;
     if (!threadId) throw new Error("thread/start returned no thread id");
 
@@ -318,14 +475,31 @@ export class CodexBridge {
     }
   }
 
-  async sendMessage(threadId, text, { model, effort, contextPacket } = {}) {
+  async sendMessage(
+    threadId,
+    text,
+    {
+      model,
+      effort,
+      contextPacket,
+      collaborationMode,
+      sandboxPolicy,
+      approvalPolicy,
+      outputSchema,
+    } = {},
+  ) {
     const prompt = contextPacket ? `${contextPacket}\n\n${text}` : text;
-    const result = await this.request("turn/start", {
+    const params = {
       threadId,
       input: [{ type: "text", text: prompt }],
       model,
       effort,
-    });
+    };
+    if (collaborationMode !== undefined) params.collaborationMode = collaborationMode;
+    if (sandboxPolicy !== undefined) params.sandboxPolicy = sandboxPolicy;
+    if (approvalPolicy !== undefined) params.approvalPolicy = approvalPolicy;
+    if (outputSchema !== undefined) params.outputSchema = outputSchema;
+    const result = await this.request("turn/start", params);
     const turnId = result.turn?.id;
     if (!turnId) throw new Error("turn/start returned no turn id");
 
@@ -334,6 +508,95 @@ export class CodexBridge {
       throw new Error(completed.params.turn?.error?.message || `Codex turn ${completed.params.turn?.status || "failed"}`);
     }
     return this.readThread(threadId);
+  }
+
+  async delegateReadOnly(
+    threadId,
+    question,
+    {
+      contextPacket,
+      model,
+      effort,
+      maxAgents = NATIVE_SUBAGENT_MAX,
+    } = {},
+  ) {
+    if (typeof question !== "string" || !question.trim()) {
+      throw new Error("native subagent question must be non-empty");
+    }
+    if (question.length > 4_000) {
+      throw new Error("native subagent question must be 4000 characters or shorter");
+    }
+    validateSubagentLimit(maxAgents);
+
+    if (!this.experimentalApi) {
+      throw new CodexNativeSubagentUnsupportedError(
+        "The Codex host was opened without experimental API capability; repository project memory remains authoritative.",
+      );
+    }
+
+    const existing = await this.listSubagentThreads(threadId);
+    const active = existing.filter((thread) => ["active", "running", "inprogress", "waiting"]
+      .includes(threadStatus(thread)));
+    if (active.length >= maxAgents) {
+      return {
+        supported: true,
+        admitted: false,
+        maxAgents,
+        activeSubagents: active,
+        fallback: "The MAGA Delegate limit is currently full; continue the existing subagent or use project memory.",
+      };
+    }
+
+    const capabilities = await this.nativeSubagentCapabilities({ model, maxAgents });
+    if (!capabilities.supported) throw new CodexNativeSubagentUnsupportedError(capabilities.fallback);
+
+    const snapshot = await this.readThread(threadId);
+    const effectiveModel = model || threadModel(snapshot) || capabilities.model;
+    if (!effectiveModel) {
+      throw new CodexNativeSubagentUnsupportedError("The Codex host did not expose a model for the native collaboration turn.");
+    }
+    const prompt = [
+      contextPacket,
+      `Investigate this bounded question and return the result to the Project Lead: ${question.trim()}`,
+    ].filter(Boolean).join("\n\n");
+    const result = await this.sendMessage(threadId, prompt, {
+      model: effectiveModel,
+      effort,
+      collaborationMode: {
+        mode: "default",
+        settings: {
+          model: effectiveModel,
+          reasoning_effort: effort || null,
+          developer_instructions: readOnlyDelegationInstructions(maxAgents),
+        },
+      },
+      sandboxPolicy: { type: "readOnly", networkAccess: false },
+      approvalPolicy: "never",
+    });
+    return {
+      supported: true,
+      admitted: true,
+      maxAgents,
+      activeSubagents: [],
+      capabilities,
+      thread: result,
+      subagents: await this.listSubagentThreads(threadId),
+    };
+  }
+
+  async tryDelegateReadOnly(threadId, question, options = {}) {
+    try {
+      return await this.delegateReadOnly(threadId, question, options);
+    } catch (error) {
+      if (!(error instanceof CodexNativeSubagentUnsupportedError) && !isUnsupportedSubagentError(error)) {
+        throw error;
+      }
+      return {
+        supported: false,
+        admitted: false,
+        fallback: error instanceof Error ? error.message : String(error),
+      };
+    }
   }
 
   readThread(threadId) {
@@ -445,6 +708,7 @@ export async function launchProjectLead({
   computeSettings,
   goal,
   goalTokenBudget,
+  subagentLimit,
 } = {}) {
   if (!new Set(["onboarding", "recovery"]).has(entryMode)) {
     throw new Error(`unknown Project Lead entry mode: ${entryMode}`);
@@ -501,12 +765,13 @@ export async function launchProjectLead({
         title,
         pinned: true,
         model: compute.actual.model || undefined,
+        subagentLimit,
       });
     } catch (error) {
       if (!compute.actual.model || !isComputeSelectionError(error)) throw error;
       compute = withHostComputeFallback(compute);
       usingHostDefaults = true;
-      thread = await bridge.createThread({ cwd, title, pinned: true });
+      thread = await bridge.createThread({ cwd, title, pinned: true, subagentLimit });
     }
 
     let readyNotified = false;

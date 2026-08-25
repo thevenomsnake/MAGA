@@ -134,9 +134,10 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 
 1. Keep a small, self-contained Ticket in the current task when it has no
    specialist `workspace` and remains Project Lead work.
-2. Use a native subagent before opening a worker when the question is short,
-   read-only, inside the approved Ticket, and its result can return to the
-   parent without durable integration. Check `Delegate` capacity first.
+2. Use the native `CodexBridge` subagent adapter before opening a worker when
+   the question is short, read-only, inside the approved Ticket, and its result
+   can return to the parent without durable integration. Check `Delegate`
+   capacity and the selected model's native capability first.
 3. Propose a fresh project task for a Ticket whose workspace is `research`,
    `prototype`, `delivery`, `diagnosis`, `review`, or `release` when the outcome
    needs a durable artifact, source change, commit, independent acceptance,
@@ -150,7 +151,10 @@ For a ticket stuck at `creating` with no matching thread, perform one bounded re
 
 ### Native subagent boundary
 
-Give a subagent the smallest repository-relative pointers and one question. It
+Give a subagent the smallest repository-relative pointers and one question. The
+bridge supplies `experimentalApi`, `collaborationMode`, a read-only sandbox, and
+the finite admission limit; the parent remains responsible for the Ticket.
+It
 returns a finding, uncertainty, or blocker to its parent. Do not give it a
 commit requirement, a task-creation instruction, an external connector, or a
 permission escalation. If the question grows into a durable artifact, source
