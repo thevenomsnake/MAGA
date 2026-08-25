@@ -1,6 +1,6 @@
 ---
 key: T009
-status: ready
+status: integrated
 authorization: approved
 role: project-lead
 workspace: release
@@ -65,8 +65,8 @@ as MAGA 0.16.0 from one explicit, reproducible commit.
 
 ## Completion
 
-- Behavior: pending
-- Validation: pending
-- Evidence: pending
-- Commit or artifact: pending
+- Behavior: MAGA 0.16.0 code and repository documentation are synchronized, and GitHub publishes the native subagent runtime adapter from the explicit release commit.
+- Validation: `node --test test/native-subagent-adapter.test.js test/codex-bridge.test.js test/native-subagent-routing.test.js test/init-project.test.js test/bundled-skills.test.js test/git-discipline.test.js` passed 49/49; all five README locale Humanization checks passed, with two non-blocking zh-CN review signals; archive preflight and SHA verification passed.
+- Evidence: GitHub release `v0.16.0` at https://github.com/thevenomsnake/MAGA/releases/tag/v0.16.0; target commit `1c8630aef6795da38681bb4fe3df59609938b985`; archive `maga-0.16.0.tar`, `byteLength: 9779200`, SHA-256 `07846234e4da68e7d6a2a40c610105b96afc941849b9768cd3f957cb2a522643`.
+- Commit or artifact: 1c8630aef6795da38681bb4fe3df59609938b985; `maga-0.16.0.tar`
 - Blocker: none

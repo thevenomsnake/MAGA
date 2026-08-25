@@ -40,7 +40,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA 0.16.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T008 are integrated; T009 is the code-and-GitHub release slice. Website, npm, and Cloudflare delivery are outside this release.
+MAGA 0.16.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T009 are integrated. The code repository and GitHub release are synchronized; website, npm, and Cloudflare delivery remain outside this release.
 
 ## Roles
 
@@ -52,7 +52,7 @@ MAGA 0.16.0 combines bounded proactive task coordination, native read-only subag
 
 ## Active Tickets
 
-- [T009 Release MAGA 0.16.0 for code and GitHub](tickets/T009-release-0160.md): ready, approved.
+None.
 
 ## Decisions
 
