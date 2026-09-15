@@ -171,11 +171,11 @@ full routing and workspace split, read
 the request could require discussion, research, a prototype, specification,
 delivery, diagnosis, review, or a fresh Codex task.
 
-When the user asks to configure MAGA's models or tune the AI work's reasoning
-depth, quality, speed, or cost—or enters through the plugin's Configure starter prompt—call the bundled
+Only when the user explicitly asks to configure MAGA's models or reasoning
+depth—or enters through the plugin's Configure starter prompt—call the bundled
 `show_maga_compute_settings` tool and present its panel. Do not turn this into a
-project Ticket. MAGA's values are recommendations until the Product Owner saves
-the panel once. Saved choices are authoritative for explicitly created new tasks;
+project Ticket. Do not offer model, reasoning-depth, or plan-selection advice.
+Saved choices are authoritative for explicitly created new tasks;
 without saved choices, omit model and reasoning overrides so Codex uses its host
 defaults. Do not infer a different model because a task appears easy or difficult.
 
@@ -183,8 +183,8 @@ Do not switch the model of an existing Project Lead in place. When the Product
 Owner explicitly asks to "use the new configuration to take over this project":
 
 1. Bring durable project state up to date and commit it before handoff.
-2. Resolve the saved `project-lead` profile. If it is not saved, explain that the
-   MAGA's values are still recommendations and offer the settings panel.
+2. Resolve the saved `project-lead` profile. Unconfigured fields inherit the host
+   default; do not prompt for a model selection.
 3. Create one unpinned replacement Project Lead in the same saved project and
    local environment under a unique temporary title shaped as
    `<project> · Project Lead · takeover <short-id>`, passing the resolved non-null

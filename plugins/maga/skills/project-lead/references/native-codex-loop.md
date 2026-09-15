@@ -18,7 +18,7 @@ Use this reference after a product Ticket is approved and work crosses Codex tas
 - Leave Ticket workers unpinned and archive them after their result is durably integrated, deferred, or superseded.
 - Never persist `threadId`, `hostId`, `clientThreadId`, `turnId`, or wait cursors; rediscover tasks by saved project plus deterministic title.
 - Preserve the session hook's branch, full `HEAD`, and dirty set as the Git baseline. Use explicit branches or permitted worktrees, serialize shared-checkout writers, and protect pre-existing dirty paths.
-- Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unsaved MAGA values are recommendations; omit overrides and use the host default.
+- Resolve each specialist Ticket's explicitly saved MAGA responsibility profile immediately before creation, pass non-null model and thinking values to the native task tool, and keep machine-specific settings out of project memory. Unconfigured fields inherit the host default; omit their overrides.
 - Do not expose task choreography, Skills, Git, or validation machinery in normal product conversation.
 - Do not create a separate UI, dashboard, task panel, or App Server service. The initializer bridge exits after establishing the Project Lead.
 

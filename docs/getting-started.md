@@ -66,21 +66,11 @@ Do not create an arbitrary task in its place. If the Project Lead task is not vi
 
 ### Optional: choose models by responsibility
 
-Open the MAGA plugin detail page and select its **Configure** starter prompt. Codex will start a MAGA task and open an in-task configuration panel. Choose the starting profile that best matches your current allowance, then adjust any row if needed:
+Unconfigured responsibilities inherit the Codex host default. MAGA does not recommend models, reasoning depths, or plan-based profiles.
 
-| Responsibility | Pro · quality first | Plus · regular use | Free / Go · quota saver |
-| --- | --- | --- | --- |
-| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| Research | Sol · max | Sol · max | Terra · max |
-| Prototype | Sol · xhigh | Terra · high | Terra · high |
-| Delivery | Terra · xhigh | Luna · max | Luna · max |
-| Diagnosis | Sol · max | Terra · xhigh | Terra · high |
-| Review | Sol · xhigh | Sol · high | Terra · high |
-| Release | Sol · xhigh | Sol · high | Sol · high |
+If you explicitly want to configure a responsibility, open **Configure** on the MAGA plugin and save your choices in the settings panel. The panel lists host-reported models and supported parameters. You can leave either field set to **Inherit host default**; saving one responsibility does not configure the others. Existing saved choices are preserved. Settings stay in the current Codex Home, outside project Git.
 
-Business, Enterprise, and Edu workspaces can start with Plus and move to Pro when their allowance and workspace policy support it. API-key users should choose by token budget. Sol handles ambiguity and assurance, Terra is the everyday workhorse, and Luna is recommended only at **max** for clear, repeatable delivery. Higher reasoning can take longer and use more tokens.
-
-Until you click **Save**, the profile is only a recommendation and MAGA uses the Codex host defaults. The first save confirms all seven rows in the current Codex Home, not this product folder or its Git history; later saves merge only the rows you changed. Saved choices apply only to new tasks covered by explicit approval or the project's confirmed Autonomy Policy. Existing tasks stay unchanged, and Project Lead adopts them only when newly created or explicitly replaced at your request. The panel's `model/list` is only a reference catalog. The destination host performs final validation when MAGA creates an approved task; if it rejects the saved choice, MAGA retries once without overrides and tells you that the host default was used.
+Saved settings apply only to authorized new tasks. Existing tasks keep their settings. The destination host validates explicit choices; if it rejects them, MAGA retries once without overrides and reports that the host default was used.
 
 ## 5. Describe the first product
 

@@ -64,21 +64,11 @@ GitHub 登录、账号或仓库设置、推送，以及 Issue 或 Pull Request �
 
 ### 可选：按职责选择模型
 
-打开 MAGA 插件详情页，选择 **Configure** starter prompt。Codex 会开启一个 MAGA 配置任务，并在任务中打开配置面板。根据当前订阅与剩余额度选择起始方案，必要时再调整个别职责；保存后回到刚才的 Project Lead 任务：
+未配置的职责继承 Codex 宿主默认值。MAGA 不提供模型、推理深度或套餐组合建议。
 
-| 职责 | Pro · 质量优先 | Plus · 常规使用 | Free / Go · 节省额度 |
-| --- | --- | --- | --- |
-| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| 研究 | Sol · max | Sol · max | Terra · max |
-| 原型 | Sol · xhigh | Terra · high | Terra · high |
-| 交付 | Terra · xhigh | Luna · max | Luna · max |
-| 诊断 | Sol · max | Terra · xhigh | Terra · high |
-| 审查 | Sol · xhigh | Sol · high | Terra · high |
-| 发布 | Sol · xhigh | Sol · high | Sol · high |
+如果你主动希望配置某项职责，可以从 MAGA 插件的 **Configure** 打开设置面板。面板列出宿主返回的模型及支持参数，任一字段都可以保留为**继承宿主默认值**。保存某个职责不会替其他职责填入配置，已有的显式选择保持有效。设置保存在当前 Codex Home，不进入项目 Git。
 
-Business、Enterprise 和 Edu 工作区可以先选 Plus；额度与工作区策略允许时再切换到 Pro。API key 用户按 token 预算选择。Sol 负责模糊问题与把关，Terra 是日常主力，Luna 只在定义清楚、可重复的交付中以 **max** 推荐。更高推理深度会花费更多时间和 token。
-
-在点击 **保存** 前，所选方案只是推荐，MAGA 使用 Codex 宿主默认值。第一次保存会把全部 7 个职责作为明确选择保存在当前实例的 Codex Home，而不是产品文件夹或 Git 历史；之后只合并你改动的职责。保存的选择只用于明确批准或项目 Autonomy Policy 覆盖的新任务；已有任务不变，Project Lead 也只会在新建或你明确要求创建 replacement 接手时采用。面板的 `model/list` 只是参考目录；创建获批任务时，目标宿主会做最终验证。若目标宿主拒绝保存的选择，MAGA 才省略 overrides 重试一次，并告诉你使用了宿主默认值。
+已保存设置只用于获授权的新任务，已有任务保持原设置。目标宿主验证显式选择；若拒绝，MAGA 省略 overrides 重试一次，并说明使用了宿主默认值。
 
 ## 5. 在 Project Lead 任务中描述第一个产品
 

@@ -21,106 +21,42 @@ export const RESPONSIBILITIES = Object.freeze([
     key: "project-lead",
     label: "Project Lead",
     description: "Product conversation, decisions, orchestration, and integration.",
-    model: "gpt-5.6-sol",
-    effort: "xhigh",
   },
   {
     key: "research",
     label: "External Research",
     description: "Source-backed facts that can change a product decision.",
-    model: "gpt-5.6-sol",
-    effort: "max",
   },
   {
     key: "prototype",
     label: "Experience Prototype",
     description: "Interaction and visual judgment before committing to delivery.",
-    model: "gpt-5.6-terra",
-    effort: "high",
   },
   {
     key: "delivery",
     label: "Product Delivery",
     description: "Bounded implementation after the product result is clear.",
-    model: "gpt-5.6-luna",
-    effort: "max",
   },
   {
     key: "diagnosis",
     label: "Diagnosis",
     description: "Evidence-led investigation of concrete failures.",
-    model: "gpt-5.6-terra",
-    effort: "xhigh",
   },
   {
     key: "review",
     label: "Independent Review",
     description: "Risk-matched acceptance and quality review.",
-    model: "gpt-5.6-sol",
-    effort: "high",
   },
   {
     key: "release",
     label: "Release And Risk",
     description: "Privacy, permissions, migration, and external release boundaries.",
-    model: "gpt-5.6-sol",
-    effort: "high",
   },
 ]);
 
 const RESPONSIBILITY_BY_KEY = new Map(
   RESPONSIBILITIES.map((responsibility) => [responsibility.key, responsibility]),
 );
-
-export const BALANCED_DEFAULTS = Object.freeze(Object.fromEntries(
-  RESPONSIBILITIES.map(({ key, model, effort }) => [
-    key,
-    Object.freeze({ model, effort }),
-  ]),
-));
-
-function freezeProfiles(profiles) {
-  return Object.freeze(Object.fromEntries(
-    Object.entries(profiles).map(([key, profile]) => [key, Object.freeze({ ...profile })]),
-  ));
-}
-
-export const COMPUTE_PRESETS = Object.freeze([
-  Object.freeze({
-    key: "pro-quality",
-    label: "Pro · quality first",
-    description: "For ChatGPT Pro or a high workspace allowance. Uses Sol for judgment and Terra for implementation.",
-    profiles: freezeProfiles({
-      "project-lead": { model: "gpt-5.6-sol", effort: "xhigh" },
-      research: { model: "gpt-5.6-sol", effort: "max" },
-      prototype: { model: "gpt-5.6-sol", effort: "xhigh" },
-      delivery: { model: "gpt-5.6-terra", effort: "xhigh" },
-      diagnosis: { model: "gpt-5.6-sol", effort: "max" },
-      review: { model: "gpt-5.6-sol", effort: "xhigh" },
-      release: { model: "gpt-5.6-sol", effort: "xhigh" },
-    }),
-  }),
-  Object.freeze({
-    key: "plus-standard",
-    label: "Plus · regular use",
-    description: "For focused weekly work. Mixes Sol judgment, Terra execution, and Luna Max delivery.",
-    profiles: BALANCED_DEFAULTS,
-  }),
-  Object.freeze({
-    key: "quota-saver",
-    label: "Free / Go · quota saver",
-    description: "For lightweight use or a tight remaining allowance. Uses Terra broadly, Sol for release, and Luna Max for delivery.",
-    profiles: freezeProfiles({
-      "project-lead": { model: "gpt-5.6-terra", effort: "xhigh" },
-      research: { model: "gpt-5.6-terra", effort: "max" },
-      prototype: { model: "gpt-5.6-terra", effort: "high" },
-      delivery: { model: "gpt-5.6-luna", effort: "max" },
-      diagnosis: { model: "gpt-5.6-terra", effort: "high" },
-      review: { model: "gpt-5.6-terra", effort: "high" },
-      release: { model: "gpt-5.6-sol", effort: "high" },
-    }),
-  }),
-]);
 
 function requireResponsibility(key) {
   const responsibility = RESPONSIBILITY_BY_KEY.get(key);
@@ -131,7 +67,7 @@ function requireResponsibility(key) {
 }
 
 function normalizeProfile(value, key) {
-  const fallback = BALANCED_DEFAULTS[key];
+  const fallback = { model: null, effort: null };
   if (!value || typeof value !== "object" || Array.isArray(value)) return { ...fallback };
 
   const model = typeof value.model === "string" && value.model.trim()
@@ -140,7 +76,7 @@ function normalizeProfile(value, key) {
   const effort = REASONING_EFFORTS.includes(value.effort)
     ? value.effort
     : fallback.effort;
-  if (model.length > 120) throw new Error(`${key}.model is too long`);
+  if (model && model.length > 120) throw new Error(`${key}.model is too long`);
   return { model, effort };
 }
 
@@ -172,15 +108,15 @@ function validateStoredSettings(value) {
   const expected = new Set(RESPONSIBILITIES.map(({ key }) => key));
   for (const key of Object.keys(value.profiles)) requireResponsibility(key);
   for (const key of expected) {
-    if (!Object.hasOwn(value.profiles, key)) throw new Error(`settings profile is missing: ${key}`);
+    if (!Object.hasOwn(value.profiles, key)) continue;
     const profile = value.profiles[key];
     if (!profile || typeof profile !== "object" || Array.isArray(profile)) {
       throw new Error(`settings profile must be an object: ${key}`);
     }
-    if (typeof profile.model !== "string" || !profile.model.trim() || profile.model.length > 120) {
+    if (profile.model != null && (typeof profile.model !== "string" || !profile.model.trim() || profile.model.length > 120)) {
       throw new Error(`settings model is invalid: ${key}`);
     }
-    if (!REASONING_EFFORTS.includes(profile.effort)) {
+    if (profile.effort != null && !REASONING_EFFORTS.includes(profile.effort)) {
       throw new Error(`settings reasoning depth is invalid: ${key}`);
     }
   }
@@ -204,7 +140,7 @@ export function loadComputeSettings({ configPath = computeConfigPath() } = {}) {
     return {
       ...normalizeComputeSettings(),
       configPath,
-      source: "balanced-defaults",
+      source: "host-default",
       revision: "missing",
     };
   }
@@ -244,15 +180,6 @@ export function saveComputeSettings(
   if (expectedRevision !== undefined && expectedRevision !== existing.revision) {
     throw new Error("MAGA settings changed in another panel; refresh before saving.");
   }
-  if (existing.source !== "saved") {
-    const supplied = new Set(Object.keys(profiles));
-    const missing = RESPONSIBILITIES
-      .map(({ key }) => key)
-      .filter((key) => !supplied.has(key));
-    if (missing.length > 0) {
-      throw new Error(`first save must confirm all MAGA responsibilities; missing: ${missing.join(", ")}`);
-    }
-  }
   const merged = Object.fromEntries(RESPONSIBILITIES.map(({ key }) => [
     key,
     Object.hasOwn(profiles, key)
@@ -262,9 +189,6 @@ export function saveComputeSettings(
   const normalized = normalizeComputeSettings({ profiles: merged });
   const document = {
     schemaVersion: COMPUTE_SCHEMA_VERSION,
-    // Saving is an explicit user confirmation. Persist the complete selection so
-    // a later MAGA release cannot silently reinterpret an old empty override set
-    // against a changed preset.
     profiles: normalized.profiles,
   };
   const content = `${JSON.stringify(document, null, 2)}\n`;
@@ -365,13 +289,13 @@ export function resolveComputeProfile(
     configWarning: settings.warning || null,
   };
   const savedProfile = settings.source === "saved" || (!settings.source && source === "saved");
-  const applyModel = savedProfile || Boolean(hasModelOverride);
-  const applyEffort = savedProfile || Boolean(hasEffortOverride);
+  const applyModel = (savedProfile && Boolean(configured.model)) || Boolean(hasModelOverride);
+  const applyEffort = (savedProfile && Boolean(configured.effort)) || Boolean(hasEffortOverride);
   if (!applyModel && !applyEffort) {
     return {
       ...resultBase,
       actual: { model: null, effort: null },
-      fallback: ["The MAGA recommendation is not active until it is saved; using the host default."],
+      fallback: [],
     };
   }
   const catalog = normalizeModelCatalog(models);
@@ -437,8 +361,6 @@ export function computeSettingsSnapshot({ settings = loadComputeSettings(), mode
     source: settings.source || "saved",
     revision: settings.revision || null,
     configWarning: settings.warning || null,
-    defaults: BALANCED_DEFAULTS,
-    presets: COMPUTE_PRESETS,
     models: catalog,
     responsibilities: RESPONSIBILITIES.map((responsibility) => ({
       key: responsibility.key,

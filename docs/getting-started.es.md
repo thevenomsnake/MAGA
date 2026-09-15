@@ -58,23 +58,11 @@ Cuando termine la configuración, Codex debe indicarte el nombre exacto de la ta
 
 ### Opcional: elegir modelos por responsabilidad
 
-Abre la página de detalles del plugin MAGA, selecciona su starter prompt **Configure** y elige la configuración inicial que encaje con tu uso disponible. Codex iniciará una tarea de MAGA y abrirá el panel dentro de esa tarea.
+Las responsabilidades sin configurar heredan los valores predeterminados de Codex. MAGA no recomienda modelos, niveles de razonamiento ni perfiles por plan.
 
-| Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
-| --- | --- | --- | --- |
-| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| Investigación | Sol · max | Sol · max | Terra · max |
-| Prototipo | Sol · xhigh | Terra · high | Terra · high |
-| Entrega | Terra · xhigh | Luna · max | Luna · max |
-| Diagnóstico | Sol · max | Terra · xhigh | Terra · high |
-| Revisión | Sol · xhigh | Sol · high | Terra · high |
-| Lanzamiento | Sol · xhigh | Sol · high | Sol · high |
+Si deseas configurar una responsabilidad, abre **Configure** en el plugin MAGA y guarda tus opciones. El panel muestra los modelos y parámetros informados por el host. Cada campo puede heredar el valor del host; guardar una responsabilidad no configura las demás. Se conservan las elecciones explícitas anteriores. La configuración se guarda en el Codex Home actual, fuera del Git del proyecto.
 
-Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. Sol cubre ambigüedad y control de calidad, Terra es el modelo habitual y Luna solo se recomienda en **max** para entregas con criterios claros.
-
-La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, no en esta carpeta de producto ni en su historial de Git. Solo se aplica a tareas nuevas cubiertas por una aprobación explícita o por la Autonomy Policy confirmada del proyecto; las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que el Project Lead actual use la configuración nueva, pide «retoma el trabajo con la configuración nueva» y aprueba la creación de una tarea de sustitución.
-
-MAGA decide automáticamente qué responsabilidad y configuración corresponden. Si una Autonomy Policy confirmada cubre el Ticket aprobado, puede crear tareas con nombre dentro del worker limit del proyecto. En los demás casos solicita tu consentimiento para el nombre concreto. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` guardados al host de destino de la tarea nueva para su validación final. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco eleva la configuración porque una petición parezca difícil.
+Las opciones guardadas se aplican solo a tareas nuevas autorizadas. Las tareas existentes no cambian. Si el host de destino rechaza una opción explícita, MAGA reintenta una vez sin overrides e informa que usó los valores del host.
 
 ## 5. Describir el primer producto
 

@@ -4,8 +4,8 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
-  BALANCED_DEFAULTS,
-  COMPUTE_PRESETS,
+  normalizeComputeSettings,
+  computeSettingsSnapshot,
   RESPONSIBILITIES,
   computeConfigPath,
   loadComputeSettings,
@@ -45,39 +45,19 @@ const MODELS = [
   },
 ];
 
-test("ships seven MAGA responsibility recommendations", () => {
-  assert.deepEqual(
-    RESPONSIBILITIES.map(({ key }) => key),
-    ["project-lead", "research", "prototype", "delivery", "diagnosis", "review", "release"],
-  );
-  assert.deepEqual(BALANCED_DEFAULTS, {
-    "project-lead": { model: "gpt-5.6-sol", effort: "xhigh" },
-    research: { model: "gpt-5.6-sol", effort: "max" },
-    prototype: { model: "gpt-5.6-terra", effort: "high" },
-    delivery: { model: "gpt-5.6-luna", effort: "max" },
-    diagnosis: { model: "gpt-5.6-terra", effort: "xhigh" },
-    review: { model: "gpt-5.6-sol", effort: "high" },
-    release: { model: "gpt-5.6-sol", effort: "high" },
-  });
-});
+const EXPLICIT_PROFILES = Object.fromEntries(RESPONSIBILITIES.map(({ key }) => [key,
+  { model: "gpt-5.6-sol", effort: key === "project-lead" ? "xhigh" : "high" },
+]));
 
-test("ships plan-aware starting profiles and recommends Luna only at Max", () => {
-  assert.deepEqual(COMPUTE_PRESETS.map(({ key }) => key), [
-    "pro-quality",
-    "plus-standard",
-    "quota-saver",
-  ]);
-  const pro = COMPUTE_PRESETS.find(({ key }) => key === "pro-quality");
-  const standard = COMPUTE_PRESETS.find(({ key }) => key === "plus-standard");
-  const saver = COMPUTE_PRESETS.find(({ key }) => key === "quota-saver");
-  assert.equal(Object.values(pro.profiles).some(({ model }) => model === "gpt-5.6-luna"), false);
-  assert.deepEqual(pro.profiles.delivery, { model: "gpt-5.6-terra", effort: "xhigh" });
-  assert.deepEqual(standard.profiles.delivery, { model: "gpt-5.6-luna", effort: "max" });
-  assert.deepEqual(saver.profiles.delivery, { model: "gpt-5.6-luna", effort: "max" });
-  for (const preset of COMPUTE_PRESETS) {
-    for (const profile of Object.values(preset.profiles)) {
-      if (profile.model === "gpt-5.6-luna") assert.equal(profile.effort, "max");
-    }
+test("ships responsibilities with host inheritance and no recommendations", () => {
+  const settings = normalizeComputeSettings();
+  const snapshot = computeSettingsSnapshot({ settings, models: MODELS });
+  assert.equal(snapshot.responsibilities.length, 7);
+  assert.equal(Object.hasOwn(snapshot, "defaults"), false);
+  assert.equal(Object.hasOwn(snapshot, "presets"), false);
+  for (const role of snapshot.responsibilities) {
+    assert.deepEqual(role.preferred, { model: null, effort: null });
+    assert.deepEqual(role.actual, { model: null, effort: null });
   }
 });
 
@@ -85,7 +65,7 @@ test("stores a complete explicit selection inside the selected Codex Home", (t) 
   const codexHome = workspace(t);
   const configPath = computeConfigPath({ env: { CODEX_HOME: codexHome } });
   const profiles = {
-    ...BALANCED_DEFAULTS,
+    ...EXPLICIT_PROFILES,
     research: { model: "gpt-5.6-luna", effort: "low" },
   };
 
@@ -111,28 +91,34 @@ test("stores a complete explicit selection inside the selected Codex Home", (t) 
   });
 });
 
-test("requires all seven recommendations to be confirmed on first save", (t) => {
-  const configPath = path.join(workspace(t), "maga", "compute-profiles.json");
-
-  assert.throws(
-    () => saveComputeSettings({
-      research: { model: "gpt-5.6-luna", effort: "low" },
-    }, { configPath }),
-    /first save must confirm all MAGA responsibilities/,
-  );
-  assert.equal(fs.existsSync(configPath), false);
+test("partial saved configurations preserve choices and inherit missing responsibilities", (t) => {
+  const configPath = path.join(workspace(t), "compute-profiles.json");
+  fs.writeFileSync(configPath, JSON.stringify({ schemaVersion: 1, profiles: {
+    research: { model: "gpt-5.6-luna", effort: "low" },
+    delivery: { model: "gpt-5.6-terra" },
+    review: { effort: "high" },
+  } }));
+  const settings = loadComputeSettings({ configPath });
+  assert.equal(settings.source, "saved");
+  assert.deepEqual(resolveComputeProfile("project-lead", { settings }).actual, { model: null, effort: null });
+  assert.deepEqual(resolveComputeProfile("delivery", { settings }).actual, { model: "gpt-5.6-terra", effort: null });
+  assert.deepEqual(resolveComputeProfile("review", { settings }).actual, { model: null, effort: "high" });
+  const saved = saveComputeSettings({ research: { model: null, effort: null } }, { configPath });
+  assert.deepEqual(saved.profiles.research, { model: null, effort: null });
+  assert.deepEqual(saved.profiles["project-lead"], { model: null, effort: null });
+  assert.deepEqual(saved.profiles.delivery, { model: "gpt-5.6-terra", effort: null });
 });
 
 test("rejects a stale panel revision instead of overwriting newer choices", (t) => {
   const configPath = path.join(workspace(t), "maga", "compute-profiles.json");
   const initial = loadComputeSettings({ configPath });
-  const first = saveComputeSettings(BALANCED_DEFAULTS, {
+  const first = saveComputeSettings(EXPLICIT_PROFILES, {
     configPath,
     expectedRevision: initial.revision,
   });
 
   assert.throws(
-    () => saveComputeSettings(BALANCED_DEFAULTS, {
+    () => saveComputeSettings(EXPLICIT_PROFILES, {
       configPath,
       expectedRevision: initial.revision,
     }),
@@ -145,7 +131,7 @@ test("rejects structurally invalid saved settings instead of activating recommen
   const root = workspace(t);
   const configPath = path.join(root, "maga", "compute-profiles.json");
   fs.mkdirSync(path.dirname(configPath), { recursive: true });
-  fs.writeFileSync(configPath, JSON.stringify({ schemaVersion: 1, profiles: {} }));
+  fs.writeFileSync(configPath, JSON.stringify({ schemaVersion: 1, profiles: { research: { model: 12 } } }));
 
   const settings = loadComputeSettings({ configPath });
   assert.equal(settings.source, "invalid-fallback");
@@ -156,7 +142,7 @@ test("rejects structurally invalid saved settings instead of activating recommen
 
 test("falls back visibly when a configured model or depth is unavailable", () => {
   const missingModel = resolveComputeProfile("project-lead", {
-    settings: { source: "saved", profiles: BALANCED_DEFAULTS },
+    settings: { source: "saved", profiles: EXPLICIT_PROFILES },
     models: MODELS.filter(({ id }) => id !== "gpt-5.6-sol"),
   });
   assert.deepEqual(missingModel.actual, { model: "gpt-5.6-sol", effort: "xhigh" });
@@ -166,7 +152,7 @@ test("falls back visibly when a configured model or depth is unavailable", () =>
     settings: {
       source: "saved",
       profiles: {
-        ...BALANCED_DEFAULTS,
+        ...EXPLICIT_PROFILES,
         delivery: { model: "gpt-5.6-luna", effort: "ultra" },
       },
     },
@@ -176,20 +162,17 @@ test("falls back visibly when a configured model or depth is unavailable", () =>
   assert.match(unsupportedDepth.fallback.join(" "), /destination host will validate/);
 });
 
-test("keeps MAGA values as recommendations until the user saves them", () => {
-  const resolved = resolveComputeProfile("project-lead", {
-    settings: { source: "balanced-defaults", profiles: BALANCED_DEFAULTS },
-    models: MODELS,
-  });
-
-  assert.deepEqual(resolved.preferred, BALANCED_DEFAULTS["project-lead"]);
+test("missing settings inherit the host without prefilled choices", (t) => {
+  const settings = loadComputeSettings({ configPath: path.join(workspace(t), "absent.json") });
+  assert.equal(settings.source, "host-default");
+  const resolved = resolveComputeProfile("project-lead", { settings, models: MODELS });
+  assert.deepEqual(resolved.preferred, { model: null, effort: null });
   assert.deepEqual(resolved.actual, { model: null, effort: null });
-  assert.match(resolved.fallback[0], /not active until it is saved/);
 });
 
 test("keeps explicit choices for destination validation when the reference catalog is unavailable", () => {
   const resolved = resolveComputeProfile("release", {
-    settings: { source: "saved", profiles: BALANCED_DEFAULTS },
+    settings: { source: "saved", profiles: EXPLICIT_PROFILES },
     models: [],
   });
   assert.deepEqual(resolved.actual, { model: "gpt-5.6-sol", effort: "high" });
@@ -198,7 +181,7 @@ test("keeps explicit choices for destination validation when the reference catal
 
 test("uses host defaults when the destination's authoritative catalog rejects a choice", () => {
   const resolved = resolveComputeProfile("project-lead", {
-    settings: { source: "saved", profiles: BALANCED_DEFAULTS },
+    settings: { source: "saved", profiles: EXPLICIT_PROFILES },
     models: MODELS.filter(({ id }) => id !== "gpt-5.6-sol"),
     catalogMode: "authoritative",
   });
@@ -208,7 +191,7 @@ test("uses host defaults when the destination's authoritative catalog rejects a 
 });
 
 test("an explicit one-task choice wins without changing saved defaults", () => {
-  const settings = { profiles: BALANCED_DEFAULTS };
+  const settings = { profiles: EXPLICIT_PROFILES };
   const resolved = resolveComputeProfile("research", {
     settings,
     models: MODELS,
@@ -217,11 +200,11 @@ test("an explicit one-task choice wins without changing saved defaults", () => {
 
   assert.deepEqual(resolved.actual, { model: "gpt-5.6-luna", effort: "low" });
   assert.equal(resolved.source, "task-override");
-  assert.deepEqual(settings.profiles.research, BALANCED_DEFAULTS.research);
+  assert.deepEqual(settings.profiles.research, EXPLICIT_PROFILES.research);
 });
 
 test("an unsaved one-task override applies only fields the user chose", () => {
-  const settings = { source: "balanced-defaults", profiles: BALANCED_DEFAULTS };
+  const settings = { source: "host-default", ...normalizeComputeSettings() };
   const modelOnly = resolveComputeProfile("research", {
     settings,
     models: MODELS,

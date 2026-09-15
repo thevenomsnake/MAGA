@@ -158,7 +158,7 @@ async function handleToolCall(id, params) {
   if (params?.name === "show_maga_compute_settings") {
     sendResult(id, toolResult(
       await snapshot(),
-      "MAGA responsibility recommendations are ready. Save the panel once before MAGA applies them to explicitly approved new tasks.",
+      "MAGA responsibility settings are ready. Unconfigured fields inherit the Codex host default.",
     ));
     return;
   }
@@ -227,7 +227,7 @@ function tools() {
     {
       name: "save_maga_compute_profiles",
       title: "Save MAGA Responsibility Settings",
-      description: "Persist explicit per-responsibility model and reasoning-depth choices for this Codex Home. Call only after the user uses the MAGA panel or explicitly asks to save. The first save must include all seven profiles; later saves may include only changed rows. Always pass the revision returned by show_maga_compute_settings.",
+      description: "Persist explicit per-responsibility model and reasoning-depth choices for this Codex Home. Call only after the user uses the MAGA panel or explicitly asks to save. Save only changed rows; null fields inherit the host default. Always pass the revision returned by show_maga_compute_settings.",
       inputSchema: {
         type: "object",
         properties: {
@@ -246,13 +246,13 @@ function tools() {
             additionalProperties: {
               type: "object",
               properties: {
-                model: { type: "string", minLength: 1, maxLength: 120 },
+                model: { type: ["string", "null"], minLength: 1, maxLength: 120 },
                 effort: {
-                  type: "string",
-                  enum: ["none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra"],
+                  type: ["string", "null"],
+                  enum: ["none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra", null],
                 },
               },
-              required: ["model", "effort"],
+              
               additionalProperties: false,
             },
           },

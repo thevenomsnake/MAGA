@@ -58,23 +58,11 @@ GitHub 로그인, 계정이나 저장소 설정, push, Issue 또는 Pull Request
 
 ### 선택 사항: 책임별 모델 고르기
 
-MAGA 플러그인 상세 페이지에서 **Configure** starter prompt를 선택하고 현재 사용량에 맞는 시작 구성을 고르세요. MAGA 작업이 시작되고 작업 안에서 설정 패널이 열립니다.
+설정하지 않은 책임은 Codex 호스트 기본값을 상속합니다. MAGA는 모델, 추론 깊이 또는 요금제별 조합을 추천하지 않습니다.
 
-| 책임 | Pro · 품질 우선 | Plus · 일반 사용 | Free / Go · 사용량 절약 |
-| --- | --- | --- | --- |
-| Project Lead | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| 조사 | Sol · max | Sol · max | Terra · max |
-| 프로토타입 | Sol · xhigh | Terra · high | Terra · high |
-| 전달 | Terra · xhigh | Luna · max | Luna · max |
-| 진단 | Sol · max | Terra · xhigh | Terra · high |
-| 리뷰 | Sol · xhigh | Sol · high | Terra · high |
-| 릴리스 | Sol · xhigh | Sol · high | Sol · high |
+직접 설정하려면 MAGA 플러그인의 **Configure**에서 설정 패널을 열고 선택을 저장하세요. 패널에는 호스트가 반환한 모델과 지원 매개변수가 표시됩니다. 각 필드는 호스트 기본값을 상속할 수 있습니다. 한 책임을 저장해도 다른 책임은 설정하지 않으며, 기존의 명시적 선택은 유지됩니다. 설정은 현재 Codex Home에 저장되며 프로젝트 Git에 포함되지 않습니다.
 
-Business, Enterprise, Edu는 Plus로 시작한 뒤 사용량과 정책이 허용하면 Pro를 고를 수 있습니다. API key 사용자는 token 예산에 맞춰 선택하세요. Sol은 모호함과 품질 판단, Terra는 일상 작업, Luna는 완료 기준이 명확한 전달에만 **max**로 추천합니다.
-
-처음 **Save**를 누르면 설정이 활성화되고 일곱 책임 전체가 하나의 완전한 설정으로 고정됩니다. 설정은 현재 Codex Home에 저장되며 이 제품 폴더나 Git 기록에는 들어가지 않습니다. 명시적 승인이나 프로젝트 Autonomy Policy가 적용되는 새 작업에만 사용되며 기존 작업은 바뀌지 않습니다. Project Lead도 새로 만들 때만 적용됩니다. 기존 Project Lead가 새 설정으로 이어받게 하려면 “새 설정으로 이어받아 줘”라고 명시하고 대체 작업 생성을 승인해야 합니다.
-
-MAGA는 필요한 책임과 설정을 자동으로 판단합니다. 확인된 Autonomy Policy가 승인된 Ticket을 포함하면 해당 worker limit 안에서 이름 있는 작업을 만들 수 있습니다. 그렇지 않으면 새 Codex 작업 이름에 대한 동의를 요청합니다. 설정 패널의 독립적인 `model/list`는 참고용 목록일 뿐 작업을 실행할 대상 호스트의 최종 기준이 아닙니다. MAGA는 저장된 `model`과 `thinking`을 새 작업의 대상 호스트에 전달해 최종 검증합니다. 대상 호스트가 거부할 때만 overrides를 빼고 한 번 다시 시도하며, 호스트 기본값을 사용했다는 사실을 명확히 알립니다. 요청이 단지 “어려워 보인다”는 이유로 설정을 높이지도 않습니다.
+저장된 선택은 승인된 새 작업에만 적용됩니다. 기존 작업은 바뀌지 않습니다. 대상 호스트가 명시적 선택을 거부하면 MAGA는 재정의 없이 한 번 재시도하고 호스트 기본값을 사용했음을 알립니다.
 
 ## 5. 첫 제품 설명하기
 

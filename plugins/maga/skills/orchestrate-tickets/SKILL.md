@@ -190,8 +190,8 @@ that as the resolver's one-task override; otherwise omit it.
   `actual.effort` to `codex_app__create_thread.thinking`. Omit a null value so
   the host applies its default.
 - Use this precedence: explicit Product Owner choice for this task, then the
-  saved responsibility setting, then the host default. The MAGA recommendation is the panel's
-  recommendation until explicitly saved. Never upgrade or downgrade because the Ticket appears easy, hard,
+  saved responsibility setting, then the host default. Unconfigured fields inherit the host default.
+  Do not recommend a model, reasoning depth, or plan. Never upgrade or downgrade because the Ticket appears easy, hard,
   urgent, or important.
 - Resolution compares the choice with a reference catalog only; task creation
   performs authoritative destination-host validation. A reference-catalog notice
