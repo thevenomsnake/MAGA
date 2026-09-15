@@ -56,7 +56,7 @@ None.
 
 ## Ready Specifications
 
-- [Codex capability compatibility](specs/codex-capability-compatibility.md): ready-for-agent; four bounded compatibility changes, implementation not started.
+- [Codex capability compatibility and removal of model recommendations](specs/codex-capability-compatibility.md): ready-for-agent; bounded compatibility changes and complete removal of model-selection recommendations, implementation not started.
 
 ## Decisions
 
