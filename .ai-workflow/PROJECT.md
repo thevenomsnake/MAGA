@@ -54,6 +54,10 @@ MAGA 0.16.0 combines bounded proactive task coordination, native read-only subag
 
 None.
 
+## Ready Specifications
+
+- [Codex capability compatibility](specs/codex-capability-compatibility.md): ready-for-agent; four bounded compatibility changes, implementation not started.
+
 ## Decisions
 
 - [D002 Native subagent delegation topology](design/records/D002-native-subagent-delegation.md): accepted.
