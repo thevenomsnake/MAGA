@@ -52,7 +52,13 @@ MAGA 0.16.0 combines bounded proactive task coordination, native read-only subag
 
 ## Active Tickets
 
-None.
+- [T010: 删除全部模型选择建议并默认继承宿主](tickets/T010-remove-model-recommendations.md) — approved; ready.
+- [T011: 使用当前宿主能力置顶任务](tickets/T011-native-task-pinning.md) — approved; ready.
+- [T012: 让普通澄清与独立工作并行推进](tickets/T012-native-async-questions.md) — approved; ready.
+- [T013: 提供实际桥接版本与能力诊断](tickets/T013-runtime-capability-diagnostics.md) — approved; ready.
+- [T014: 精简核心 Skill 并保留已更新的行为](tickets/T014-simplify-core-skill-routing.md) — approved; blocked by T010, T011, T012.
+
+Shared-file writers run serially. Each Ticket carries its own focused verification and Git delivery boundary; implementation has not started.
 
 ## Ready Specifications
 
