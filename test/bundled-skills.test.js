@@ -11,6 +11,20 @@ const METHODS_ROOT = path.join(PLUGIN_ROOT, "methods");
 
 const MAGA_SKILLS = ["bar-tester", "orchestrate-tickets", "project-lead"];
 const HUMANIZATION_SKILLS = ["humanization"];
+
+test("routes native pinning and asynchronous clarification without inventing success", () => {
+  const orchestration = fs.readFileSync(path.join(SKILLS_ROOT, "orchestrate-tickets", "SKILL.md"), "utf8");
+  assert.match(orchestration, /move_thread_to_sidebar_section/);
+  assert.doesNotMatch(orchestration, /set_thread_pinned/);
+  assert.match(orchestration, /keep the existing task/);
+  const lead = fs.readFileSync(path.join(SKILLS_ROOT, "project-lead", "SKILL.md"), "utf8");
+  assert.match(lead, /references\/async-clarification\.md/);
+  const clarification = fs.readFileSync(path.join(SKILLS_ROOT, "project-lead", "references", "async-clarification.md"), "utf8");
+  assert.match(clarification, /Continue only independent work/);
+  assert.match(clarification, /silence, or preselected option is not an answer/);
+  assert.match(clarification, /reconcile it with the current Ticket/);
+  assert.match(clarification, /not through those tools/);
+});
 const MATT_INTERNAL_METHODS = [
   "ask-matt",
   "grill-me",

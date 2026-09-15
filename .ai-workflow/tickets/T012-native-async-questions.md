@@ -1,6 +1,6 @@
 ---
 key: T012
-status: ready
+status: completed
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -18,11 +18,11 @@ None（可立即开始）
 
 ## Acceptance criteria
 
-- [ ] 检查异步提问工具是否可用，普通问题优先只问一个；不可用时使用简短普通对话。
-- [ ] 非阻塞问题待答时可继续独立工作；影响正确性、行为或授权的依赖步骤保持待决。
-- [ ] 新答案先对照当前 Ticket、已完成事实和未完成工作，再继续；范围变化显式记录，不丢弃答案或擅自扩张。
-- [ ] 未回复、超时与预选项不构成同意；权限问题继续走宿主审批。
-- [ ] 文本工具不用于索要文件或截图；桥接未支持的宿主请求保持明确限制，不自动答复。
+- [x] 检查异步提问工具是否可用，普通问题优先只问一个；不可用时使用简短普通对话。
+- [x] 非阻塞问题待答时可继续独立工作；影响正确性、行为或授权的依赖步骤保持待决。
+- [x] 新答案先对照当前 Ticket、已完成事实和未完成工作，再继续；范围变化显式记录，不丢弃答案或擅自扩张。
+- [x] 未回复、超时与预选项不构成同意；权限问题继续走宿主审批。
+- [x] 文本工具不用于索要文件或截图；桥接未支持的宿主请求保持明确限制，不自动答复。
 
 ## Verification
 
@@ -46,6 +46,6 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 
 ## Execution
 
-- Task opening: pending
-- Implementation: not started
-- Completion evidence: none
+- Task opening: not-needed
+- Implementation: completed on the integration branch
+- Completion evidence: Skill routing implemented; focused bundled-skills check passed 14/14. Native host interaction was not exercised.

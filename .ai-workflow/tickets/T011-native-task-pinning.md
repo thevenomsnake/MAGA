@@ -1,6 +1,6 @@
 ---
 key: T011
-status: ready
+status: completed
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -18,10 +18,10 @@ None（可立即开始）
 
 ## Acceptance criteria
 
-- [ ] 编排指导使用当前 move_thread_to_sidebar_section 的 pinned 分区映射，执行前核对真实工具定义。
-- [ ] 只有宿主操作成功后才报告已置顶；不可用或失败时保留现有任务并报告准确标题与未完成状态。
-- [ ] 移除运行时指导中的 set_thread_pinned 旧引用；不机械改名独立的桥接元数据协议。
-- [ ] 保留任务创建授权、已有任务复用和仓库目录边界。
+- [x] 编排指导使用当前 move_thread_to_sidebar_section 的 pinned 分区映射，执行前核对真实工具定义。
+- [x] 只有宿主操作成功后才报告已置顶；不可用或失败时保留现有任务并报告准确标题与未完成状态。
+- [x] 移除运行时指导中的 set_thread_pinned 旧引用；不机械改名独立的桥接元数据协议。
+- [x] 保留任务创建授权、已有任务复用和仓库目录边界。
 
 ## Verification
 
@@ -45,6 +45,6 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 
 ## Execution
 
-- Task opening: pending
-- Implementation: not started
-- Completion evidence: none
+- Task opening: not-needed
+- Implementation: completed on the integration branch
+- Completion evidence: Skill routing implemented; focused bundled-skills check passed 14/14. Native host interaction was not exercised.

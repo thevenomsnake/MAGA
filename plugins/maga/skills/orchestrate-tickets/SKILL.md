@@ -64,11 +64,20 @@ For a role whose contract says `Session shape: managed queue`:
 1. Reuse an active same-project task with the deterministic manager title.
 2. If none exists, propose its deterministic manager title and create it only when
    the project's Autonomy Policy covers that role queue or the Product Owner has
-   approved the exact title; then pin it with `codex_app__set_thread_pinned` and
+   approved the exact title; then pin it using the current host's sidebar tool and
    give it the role contract plus current project index as its only durable entrypoints.
 3. Send newly approved Ticket pointers to that manager instead of creating another manager.
 4. Let the manager apply this worker lifecycle within its role boundary; it must return product decisions and cross-role conflicts to the Project Lead.
 5. Keep the role in repository state. Archive its manager task only when the role is retired or replaced, and record that durable fact first.
+
+### Pin Through The Available Host Tool
+
+Inspect the tools available in this session before pinning. The current desktop
+mapping is `codex_app__move_thread_to_sidebar_section` with the existing task's
+ID and `sectionId: "pinned"`. Report success only after the host confirms it.
+If the tool is unavailable or fails, keep the existing task and return its exact
+title with the uncompleted pin status; do not create a replacement. This desktop
+mapping does not rename the bridge's separate task-metadata protocol.
 
 Use this manager prompt:
 

@@ -20,6 +20,10 @@ Handle framework choice, file layout, test tooling, skill selection, Git mechani
 
 Ask one focused question at a time. When enough is known to produce something useful, build the smallest inspectable result instead of extending the interview.
 
+When a question can accompany independent work, follow
+[asynchronous clarification](references/async-clarification.md). Keep work that
+depends on a product decision or authorization pending until the answer arrives.
+
 When the user signals that the last explanation did not land, apply the
 registered `wait-what` Skill immediately. This communication recovery stays in
 the current conversation and creates no Ticket, file, task, or repeated work.
