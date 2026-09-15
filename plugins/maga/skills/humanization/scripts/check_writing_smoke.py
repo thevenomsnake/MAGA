@@ -2,6 +2,9 @@
 """One focused self-check for the three-module writing checker."""
 
 from check_writing import check_generic
+from pathlib import Path
+import subprocess
+import sys
 
 SLOP_SAMPLES = {
     "zh-CN": "这是一项革命性升级。",
@@ -85,6 +88,32 @@ def main() -> None:
     )
     assert any("protected token" in failure for failure in failures), failures
     assert any("resource key missing" in failure for failure in failures), failures
+
+    canonical_failures, _ = check_generic(
+        broken, "es", "ui-microcopy", [], source_text=source,
+        source_name="source.json", target_name="target.json",
+    )
+    assert canonical_failures == failures, (canonical_failures, failures)
+
+    checker = Path(__file__).with_name("check_writing.py")
+    for format_name, sample in (
+        ("ui-microcopy", '<button>Save</button>'),
+        ("web-microcopy", '<button>Save</button>'),
+        ("ui-description", 'The Save button closes the dialog after saving.'),
+    ):
+        result = subprocess.run(
+            [sys.executable, "-B", str(checker), "--locale", "en", "--format",
+             format_name, "--surface", "component-spec", "-"],
+            input=sample, text=True, capture_output=True,
+        )
+        assert result.returncode == 0, (format_name, result.stdout, result.stderr)
+        assert "surface=component-spec" in result.stdout, result.stdout
+
+    failures, _ = check_generic(
+        'The button opens ${other}.', "en", "ui-description", [],
+        source_text='The button opens ${target}.',
+    )
+    assert any("protected token" in failure for failure in failures), failures
 
     failures, _ = check_generic("中文 — 文案", "zh-TW", "copy", [])
     assert not failures, failures

@@ -13,7 +13,7 @@ from check_gui import check_gui, check_resource_integrity
 from check_locale import check_locale
 
 LOCALES = ("zh-CN", "zh-TW", "en", "ja", "ko", "es")
-FORMATS = ("prose", "copy", "web-microcopy")
+FORMATS = ("prose", "copy", "ui-microcopy", "ui-description", "web-microcopy")
 
 
 def read_input(path: str) -> str:
@@ -29,10 +29,11 @@ def check_generic(
     source_text: str | None = None,
     source_name: str = "",
     target_name: str = "",
+    surface: str = "",
 ) -> tuple[list[str], list[str]]:
     failures = check_common(text, brand_terms, source_text)
     review_text = text
-    if format_name == "web-microcopy":
+    if format_name in ("ui-microcopy", "web-microcopy"):
         gui_failures, review_text = check_gui(text, locale, target_name)
         failures.extend(gui_failures)
         if source_text is not None:
@@ -48,6 +49,11 @@ def main() -> int:
     )
     parser.add_argument("--locale", choices=LOCALES, required=True)
     parser.add_argument("--format", dest="format_name", choices=FORMATS, required=True)
+    parser.add_argument(
+        "--surface",
+        default="",
+        help="Optional route label such as article, error, or component-spec",
+    )
     parser.add_argument("--brand-term", action="append", default=[])
     parser.add_argument("--source", help="UTF-8 source resource for invariant comparison")
     parser.add_argument("path", help="UTF-8 target path or - for stdin")
@@ -68,6 +74,7 @@ def main() -> int:
         source_text=source_text,
         source_name=args.source or "",
         target_name=args.path,
+        surface=args.surface,
     )
 
     zh_result: subprocess.CompletedProcess[str] | None = None
@@ -96,7 +103,10 @@ def main() -> int:
         return 1
     if zh_result is not None and zh_result.returncode:
         return zh_result.returncode
-    print(f"OK locale={args.locale} format={args.format_name}")
+    route = f"locale={args.locale} format={args.format_name}"
+    if args.surface:
+        route += f" surface={args.surface}"
+    print(f"OK {route}")
     return 0
 
 

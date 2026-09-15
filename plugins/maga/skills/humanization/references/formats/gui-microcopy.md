@@ -1,6 +1,6 @@
 # GUI microcopy
 
-Use this module for text attached to an interface or product state. The public format name remains `web-microcopy` for compatibility, but the rules apply to HTML, JSON, YAML, ARB, PO, source code, design files, desktop apps, mobile apps, and web apps.
+Use this module for text attached to an interface or product state. The format is `ui-microcopy`. The rules apply to HTML, JSON, YAML, ARB, PO, source code, design files, desktop apps, mobile apps, and web apps.
 
 ## Content gate
 

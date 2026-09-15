@@ -100,11 +100,11 @@ SOFTWARE.
 
 Source: https://github.com/thevenomsnake/humanization
 
-Reference commit: `c38b5b6d0878ee06b899213d4003e694cece5e0c`
+Reference commit: `d2562d50bc61e4479aaacf4a8515b6cdc2ead536`
 
-Reference version: `3.0.0`
+Reference version: `4.0.0` (MAGA adaptation: `4.0.0-maga.1`)
 
-MAGA vendors the complete Humanization Skill, including its six locale
+MAGA vendors the Humanization Skill with the adaptations below, including its six locale
 profiles, prose and GUI-copy references, deterministic checkers, UI metadata,
 icons, version marker, and Skill-local license. MAGA changes the Codex card to
 the MAGA product namespace, limits implicit invocation to human-readable text
@@ -116,6 +116,17 @@ task-scoped author-sample calibration: it is opt-in, temporary, and subordinate
 to facts, locale, privacy, CTA, accessibility, and protected-structure
 boundaries. These adaptations preserve Humanization's facts, source, privacy,
 CTA, locale, and protected-structure boundaries.
+
+The 4.0.0 update adds separate UI microcopy and interface-description routes.
+MAGA retains `web-microcopy` as a CLI alias and the legacy `check_prose.py`
+entry point. Existing resource-invariant checks apply to both microcopy names.
+The optional `--surface` label records context; it does not validate interface
+behavior. Normal editing stays scoped to changed text with one relevant check.
+
+The optional full-audit reference adapts coverage guidance from Humanization
+4.1.0, commit `d10aafc8daee3e07e060cd3b1236af584c393dd7`. It is loaded only for
+an explicit complete audit, inventory, or coverage request. MAGA does not bundle
+that version's scanner, manifest checker, or mandatory sentence-level receipts.
 
 Humanization records that its initial `zh-CN` long-form foundation comes from
 KKKKhazix/human-writing v1.1.0 under MIT, and that its concrete, restrained

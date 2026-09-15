@@ -161,7 +161,7 @@ test("routes local-file text through Humanization without touching chat-only out
   const instructions = read(root, "SKILL.md");
   const metadata = read(root, "agents", "openai.yaml");
 
-  assert.equal(read(root, "VERSION").trim(), "3.0.0");
+  assert.equal(read(root, "VERSION").trim(), "4.0.0-maga.1");
   assert.match(instructions, /Use automatically only when a task will create or update a local file containing prose or audience-facing copy/);
   assert.match(instructions, /唯一的自动判据是：本次工作是否会产生本地文件变更/);
   assert.match(instructions, /仅在聊天中返回的普通问答、解释、文章、邮件\s*草稿/);
@@ -177,6 +177,8 @@ test("routes local-file text through Humanization without touching chat-only out
   assert.match(read(root, "LICENSE"), /Human Writing Skill contributors/);
   for (const relative of [
     "references/core.md",
+    "references/full-audit.md",
+    "references/formats/ui-description.md",
     "references/formats/gui-microcopy.md",
     "references/locales/zh-CN.md",
     "references/locales/en.md",
@@ -464,7 +466,7 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   );
   assert.match(notices, /5b15a47f2d7150f545fbcacbfe381787fc0230dc/);
   assert.match(notices, /2ed6c52c9d7e5e56942508591085fd45dea277d3/);
-  assert.match(notices, /c38b5b6d0878ee06b899213d4003e694cece5e0c/);
+  assert.match(notices, /d2562d50bc61e4479aaacf4a8515b6cdc2ead536/);
   assert.match(notices, /Eleven are registered with their technical identities/);
   assert.match(notices, /ten upstream\s+model-invoked Skills retain implicit invocation/);
   assert.match(notices, /wait-what[\s\S]+adapted from user-only invocation\s+to implicit Codex routing/);
@@ -472,7 +474,7 @@ test("publishes a complete upstream mapping and identical distributed notices", 
   assert.match(notices, /remaining upstream capability is absorbed into Project Lead/);
   assert.match(notices, /nineteen registered product Skills/);
   assert.match(notices, /four registered Skills, the help and benchmark material/);
-  assert.match(notices, /complete Humanization Skill/);
+  assert.match(notices, /Humanization Skill with the adaptations below/);
   assert.match(notices, /task-scoped author-sample calibration/);
   assert.match(notices, /Human Writing Skill contributors/);
   assert.equal(notices, read(REPOSITORY_ROOT, "THIRD_PARTY_NOTICES.md"));

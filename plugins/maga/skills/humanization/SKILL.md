@@ -3,7 +3,7 @@ name: humanization
 description: Humanize human-readable text written to or edited in local files in zh-CN, zh-TW, en, ja, ko, and es while preserving facts and technical structure, optionally calibrating expression to a user-designated writing sample for the current task. Use automatically only when a task will create or update a local file containing prose or audience-facing copy, including Markdown and document files, reports, articles, saved email or message drafts, release notes, and visible webpage or app text in source or resource files. Do not use automatically for text returned only in chat, regardless of its length, Markdown formatting, copy-readiness, or whether it might later be shared; users may still invoke the Skill explicitly. Select an explicit locale, format, and surface; preserve sources, capabilities, privacy, CTA, brand terms, citations, quotations, code, commands, placeholders, ICU messages, variables, markup, data, and runtime structure.
 ---
 
-# Humanization 3.0.0
+# Humanization 4.0.0 (MAGA adaptation)
 
 ## MAGA 默认出口
 
@@ -11,7 +11,7 @@ description: Humanize human-readable text written to or edited in local files in
 唯一的自动判据是：本次工作是否会产生本地文件变更？没有本地文件变更就不自动触发。
 文章、故事和报告使用 `prose`；Markdown 文档、保存为文件的邮件或消息、产品或营销
 内容使用 `copy`；网页或应用源码、资源文件中附着在控件、状态和用户流程上的文字
-使用 `web-microcopy`。
+使用 `ui-microcopy`；写给设计、开发或交接人员的界面行为说明使用 `ui-description`。
 
 用户明确指定语言时使用该 locale；否则在会话语言清楚时将它记录为显式 locale。
 静默推断 format 和 surface，不因 Humanization 的触发、locale、format 或 surface 向
@@ -31,7 +31,7 @@ placeholder、变量、ICU、markup、数据、机器协议和逐字引用不进
 不为本 Skill 单独追问：
 
 - `locale`: `zh-CN`、`zh-TW`、`en`、`ja`、`ko` 或 `es`；
-- `format`: `prose`、`copy` 或 `web-microcopy`；
+- `format`: `prose`、`copy`、`ui-microcopy` 或 `ui-description`；
 - `surface`: 文章、邮件、按钮、错误、空状态、确认、通知、页面或资源文件等真实表面；
 - 可选的 `author_sample`：用户明确指定用于当前任务表达校准的样本文字，并记录其 locale、format/surface 和正文边界；
 - 受众、目的、渠道、已有材料和交付限制；
@@ -40,7 +40,7 @@ placeholder、变量、ICU、markup、数据、机器协议和逐字引用不进
 - 品牌词、不可翻译词、CTA、隐私/能力承诺；
 - GUI 任务的源资源、key、placeholder、ICU、变量、markup 和运行时约束。
 
-`web-microcopy` 是兼容保留的公开 format 名，实际覆盖所有 GUI 文案，不限于 HTML 或网页。
+`web-microcopy` 是 `ui-microcopy` 的兼容别名，旧命令继续可用。
 
 ## 2. 按三层路由
 
@@ -65,9 +65,12 @@ placeholder、变量、ICU、markup、数据、机器协议和逐字引用不进
 
 - `prose`: 按材料和文体组织长文，不套用 GUI 组件规则。
 - `copy`: 读取 `references/formats/expressive-text.md`，先判断信息是否值得出现在当前表面，再处理非 GUI 的文档、产品、营销、邮件和社交文字。
-- `web-microcopy`: 读取 `references/formats/gui-microcopy.md`，按按钮、错误、空状态、确认、通知等组件处理文字并保护资源结构。
+- `ui-microcopy`: 读取 `references/formats/gui-microcopy.md`，按按钮、错误、空状态、确认、通知等组件处理文字并保护资源结构。
+- `ui-description`: 读取 `references/formats/ui-description.md`，处理界面规格、状态转换、交互流程和交接说明，区分已有、计划和未知行为。
 
-一段文字附着在控件或产品状态上时使用 `web-microcopy`，无论它存放在 HTML、JSON、YAML、ARB、PO、源码还是设计稿中。
+一段文字附着在控件或产品状态上时使用 `ui-microcopy`，无论它存放在 HTML、JSON、YAML、ARB、PO、源码还是设计稿中。混合文件按实际改动的段落或字段分别路由；文件扩展名不决定 format。
+
+默认只处理本次写入或修改的文本，保持内部记录简短。仅当用户明确要求完整文案审计、逐项盘点或覆盖回执时，读取 `references/full-audit.md`；常规写作和改稿不生成 manifest，也不附逐句回执。
 
 ## 3. 写作或改稿
 
@@ -79,18 +82,19 @@ placeholder、变量、ICU、markup、数据、机器协议和逐字引用不进
 
 ## 4. 做确定性校验
 
-显式传入 locale 和 format：
+按本次改动选择一次直接相关的校验；项目已有检查覆盖同一事实时复用其结果。CLI 显式传入 locale 和 format，surface 可作为结果标签（不替代语义审核）：
 
 ```bash
 python scripts/check_writing.py --locale zh-CN --format prose draft.md
 python scripts/check_writing.py --locale es --format copy campaign.txt
-python scripts/check_writing.py --locale en --format web-microcopy page.html
-python scripts/check_writing.py --locale ja --format web-microcopy --source source.json target.json
+python scripts/check_writing.py --locale en --format ui-microcopy --surface page page.html
+python scripts/check_writing.py --locale ja --format ui-microcopy --source source.json target.json
+python scripts/check_writing.py --locale en --format ui-description --surface component-spec handoff.md
 ```
 
 可重复使用 `--brand-term TERM` 声明必须保留的品牌词。`--source` 提供 GUI 源资源后，检查器会比较 JSON/ARB key 与结构、HTML markup，以及常见 placeholder、ICU 参数、变量、URL 和转义；其他资源格式仍应运行项目自己的 parser 或 linter。
 
-脚本只阻断可证明的空输入、品牌词丢失、资源结构损坏、可访问名称缺失和 locale 专属硬规则。脚本不能判断候选信息是否有用户职责，也不能凭关键词决定文案是否应该存在。词汇、语气、翻译腔、节奏和信息价值只给人工或模型结合上下文判断。旧入口 `scripts/check_prose.py` 继续兼容 `zh-CN prose`。
+脚本只阻断可证明的空输入、品牌词丢失、资源结构损坏、可访问名称缺失和 locale 专属硬规则。`ui-description` 运行通用 token 与语言检查，界面行为和状态转换由模型按来源核对；CLI 的 `OK` 不代表全文完整审计。脚本不能判断候选信息是否有用户职责，也不能凭关键词决定文案是否应该存在。词汇、语气、翻译腔、节奏和信息价值只给人工或模型结合上下文判断。旧入口 `scripts/check_prose.py` 继续兼容 `zh-CN prose`。
 
 ## 5. 交付
 

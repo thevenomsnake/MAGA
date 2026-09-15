@@ -1,6 +1,6 @@
 # Expressive text
 
-Use `format=copy` for bounded, non-GUI text such as product descriptions, documentation, help content, release notes, email, social posts, campaign copy, and captions. A string attached to a control or product state uses `format=web-microcopy` regardless of whether it lives in HTML, JSON, YAML, ARB, PO, source code, or a design file.
+Use `format=copy` for bounded, non-GUI text such as product descriptions, documentation, help content, release notes, email, social posts, campaign copy, and captions. A string attached to a control or product state uses `format=ui-microcopy` regardless of whether it lives in HTML, JSON, YAML, ARB, PO, source code, or a design file.
 
 ## Input
 
