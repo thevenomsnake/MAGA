@@ -235,7 +235,7 @@ test("ships localized product guides, beginner manuals, and one English comparis
   assert.match(readme, /confirmed project Autonomy Policy/);
   assert.match(publicSurfaceContract, /## Bounded continuity/);
   assert.match(publicSurfaceContract, /Design record/);
-  for (const localizedReadme of readmes) assert.match(localizedReadme, /v0\.16\.0/);
+  for (const localizedReadme of readmes) assert.match(localizedReadme, /v0\.16\.1/);
   assert.match(readme, /inherit the Codex host default/);
   assert.match(guide, /Saved settings apply only to authorized new tasks/);
   assert.doesNotMatch(readme, /Pro · quality first|Plus · regular use|Free \/ Go · quota saver|is only recommended at/);

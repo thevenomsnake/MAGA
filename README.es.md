@@ -176,7 +176,7 @@ Las opciones guardadas se aplican solo a tareas nuevas autorizadas. Las tareas e
 
 ## Qué incluye
 
-La versión actual es **v0.16.0**. Contiene 19 Skills registrados, coordinación proactiva acotada de tareas, subagentes nativos de solo lectura con recuperación de sus tareas hijas, design records del proyecto, continuación opcional mediante thread Goal, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
+La versión actual es **v0.16.1**. Contiene 19 Skills registrados, coordinación proactiva acotada de tareas, subagentes nativos de solo lectura con recuperación de sus tareas hijas, design records del proyecto, continuación opcional mediante thread Goal, una biblioteca de métodos internos que se carga solo cuando hace falta, un perfil de Bar Tester confirmado por la persona responsable del producto, enrutamiento automático a Humanization para texto legible guardado en archivos locales y protecciones de entrega Git basadas en commits explícitos.
 
 Antes del primer Ticket de software, Bar Tester propone un perfil según el uso actual, la exposición, la forma de entrega y el tamaño del sistema, y la persona responsable del producto lo confirma de una sola vez. Para un prototipo personal, parte de una sola comprobación en la entrada real; solo añade pruebas cuando crecen el público, la exposición, el límite de entrega o un riesgo concreto.
 

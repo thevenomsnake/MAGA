@@ -190,7 +190,7 @@ Saved settings apply only to authorized new tasks. Existing tasks keep their set
 
 ## What is inside
 
-The current release is **v0.16.0**. It contains 19 registered Skills, bounded proactive task coordination, native read-only subagents with child-task recovery, repository-local design records, optional thread Goal continuation, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
+The current release is **v0.16.1**. It contains 19 registered Skills, bounded proactive task coordination, native read-only subagents with child-task recovery, repository-local design records, optional thread Goal continuation, an internal method library loaded only when needed, responsibility-level compute settings, a Product Owner-confirmed Bar Tester profile, automatic Humanization routing for human-readable local-file content, and commit-safe Git delivery guardrails.
 
 Before the first software Ticket, Bar Tester recommends a profile for how the product is used today—who it is for, where it is exposed, how it ships, and how large it is—and asks the Product Owner to confirm it in one reply. A personal prototype may need only one direct check at its real entry point; verification grows only when its audience, exposure, delivery boundary, or a concrete risk grows.
 

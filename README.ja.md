@@ -176,7 +176,7 @@ MAGA が扱うのは一つの機能ではなく、アプリケーション全体
 
 ## 構成
 
-現在のリリースは **v0.16.0** です。19 個の登録済み Skills、境界付きの proactive task coordination、ネイティブ read-only subagent と子タスクの復旧、プロジェクト内 design records、任意の thread Goal continuation、必要なときだけ読み込む内部手法ライブラリ、プロダクト責任者が確認する Bar Tester プロファイル、ローカルファイル内の人向けテキストへの Humanization 自動ルーティング、明示的なコミットに基づく Git 配信保護を含みます。
+現在のリリースは **v0.16.1** です。19 個の登録済み Skills、境界付きの proactive task coordination、ネイティブ read-only subagent と子タスクの復旧、プロジェクト内 design records、任意の thread Goal continuation、必要なときだけ読み込む内部手法ライブラリ、プロダクト責任者が確認する Bar Tester プロファイル、ローカルファイル内の人向けテキストへの Humanization 自動ルーティング、明示的なコミットに基づく Git 配信保護を含みます。
 
 最初のソフトウェア Ticket を作る前に、Bar Tester は現在の利用者、公開範囲、提供形態、システム規模からプロファイルを提案し、プロダクト責任者に一度だけ確認を求めます。個人用プロトタイプなら実際の入口で一度確認するところから始め、利用者、公開範囲、提供上の境界、具体的なリスクが増えたときだけ検証を追加します。
 
