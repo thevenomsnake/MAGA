@@ -12,6 +12,18 @@ const METHODS_ROOT = path.join(PLUGIN_ROOT, "methods");
 const MAGA_SKILLS = ["bar-tester", "orchestrate-tickets", "project-lead"];
 const HUMANIZATION_SKILLS = ["humanization"];
 
+test("core Skill entries point to existing scoped reference files", () => {
+  for (const skill of ["project-lead", "orchestrate-tickets", "humanization"]) {
+    const root = path.join(SKILLS_ROOT, skill);
+    const entry = fs.readFileSync(path.join(root, "SKILL.md"), "utf8");
+    const links = [...entry.matchAll(/\]\((references\/[^)]+\.md)\)/g)];
+    assert.ok(links.length > 0, skill);
+    for (const [, relative] of links) {
+      assert.ok(fs.existsSync(path.join(root, relative)), `${skill}: ${relative}`);
+    }
+  }
+});
+
 test("routes native pinning and asynchronous clarification without inventing success", () => {
   const orchestration = fs.readFileSync(path.join(SKILLS_ROOT, "orchestrate-tickets", "SKILL.md"), "utf8");
   assert.match(orchestration, /move_thread_to_sidebar_section/);

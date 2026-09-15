@@ -76,7 +76,9 @@ test("ships per-Ticket execution authorization", () => {
   assert.match(memory, /## Autonomy Policy[\s\S]+Dispatch: approved \| pending/);
   assert.match(memory, /Task opening: standing-policy/);
   assert.match(memory, /future Ticket/);
-  assert.match(projectLead, /Set `authorization: approved` on exactly those Tickets/);
+  assert.match(projectLead, /references\/project-execution\.md/);
+  const execution = fs.readFileSync(path.join(REPOSITORY_ROOT, "plugins", "maga", "skills", "project-lead", "references", "project-execution.md"), "utf8");
+  assert.match(execution, /Set `authorization: approved` on exactly those Tickets/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
   assert.doesNotMatch(projectLead, /task_creation/);
   assert.doesNotMatch(orchestration, /task_creation: approved/);
@@ -133,7 +135,7 @@ test("routes specifically named professional workspaces on demand", () => {
   assert.match(memory, /## Execution[\s\S]+Task title: pending[\s\S]+Attempt: pending/);
   assert.match(memory, /Validation: pending/);
   assert.match(memory, /integrated, deferred, or superseded/);
-  assert.match(orchestration, /approved research, prototype, diagnosis, review, delivery, or release Tickets/);
+  assert.match(orchestration, /Coordinate approved MAGA Tickets across Codex tasks/);
   assert.match(orchestration, /Never create or keep a worker titled only with a generic capability/);
   assert.match(orchestration, /every selected Ticket records `authorization: approved`/);
   assert.equal(manifest.interface.defaultPrompt.length, 3);
