@@ -8,6 +8,56 @@ import {
 } from "../src/codex-bridge.js";
 import { buildContextPacket } from "../src/context-packet.js";
 
+test("runtime diagnostics use the configured command and report metadata evidence without delegation", async () => {
+  // Node is the version-command stand-in; RPC responses below are protocol
+  // fixtures, not an end-to-end Codex host compatibility observation.
+  const bridge = new CodexBridge({ command: process.execPath });
+  bridge.initializeResult = {};
+  const calls = [];
+  bridge.request = async (method) => {
+    calls.push(method);
+    assert.equal(method, "model/list");
+    return { data: [
+      { id: "available", multiAgentVersion: "v1" },
+      { id: "unavailable", multiAgentVersion: null },
+      { id: "unreported" },
+      { id: "unrecognized", multiAgentVersion: "future" },
+    ] };
+  };
+
+  const result = await bridge.runtimeDiagnostics();
+  assert.equal(result.command, process.execPath);
+  assert.equal(result.version.status, "supported");
+  assert.equal(result.version.value, process.version);
+  assert.equal(result.capabilities.appServer.status, "supported");
+  assert.equal(result.capabilities.modelCatalog.status, "supported");
+  assert.deepEqual(result.nativeSubagentModels.map(({ status }) => status), [
+    "supported", "unsupported", "unknown", "unknown",
+  ]);
+  assert.ok(result.nativeSubagentModels.every(({ reason }) => reason.length > 0));
+  assert.deepEqual(calls, ["model/list"]);
+  assert.equal(bridge.process, undefined);
+  assert.equal(bridge.experimentalApi, true);
+});
+
+test("runtime diagnostics keep failed probes unknown and explicit missing methods unsupported", async () => {
+  const bridge = new CodexBridge({ command: "./missing-diagnostic-command" });
+  bridge.request = async () => { throw Object.assign(new Error("Method not found"), { code: -32601 }); };
+  const result = await bridge.runtimeDiagnostics();
+  assert.equal(result.version.status, "unknown");
+  assert.equal(result.version.value, null);
+  assert.ok(result.version.reason);
+  assert.equal(result.capabilities.appServer.status, "unknown");
+  assert.equal(result.capabilities.modelCatalog.status, "unsupported");
+  assert.deepEqual(result.nativeSubagentModels, []);
+
+  bridge.request = async () => { throw new Error("model/list timed out"); };
+  const unavailable = await bridge.runtimeDiagnostics();
+  assert.equal(unavailable.capabilities.modelCatalog.status, "unknown");
+  assert.match(unavailable.capabilities.modelCatalog.reason, /timed out/);
+  assert.equal(bridge.command, "./missing-diagnostic-command");
+});
+
 test("reconciles paginated thread listings with bounded retry", async () => {
   const calls = [];
   const bridge = new CodexBridge({ cwd: process.cwd() });

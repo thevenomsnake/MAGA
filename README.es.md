@@ -154,39 +154,11 @@ MAGA puede avanzar trabajo autorizado sin convertir una petición en lenguaje na
 
 ## Modelos por responsabilidad
 
-MAGA trabaja a la escala de una aplicación completa, pero esa aplicación no tiene por qué ser una plataforma enorme. Coordina todo lo necesario para llevar un producto enfocado desde la intención hasta una primera versión pequeña, completa y funcional. No necesitas aprender los siete nombres siguientes como profesiones ni dirigir siete equipos; son etiquetas internas con las que MAGA divide el trabajo.
+Las responsabilidades sin configurar heredan los valores predeterminados de Codex. MAGA no recomienda modelos, niveles de razonamiento ni perfiles por plan.
 
-### Entender las siete responsabilidades con una primera versión pequeña pero completa
+Si deseas configurar una responsabilidad, abre **Configure** en el plugin MAGA y guarda tus opciones. El panel muestra los modelos y parámetros informados por el host. Cada campo puede heredar el valor del host; guardar una responsabilidad no configura las demás. Se conservan las elecciones explícitas anteriores. La configuración se guarda en el Codex Home actual, fuera del Git del proyecto.
 
-Imagina que quieres crear y lanzar una pequeña aplicación para que una comunidad de aficionados comparta su actividad. Las personas pueden registrarse, añadir un nombre y un perfil breve, publicar actualizaciones cortas, ver las publicaciones recientes de la comunidad en la cronología de inicio y responder. No es una sola función añadida a un producto existente ni un intento de construir de golpe una gran red social: es una primera versión pequeña pero completa, con un ciclo principal real que puede ponerse en manos de usuarios.
-
-- **Project Lead (`project-lead`) — hace avanzar el producto completo:** Convierte tu dirección de producto en un alcance y unos criterios de aceptación claros; por ejemplo, completar el ciclo «registrarse → perfil → publicar → cronología de inicio → responder». Después coordina investigación, prototipo, implementación y validación. Las decisiones que cambian el público o la dirección de la experiencia siguen siendo tuyas.
-- **Investigación (`research`) — busca evidencia para las decisiones de producto:** Averigua cómo se comunica hoy la comunidad, dónde falla la experiencia actual y qué esperan realmente sus integrantes de los perfiles, las publicaciones cortas, la cronología de inicio y las respuestas, para no diseñar solo a partir de suposiciones.
-- **Prototipo (`prototype`) — permite ver y usar el producto antes de construirlo por completo:** Crea una versión interactiva del registro, el perfil, la publicación, la cronología de inicio y las respuestas para que puedas inspeccionar la información, probar tú mismo la secuencia y decidir si funciona el ciclo principal.
-- **Entrega (`delivery`) — convierte la experiencia aceptada en un producto real:** Transforma el prototipo en una aplicación funcional mediante partes pequeñas, de modo que las cuentas, los perfiles, las publicaciones y las respuestas se guarden de verdad y queden conectados correctamente, en lugar de existir solo como pantallas o demostración.
-- **Diagnóstico (`diagnosis`) — encuentra el origen de los fallos reales:** Si una publicación nueva no aparece en la cronología de inicio, el contenido desaparece al actualizar o una respuesta aparece en el lugar equivocado, reproduce el comportamiento y aísla la causa real en vez de reconstruir el producto a ciegas.
-- **Revisión (`review`) — comprueba de forma independiente la integridad y la fiabilidad:** Recorre todo el camino desde el registro hasta publicar, navegar y responder, contrasta el resultado con tus requisitos y confirma que la información de las cuentas y el contenido de la comunidad respetan límites esenciales de accesibilidad, privacidad y seguridad.
-- **Lanzamiento (`release`) — entrega el producto de forma fiable a usuarios reales:** Confirma que la configuración en vivo, las copias de seguridad, la visibilidad operativa y una vía de reversión están listas. Después de que apruebes el lanzamiento, abre el producto al público y verifica que una persona nueva pueda completar todo el recorrido principal.
-
-Cuando configuras modelos, no estás contratando ni gestionando a siete personas. Estás decidiendo cuánta capacidad de juicio y razonamiento puede utilizar cada clase de trabajo entre bastidores. MAGA sigue ocupándose de elegir responsabilidades, dirigir tareas y coordinar el trabajo.
-
-| Responsabilidad | Pro · calidad primero | Plus · uso habitual | Free / Go · ahorrar uso |
-| --- | --- | --- | --- |
-| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| Investigación (`research`) | Sol · max | Sol · max | Terra · max |
-| Prototipo (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
-| Entrega (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
-| Diagnóstico (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
-| Revisión (`review`) | Sol · xhigh | Sol · high | Terra · high |
-| Lanzamiento (`release`) | Sol · xhigh | Sol · high | Sol · high |
-
-Los espacios Business, Enterprise y Edu pueden empezar con Plus y pasar a Pro cuando su asignación y política lo permitan. Quienes usen una API key deben elegir según su presupuesto de tokens. **Sol** cubre ambigüedad, criterio y acabado; **Terra** es el modelo habitual para trabajo acotado que todavía requiere razonamiento y herramientas. **Luna** solo se recomienda en **max** para entregas con un criterio de finalización claro. Cada fila se puede modificar después de aplicar una configuración.
-
-Para cambiar estas opciones, abre la página de detalles del plugin MAGA y elige su starter prompt **Configure**. Se iniciará una tarea de MAGA con un panel de configuración dentro de la propia tarea. El panel no está incrustado en la página de detalles porque las páginas de plugins de Codex todavía no admiten formularios personalizados arbitrarios. La primera vez que pulsas **Save**, se activa la configuración y quedan fijadas las siete responsabilidades como un conjunto completo. Se guarda en el Codex Home actual, fuera del repositorio del producto y de su historial de Git.
-
-La configuración guardada solo se aplica a las tareas nuevas que se creen explícitamente después. Las tareas existentes no cambian. El Project Lead también la adopta únicamente al crear uno nuevo. Para que un Project Lead existente continúe con la configuración nueva, debes pedir explícitamente «retoma el trabajo con la configuración nueva» y aprobar la creación de una tarea de sustitución.
-
-MAGA decide automáticamente qué responsabilidad y configuración corresponden. Si el proyecto tiene una Autonomy Policy confirmada, puede crear workers con nombre dentro de un Ticket aprobado hasta el límite confirmado para ese proyecto y entregarles un context packet acotado. El límite inicial recomendado es dos. Si no existe esa policy, confirma el nombre concreto de la tarea. El `model/list` independiente del panel es solo un catálogo orientativo, no la fuente definitiva del host que ejecutará la tarea. MAGA envía el `model` y el `thinking` que guardaste explícitamente al host de destino de la tarea nueva para que allí se validen. Solo si ese host los rechaza, reintenta una vez sin overrides e informa claramente de que se usaron los valores predeterminados del host. Tampoco sube silenciosamente de modelo porque una tarea parezca difícil.
+Las opciones guardadas se aplican solo a tareas nuevas autorizadas. Las tareas existentes no cambian. Si el host de destino rechaza una opción explícita, MAGA reintenta una vez sin overrides e informa que usó los valores del host.
 
 ## Qué incluye
 

@@ -1,6 +1,6 @@
 ---
 key: T013
-status: ready
+status: done
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -18,12 +18,12 @@ None（可立即开始）
 
 ## Acceptance criteria
 
-- [ ] 通过现有 CodexBridge 接口暴露小型只读诊断结果，说明配置命令身份、版本获取结果与能力依据。
-- [ ] 版本来自实际配置命令；读取失败有原因并标为未知，不能借用桌面版本替代。
-- [ ] 能力分别表示已确认可用、已确认不可用或未知；用现有握手、工具或模型元数据判断，不因版本新就推断支持。
-- [ ] 0.154.0 仅作本轮兼容参考，不是所有功能的硬最低版本；现有子代理白名单、只读与数量限制不变。
-- [ ] 诊断不改变配置、不安装、不隐式切换命令；需要但未确认的能力使用现有回退或返回明确限制。
-- [ ] 本机路径和运行时标识只留在本次结果，不写入公开持久状态。
+- [x] 通过现有 CodexBridge 接口暴露小型只读诊断结果，说明配置命令身份、版本获取结果与能力依据。
+- [x] 版本来自实际配置命令；读取失败有原因并标为未知，不能借用桌面版本替代。
+- [x] 能力分别表示已确认可用、已确认不可用或未知；用现有握手、工具或模型元数据判断，不因版本新就推断支持。
+- [x] 0.154.0 仅作本轮兼容参考，不是所有功能的硬最低版本；现有子代理白名单、只读与数量限制不变。
+- [x] 诊断不改变配置、不安装、不隐式切换命令；需要但未确认的能力使用现有回退或返回明确限制。
+- [x] 本机路径和运行时标识只留在本次结果，不写入公开持久状态。
 
 ## Verification
 
@@ -47,6 +47,6 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 
 ## Execution
 
-- Task opening: pending
-- Implementation: not started
-- Completion evidence: none
+- Task opening: approved implementation in an isolated repository worktree
+- Implementation: complete; `CodexBridge.runtimeDiagnostics()` returns configured command/version and handshake, catalog, and per-model metadata evidence without delegating or persisting the result.
+- Completion evidence: `node --test --test-name-pattern="runtime diagnostics" test/codex-bridge.test.js` passed 2/2 focused tests. The configured version command is exercised with Node as a stand-in; model/handshake evidence uses protocol fixtures. Version failure, catalog method absence, catalog timeout, and metadata supported/unsupported/unknown are distinct. This is not a real-host end-to-end compatibility result. Existing delegation permissions, allowlist, and admission limits are unchanged.

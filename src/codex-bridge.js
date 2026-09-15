@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
 import { EventEmitter, once } from "node:events";
 import path from "node:path";
 import readline from "node:readline";
@@ -306,6 +306,55 @@ export class CodexBridge {
   async listModels({ includeHidden = false } = {}) {
     const result = await this.request("model/list", { includeHidden, limit: 100 });
     return result.data || [];
+  }
+
+  // Call after connect() for handshake/catalog evidence. This only runs the
+  // configured command's --version and reads model metadata; it never delegates.
+  // The result is transient and may contain machine-specific command details.
+  async runtimeDiagnostics() {
+    const version = await new Promise((resolve) => {
+      execFile(this.command, ["--version"], {
+        cwd: this.cwd,
+        windowsHide: true,
+        shell: false,
+        timeout: Math.min(this.timeoutMs, 5_000),
+        maxBuffer: 16_384,
+      }, (error, stdout) => {
+        const value = stdout.trim();
+        resolve(error || !value
+          ? { status: "unknown", value: null, reason: error?.message || "The configured command returned no version output." }
+          : { status: "supported", value, reason: "Output of the configured command with --version." });
+      });
+    });
+    const capabilities = {
+      appServer: this.initializeResult !== null
+        ? { status: "supported", reason: "The app-server initialize handshake succeeded in this session." }
+        : { status: "unknown", reason: "No successful app-server initialize handshake was observed." },
+      modelCatalog: { status: "unknown", reason: "The model catalog has not been read." },
+    };
+    let nativeSubagentModels = [];
+    try {
+      const models = await this.listModels();
+      if (!Array.isArray(models)) throw new Error("model/list returned an invalid catalog");
+      capabilities.modelCatalog = { status: "supported", reason: "model/list succeeded." };
+      nativeSubagentModels = models.map((entry) => {
+        const multiAgentVersion = entry.multiAgentVersion;
+        const evidence = !this.experimentalApi
+          ? { status: "unsupported", reason: "This bridge session disabled experimental API capability." }
+          : NATIVE_MULTI_AGENT_VERSIONS.has(multiAgentVersion)
+            ? { status: "supported", reason: "model/list advertises a multiAgentVersion accepted by the existing bridge adapter; no delegation was attempted." }
+            : multiAgentVersion === null
+              ? { status: "unsupported", reason: "model/list explicitly reports no multiAgentVersion." }
+              : { status: "unknown", reason: "model/list omits multiAgentVersion or reports a version the bridge has not confirmed; existing delegation fallback still applies." };
+        return { model: entry.id, multiAgentVersion: multiAgentVersion ?? null, ...evidence };
+      });
+    } catch (error) {
+      capabilities.modelCatalog = {
+        status: error.code === -32601 ? "unsupported" : "unknown",
+        reason: `model/list could not be read: ${error.message}`,
+      };
+    }
+    return { command: this.command, version, capabilities, nativeSubagentModels };
   }
 
   async listSubagentThreads(parentThreadId, { cwd = this.cwd, archived = false } = {}) {

@@ -105,20 +105,17 @@ test("MCP app renders, saves, and resolves responsibility settings", async (t) =
 
   const shown = await server.request("tools/call", { name: "show_maga_compute_settings", arguments: {} });
   assert.equal(shown.structuredContent.responsibilities.length, 7);
-  assert.deepEqual(shown.structuredContent.presets.map(({ key }) => key), [
-    "pro-quality",
-    "plus-standard",
-    "quota-saver",
-  ]);
-  assert.equal(shown.structuredContent.source, "balanced-defaults");
+  assert.equal(Object.hasOwn(shown.structuredContent, "presets"), false);
+  assert.equal(Object.hasOwn(shown.structuredContent, "defaults"), false);
+  assert.equal(shown.structuredContent.source, "host-default");
+  assert.doesNotMatch(resource.contents[0].text, /data-preset|snapshot\.defaults|copy\.recommended/);
+  assert.match(resource.contents[0].text, /Inherit host default/);
+  new Function(resource.contents[0].text.match(/<script>([\s\S]*?)<\/script>/)[1]);
   assert.deepEqual(shown.structuredContent.responsibilities[0].actual, {
     model: null,
     effort: null,
   });
-  const profiles = Object.fromEntries(shown.structuredContent.responsibilities.map((role) => [
-    role.key,
-    role.preferred,
-  ]));
+  const profiles = {};
   profiles.research = { model: "gpt-5.6-luna", effort: "low" };
 
   const saved = await server.request("tools/call", {
@@ -126,6 +123,7 @@ test("MCP app renders, saves, and resolves responsibility settings", async (t) =
     arguments: { expectedRevision: shown.structuredContent.revision, profiles },
   });
   const savedResearch = saved.structuredContent.responsibilities.find(({ key }) => key === "research");
+  assert.deepEqual(saved.structuredContent.responsibilities[0].actual, { model: null, effort: null });
   assert.equal(savedResearch.preferred.model, "gpt-5.6-luna");
   assert.deepEqual(savedResearch.actual, { model: "gpt-5.6-luna", effort: "low" });
   assert.equal(fs.existsSync(path.join(server.codexHome, "maga", "compute-profiles.json")), true);

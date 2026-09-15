@@ -80,33 +80,6 @@
       box-shadow: var(--shadow);
     }
     .principle strong { color: var(--accent); }
-    .model-guide {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .model-note {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: color-mix(in srgb, var(--surface) 74%, transparent);
-      padding: 10px 12px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .model-note strong { display: block; color: var(--ink); font-size: 13px; }
-    .preset-section { margin-bottom: 16px; }
-    .preset-heading { margin: 0 0 8px; font-size: 13px; letter-spacing: .02em; }
-    .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .preset {
-      min-height: 92px;
-      border-radius: 12px;
-      padding: 11px 12px;
-      text-align: left;
-    }
-    .preset strong, .preset span { display: block; }
-    .preset span { margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.35; }
-    .preset[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); }
     .grid { display: grid; gap: 10px; }
     .row {
       display: grid;
@@ -168,8 +141,6 @@
       .shell { padding: 16px; }
       header { grid-template-columns: 1fr; }
       .badge { justify-self: start; }
-      .model-guide { grid-template-columns: 1fr; }
-      .presets { grid-template-columns: 1fr; }
       .row { grid-template-columns: 1fr 1fr; }
       .role { grid-column: 1 / -1; }
       .actual { grid-column: 1 / -1; }
@@ -184,25 +155,14 @@
       <div>
         <div class="eyebrow">Make Apps Great Again</div>
         <h1 id="title">Responsibility settings</h1>
-        <p class="lede" id="lede">Review the model and reasoning depth recommended for each kind of work, then save the choices you want MAGA to use.</p>
+        <p class="lede" id="lede">Unconfigured fields inherit the Inherit host default. You can save explicit choices for new tasks.</p>
       </div>
       <div class="badge" id="scope">Current Codex Home</div>
     </header>
 
     <section class="principle">
       <strong id="principle-label">Your choice wins.</strong>
-      <span id="principle-copy">MAGA recommendations stay inactive until you save them. MAGA does not silently change a task because it looks difficult.</span>
-    </section>
-
-    <section class="model-guide" aria-label="Model guide">
-      <div class="model-note"><strong>Sol</strong><span id="sol-guide">Best judgment for ambiguity and risk.</span></div>
-      <div class="model-note"><strong>Terra</strong><span id="terra-guide">The everyday workhorse for scoped work that still needs reasoning and tools.</span></div>
-      <div class="model-note"><strong>Luna</strong><span id="luna-guide">For clear, repeatable execution; MAGA recommends it only at Max.</span></div>
-    </section>
-
-    <section class="preset-section" aria-labelledby="preset-heading">
-      <h2 class="preset-heading" id="preset-heading">Choose a starting profile</h2>
-      <div class="presets" id="presets"></div>
+      <span id="principle-copy">Saved choices apply to new tasks. Existing tasks keep their settings.</span>
     </section>
 
     <div id="content" class="loading">Loading available models…</div>
@@ -213,70 +173,44 @@
     const zh = (navigator.language || document.documentElement.lang || "").toLowerCase().startsWith("zh");
     const copy = zh ? {
       title: "职责设置",
-      lede: "查看每类工作的模型与思考深度建议，再保存你希望 MAGA 使用的选择。",
+      lede: "未配置的字段继承 Codex 宿主默认值。你可以为新任务保存自己的选择。",
       scope: "当前 Codex Home",
       principleLabel: "你的设置优先。",
-      principleCopy: "MAGA 推荐配置在保存前不会生效。MAGA 不会因为任务“看起来很难”而擅自更换设置。",
-      solGuide: "判断力最强，适合模糊问题与风险。",
-      terraGuide: "日常主力，适合需要推理与工具调用的明确工作。",
-      lunaGuide: "适合清楚、可重复的执行；MAGA 仅在 Max 下推荐。",
+      principleCopy: "保存后的选择用于新任务，已有任务保持原设置。",
       footnote: "这些偏好不会进入项目 Git。保存后的选择用于新建任务；正在运行的任务保持原设置。",
       model: "模型",
       effort: "思考深度",
-      recommended: "推荐配置",
       nextTask: "下一个新任务",
-      hostDefault: "Codex 宿主默认",
+      hostDefault: "继承宿主默认值",
       hostDepth: "默认深度",
-      balanced: "恢复 Plus 常规配置",
       save: "保存设置",
       saving: "正在保存…",
       saved: "已保存。新任务会使用这些设置；已有任务保持不变。Project Lead 在新建或明确接手时生效。",
       ready: "可修改后保存。",
-      activate: "点击保存，确认并启用这套 MAGA 推荐配置。",
       noChanges: "没有需要保存的修改。",
       unavailable: "参考目录未列出",
       noCatalog: "无法读取参考模型目录；新任务的目标宿主会验证已保存选择。",
       loading: "正在读取可用模型…",
-      presetHeading: "选择一套起始配置",
-      presetApplied: "已套用起始配置；保存后才会用于新任务。",
-      presets: {
-        "pro-quality": ["Pro · 质量优先", "Sol 负责判断与把关，Terra 负责明确实现；不使用 Luna。"],
-        "plus-standard": ["Plus · 常规使用", "Sol 做关键判断，Terra 做日常执行，Luna Max 做有边界交付。"],
-        "quota-saver": ["Free / Go · 节省额度", "主要使用 Terra，发布用 Sol，明确交付使用 Luna Max。"],
-      },
     } : {
       title: "Responsibility settings",
-      lede: "Review the model and reasoning depth recommended for each kind of work, then save the choices you want MAGA to use.",
+      lede: "Unconfigured fields inherit the Inherit host default. You can save explicit choices for new tasks.",
       scope: "Current Codex Home",
       principleLabel: "Your choice wins.",
-      principleCopy: "MAGA recommendations stay inactive until you save them. MAGA does not silently change a task because it looks difficult.",
-      solGuide: "Best judgment for ambiguity and risk.",
-      terraGuide: "The everyday workhorse for scoped work that still needs reasoning and tools.",
-      lunaGuide: "For clear, repeatable execution; MAGA recommends it only at Max.",
+      principleCopy: "Saved choices apply to new tasks. Existing tasks keep their settings.",
       footnote: "These preferences stay outside the project repository. Saved choices apply to new tasks; running tasks keep their current settings.",
       model: "Model",
       effort: "Reasoning depth",
-      recommended: "Recommended",
       nextTask: "Next new task",
-      hostDefault: "Codex host default",
+      hostDefault: "Inherit host default",
       hostDepth: "default depth",
-      balanced: "Restore Plus profile",
       save: "Save settings",
       saving: "Saving…",
       saved: "Saved. New tasks use these settings; existing tasks stay unchanged. Project Lead uses them when newly created or explicitly replaced.",
       ready: "Adjust any row, then save.",
-      activate: "Save once to confirm and activate these MAGA recommendations.",
       noChanges: "There are no changes to save.",
       unavailable: "not in reference catalog",
       noCatalog: "The reference model catalog is unavailable. The destination host will validate saved choices when a task is created.",
       loading: "Loading available models…",
-      presetHeading: "Choose a starting profile",
-      presetApplied: "Starting profile applied. Save before MAGA uses it for new tasks.",
-      presets: {
-        "pro-quality": ["Pro · quality first", "Sol handles judgment and assurance; Terra handles scoped implementation. No Luna."],
-        "plus-standard": ["Plus · regular use", "Sol handles key judgment, Terra everyday work, and Luna Max bounded delivery."],
-        "quota-saver": ["Free / Go · quota saver", "Mostly Terra, Sol for release, and Luna Max for clearly bounded delivery."],
-      },
     };
 
     document.getElementById("title").textContent = copy.title;
@@ -284,19 +218,15 @@
     document.getElementById("scope").textContent = copy.scope;
     document.getElementById("principle-label").textContent = copy.principleLabel;
     document.getElementById("principle-copy").textContent = copy.principleCopy;
-    document.getElementById("sol-guide").textContent = copy.solGuide;
-    document.getElementById("terra-guide").textContent = copy.terraGuide;
-    document.getElementById("luna-guide").textContent = copy.lunaGuide;
     document.getElementById("footnote").textContent = copy.footnote;
-    document.getElementById("preset-heading").textContent = copy.presetHeading;
     document.getElementById("content").textContent = copy.loading;
 
     const effortLabels = zh ? {
-      none: "无", minimal: "最少", low: "低 · 快速", medium: "中 · 均衡",
-      high: "高 · 深入", xhigh: "超高", max: "最大", ultra: "极致",
+      none: "无", minimal: "最少", low: "低", medium: "中",
+      high: "高", xhigh: "超高", max: "最大", ultra: "极致",
     } : {
-      none: "None", minimal: "Minimal", low: "Low · fast", medium: "Medium · balanced",
-      high: "High · thorough", xhigh: "Extra high", max: "Maximum", ultra: "Ultra",
+      none: "None", minimal: "Minimal", low: "Low", medium: "Medium",
+      high: "High", xhigh: "Extra high", max: "Maximum", ultra: "Ultra",
     };
     const roleLabels = zh ? {
       "project-lead": ["项目负责人", "产品对话、决策、编排与整合。"],
@@ -330,39 +260,26 @@
       return element;
     }
 
-    function modelOptionsFor(role) {
-      const models = [...(snapshot.models || [])];
-      const required = [
-        role.preferred?.model,
-        snapshot.defaults?.[role.key]?.model,
-        ...(snapshot.presets || []).map((preset) => preset.profiles?.[role.key]?.model),
-      ].filter(Boolean);
-      for (const modelId of required.reverse()) {
-        if (!models.some((model) => model.id === modelId)) {
-          models.unshift({ id: modelId, displayName: `${modelId} · ${copy.unavailable}`, supportedReasoningEfforts: [] });
-        }
-      }
-      return models;
+    function modelOptionsFor() {
+      return snapshot.models || [];
     }
 
     function effortsFor(modelId) {
-      const model = (snapshot.models || []).find((entry) => entry.id === modelId);
-      return model?.supportedReasoningEfforts?.length
-        ? model.supportedReasoningEfforts
-        : Object.keys(effortLabels);
+      const model = (snapshot.models || []).find((entry) => modelId ? entry.id === modelId : entry.isDefault);
+      return [...(model?.supportedReasoningEfforts || [])];
     }
 
     function updateEffortSelect(row, preferred) {
-      const modelSelect = row.querySelector("[data-model]");
       const effortSelect = row.querySelector("[data-effort]");
-      const efforts = effortsFor(modelSelect.value);
-      if (preferred && !efforts.includes(preferred)) efforts.unshift(preferred);
-      const wanted = preferred || efforts[0];
-      effortSelect.replaceChildren(...efforts.map((effort) => option(
-        effort,
-        `${effortLabels[effort] || effort}${effortsFor(modelSelect.value).includes(effort) ? "" : ` · ${copy.unavailable}`}`,
-        effort === wanted,
+      const efforts = effortsFor(row.querySelector("[data-model]").value);
+      effortSelect.replaceChildren(option("", copy.hostDefault, !preferred), ...efforts.map((effort) => option(
+        effort, effortLabels[effort] || effort, effort === preferred,
       )));
+      if (preferred && !efforts.includes(preferred)) {
+        const saved = option(preferred, `${preferred} · ${copy.unavailable}`, true);
+        saved.disabled = true;
+        effortSelect.append(saved);
+      }
     }
 
     function render(value) {
@@ -397,8 +314,14 @@
         const modelSelect = document.createElement("select");
         modelSelect.dataset.model = "";
         modelSelect.setAttribute("aria-label", `${title.textContent} ${copy.model}`);
-        for (const model of modelOptionsFor(role)) {
+        modelSelect.append(option("", copy.hostDefault, !role.preferred.model));
+        for (const model of modelOptionsFor()) {
           modelSelect.append(option(model.id, model.displayName || model.id, model.id === role.preferred.model));
+        }
+        if (role.preferred.model && !modelOptionsFor().some(({ id }) => id === role.preferred.model)) {
+          const saved = option(role.preferred.model, `${role.preferred.model} · ${copy.unavailable}`, true);
+          saved.disabled = true;
+          modelSelect.append(saved);
         }
         modelField.append(modelLabel, modelSelect);
 
@@ -412,16 +335,11 @@
         effortField.append(effortLabel, effortSelect);
 
         const actual = document.createElement("div");
-        const confirmed = snapshot.source === "saved";
-        actual.className = `actual${confirmed && role.fallback?.length ? " fallback" : ""}`;
+        actual.className = `actual${role.fallback?.length ? " fallback" : ""}`;
         const actualLabel = document.createElement("strong");
-        actualLabel.textContent = confirmed ? copy.nextTask : copy.recommended;
+        actualLabel.textContent = copy.nextTask;
         const actualValue = document.createElement("span");
-        actualValue.textContent = confirmed
-          ? (role.actual?.model
-            ? `${role.actual.model} · ${role.actual.effort ? (effortLabels[role.actual.effort] || role.actual.effort) : copy.hostDepth}`
-            : copy.hostDefault)
-          : `${role.preferred.model} · ${effortLabels[role.preferred.effort] || role.preferred.effort}`;
+        actualValue.textContent = `${role.actual?.model || copy.hostDefault} · ${role.actual?.effort ? (effortLabels[role.actual.effort] || role.actual.effort) : copy.hostDepth}`;
         actual.append(actualLabel, actualValue);
         if (role.fallback?.length) actual.title = role.fallback.join(" ");
 
@@ -430,14 +348,11 @@
         updateEffortSelect(row, role.preferred.effort);
         row.dataset.initialModel = modelSelect.value;
         row.dataset.initialEffort = effortSelect.value;
-        modelSelect.addEventListener("change", () => updateEffortSelect(row, effortSelect.value));
+        modelSelect.addEventListener("change", () => updateEffortSelect(row, null));
       }
 
       const actions = document.createElement("div");
       actions.className = "actions";
-      const reset = document.createElement("button");
-      reset.type = "button";
-      reset.textContent = copy.balanced;
       const save = document.createElement("button");
       save.type = "button";
       save.className = "primary";
@@ -445,72 +360,16 @@
       const status = document.createElement("div");
       status.className = "status";
       status.setAttribute("aria-live", "polite");
-      status.textContent = snapshot.configWarning
-        || (snapshot.source === "saved"
-          ? (snapshot.catalogWarning ? copy.noCatalog : copy.ready)
-          : copy.activate);
+      status.textContent = snapshot.configWarning || (snapshot.catalogWarning ? copy.noCatalog : copy.ready);
       if (snapshot.configWarning) status.className = "status error";
-
-      function selectedProfiles() {
-        return Object.fromEntries([...grid.querySelectorAll(".row")].map((row) => [
-          row.dataset.key,
-          {
-            model: row.querySelector("[data-model]").value,
-            effort: row.querySelector("[data-effort]").value,
-          },
-        ]));
-      }
-
-      function refreshPresetState() {
-        const selected = selectedProfiles();
-        for (const button of document.querySelectorAll("[data-preset]")) {
-          const preset = (snapshot.presets || []).find(({ key }) => key === button.dataset.preset);
-          const matches = preset && Object.entries(preset.profiles).every(([key, profile]) => (
-            selected[key]?.model === profile.model && selected[key]?.effort === profile.effort
-          ));
-          button.setAttribute("aria-pressed", String(Boolean(matches)));
-        }
-      }
-
-      function applyProfiles(profiles) {
-        for (const row of grid.querySelectorAll(".row")) {
-          const profile = profiles[row.dataset.key];
-          if (!profile) continue;
-          row.querySelector("[data-model]").value = profile.model;
-          updateEffortSelect(row, profile.effort);
-        }
-        refreshPresetState();
-        status.textContent = copy.presetApplied;
-      }
-
-      const presets = document.getElementById("presets");
-      presets.replaceChildren(...(snapshot.presets || []).map((preset) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "preset";
-        button.dataset.preset = preset.key;
-        const localized = copy.presets[preset.key] || [preset.label, preset.description];
-        const title = document.createElement("strong");
-        title.textContent = localized[0];
-        const description = document.createElement("span");
-        description.textContent = localized[1];
-        button.append(title, description);
-        button.onclick = () => applyProfiles(preset.profiles);
-        return button;
-      }));
-
-      reset.onclick = () => {
-        applyProfiles(snapshot.defaults);
-      };
 
       save.onclick = async () => {
         const profiles = {};
-        const activateAll = snapshot.source !== "saved";
         for (const row of grid.querySelectorAll(".row")) {
           const model = row.querySelector("[data-model]").value;
           const effort = row.querySelector("[data-effort]").value;
-          if (activateAll || model !== row.dataset.initialModel || effort !== row.dataset.initialEffort) {
-            profiles[row.dataset.key] = { model, effort };
+          if (model !== row.dataset.initialModel || effort !== row.dataset.initialEffort) {
+            profiles[row.dataset.key] = { model: model || null, effort: effort || null };
           }
         }
         if (Object.keys(profiles).length === 0) {
@@ -518,7 +377,7 @@
           return;
         }
         save.disabled = true;
-        reset.disabled = true;
+
         status.className = "status";
         status.textContent = copy.saving;
         try {
@@ -533,17 +392,12 @@
           status.className = "status error";
           status.textContent = error?.message || String(error);
           save.disabled = false;
-          reset.disabled = false;
+
         }
       };
 
-      actions.append(reset, save, status);
+      actions.append(save, status);
       content.append(grid, actions);
-      for (const row of grid.querySelectorAll(".row")) {
-        row.querySelector("[data-model]").addEventListener("change", refreshPresetState);
-        row.querySelector("[data-effort]").addEventListener("change", refreshPresetState);
-      }
-      refreshPresetState();
     }
 
     window.addEventListener("message", (event) => {

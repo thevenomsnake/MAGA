@@ -1,6 +1,6 @@
 ---
 key: T014
-status: ready
+status: completed
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -18,11 +18,11 @@ T010、T011、T012（先固定模型建议移除、置顶和异步提问规则�
 
 ## Acceptance criteria
 
-- [ ] 三个 description 只保留职责、准确触发条件与必要排除边界；不新注册 Skill。
-- [ ] 入口保留共同步骤与完成条件，多分支执行细节迁入有明确触发条件的参考，不机械限定字符或行数。
-- [ ] 保留本地文件触发、聊天输出排除、旧命令兼容与完整审计显式触发。
-- [ ] 保留前序置顶与异步提问行为、全部模型建议已移除的边界、Ticket 授权和已有任务复用。
-- [ ] 保留只读子代理与独立任务的区别、宿主创建任务限制、来源和资源保护、一次定向验证。
+- [x] 三个 description 只保留职责、准确触发条件与必要排除边界；不新注册 Skill。
+- [x] 入口保留共同步骤与完成条件，多分支执行细节迁入有明确触发条件的参考，不机械限定字符或行数。
+- [x] 保留本地文件触发、聊天输出排除、旧命令兼容与完整审计显式触发。
+- [x] 保留前序置顶与异步提问行为、全部模型建议已移除的边界、Ticket 授权和已有任务复用。
+- [x] 保留只读子代理与独立任务的区别、宿主创建任务限制、来源和资源保护、一次定向验证。
 
 ## Verification
 
@@ -46,6 +46,6 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 
 ## Execution
 
-- Task opening: pending
-- Implementation: not started
-- Completion evidence: none
+- Task opening: not-needed
+- Implementation: complete; three core entries now route to scoped supporting references.
+- Completion evidence: bundled Skill checks 15/15, affected initialization routing checks 2/2, and native execution-shape check 1/1 passed. Prior configuration and bridge results reused; no full regression.

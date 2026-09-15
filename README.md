@@ -168,45 +168,11 @@ MAGA can advance authorized work without turning one natural-language request in
 
 ## Models by responsibility
 
-MAGA works at the scale of a complete application, but that application does not need to be a huge platform. It coordinates the work required to take a small but complete first release from intent to a working release. You do not need to learn the seven names below as job titles or manage seven separate teams; they are internal labels MAGA uses to divide the work.
+Unconfigured responsibilities inherit the Codex host default. MAGA does not recommend models, reasoning depths, or plan-based profiles.
 
-### Understanding the seven responsibilities through a small but complete first release
+If you explicitly want to configure a responsibility, open **Configure** on the MAGA plugin and save your choices in the settings panel. The panel lists host-reported models and supported parameters. You can leave either field set to **Inherit host default**; saving one responsibility does not configure the others. Existing saved choices are preserved. Settings stay in the current Codex Home, outside project Git.
 
-Imagine you want to build and launch a small activity-sharing application for an interest community. People can sign up, add a name and short profile, publish brief updates, see the community’s latest posts on a home timeline, and reply. This is not a single feature added to an existing product, nor an attempt to build a huge social platform at once. It is a small but complete first release with a real core loop that can be placed in users’ hands.
-
-- **Project Lead (`project-lead`) — moving the whole product forward:** Turns your product direction into a clear scope and acceptance criteria—for example, completing the loop of “sign up → profile → post → home timeline → reply”—then coordinates research, prototyping, implementation, and validation. Decisions that change the audience or experience direction remain yours.
-- **Research (`research`) — finding evidence for product decisions:** Learns how the interest community communicates today, where the current experience falls short, and what members actually expect from profiles, short posts, the home timeline, and replies, so the product is not designed from assumptions alone.
-- **Prototype (`prototype`) — making the product visible and usable before the full build:** Creates an interactive version of sign-up, profiles, publishing, the home timeline, and replies so you can inspect the information, try the sequence yourself, and decide whether the core loop works.
-- **Delivery (`delivery`) — turning the accepted experience into a real product:** Builds the prototype into a working application in small slices so accounts, profiles, posts, and replies are genuinely saved and correctly connected instead of existing only as screens or a demonstration.
-- **Diagnosis (`diagnosis`) — finding where real failures originate:** If a new post does not appear at home, content disappears after refresh, or a reply appears in the wrong place, it reproduces the behavior and isolates the actual cause instead of blindly rebuilding the product.
-- **Review (`review`) — independently checking completeness and reliability:** Walks through the full journey from sign-up to publishing, browsing, and replying, checks the result against your requirements, and confirms that account information and community content have essential accessibility, privacy, and safety boundaries.
-- **Release (`release`) — delivering the product reliably to real users:** Confirms that live settings, backups, operational visibility, and a rollback path are ready. After you approve the launch, it opens the product and verifies that a new user can complete the entire core journey.
-
-When you configure models, you are not hiring or managing seven people. You are deciding how much judgment and reasoning capacity each kind of behind-the-scenes work can use. MAGA still handles responsibility selection, task routing, and coordination.
-
-Its settings panel offers three starting profiles for the same seven responsibilities:
-
-- **Pro · quality first:** Sol handles open-ended judgment and assurance; Terra handles scoped implementation. Luna is not used.
-- **Plus · regular use:** Sol protects the highest-value decisions, Terra handles everyday reasoning and tools, and Luna Max handles bounded delivery.
-- **Free / Go · quota saver:** Terra carries most work, Sol is reserved for release risk, and Luna Max handles clearly specified delivery.
-
-| Responsibility | Pro · quality first | Plus · regular use | Free / Go · quota saver |
-| --- | --- | --- | --- |
-| Project Lead (`project-lead`) | Sol · xhigh | Sol · xhigh | Terra · xhigh |
-| Research (`research`) | Sol · max | Sol · max | Terra · max |
-| Prototype (`prototype`) | Sol · xhigh | Terra · high | Terra · high |
-| Delivery (`delivery`) | Terra · xhigh | Luna · max | Luna · max |
-| Diagnosis (`diagnosis`) | Sol · max | Terra · xhigh | Terra · high |
-| Review (`review`) | Sol · xhigh | Sol · high | Terra · high |
-| Release (`release`) | Sol · xhigh | Sol · high | Sol · high |
-
-Business, Enterprise, and Edu workspaces can start with the Plus profile, then use the Pro profile when their workspace allowance and model policy support it. API-key users should choose by their own token budget. Plan access and limits can change; see the current [Codex pricing and plan guide](https://learn.chatgpt.com/docs/pricing).
-
-The profiles follow the work rather than ranking the models: **Sol** is for ambiguity, judgment, and polish; **Terra** is the everyday workhorse for scoped work that still needs reasoning and tools; **Luna** is only recommended at **max**, for clear and repeatable delivery. Higher reasoning can take longer and use more tokens, and every row stays editable after a profile is applied.
-
-Open the MAGA plugin detail page and select its **Configure** starter prompt. This starts a MAGA task with an in-task configuration panel; current Codex plugin detail pages do not support arbitrary embedded settings forms. Choose a profile, adjust any row, and click **Save**. Until that first save, the Codex host defaults stay active. Later saves update only the rows you changed. The choices live in the current Codex Home, outside the product repository and its Git history.
-
-Saved changes apply only to new tasks that you explicitly approve in product language; a confirmed project Autonomy Policy may also authorize named workers inside approved Tickets, up to that project's worker limit. Existing tasks keep their settings. A Project Lead uses a saved profile when it is first created or when you explicitly request a replacement to take over. The panel's `model/list` is a reference catalog, not proof of what every destination supports. MAGA passes your saved model and depth to the new task's destination host for final validation; if that host rejects them, MAGA retries once without overrides, tells you it used the host default, and never silently chooses another tier. It also never upgrades a task merely because it looks difficult.
+Saved settings apply only to authorized new tasks. Existing tasks keep their settings. The destination host validates explicit choices; if it rejects them, MAGA retries once without overrides and reports that the host default was used.
 
 ## What is inside
 
