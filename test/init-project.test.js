@@ -179,8 +179,7 @@ test("ships localized product guides, beginner manuals, and one English comparis
     assert.match(localizedReadme, /assets\/maga-operating-model\.svg/);
     assert.match(localizedReadme, /website\/design\/hero-concept\.png/);
     assert.match(localizedReadme, /https:\/\/maga\.sumimi\.jp\//);
-    assert.match(localizedReadme, /Sol · xhigh/);
-    assert.match(localizedReadme, /Luna · max/);
+    assert.doesNotMatch(localizedReadme, /Sol · xhigh|Luna · max/);
     assert.ok(localizedReadme.includes(guideFiles[index]));
     assert.doesNotMatch(localizedReadme, /npx github:thevenomsnake\/MAGA/);
     assert.doesNotMatch(localizedReadme, /玩梗|带梗|竞选承诺|No rallies|explaining the joke/i);
@@ -191,7 +190,7 @@ test("ships localized product guides, beginner manuals, and one English comparis
     assert.match(localizedGuide, /Uninstall plugin/);
     assert.match(localizedGuide, /agent-approvals-security/);
     assert.match(localizedGuide, /Project Lead/);
-    assert.match(localizedGuide, /Autonomy Policy/);
+    assert.doesNotMatch(localizedGuide, /Sol · xhigh|Luna · max/);
     assert.doesNotMatch(
       localizedGuide,
       /new (?:Codex )?chat|chat nuevo|新しい[^\n]*チャット|새 [^\n]*채팅|新建[^\n]*聊天/i,
@@ -237,8 +236,9 @@ test("ships localized product guides, beginner manuals, and one English comparis
   assert.match(publicSurfaceContract, /## Bounded continuity/);
   assert.match(publicSurfaceContract, /Design record/);
   for (const localizedReadme of readmes) assert.match(localizedReadme, /v0\.16\.0/);
-  assert.match(readme, /Pro · quality first[\s\S]+Plus · regular use[\s\S]+Free \/ Go · quota saver/);
-  assert.match(readme, /\*\*Luna\*\* is only recommended at \*\*max\*\*/);
+  assert.match(readme, /inherit the Codex host default/);
+  assert.match(guide, /Saved settings apply only to authorized new tasks/);
+  assert.doesNotMatch(readme, /Pro · quality first|Plus · regular use|Free \/ Go · quota saver|is only recommended at/);
   assert.doesNotMatch(readme, /The wrapper is the installed working contract/);
   assert.doesNotMatch(readme, /```mermaid|maga-product-vision-hero|maga-routing-hero/);
 
@@ -257,7 +257,13 @@ test("ships localized product guides, beginner manuals, and one English comparis
   assert.match(comparison, /viewBox="0 0 1600 1040"/);
   assert.deepEqual(
     fs.readdirSync(path.join(REPOSITORY_ROOT, "assets")).sort(),
-    ["maga-operating-model.svg"],
+    [
+      "maga-execution-topology.drawio",
+      "maga-execution-topology.drawio.png",
+      "maga-operating-model.svg",
+      "maga-product-loop.drawio",
+      "maga-product-loop.drawio.png",
+    ],
   );
 });
 
