@@ -1,6 +1,6 @@
 ---
 key: T013
-status: done
+status: integrated
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -50,3 +50,8 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 - Task opening: approved implementation in an isolated repository worktree
 - Implementation: complete; `CodexBridge.runtimeDiagnostics()` returns configured command/version and handshake, catalog, and per-model metadata evidence without delegating or persisting the result.
 - Completion evidence: `node --test --test-name-pattern="runtime diagnostics" test/codex-bridge.test.js` passed 2/2 focused tests. The configured version command is exercised with Node as a stand-in; model/handshake evidence uses protocol fixtures. Version failure, catalog method absence, catalog timeout, and metadata supported/unsupported/unknown are distinct. This is not a real-host end-to-end compatibility result. Existing delegation permissions, allowlist, and admission limits are unchanged.
+
+## Integration
+
+- Integrated into main through PR #1, merge commit `56bc0ee`.
+- Validation evidence above is retained; no unaffected checks were repeated.

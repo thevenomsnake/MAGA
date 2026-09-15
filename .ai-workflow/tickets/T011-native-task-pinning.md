@@ -1,6 +1,6 @@
 ---
 key: T011
-status: completed
+status: integrated
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -48,3 +48,8 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 - Task opening: not-needed
 - Implementation: completed on the integration branch
 - Completion evidence: Skill routing implemented; focused bundled-skills check passed 14/14. Native host interaction was not exercised.
+
+## Integration
+
+- Integrated into main through PR #1, merge commit `56bc0ee`.
+- Validation evidence above is retained; no unaffected checks were repeated.

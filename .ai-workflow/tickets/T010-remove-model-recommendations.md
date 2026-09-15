@@ -1,6 +1,6 @@
 ---
 key: T010
-status: done
+status: integrated
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -50,3 +50,8 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 - Task opening: authorized implementation in a repository-local worktree.
 - Implementation: removed recommendation defaults, presets, UI guidance and localized public guidance; missing fields inherit the host and explicit settings remain intact.
 - Completion evidence: `node --test test/compute-profiles.test.js test/mcp-settings.test.js` passed 12/12. One directed content search covered runtime, bundled skills, README/guides, website, templates and public research. Remaining model mentions are removal requirements, prohibited-advice rules, or historical benchmark evidence; no active model recommendation remains. Settings UI script syntax and MCP resource/snapshot were checked; this was not a real desktop end-to-end run.
+
+## Integration
+
+- Integrated into main through PR #1, merge commit `56bc0ee`.
+- Validation evidence above is retained; no unaffected checks were repeated.

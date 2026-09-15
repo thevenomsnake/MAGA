@@ -1,6 +1,6 @@
 ---
 key: T014
-status: completed
+status: integrated
 authorization: approved
 role: project-lead
 workspace: delivery
@@ -49,3 +49,8 @@ Triage: ready-for-agent. Ticket breakdown and dependencies approved by the Produ
 - Task opening: not-needed
 - Implementation: complete; three core entries now route to scoped supporting references.
 - Completion evidence: bundled Skill checks 15/15, affected initialization routing checks 2/2, and native execution-shape check 1/1 passed. Prior configuration and bridge results reused; no full regression.
+
+## Integration
+
+- Integrated into main through PR #1, merge commit `56bc0ee`.
+- Validation evidence above is retained; no unaffected checks were repeated.

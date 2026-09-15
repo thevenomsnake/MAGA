@@ -40,7 +40,7 @@ project_name: "MAGA"
 
 ## Current State
 
-MAGA 0.16.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T009 are integrated. The code repository and GitHub release are synchronized; website, npm, and Cloudflare delivery remain outside this release.
+MAGA 0.16.0 combines bounded proactive task coordination, native read-only subagent delegation, a CodexBridge runtime adapter, durable context packets, accepted design records, and optional thread Goal continuation. T003 through T009 are integrated. The latest source also includes T010–T014 compatibility changes. These changes have not been published as a new package or GitHub release; deployed website, npm, and Cloudflare state is unchanged.
 
 ## Roles
 
@@ -52,17 +52,11 @@ MAGA 0.16.0 combines bounded proactive task coordination, native read-only subag
 
 ## Active Tickets
 
-- [T010: 删除全部模型选择建议并默认继承宿主](tickets/T010-remove-model-recommendations.md) — approved; ready.
-- [T011: 使用当前宿主能力置顶任务](tickets/T011-native-task-pinning.md) — approved; ready.
-- [T012: 让普通澄清与独立工作并行推进](tickets/T012-native-async-questions.md) — approved; ready.
-- [T013: 提供实际桥接版本与能力诊断](tickets/T013-runtime-capability-diagnostics.md) — approved; ready.
-- [T014: 精简核心 Skill 并保留已更新的行为](tickets/T014-simplify-core-skill-routing.md) — approved; blocked by T010, T011, T012.
+None.
 
-Shared-file writers run serially. Each Ticket carries its own focused verification and Git delivery boundary; implementation has not started.
+## Completed Specifications
 
-## Ready Specifications
-
-- [Codex capability compatibility and removal of model recommendations](specs/codex-capability-compatibility.md): ready-for-agent; bounded compatibility changes and complete removal of model-selection recommendations, implementation not started.
+- [Codex capability compatibility and removal of model recommendations](specs/codex-capability-compatibility.md): T010–T014 integrated through PR #1. Model recommendations removed, host inheritance preserved, native interaction guidance updated, read-only bridge diagnostics added, and core Skill entries simplified.
 
 ## Decisions
 

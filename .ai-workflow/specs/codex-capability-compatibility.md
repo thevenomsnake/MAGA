@@ -1,8 +1,8 @@
 ---
-status: ready-for-agent
+status: complete
 kind: spec
 date: 2026-09-15
-implementation_status: not-started
+implementation_status: integrated
 ---
 
 # Codex 能力兼容、轻量工作流与模型建议移除
@@ -150,3 +150,7 @@ MAGA 还在职责默认值、套餐预设、设置面板和多语言指南中建
 - [Codex App Server：握手、请求、能力与用户输入](https://learn.chatgpt.com/docs/app-server)
 - [Codex 子代理：调用条件与宿主行为](https://learn.chatgpt.com/docs/agent-configuration/subagents)
 - [为 GPT-6 Astra 调整 Skill 与提示词](https://learn.chatgpt.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
+
+### Implementation outcome
+
+T010–T014 were integrated into main through PR #1 (`56bc0ee`). Configuration/MCP checks passed 12/12, diagnostic checks 2/2, and affected Skill/routing checks 18/18. Command/protocol substitutes and static guidance checks were used; no live desktop end-to-end compatibility claim is made. Host installations and external releases remain outside the delivered scope.
